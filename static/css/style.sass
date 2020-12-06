@@ -1,0 +1,35 @@
+body
+	margin: 0
+
+main
+	display: grid
+	height: 100vh
+
+#explorer
+	margin: auto 0
+	max-width: 768px
+	padding: 30px
+
+.folder-elm, .file-elm
+	$color1: #a00c3d
+	$color2: #222
+	$color3: #ddd
+	border-bottom: solid 1px lighten($color1, 50%)
+	color: $color1
+	fill: $color1
+
+	&:hover
+		background-color: lighten($color1, 63%)
+		color: darken($color1, 20%)
+		fill: darken($color1, 20%)
+	
+	&__a
+		align-items: center
+		color: inherit
+		display: flex
+		text-decoration: none
+	
+	&__svg	
+		fill: inherit
+		margin-right: 5px
+		width: 36px
