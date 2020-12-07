@@ -10,26 +10,38 @@ main
 	max-width: 768px
 	padding: 30px
 
-.folder-elm, .file-elm
+.folder, .file
 	$color1: #a00c3d
 	$color2: #222
 	$color3: #ddd
+	align-items: center
 	border-bottom: solid 1px lighten($color1, 50%)
 	color: $color1
+	display: flex
 	fill: $color1
+	justify-content: space-between
 
-	&:hover
-		background-color: lighten($color1, 63%)
-		color: darken($color1, 20%)
-		fill: darken($color1, 20%)
+
 	
-	&__a
+	&__link
 		align-items: center
 		color: inherit
 		display: flex
 		text-decoration: none
+		&:hover
+			color: darken($color1, 20%)
+			fill: darken($color1, 20%)
+		&__label
+			margin: 5px 0
+			&:last-of-type
+				font-size: 0.75em
+		&__svg
+			margin-right: 5px
+			width: 60px
 	
-	&__svg	
-		fill: inherit
-		margin-right: 5px
-		width: 36px
+	&__actions
+	
+		&__svg
+			width: 30px
+			&:hover
+				fill: darken($color1, 20%)

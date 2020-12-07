@@ -1,5 +1,15 @@
-<?php function readCurrentDir() {
+<?php 
 
+function inScopeDir() {
+	return preg_match('/\.\/datas/', urldecode($_GET['dir'])) ? true : false;
+}
+
+function inRootDir() {
+	return urldecode($_GET['dir']) === './datas' ? true : false;
+}
+
+function readCurrentDir() {
+	
 	// Redirect to the base if the top parent directory is reached.
 	if(!isset($_GET['dir']) || !inScopeDir($_GET['dir'])) {
 		header('Location: .?dir=' . urlencode('./datas'));
@@ -46,14 +56,4 @@
 
 	$dir->close();
 
-}
-
-// Check if the user is at least in the folder "./datas".
-function inScopeDir() {
-	return preg_match('/\.\/datas/', urldecode($_GET['dir'])) ? true : false;
-}
-
-// Check if the user is in the root folder.
-function inRootDir() {
-	return urldecode($_GET['dir']) === './datas' ? true : false;
 }
