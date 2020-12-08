@@ -1,0 +1,58 @@
+body
+	--theme-color-a: #2b3d41
+	--theme-color-b: #fff
+	--marpad: 60px
+	background-color: var(--theme-color-b)
+	font-family: sans-serif
+	margin: 0
+
+a
+	color: inherit
+
+main
+	display: grid
+	height: 100vh
+
+
+#explorer
+	margin: auto 0
+	overflow-y: auto
+	padding: var(--marpad)
+
+.folder, .file
+	max-width: 768px
+	$theme-color-a: #2b3d41
+	align-items: center
+	border-bottom: solid 1px lighten($theme-color-a, 50%)
+	color: $theme-color-a
+	display: flex
+	fill: $theme-color-a
+	justify-content: space-between
+
+	&:last-of-type
+		margin-bottom: var(--marpad)
+		border-bottom: none
+	
+	&__link
+		align-items: center
+		display: flex
+		text-decoration: none
+		&:hover
+			color: darken($theme-color-a, 10%)
+			fill: darken($theme-color-a, 10%)
+		&__label
+			margin: 5px 0
+			&:first-of-type
+				font-weight: bold
+			&:last-of-type
+				font-size: 0.75em
+		&__svg
+			margin-right: 5px
+			width: 60px
+	
+	&__actions
+	
+		&__svg
+			width: 30px
+			&:hover
+				fill: darken($theme-color-a, 20%)
