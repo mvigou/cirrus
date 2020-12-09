@@ -8,24 +8,14 @@
 </head>
 <body>
 	<main>
-		<section id="explorer">
-			
-			<?php
-
-				require_once('./func-browse.php');
-				require_once('./func-build.php');
-
-
-				define('DATAS_FOLDER_BASE', './datas');
-
-				buildTree($_GET['dir']);
-				browseDir($_GET['dir']);
-				
-			?>
-
+		<section class="browser">
+			<nav class="browser__tree"></nav>
+			<ul class="browser__content"></ul>
 		</section>
-		
 	</main>
+	<script src="./check.js"></script>
+	<script src="./browse.js"></script>
+	<script src="./build.js"></script>
 	<script src="./script.js"></script>
 </body>    
 </html>
