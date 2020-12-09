@@ -9,11 +9,12 @@
 <body>
 	<main>
 		<section id="explorer">
-
+			
 			<?php
 
 				require_once('./func-browse.php');
-				require_once('./func-build.php');	
+				require_once('./func-build.php');
+
 
 				define('DATAS_FOLDER_BASE', './datas');
 

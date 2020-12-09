@@ -10,3 +10,16 @@ function saveFolder(dir) {
 	req.send(null);
 
 }
+
+function deleteFile(file, confirm = false) {
+
+	let req = new XMLHttpRequest();
+	req.open('GET', '/async-deleteFile.php?file=' + file);
+
+	req.onload = () => {
+		console.log(req.responseText);
+
+	};
+	req.send(null);
+
+}
