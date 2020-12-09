@@ -45,7 +45,7 @@
 								'type' => 'file',
 								'label' => $item,
 								'directory' => $dir,
-								'lastMod' => date('Y-m-d à H:i:s', filemtime($dir . '/' . $item))
+								'lastMod' => date('Y-m-d / H:i', filemtime($dir . '/' . $item))
 							)
 						);
 					}

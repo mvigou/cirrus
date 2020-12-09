@@ -68,7 +68,7 @@ function buildItems(items) {
 					'<h3 class="browser__item__link__title">' + item.label + '</h3>';
 					// Files only.
 					if(item.type === 'file') {
-						template += '<p class="browser__item__link__info">Dernière modification le ' + item.lastMod + '</p>';
+						template += '<p class="browser__item__link__info">' + labels.latestMod + ' ' + item.lastMod + '</p>';
 					}
 				template +=
 				'</div>' +
@@ -78,7 +78,7 @@ function buildItems(items) {
 			if(item.type === 'file' || item.type === 'subfolder') {
 				template += 
 				'<div class="browser__item__actions">' +
-					'<a class="browser__item__actions_a" href="' + item.pathOutAppContext + '" title="Télécharger" download>' +
+					'<a class="browser__item__actions_a" href="' + item.pathOutAppContext + '" title="' + labels.download + '" download>' +
 						'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
 		
 							template +=  item.type === 'file' ?
@@ -90,7 +90,7 @@ function buildItems(items) {
 						template += // Common parts for files and subfolders. 
 						'</svg>' +
 					'</a>' +
-					'<a class="browser__item__actions_a" href="#" title="Supprimer">' +
+					'<a class="browser__item__actions_a" href="#" title="' + labels.remove + '">' +
 						'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
 							
 							template +=  item.type === 'file' ?
