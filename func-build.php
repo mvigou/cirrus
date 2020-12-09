@@ -4,18 +4,20 @@
 function buildTree ($dir) {
 
 	$subDirs = array_diff(explode( '/', $dir), ['.']);
-
 	$tree = '.';
+	echo '<nav class="tree-nav">';
 
 	foreach($subDirs as $dir) {
 
 		$tree .= '/';
 		$tree .= $dir;
 		
-		echo '/';
+		echo '<pre> / </pre>';
 		echo '<a href="?dir=' . urlencode($tree) . '">' . $dir . '</a>';
 
 	}
+
+	echo '</nav>';
 	
 }
 

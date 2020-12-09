@@ -1,13 +1,20 @@
 body
-	--theme-color-a: #2b3d41
-	--theme-color-b: #fff
 	--marpad: 60px
-	background-color: var(--theme-color-b)
 	font-family: sans-serif
 	margin: 0
 
 a
 	color: inherit
+
+
+.tree-nav
+	align-items: center
+	display: flex
+	pre
+		font-family: sans-serif
+	a:last-of-type
+		font-weight: bold
+
 
 main
 	display: grid
@@ -20,14 +27,15 @@ main
 	padding: var(--marpad)
 
 .folder, .file
-	max-width: 768px
-	$theme-color-a: #2b3d41
+	$theme-color-a: #a00c3d
+	$theme-color-b: #222
 	align-items: center
 	border-bottom: solid 1px lighten($theme-color-a, 50%)
-	color: $theme-color-a
+	color: $theme-color-b
 	display: flex
-	fill: $theme-color-a
+	fill: lighten($theme-color-b, 20%)
 	justify-content: space-between
+	max-width: 768px
 
 	&:last-of-type
 		margin-bottom: var(--marpad)
@@ -38,21 +46,23 @@ main
 		display: flex
 		text-decoration: none
 		&:hover
-			color: darken($theme-color-a, 10%)
-			fill: darken($theme-color-a, 10%)
+			fill: $theme-color-a
+			
 		&__label
 			margin: 5px 0
 			&:first-of-type
-				font-weight: bold
+				font-family: serif
+				text-decoration: underline
+				color: $theme-color-a
 			&:last-of-type
 				font-size: 0.75em
 		&__svg
 			margin-right: 5px
-			width: 60px
+			width: 50px
 	
 	&__actions
 	
 		&__svg
 			width: 30px
 			&:hover
-				fill: darken($theme-color-a, 20%)
+				fill: $theme-color-a
