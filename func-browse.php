@@ -10,6 +10,7 @@ function inRootDir($dir) {
 	return urldecode($dir) === DATAS_FOLDER_BASE ? true : false;
 }
 
+// Redirect the user to the root directory.
 function toRootDir() {
 	header('Location: .?dir=' . urlencode(DATAS_FOLDER_BASE));
 }
@@ -27,8 +28,9 @@ function browseDir($dir) {
 				if($item === '..') {
 				
 					if(!inRootDir($dir)) {
-						buildFolder(
+						buildItem(
 							$item,
+							'parent',
 							$dir,
 							substr($dir, 0, strrpos($dir, '/')) // !!! trouver comment retirer cette ligne sans perdre en lisibilité.
 						);
@@ -40,17 +42,17 @@ function browseDir($dir) {
 				else {
 					
 					if(is_file($dir . '/' . $item)) {
-						buildFile(
+						buildItem(
 							$item,
-							$dir,
-							$dir . '/' . $item
+							'file',
+							$dir
 						);
 					}
 					else {
-						buildFolder(
+						buildItem(
 							$item,
-							$dir,
-							$dir . '/' . $item
+							'subfolder',
+							$dir
 						);
 					}
 		
