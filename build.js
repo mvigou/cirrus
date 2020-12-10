@@ -89,8 +89,15 @@ function buildItems(items) {
 						
 						template += // Common parts for files and subfolders. 
 						'</svg>' +
-					'</a>' +
-					'<a class="browser__item__actions_a" href="#" title="' + labels.remove + '">' +
+					'</a>';
+
+					template += item.type === 'file' ?
+					// Files only.
+					'<a class="browser__item__actions_a" href="#" onclick="removeFile(\'' + item.pathInAppContext + '\')" title="' + labels.remove + '">' :
+					// Parent and subfolders only.
+					'<a class="browser__item__actions_a" href="#" onclick="removeDir(\'' + item.pathInAppContext + '\')" title="' + labels.remove + '">';
+					
+						template += 
 						'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
 							
 							template +=  item.type === 'file' ?
