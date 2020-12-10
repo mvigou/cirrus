@@ -13,10 +13,7 @@
 			<ul class="browser__content"></ul>
 		</section>
 	</main>
+	<script src="./functions.js"></script>
 	<script src="./config.js"></script>
-	<script src="./browse.js"></script>
-	<script src="./build.js"></script>
-	<script src="./modify.js"></script>
-	<script src="./script.js"></script>
 </body>    
 </html>

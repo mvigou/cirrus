@@ -1,11 +1,21 @@
 <?php 
 
+require_once('./commons.php');
+
+// Basic checks.
+if(isset($_GET['file']) && inScopeDir($_GET['file'])) {
+	removeFile($_GET['file']);
+}
+else {
+	echo 'failure';
+}
+
 // Move a file to the trash.
-if(isset($_GET['file'])) {
+function removeFile($file) {
 
 	// From, to.
 	$origPath = $_GET['file'];
-	$destPath = str_replace('./datas', './trash', $origPath);
+	$destPath = str_replace(DATAS_FOLDER_BASE, TRASH_FOLDER_BASE, $origPath);
 
 	// If needed, recreate the folder structure first (parent folders).
 	$parentDirs = explode('/', $destPath);
@@ -25,8 +35,6 @@ if(isset($_GET['file'])) {
 	}
 
 	// Move the file.
-	if(rename($origPath, $destPath)) {
-		echo 'success';
-	};
+	echo rename($origPath, $destPath) ? 'success' : 'failure';
 
 }

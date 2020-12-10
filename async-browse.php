@@ -1,19 +1,19 @@
-<?php function browseDirectory($dir) {
-	
-	define('DATAS_FOLDER_BASE', './datas');
+<?php 
 
-	// Check if the user is in his data directory.
-	function inScopeDir($dir) {
-		return preg_match('/\.\/datas/', urldecode($dir)) ? true : false;
-	}
-	
-	// Check if the user is in the root directory.
-	function inRootDir($dir) {
-		return urldecode($dir) === DATAS_FOLDER_BASE ? true : false;
-	}
+require_once('./commons.php');
 
-	// Only if the user is in an existing folder of the authorized scop.
-	if(isset($dir) && inScopeDir($dir) && $tree = dir($dir)) {
+// Basic checks.
+if(isset($_GET['dir']) && inScopeDir($_GET['dir'])) {
+	browseDirectory($_GET['dir']);
+}
+else {
+	echo 'failure';
+}
+
+// Browse content directory.
+function browseDirectory($dir) {
+	
+	if($tree = dir($dir)) {
 
 		$response = [];
 
@@ -67,12 +67,7 @@
 		$tree->close();
 
 		echo json_encode($response);
-	}
 
-	else {		
-		header('Location: ./');
 	}
 
 }
-
-browseDirectory($_GET['dir']);
