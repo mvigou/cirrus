@@ -1,5 +1,7 @@
 const LANG = 'fr';
-const DATAS_FOLDER_BASE = './datas'
+const DATAS_DIR_PATH = './datas';
+const TRASH_DIR_PATH = './trash';
+const TEMP_DIR_PATH = './temp';
 
 let labels;
 

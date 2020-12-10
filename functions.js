@@ -1,15 +1,15 @@
 /* --- ACTIONS --- */
 
 	// Check if the user is in his data directory.
-	function inScopeDir(elm) { 
+	function inScopeDirectory(elm) { 
 		return elm.match(/^\.\/datas/) ? true : false;
 	}
 
 	// Browse content directory.
 	function browseDirectory(dir) {
 
-		if(dir == undefined || !inScopeDir(dir)) {
-			dir = DATAS_FOLDER_BASE;    
+		if(dir == undefined || !inScopeDirectory(dir)) {
+			dir = DATAS_DIR_PATH;    
 		}
 		
 		let req = new XMLHttpRequest();
@@ -27,7 +27,7 @@
 	// Move a file from ./datas directory to ./trash directory.
 	function removeFile(file) {
 
-		if(!file == undefined || inScopeDir(file)) {      
+		if(!file == undefined || inScopeDirectory(file)) {      
 			
 			if(confirm(labels.confirmDel)) {
 
@@ -48,6 +48,35 @@
 
 			}
 					
+		}
+
+	}
+
+	// Build a zip to download of the selected directory.
+	function downloadDirectory(dir) {
+
+		if(!dir == undefined || inScopeDirectory(dir)) {   
+
+			let req = new XMLHttpRequest();
+			req.open('GET', './async-download.php?dir=' + encodeURIComponent(dir), true);
+		
+			req.onload = () => {
+
+				if(req.responseText !== 'failure') {
+
+					let pathToZip = req.responseText;
+
+					// Offers the download of the generated zip.
+					let aElm = document.createElement('a');
+					aElm.href = pathToZip;
+					aElm.click();
+
+				}				
+				
+			};
+			
+			req.send(null);
+
 		}
 
 	}
@@ -82,20 +111,14 @@
 
 			switch(item.type) {
 				case 'file':
-					item.pathInAppContext = item.directory + '/' + item.label;
-					item.pathOutAppContext = item.directory + '/' + item.label;
+					item.path = item.directory + '/' + item.label;
 					break;
 				case 'subfolder':
-					item.pathInAppContext = item.directory + '/' + item.label;
-					item.pathOutAppContext = item.directory + '/' + item.label;
+					item.path = item.directory + '/' + item.label;
 					break;
 				case 'parent':
-					item.pathInAppContext = item.directory.substr(0, item.directory.lastIndexOf('/'));
-					item.pathOutAppContext = item.directory + '/' + item.label;
+					item.path = item.directory.substr(0, item.directory.lastIndexOf('/'));
 					break;
-				default:
-					item.pathInAppContext = '';
-					item.pathOutAppContext = '';
 			};
 			
 			let template = '';
@@ -105,9 +128,9 @@
 			
 				template += item.type === 'file' ?
 				// Files only.
-				'<a class="browser__item__link" href="' + item.pathInAppContext + '">':
+				'<a class="browser__item__link" href="' + item.path + '">':
 				// Parent and subfolders only.
-				'<a class="browser__item__link" href="#" onclick="browseDirectory(\'' + item.pathInAppContext + '\')">';
+				'<a class="browser__item__link" href="#" onclick="browseDirectory(\'' + item.path + '\')">';
 				
 					template += // Common parts for parent, files and subfolders.
 					'<svg class="browser__item__link__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
@@ -133,8 +156,16 @@
 				// Common parts for files and subfolders.
 				if(item.type === 'file' || item.type === 'subfolder') {
 					template += 
-					'<div class="browser__item__actions">' +
-						'<a class="browser__item__actions_a" href="' + item.pathOutAppContext + '" title="' + labels.downloadElm + '" download>' +
+					'<div class="browser__item__actions">';
+
+						template += item.type === 'file' ?
+						// Files only.
+						'<a class="browser__item__actions_a" href="' + item.path + '" title="' + labels.downloadElm + '" download>' :
+						// Subfolders only.
+						'<a class="browser__item__actions_a" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + labels.downloadElm + '">';
+
+							// Common parts for files and subfolders.
+							template +=
 							'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
 			
 								template +=  item.type === 'file' ?
@@ -149,9 +180,9 @@
 
 						template += item.type === 'file' ?
 						// Files only.
-						'<a class="browser__item__actions_a" href="#" onclick="removeFile(\'' + item.pathInAppContext + '\')" title="' + labels.deleteElm + '">' :
+						'<a class="browser__item__actions_a" href="#" onclick="removeFile(\'' + item.path + '\')" title="' + labels.deleteElm + '">' :
 						// Parent and subfolders only.
-						'<a class="browser__item__actions_a" href="#" onclick="removeDir(\'' + item.pathInAppContext + '\')" title="' + labels.deleteElm + '">';
+						'<a class="browser__item__actions_a" href="#" title="' + labels.deleteElm + '">';
 						
 							template += 
 							'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';

@@ -3,7 +3,7 @@
 require_once('./commons.php');
 
 // Basic checks.
-if(isset($_GET['dir']) && inScopeDir($_GET['dir'])) {
+if(isset($_GET['dir']) && inScopeDirectory($_GET['dir'])) {
 	browseDirectory($_GET['dir']);
 }
 else {
@@ -24,7 +24,7 @@ function browseDirectory($dir) {
 				// To parent folder.
 				if($item === '..') {
 				
-					if(!inRootDir($dir)) {
+					if(!inRootDirectory($dir)) {
 						array_push($response,
 							array(
 								'type' => 'parent',

@@ -3,7 +3,7 @@
 require_once('./commons.php');
 
 // Basic checks.
-if(isset($_GET['file']) && inScopeDir($_GET['file'])) {
+if(isset($_GET['file']) && inScopeDirectory($_GET['file'])) {
 	removeFile($_GET['file']);
 }
 else {
@@ -15,7 +15,7 @@ function removeFile($file) {
 
 	// From, to.
 	$origPath = $_GET['file'];
-	$destPath = str_replace(DATAS_FOLDER_BASE, TRASH_FOLDER_BASE, $origPath);
+	$destPath = str_replace(DATAS_DIR_PATH, TRASH_DIR_PATH, $origPath);
 
 	// If needed, recreate the folder structure first (parent folders).
 	$parentDirs = explode('/', $destPath);
