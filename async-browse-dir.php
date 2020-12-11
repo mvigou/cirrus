@@ -1,8 +1,13 @@
 <?php 
 
-require_once('./commons.php');
+/* 
+Server side job : Browse content of the selected directory.
+Return : A JSON object representing the content of the directory.
+Called by : async.js.
+*/
 
-// Basic checks.
+require_once('./common.php');
+
 if(isset($_GET['dir']) && inScopeDirectory($_GET['dir'])) {
 	browseDirectory($_GET['dir']);
 }
@@ -10,7 +15,6 @@ else {
 	echo 'failure';
 }
 
-// Browse content directory.
 function browseDirectory($dir) {
 	
 	if($tree = dir($dir)) {

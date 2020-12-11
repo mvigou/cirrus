@@ -1,8 +1,13 @@
-<?php
+<?php 
 
-require_once('./commons.php');
+/* 
+Server side job : Build a zip of the selected directory.
+Return : The path to the created zip.
+Called by : async.js.
+*/
 
-// Basic checks.
+require_once('./common.php');
+
 if(isset($_GET['dir']) && inScopeDirectory($_GET['dir'])) {
 
 	$zipName = array_slice(explode('/', $_GET['dir']), -1)[0];

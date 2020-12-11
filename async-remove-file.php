@@ -1,8 +1,13 @@
 <?php 
 
-require_once('./commons.php');
+/* 
+Server side job : // Move the selected file to the trash.
+Return : 'success' if done, 'failure' if undone.
+Called by : async.js.
+*/
 
-// Basic checks.
+require_once('./common.php');
+
 if(isset($_GET['file']) && inScopeDirectory($_GET['file'])) {
 	removeFile($_GET['file']);
 }
@@ -10,7 +15,6 @@ else {
 	echo 'failure';
 }
 
-// Move a file to the trash.
 function removeFile($file) {
 
 	// From, to.

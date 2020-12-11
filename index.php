@@ -13,7 +13,8 @@
 			<ul class="browser__content"></ul>
 		</section>
 	</main>
-	<script src="./functions.js"></script>
+	<script src="./common.js"></script>
+	<script src="./async.js"></script>
 	<script src="./config.js"></script>
 </body>    
 </html>
