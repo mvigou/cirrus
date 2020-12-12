@@ -17,30 +17,44 @@ function browseDirectory(dir) {
 
 }
 
-// Ask the server to move a file from the ./datas directory to the ./trash directory.
-function removeFile(file) {
+// Ask the server to move a file from the ./datas directory to the ./recycle directory.
+function removeFile(file, confirm = false) {
 
 	if(!file == undefined || inScopeDirectory(file)) {      
 		
-		if(confirm(labels.confirmDel)) {
+		let req = new XMLHttpRequest();
+		req.open('GET', './async-remove-file.php?file=' + encodeURIComponent(file) + '&confirm=' + confirm, true);
 
-			let req = new XMLHttpRequest();
-			req.open('GET', './async-remove-file.php?file=' + encodeURIComponent(file), true);
+		req.onload = () => {
 			
-			req.onload = () => {
+			// Confirm was false : ask for a confirmation.
+			if(req.responseText === 'warning' || req.responseText === 'no-warning') {
+				dial(
+					'<p>' + (req.responseText === 'warning' ? lab.toRecycleNormal : lab.toRecycleWarning) + '</p>' +
+					'<button onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
+					'<button onclick="dial()">' + lab.button.cancel + '</button>'
+				);
 
-				if(req.responseText === 'success') {
+			}
 
-					browseDirectory(file.slice(0, file.lastIndexOf('/')));
+			// Confirm was true : operation completed.
+			else if(req.responseText === 'success') {
+				browseDirectory(file.slice(0, file.lastIndexOf('/')));
+				dial();
+			}
 
-				}				
-				
-			};
+			// Confirm was true, but an error has occured.
+			else {
+				dial(
+					'<p>' + lab.error + '</p>' +
+					'<button onclick="dial()">' + lab.button.close + '</button>'			
+				);
+			}
 			
-			req.send(null);
+		};
 
-		}
-				
+		req.send(null);
+
 	}
 
 }

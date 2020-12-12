@@ -1,3 +1,7 @@
+// Add a dial when some HTML is provided.
+function dial(html) {
+	browserElm.dial.innerHTML = html != undefined ? html : '';
+}
 
 // Check if the user is in his data directory.
 function inScopeDirectory(elm) { 
@@ -72,7 +76,7 @@ function buildItems(items) {
 					'<h3 class="browser__item__link__title">' + item.label + '</h3>';
 					// Files only.
 					if(item.type === 'file') {
-						template += '<p class="browser__item__link__info">' + labels.latestMod + ' ' + item.lastMod + '</p>';
+						template += '<p class="browser__item__link__info">' + lab.latestMod + ' ' + item.lastMod + '</p>';
 					}
 				template +=
 				'</div>' +
@@ -85,9 +89,9 @@ function buildItems(items) {
 
 					template += item.type === 'file' ?
 					// Files only.
-					'<a class="browser__item__actions_a" href="' + item.path + '" title="' + labels.downloadElm + '" download>' :
+					'<a class="browser__item__actions_a" href="' + item.path + '" title="' + lab.button.download + '" download>' :
 					// Subfolders only.
-					'<a class="browser__item__actions_a" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + labels.downloadElm + '">';
+					'<a class="browser__item__actions_a" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + lab.button.download + '">';
 
 						// Common parts for files and subfolders.
 						template +=
@@ -105,9 +109,9 @@ function buildItems(items) {
 
 					template += item.type === 'file' ?
 					// Files only.
-					'<a class="browser__item__actions_a" href="#" onclick="removeFile(\'' + item.path + '\')" title="' + labels.deleteElm + '">' :
+					'<a class="browser__item__actions_a" href="#" onclick="removeFile(\'' + item.path + '\')" title="' + lab.button.delete + '">' :
 					// Parent and subfolders only.
-					'<a class="browser__item__actions_a" href="#" title="' + labels.deleteElm + '">';
+					'<a class="browser__item__actions_a" href="#" title="' + lab.button.delete + '">';
 					
 						template += 
 						'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
