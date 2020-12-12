@@ -20,6 +20,10 @@ function buildTree(dir) {
 		'<a href="#" onclick="browseDirectory(\'' + tree + '\')">' + subDirs + '</a>';
 	
 	}
+
+	browserElm.tree.classList.remove('browser__tree--updated');
+	void browserElm.tree.offsetWidth;
+	browserElm.tree.classList.add('browser__tree--updated');
 	
 }
 

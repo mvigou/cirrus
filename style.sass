@@ -1,3 +1,9 @@
+@keyframes entry-from-left
+	from	
+		transform: translate(-15px)	
+	to
+		transform: initial
+	
 body
 	--marpad: 60px
 	font-family: sans-serif
@@ -11,14 +17,15 @@ a
 	padding: var(--marpad)
 	
 	&__tree
+		animation: none 0.25s ease
 		align-items: center
 		display: flex
 		pre
 			font-family: sans-serif
 		a:last-of-type
 			font-weight: bold
-
-	&__content
+		&--updated
+			animation-name: entry-from-left
 
 	&__item
 		$theme-color-a: #a00c3d
