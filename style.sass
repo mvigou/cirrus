@@ -5,20 +5,41 @@
 		transform: initial
 	
 body
+	--danger-color: #f33
 	--marpad: 60px
+	--theme-color-a: #a00c3d
+	--theme-color-b: #444
+	color: var(--theme-color-b)
 	font-family: sans-serif
 	margin: 0
-	color: #222
 
 a
 	color: inherit
 
+button
+	margin: 5px
+
 .browser
 	padding: var(--marpad)
-	
+
+	&__dial
+		&__content
+			margin: auto
+			max-width: 60ch
+			text-align: center
+		&--visible
+			background-color: #fffc
+			bottom: 0
+			display: grid
+			left: 0
+			position: fixed
+			right: 0
+			top: 0
+			z-index: 2
+		
 	&__tree
-		animation: none 0.25s ease
 		align-items: center
+		animation: none 0.25s ease
 		display: flex
 		pre
 			font-family: sans-serif
@@ -28,41 +49,59 @@ a
 			animation-name: entry-from-left
 
 	&__item
-		$theme-color-a: #a00c3d
-		$theme-color-b: #222
 		align-items: center
-		border-bottom: solid 1px lighten($theme-color-a, 50%)
-		color: $theme-color-b
+		border-bottom: solid 1px #eee
+		border-left: solid 5px #fff
+		color: var(--theme-color-a)
+		color: var(--theme-color-b)
 		display: flex
-		fill: lighten($theme-color-b, 20%)
 		justify-content: space-between
+		margin: 5px 0
 		max-width: 768px
-
-		&:last-of-type
-			margin-bottom: var(--marpad)
-			border-bottom: none
+		padding: 0 5px
+		&:hover
+			border-left-color: var(--theme-color-a)
 		
 		&__link
 			align-items: center
+			color: var(--theme-color-b)
 			display: flex
-			text-decoration: none
-			&:hover
-				fill: $theme-color-a		
+			text-decoration: none					
 			&__title
-				color: $theme-color-a
 				font-family: serif
 				font-size: 1em
 				font-weight: normal
-				text-decoration: underline
+				text-decoration: underline var(--theme-color-b)
 			&__info
 				font-size: 0.75em
 				margin-top: -15px
 			&__svg
+				fill: var(--theme-color-a)
 				margin-right: 5px
 				width: 50px
 		
 		&__actions
 			&__svg
+				fill: var(--theme-color-b)
 				width: 35px
 				&:hover
-					fill: $theme-color-a
+					fill: var(--theme-color-a)
+
+button
+	background-color: transparent
+	border-radius: 3px
+	border: none
+	border: solid 1px #bbb
+	cursor: pointer
+	font-family: sans-serif
+	opacity: 0.8
+	padding: 8px 10px
+	&.danger
+		background-color: var(--danger-color)
+		border: none
+		color: #fff
+	&:hover
+		font-family: 0.75em
+		opacity: 1
+		transform: scale(1.05)
+		

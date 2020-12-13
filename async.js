@@ -31,7 +31,7 @@ function removeFile(file, confirm = false) {
 			if(req.responseText === 'warning' || req.responseText === 'no-warning') {
 				dial(
 					'<p>' + (req.responseText === 'warning' ? lab.toRecycleNormal : lab.toRecycleWarning) + '</p>' +
-					'<button onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
+					'<button onclick="removeFile(this.value, true)" class="danger" value="' + file + '">' + lab.button.confirm + '</button>' +
 					'<button onclick="dial()">' + lab.button.cancel + '</button>'
 				);
 

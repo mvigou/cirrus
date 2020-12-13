@@ -11,7 +11,9 @@
 		<section class="browser">
 			<nav class="browser__tree"></nav>
 			<ul class="browser__content"></ul>
-			<div class="browser__dial"></div>
+			<div class="browser__dial">
+				<div class="browser__dial__content"></div>
+			</div>
 		</section>
 	</main>
 	<script src="./common.js"></script>
