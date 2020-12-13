@@ -15,29 +15,21 @@ function browseDirectory(dir) {
 
 	req.send(null);
 
-
-
-
-	
-	
-	
 	// Global
 	currentDir = dir;
-	switchParentDir();
-	
+
 }
 
+// Ask the server to create an empty folder in the current directory.
 function createDirectory(dirName = null) {
-
-// nom valide ou pas ?
 
 	if(dirName === null) {
 		
 		dial(
 			'<label for="input">' + lab.createNewdir + '</label>' +
-			'<input type="text" id="input"/>' +
-			'<button class="dial__button" onclick="createDirectory(this.previousSibling.value)">' + lab.button.confirm + '</button>' +
-			'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+			'<input type="text" id="input" />' +
+			'<button class="dial__bt" onclick="createDirectory(this.previousSibling.value)">' + lab.bt.confirm + '</button>' +
+			'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
 		);	
 		
 	}
@@ -60,7 +52,7 @@ function createDirectory(dirName = null) {
 				default:
 					dial(
 						'<p>' + lab.error + '</p>' +
-						'<button onclick="dial()">' + lab.button.close + '</button>'			
+						'<button onclick="dial()">' + lab.bt.close + '</button>'			
 					);
 					break;
 
@@ -91,23 +83,23 @@ function removeFile(file, confirm = false) {
 				case 'move':
 					dial(
 						'<p>' + lab.toRecycleMove + '</p>' +
-						'<button class="dial__button dial__button--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
-						'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+						'<button class="dial__bt dial__bt--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.bt.confirm + '</button>' +
+						'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
 					);		
 					break;
 				case 'remove':
 					dial(
 						'<p>' + lab.toRecycleRemove + '</p>' +
-						'<button class="dial__button dial__button--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
-						'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+						'<button class="dial__bt dial__bt--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.bt.confirm + '</button>' +
+						'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
 					);	
 				
 				break;
 				case 'overwrite':
 					dial(
 						'<p>' + lab.toRecycleOverwrite + '</p>' +
-						'<button class="dial__button dial__button--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
-						'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+						'<button class="dial__bt dial__bt--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.bt.confirm + '</button>' +
+						'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
 					);
 				break;
 				case 'success':
@@ -117,7 +109,7 @@ function removeFile(file, confirm = false) {
 				case 'failure':
 					dial(
 						'<p>' + lab.error + '</p>' +
-						'<button onclick="dial()">' + lab.button.close + '</button>'			
+						'<button onclick="dial()">' + lab.bt.close + '</button>'			
 					);
 					break;
 

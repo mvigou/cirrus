@@ -1,5 +1,10 @@
 /* Commons */
 
+@font-face
+	font-display: swap
+	font-family: 'Josefin'
+	src: url("./JosefinSans-Regular.woff2") format("woff2")
+
 @mixin medium-screen
 	@media screen and (min-width: 768px)
 		@content
@@ -12,82 +17,73 @@
 
 a
 	color: inherit
+	&:hover
+		color: var(--theme-color-a)
 
 label, input
+	margin: 10px 0
 	display: block
 
 button
 	background-color: transparent
+	background-color: var(--theme-color-b)
 	border-radius: 3px
 	border: none
+	color: var(--theme-color-c)
 	cursor: pointer
-	font-family: sans-serif
-	margin: 3px
-	padding: 8px 10px
+	font-family: Josefin, sans-serif
+	font-size: 0.85em
+	margin-right: 5px
+	padding: 8px 12px
+	&:hover
+		background-color: var(--theme-color-a)
 
 /* Specifics */
 
 body
 	--danger-color: #f33
-	--marpad: 15px
+	--theme-color-c: #fff
+	--theme-color-d: #ddd
 	color: var(--theme-color-b)
-	font-family: sans-serif
+	font-family: Josefin, sans-serif
+	font-size: 1.1em
 	margin: 0
-	@include medium-screen
-		--marpad: 60px
-
 	/* Change theme and hide/unhide some features when user is in ./datas. */
-	&.--in-data
+	&.--in-datas
 		--theme-color-a: #a00c3d
 		--theme-color-b: #444
-		--theme-color-c: #fff
-		.data-feature
-			display: none
-		.recycle-feature
+		.datas-feature
 			display: block
+		.recycle-feature
+			display: none
 
 	/* Change theme and hide/unhide some features when user is in ./recycle. */
 	&.--in-recycle
 		--theme-color-a: #222
 		--theme-color-b: #555
-		--theme-color-c: #fff
-		.data-feature
-			display: block
-		.recycle-feature
+		.datas-feature
 			display: none
-
-.main-nav
-	background-color: var(--theme-color-a)
-	display: flex
-	justify-content: space-between
-	left: 0
-	padding: 15px
-	position: fixed
-	right: 0
-	top: 0
-	@include medium-screen
-		bottom: 0
-		flex-direction: column
-		left: 0
-		right: initial
-		top: 0
-	&__svg
-		fill: var(--theme-color-c)
-		width: 30px
+		.recycle-feature
+			display: block
 
 .browser
-	margin-top: 90px
-	padding: var(--marpad)
-	@include medium-screen
-		margin-top: 0
-		margin-left: 60px
 	
-	&__tree
+	padding: 30px
+	
+	&__nav
+		border-bottom: solid 1px var(--theme-color-d)
+		display: flex
+		padding-bottom: 15px
+		&__svg
+			fill: var(--theme-color-c)
+			width: 20px
+
+	&__tree-nav
 		align-items: center
 		animation: none 0.25s ease
 		display: flex
 		pre
-			font-family: sans-serif
+			font-family: Josefin, sans-serif
 		a:last-of-type
 			font-weight: bold
 		&--updated
@@ -97,17 +93,21 @@ body
 		padding: 0
 
 	&__item
-		$theme-color-b: #444
 		align-items: center
-		border-bottom: solid 1px lighten($theme-color-b, 65%)
+		border-bottom: solid 1px var(--theme-color-d)
 		border-left: solid 5px var(--theme-color-c)
 		color: var(--theme-color-b)
 		display: grid
+		fill: var(--theme-color-b)
 		grid-template-columns: 5fr auto
 		justify-content: space-between
+		margin-bottom: 10px
 		max-width: 768px
 		padding: 0 5px
+		&:last-of-type
+			border-bottom: none
 		&:hover
+			fill: var(--theme-color-a)
 			border-left-color: var(--theme-color-a)
 		&__link
 			align-items: center
@@ -115,22 +115,26 @@ body
 			display: flex
 			text-decoration: none
 			&__title
-				font-family: serif
 				font-size: 1em
 				font-weight: normal
-				text-decoration: underline lighten($theme-color-b, 40%)
+				text-decoration: underline var(--theme-color-d)
 			&__info
-				font-size: 0.75em
 				margin-top: -15px
+				font-size: 0.85em 
 			&__svg
-				fill: var(--theme-color-a)
+				fill: inherit
 				margin-right: 5px
-				max-width: 50px
-				min-width: 50px
+				max-width: 44px
+				min-width: 44px
+	
 		&__actions
+			display: flex
+			&__a:first-child
+				border-right: solid 1px var(--theme-color-d)
 			&__svg
 				fill: var(--theme-color-b)
-				width: 35px
+				width: 20px
+				padding: 10px
 				&:hover
 					fill: var(--theme-color-a)
 
@@ -146,14 +150,7 @@ body
 		z-index: 2
 	&__content
 		margin: auto
-		max-width: 60ch
-	&__button
-		background-color: var(--theme-color-c)
-		border: solid 1px #bbb
-		opacity: 0.8
+		max-width: 30ch
+	&__bt
 		&--danger
 			background-color: var(--danger-color)
-			border: none
-			color: var(--theme-color-c)
-		&:hover
-			opacity: 1
