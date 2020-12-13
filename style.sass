@@ -1,3 +1,7 @@
+@mixin medium-screen
+	@media screen and (min-width: 768px)
+		@content
+	
 @keyframes entry-from-left
 	from	
 		transform: translate(-15px)	
@@ -5,13 +9,16 @@
 		transform: initial
 	
 body
+	--marpad: 15px
 	--danger-color: #f33
-	--marpad: 60px
 	--theme-color-a: #a00c3d
 	--theme-color-b: #444
 	color: var(--theme-color-b)
 	font-family: sans-serif
 	margin: 0
+	@include medium-screen
+		--marpad: 60px
+
 
 a
 	color: inherit
@@ -48,9 +55,13 @@ button
 		&--updated
 			animation-name: entry-from-left
 
+	&__content
+		padding: 0
+
 	&__item
+		$theme-color-b: #444
 		align-items: center
-		border-bottom: solid 1px #eee
+		border-bottom: solid 1px lighten($theme-color-b, 65%)
 		border-left: solid 5px #fff
 		color: var(--theme-color-b)
 		display: grid
@@ -65,19 +76,20 @@ button
 			align-items: center
 			color: var(--theme-color-b)
 			display: flex
-			text-decoration: none					
+			text-decoration: none
 			&__title
 				font-family: serif
 				font-size: 1em
 				font-weight: normal
-				text-decoration: underline var(--theme-color-b)
+				text-decoration: underline lighten($theme-color-b, 40%)
 			&__info
 				font-size: 0.75em
 				margin-top: -15px
 			&__svg
 				fill: var(--theme-color-a)
 				margin-right: 5px
-				width: 50px
+				max-width: 50px
+				min-width: 50px
 		&__actions
 			&__svg
 				fill: var(--theme-color-b)
