@@ -2,25 +2,25 @@
 function dial(html) {
 
 	if(html != undefined) {
-		browserElm.dial.querySelector('div').innerHTML = html;
-		browserElm.dial.classList.add('browser__dial--visible');
+		UI.dial.querySelector('div').innerHTML = html;
+		UI.dial.classList.add('dial--visible');
 	}
 	else {
-		browserElm.dial.querySelector('div').innerHTML = '';
-		browserElm.dial.classList.remove('browser__dial--visible');
+		UI.dial.querySelector('div').innerHTML = '';
+		UI.dial.classList.remove('dial--visible');
 	}
 
 }
 
-// Check if the user is in his data directory.
+// Check if the user is within the authorized perimeter (data or recycle directory).
 function inScopeDirectory(elm) { 
-	return elm.match(/^\.\/datas/) ? true : false;
+	return elm.match(/^\.\/(datas|recycle)/) ? true : false;
 }
 
 // Build a navigable tree.
 function buildTree(dir) {
 
-	browserElm.tree.innerHTML = '';
+	UI.browserTree.innerHTML = '';
 	let tree = '.';
 	
 	for(let subDirs of dir.slice(2).split('/')) {
@@ -28,22 +28,22 @@ function buildTree(dir) {
 		tree += '/';
 		tree += subDirs;
 		
-		browserElm.tree.innerHTML += 
+		UI.browserTree.innerHTML += 
 		'<pre> / </pre>' +
 		'<a href="#" onclick="browseDirectory(\'' + tree + '\')">' + subDirs + '</a>';
 	
 	}
 
-	browserElm.tree.classList.remove('browser__tree--updated');
-	void browserElm.tree.offsetWidth;
-	browserElm.tree.classList.add('browser__tree--updated');
+	UI.browserTree.classList.remove('browser__tree--updated');
+	void UI.browserTree.offsetWidth;
+	UI.browserTree.classList.add('browser__tree--updated');
 	
 }
 
 // Build a file or a folder element.
 function buildItems(items) {
 
-	browserElm.content.innerHTML = '';
+	UI.browserList.innerHTML = '';
 	
 	for(let item of items) {
 
@@ -141,7 +141,7 @@ function buildItems(items) {
 		// Common parts for parent, files and subfolders.
 		template +=  '</li>';
 
-		browserElm.content.innerHTML += template;
+		UI.browserList.innerHTML += template;
 
 	}
 

@@ -13,36 +13,75 @@ body
 	--danger-color: #f33
 	--theme-color-a: #a00c3d
 	--theme-color-b: #444
+	--theme-color-c: #fff
 	color: var(--theme-color-b)
 	font-family: sans-serif
 	margin: 0
 	@include medium-screen
 		--marpad: 60px
 
-
 a
 	color: inherit
 
 button
-	margin: 5px
+	cursor: pointer
+	font-family: sans-serif
+	padding: 8px 10px
+	border: none
+	background-color: transparent
+	border-radius: 3px
+	margin: 3px
+
+.main-nav
+	display: flex
+	flex-direction: column
+	justify-content: space-between
+	position: fixed
+	padding: 15px
+	top: 0
+	left: 0
+	bottom: 0
+	border-right: solid 1px
+	background-color: var(--theme-color-a)
+
+		
+
+	&__svg
+		fill: var(--theme-color-c)
+		width: 30px
+
+.dial
+	&--visible
+		background-color: #fffd
+		bottom: 0
+		display: grid
+		left: 0
+		position: fixed
+		right: 0
+		top: 0
+		z-index: 2
+	&__content
+		margin: auto
+		max-width: 60ch
+		text-align: center
+	&__button
+		background-color: var(--theme-color-c)
+		border: solid 1px #bbb
+		opacity: 0.8
+		&--danger
+			background-color: var(--danger-color)
+			border: none
+			color: var(--theme-color-c)
+		&:hover
+			opacity: 1
+
+
+
+
 
 .browser
+	margin-left: 60px
 	padding: var(--marpad)
-
-	&__dial
-		&__content
-			margin: auto
-			max-width: 60ch
-			text-align: center
-		&--visible
-			background-color: #fffc
-			bottom: 0
-			display: grid
-			left: 0
-			position: fixed
-			right: 0
-			top: 0
-			z-index: 2
 		
 	&__tree
 		align-items: center
@@ -55,19 +94,18 @@ button
 		&--updated
 			animation-name: entry-from-left
 
-	&__content
+	&__list
 		padding: 0
 
 	&__item
 		$theme-color-b: #444
 		align-items: center
 		border-bottom: solid 1px lighten($theme-color-b, 65%)
-		border-left: solid 5px #fff
+		border-left: solid 5px var(--theme-color-c)
 		color: var(--theme-color-b)
 		display: grid
 		grid-template-columns: 5fr auto
 		justify-content: space-between
-		margin: 5px 0
 		max-width: 768px
 		padding: 0 5px
 		&:hover
@@ -97,21 +135,5 @@ button
 				&:hover
 					fill: var(--theme-color-a)
 
-button
-	background-color: transparent
-	border-radius: 3px
-	border: none
-	border: solid 1px #bbb
-	cursor: pointer
-	font-family: sans-serif
-	opacity: 0.8
-	padding: 8px 10px
-	&.danger
-		background-color: var(--danger-color)
-		border: none
-		color: #fff
-	&:hover
-		font-family: 0.75em
-		opacity: 1
-		transform: scale(1.05)
+
 		

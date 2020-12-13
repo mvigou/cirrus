@@ -1,10 +1,10 @@
 // Ask the server to browse the contents of the selected directory, then build it.
 function browseDirectory(dir) {
-
+	
 	if(dir == undefined || !inScopeDirectory(dir)) {
 		dir = DATAS_DIR_PATH;    
 	}
-	
+		
 	let req = new XMLHttpRequest();
 	req.open('GET', './async-browse-dir.php?dir=' + encodeURIComponent(dir), true);
 
@@ -27,29 +27,42 @@ function removeFile(file, confirm = false) {
 
 		req.onload = () => {
 			
-			// Confirm was false : ask for a confirmation.
-			if(req.responseText === 'warning' || req.responseText === 'no-warning') {
-				dial(
-					'<p>' + (req.responseText === 'warning' ? lab.toRecycleNormal : lab.toRecycleWarning) + '</p>' +
-					'<button onclick="removeFile(this.value, true)" class="danger" value="' + file + '">' + lab.button.confirm + '</button>' +
-					'<button onclick="dial()">' + lab.button.cancel + '</button>'
-				);
+			switch(req.responseText) {
+			
+				case 'move':
+					dial(
+						'<p>' + lab.toRecycleMove + '</p>' +
+						'<button class="dial__button dial__button--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
+						'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+					);		
+					break;
+				case 'remove':
+					dial(
+						'<p>' + lab.toRecycleRemove + '</p>' +
+						'<button class="dial__button dial__button--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
+						'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+					);	
+				
+				break;
+				case 'overwrite':
+					dial(
+						'<p>' + lab.toRecycleOverwrite + '</p>' +
+						'<button class="dial__button dial__button--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.button.confirm + '</button>' +
+						'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+					);
+				break;
+				case 'success':
+					browseDirectory(file.slice(0, file.lastIndexOf('/')));
+					dial();			
+					break;
+				case 'failure':
+					dial(
+						'<p>' + lab.error + '</p>' +
+						'<button onclick="dial()">' + lab.button.close + '</button>'			
+					);
+					break;
 
-			}
-
-			// Confirm was true : operation completed.
-			else if(req.responseText === 'success') {
-				browseDirectory(file.slice(0, file.lastIndexOf('/')));
-				dial();
-			}
-
-			// Confirm was true, but an error has occured.
-			else {
-				dial(
-					'<p>' + lab.error + '</p>' +
-					'<button onclick="dial()">' + lab.button.close + '</button>'			
-				);
-			}
+			}			
 			
 		};
 
