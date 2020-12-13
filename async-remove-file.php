@@ -2,7 +2,7 @@
 
 /* 
 Server side job : // Move the selected file to the recycle bin or permanently remove it.
-Return : 'warning' or 'no-warning' on the first request, success' if done, 'failure' if undone when proceed.
+Return : 'move', 'overwrite' or 'remove' on the first request, then success' if done, 'failure' if undone.
 Called by : async.js.
 */
 

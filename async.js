@@ -15,6 +15,63 @@ function browseDirectory(dir) {
 
 	req.send(null);
 
+
+
+
+	
+	
+	
+	// Global
+	currentDir = dir;
+	switchParentDir();
+	
+}
+
+function createDirectory(dirName = null) {
+
+// nom valide ou pas ?
+
+	if(dirName === null) {
+		
+		dial(
+			'<label for="input">' + lab.createNewdir + '</label>' +
+			'<input type="text" id="input"/>' +
+			'<button class="dial__button" onclick="createDirectory(this.previousSibling.value)">' + lab.button.confirm + '</button>' +
+			'<button class="dial__button" onclick="dial()">' + lab.button.cancel + '</button>'
+		);	
+		
+	}
+	
+	else {
+		
+		let req = new XMLHttpRequest();
+		req.open('GET', './async-create-dir.php?dir=' + encodeURIComponent(currentDir) + '&newDir=' + dirName, true);
+
+		req.onload = () => {
+			
+			let state = req.responseText; 
+
+			switch(state) {
+
+				case 'success':
+					browseDirectory(currentDir.slice(0, currentDir.lastIndexOf('/')));
+					dial();
+					break;
+				default:
+					dial(
+						'<p>' + lab.error + '</p>' +
+						'<button onclick="dial()">' + lab.button.close + '</button>'			
+					);
+					break;
+
+			}
+		
+		};
+
+		req.send(null);
+
+	}
+
 }
 
 // Ask the server to move a file from the ./datas directory to the ./recycle directory.
@@ -27,7 +84,9 @@ function removeFile(file, confirm = false) {
 
 		req.onload = () => {
 			
-			switch(req.responseText) {
+			let state = req.responseText;
+
+			switch(state) {
 			
 				case 'move':
 					dial(
@@ -53,7 +112,7 @@ function removeFile(file, confirm = false) {
 				break;
 				case 'success':
 					browseDirectory(file.slice(0, file.lastIndexOf('/')));
-					dial();			
+					dial();
 					break;
 				case 'failure':
 					dial(

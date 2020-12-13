@@ -1,3 +1,32 @@
+// Check if the user is within .datas or ./recycle.
+function inScopeDirectory(elm) { 
+	return inDataDirectory(elm) || inRecycleDirectory(elm) ? true : false
+}
+
+// Check if the user is within ./datas.
+function inDataDirectory(elm) {
+	return elm.match(/^\.\/datas/) ? true : false;
+}
+
+// Check if the user is within ./recycle.
+function inRecycleDirectory(elm) {
+	return elm.match(/^\.\/recycle/) ? true : false;
+}
+
+// Switch some properties between ./datas and ./recycle.
+function switchParentDir() {
+
+	if(inDataDirectory(currentDir)) {
+		document.body.classList.remove('--in-recycle');
+		document.body.classList.add('--in-data');
+	}
+	else {
+		document.body.classList.remove('--in-data');
+		document.body.classList.add('--in-recycle');
+	}
+	
+}
+
 // Add a dial when some HTML is provided.
 function dial(html) {
 
@@ -10,11 +39,6 @@ function dial(html) {
 		UI.dial.classList.remove('dial--visible');
 	}
 
-}
-
-// Check if the user is within the authorized perimeter (data or recycle directory).
-function inScopeDirectory(elm) { 
-	return elm.match(/^\.\/(datas|recycle)/) ? true : false;
 }
 
 // Build a navigable tree.

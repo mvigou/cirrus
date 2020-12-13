@@ -1,3 +1,5 @@
+/* Commons */
+
 @mixin medium-screen
 	@media screen and (min-width: 768px)
 		@content
@@ -7,82 +9,79 @@
 		transform: translate(-15px)	
 	to
 		transform: initial
-	
+
+a
+	color: inherit
+
+label, input
+	display: block
+
+button
+	background-color: transparent
+	border-radius: 3px
+	border: none
+	cursor: pointer
+	font-family: sans-serif
+	margin: 3px
+	padding: 8px 10px
+
+/* Specifics */
+
 body
-	--marpad: 15px
 	--danger-color: #f33
-	--theme-color-a: #a00c3d
-	--theme-color-b: #444
-	--theme-color-c: #fff
+	--marpad: 15px
 	color: var(--theme-color-b)
 	font-family: sans-serif
 	margin: 0
 	@include medium-screen
 		--marpad: 60px
 
-a
-	color: inherit
+	/* Change theme and hide/unhide some features when user is in ./datas. */
+	&.--in-data
+		--theme-color-a: #a00c3d
+		--theme-color-b: #444
+		--theme-color-c: #fff
+		.data-feature
+			display: none
+		.recycle-feature
+			display: block
 
-button
-	cursor: pointer
-	font-family: sans-serif
-	padding: 8px 10px
-	border: none
-	background-color: transparent
-	border-radius: 3px
-	margin: 3px
+	/* Change theme and hide/unhide some features when user is in ./recycle. */
+	&.--in-recycle
+		--theme-color-a: #222
+		--theme-color-b: #555
+		--theme-color-c: #fff
+		.data-feature
+			display: block
+		.recycle-feature
+			display: none
 
 .main-nav
-	display: flex
-	flex-direction: column
-	justify-content: space-between
-	position: fixed
-	padding: 15px
-	top: 0
-	left: 0
-	bottom: 0
-	border-right: solid 1px
 	background-color: var(--theme-color-a)
-
-		
-
+	display: flex
+	justify-content: space-between
+	left: 0
+	padding: 15px
+	position: fixed
+	right: 0
+	top: 0
+	@include medium-screen
+		bottom: 0
+		flex-direction: column
+		left: 0
+		right: initial
+		top: 0
 	&__svg
 		fill: var(--theme-color-c)
 		width: 30px
 
-.dial
-	&--visible
-		background-color: #fffd
-		bottom: 0
-		display: grid
-		left: 0
-		position: fixed
-		right: 0
-		top: 0
-		z-index: 2
-	&__content
-		margin: auto
-		max-width: 60ch
-		text-align: center
-	&__button
-		background-color: var(--theme-color-c)
-		border: solid 1px #bbb
-		opacity: 0.8
-		&--danger
-			background-color: var(--danger-color)
-			border: none
-			color: var(--theme-color-c)
-		&:hover
-			opacity: 1
-
-
-
-
-
 .browser
-	margin-left: 60px
+	margin-top: 90px
 	padding: var(--marpad)
-		
+	@include medium-screen
+		margin-top: 0
+		margin-left: 60px
+	
 	&__tree
 		align-items: center
 		animation: none 0.25s ease
@@ -135,5 +134,26 @@ button
 				&:hover
 					fill: var(--theme-color-a)
 
-
-		
+.dial
+	&--visible
+		background-color: #fffd
+		bottom: 0
+		display: grid
+		left: 0
+		position: fixed
+		right: 0
+		top: 0
+		z-index: 2
+	&__content
+		margin: auto
+		max-width: 60ch
+	&__button
+		background-color: var(--theme-color-c)
+		border: solid 1px #bbb
+		opacity: 0.8
+		&--danger
+			background-color: var(--danger-color)
+			border: none
+			color: var(--theme-color-c)
+		&:hover
+			opacity: 1
