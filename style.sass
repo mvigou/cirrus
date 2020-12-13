@@ -52,16 +52,15 @@ button
 		align-items: center
 		border-bottom: solid 1px #eee
 		border-left: solid 5px #fff
-		color: var(--theme-color-a)
 		color: var(--theme-color-b)
-		display: flex
+		display: grid
+		grid-template-columns: 5fr auto
 		justify-content: space-between
 		margin: 5px 0
 		max-width: 768px
 		padding: 0 5px
 		&:hover
 			border-left-color: var(--theme-color-a)
-		
 		&__link
 			align-items: center
 			color: var(--theme-color-b)
@@ -79,7 +78,6 @@ button
 				fill: var(--theme-color-a)
 				margin-right: 5px
 				width: 50px
-		
 		&__actions
 			&__svg
 				fill: var(--theme-color-b)
