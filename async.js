@@ -1,152 +1,171 @@
-// Ask the server to browse the contents of the selected directory, then build it.
+function ajaxManager(script, args, callback) {
+
+	let url = './' + script + '.php?';
+	
+	for(let arg of args) {
+		url += arg.name + '=' + encodeURIComponent(arg.value) + '&';
+	}
+	
+	let req = new XMLHttpRequest();
+	req.open('GET', url, true);
+	req.onload = () => callback(req.responseText);
+	req.send(null);
+
+}
+
+function ajaxErrorHandler(error) {
+
+	dial(
+		'<p>' + lab.error + '<i>' + error + '</i></p>' +
+		'<button onclick="dial()">' + lab.button.close + '</button>'			
+	);
+
+}
+
 function browseDirectory(dir) {
 	
 	if(dir == undefined || !inScopeDirectory(dir)) {
 		dir = DATAS_DIR_PATH;    
 	}
-		
-	let req = new XMLHttpRequest();
-	req.open('GET', './async-browse-dir.php?dir=' + encodeURIComponent(dir), true);
 
-	req.onload = () => {
-		buildItems(JSON.parse(req.responseText));
-		buildTree (dir);
-	};
-
-	req.send(null);
-
-	// Global
 	currentDir = dir;
+
+	ajaxManager(
+		// Script.
+		'async-browse-dir',
+		// Arguments.
+		[{ name: 'dir', value: dir }],
+		// Callback.
+		(response) => {
+			buildItems(response);
+			buildTree(dir);
+		}
+	);
 
 }
 
-// Ask the server to create an empty folder in the current directory.
-function createDirectory(dirName = null) {
+function createDirectory(dir = null) {
 
-	if(dirName === null) {
+	// No name for directory ? Ask for it first.
+	if(dir === null) {
 		
 		dial(
-			'<label for="input">' + lab.createNewdir + '</label>' +
+			'<label for="input">' + 
+				lab.action.nameNewdir + 
+			'</label>' +
 			'<input type="text" id="input" />' +
-			'<button class="dial__bt" onclick="createDirectory(this.previousSibling.value)">' + lab.bt.confirm + '</button>' +
-			'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
+			'<button class="dial__bt" onclick="createDirectory(this.previousSibling.value)">' + 
+				lab.button.confirm + 
+			'</button>' +
+			'<button class="dial__bt" onclick="dial()">' +
+				lab.button.cancel +
+			'</button>'
 		);	
 		
 	}
 	
+	// Name provided ? Proceed.
 	else {
-		
-		let req = new XMLHttpRequest();
-		req.open('GET', './async-create-dir.php?dir=' + encodeURIComponent(currentDir) + '&newDir=' + dirName, true);
 
-		req.onload = () => {
-			
-			let state = req.responseText; 
-
-			switch(state) {
-
-				case 'success':
-					browseDirectory(currentDir.slice(0, currentDir.lastIndexOf('/')));
+		ajaxManager(
+			// Script.
+			'async-create-dir',
+			// Arguments.
+			[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
+			// Callback.
+			(response) => {
+				if(response === 'success') {
+					browseDirectory(currentDir);
 					dial();
-					break;
-				default:
-					dial(
-						'<p>' + lab.error + '</p>' +
-						'<button onclick="dial()">' + lab.bt.close + '</button>'			
-					);
-					break;
-
+				}
+				else {
+					ajaxErrorHandler(response);
+				}
 			}
-		
-		};
-
-		req.send(null);
+		);
 
 	}
 
 }
 
-// Ask the server to move a file from the ./datas directory to the ./recycle directory.
-function removeFile(file, confirm = false) {
+function removeElm(elm, confirm = false) {
 
-	if(!file == undefined || inScopeDirectory(file)) {      
+	// Confirm is false ? Ask for an user confirmation first.
+	if(!confirm) {
 		
-		let req = new XMLHttpRequest();
-		req.open('GET', './async-remove-file.php?file=' + encodeURIComponent(file) + '&confirm=' + confirm, true);
+		let label ='';
 
-		req.onload = () => {
-			
-			let state = req.responseText;
+		if(inDataDirectory(elm)) {
+			label = lab.action.moveToRecycle;
+		}
 
-			switch(state) {
+		else if(inRecycleDirectory(elm)) {
 			
-				case 'move':
-					dial(
-						'<p>' + lab.toRecycleMove + '</p>' +
-						'<button class="dial__bt dial__bt--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.bt.confirm + '</button>' +
-						'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
-					);		
-					break;
-				case 'remove':
-					dial(
-						'<p>' + lab.toRecycleRemove + '</p>' +
-						'<button class="dial__bt dial__bt--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.bt.confirm + '</button>' +
-						'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
-					);	
-				
-				break;
-				case 'overwrite':
-					dial(
-						'<p>' + lab.toRecycleOverwrite + '</p>' +
-						'<button class="dial__bt dial__bt--danger" onclick="removeFile(this.value, true)" value="' + file + '">' + lab.bt.confirm + '</button>' +
-						'<button class="dial__bt" onclick="dial()">' + lab.bt.cancel + '</button>'
-					);
-				break;
-				case 'success':
-					browseDirectory(file.slice(0, file.lastIndexOf('/')));
+			if(elm === RECYCLE_DIR_PATH) {
+				label = lab.action.emptyRecycle;
+			}
+
+			else {
+				label = lab.action.removePermanently;
+			}
+
+		}
+		
+		dial(
+			'<p>' + label + '</p>' +
+			'<button class="dial__bt dial__bt--danger" onclick="removeElm(\'' + elm + '\', true)">' + 
+				lab.button.confirm + 
+			'</button>' +
+			'<button class="dial__bt" onclick="dial()">' + 
+				lab.button.cancel + 
+			'</button>'
+		);	
+
+	}
+
+	// Confirm is true ? Proceed.
+	else {
+
+		ajaxManager(
+			// Script.
+			'async-remove',
+			// Arguments.
+			[{ name: 'elm', value: elm }],
+			// Callback.
+			(response) => {
+				if(response === 'success') {
+					browseDirectory(currentDir);
 					dial();
-					break;
-				case 'failure':
-					dial(
-						'<p>' + lab.error + '</p>' +
-						'<button onclick="dial()">' + lab.bt.close + '</button>'			
-					);
-					break;
-
-			}			
-			
-		};
-
-		req.send(null);
+				}
+				else {
+					ajaxErrorHandler(response);
+				}		
+			}
+		);
 
 	}
 
 }
 
-// Ask the server to create a zip to download from the selected directory.
 function downloadDirectory(dir) {
 
 	if(!dir == undefined || inScopeDirectory(dir)) {   
 
-		let req = new XMLHttpRequest();
-		req.open('GET', './async-build-zip.php?dir=' + encodeURIComponent(dir), true);
-	
-		req.onload = () => {
-
-			if(req.responseText !== 'failure') {
-
-				let pathToZip = req.responseText;
-
-				// Offers the download of the generated zip.
-				let aElm = document.createElement('a');
-				aElm.href = pathToZip;
-				aElm.click();
-
-			}				
-			
-		};
-		
-		req.send(null);
+		ajaxManager(
+			// Script.
+			'async-build-zip',
+			// Arguments.
+			[{ name: 'dir', value: dir }],
+			// Callback.
+			(pathToZip) => {
+				if(pathToZip !== 'failure') {
+					// Offers the download of the generated zip.
+					let aElm = document.createElement('a');
+					aElm.href = pathToZip;
+					aElm.click();
+				}	
+			}
+		);
 
 	}
 

@@ -58,6 +58,8 @@ function buildTree(dir) {
 // Build a file or a folder element.
 function buildItems(items) {
 
+	items = JSON.parse(items);
+
 	UI.browserList.innerHTML = '';
 	
 	for(let item of items) {
@@ -113,9 +115,9 @@ function buildItems(items) {
 
 					template += item.type === 'file' ?
 					// Files only.
-					'<a class="browser__item__actions__a" href="' + item.path + '" title="' + lab.bt.download + '" download>' :
+					'<a class="browser__item__actions__a" href="' + item.path + '" title="' + lab.button.download + '" download>' :
 					// Subfolders only.
-					'<a class="browser__item__actions__a" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + lab.bt.download + '">';
+					'<a class="browser__item__actions__a" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + lab.button.download + '">';
 
 						// Common parts for files and subfolders.
 						template +=
@@ -127,9 +129,9 @@ function buildItems(items) {
 
 					template += item.type === 'file' ?
 					// Files only.
-					'<a class="browser__item__actions__a" href="#" onclick="removeFile(\'' + item.path + '\')" title="' + lab.bt.delete + '">' :
+					'<a class="browser__item__actions__a" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">' :
 					// Parent and subfolders only.
-					'<a class="browser__item__actions__a" href="#" title="' + lab.bt.delete + '">';
+					'<a class="browser__item__actions__a" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">';
 					
 						template += 
 						'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +			

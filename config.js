@@ -16,7 +16,7 @@ let lab;
 if(LANG === 'fr') {
 	
 	lab = {
-		bt: {
+		button: {
 			cancel: 'Annuler',
 			close: 'Fermer',
 			confirm: 'Confirmer',
@@ -27,12 +27,14 @@ if(LANG === 'fr') {
 			toData: 'Afficher le dossier utilisateur',
 			toRecycle: 'Afficher la corbeille'
 		},
-		createNewdir: 'Veuillez saisir le nom du dossier :',
-		error: 'Une erreur est survenue.',
-		latestMod: 'Dernière modification le',
-		toRecycleMove: 'Déplacer vers la corbeille ?',
-		toRecycleOverwrite: 'Attention : il y a déjà un fichier avec ce nom dans la corbeille. Si vous confirmez, il sera écrasé.',
-		toRecycleRemove: 'Supprimer définitivement le fichier ?',
+		action: {
+			moveToRecycle: 'Déplacer l\'élément vers la corbeille ? Attention : s\'il en existe déjà avec le même nom, ce dernier sera remplacé.',
+			removePermanently: 'Supprimer définitivement l\'élément ?',
+			emptyRecycle: 'La corbeille sera vidée : tous les éléments seront définitivement supprimés.',
+			nameNewdir: 'Veuillez saisir le nom du dossier :'
+		},
+		error: 'Une erreur est survenue. Le message suivant a été renvoyé : ',
+		latestMod: 'Dernière modification le'
 	};
 	
 }
@@ -40,7 +42,7 @@ if(LANG === 'fr') {
 else if(LANG === 'en') {
 	
 	lab = {
-		bt: {
+		button: {
 			cancel: 'Cancel',
 			close: 'Close',
 			confirm: 'Confirm',
@@ -51,12 +53,14 @@ else if(LANG === 'en') {
 			toData: 'Display the user directory',
 			toRecycle: 'Display the recycle bin'
 		},
-		createNewdir: 'Please type the name of the directory :',
-		error: 'An error has occurred.',
-		latestMod: 'Latest modification at',
-		toRecycleMove: 'Move to the recycle bin ?',
-		toRecycleOverwrite: 'Warning : there is already a file with the same name in the recycle bin. If you confirm, it will be overwritten.',
-		toRecycleRemove: 'Permanently remove the file ?'
+		action: {
+			moveToRecycle: 'Move the element to the recycle bin ?',
+			removePermanently: 'Permanently delete the item? Warning: if there is already one with the same name, it will be overwritten',
+			emptyRecycle: 'The recycle bin will be emptied: all items will be permanently deleted.',
+			nameNewdir: 'Please type the name of the directory :',
+		},
+		error: 'An error has occurred. The following message has been returned : ',
+		latestMod: 'Latest modification at'
 	};
 	
 }

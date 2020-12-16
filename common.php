@@ -13,3 +13,13 @@ function inScopeDirectory($elm) {
 function inRootDirectory($dir) {
     return urldecode($dir) === DATAS_DIR_PATH || urldecode($dir) === RECYCLE_DIR_PATH ? true : false;
 }
+
+// Check if the user is within ./datas.
+function inDataDirectory($elm) {
+	return preg_match('/^\.\/datas/', urldecode($elm)) ? true : false;
+}
+
+// Check if the user is within ./recycle.
+function inRecycleDirectory($elm) {
+	return preg_match('/^\.\/recycle/', urldecode($elm)) ? true : false;
+}
