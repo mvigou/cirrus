@@ -6,12 +6,18 @@ Return : 'success' if done.
 Called by : async.js.
 */
 
-require_once('./common.php');
+require_once('./config.php');
+require_once('./async-functions.php');
 
 if(isset($_GET['elm'])) {
 
+	// Empty request ? Empty recycle bin.
+	if($_GET['elm'] === '') {
+		$_GET['elm'] = RECYCLE_DIR_PATH;	
+	}
+
 	// Request made from the datas directory ? MOVE to recycle.
-	if(inDataDirectory($_GET['elm'])) {
+	if(inDatasDirectory($_GET['elm'])) {
 		moveToRecycle($_GET['elm']);
 		echo 'success';
 	}
@@ -29,15 +35,15 @@ if(isset($_GET['elm'])) {
 	
 	}
 
-} 
+}
 
 function moveToRecycle ($elm) {
 
-	define('FILENAME', array_slice(explode('/', $elm), -1)[0]);
+	$filename = array_slice(explode('/', $elm), -1)[0];
 	
 	// From, to.
 	$origPath = $elm;
-	$destPath = RECYCLE_DIR_PATH . '/' . FILENAME;
+	$destPath = RECYCLE_DIR_PATH . '/' . $filename;
 
 	// Delete possibly identical files and directories before continuing.
 	if(is_file($destPath)) {

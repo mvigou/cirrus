@@ -6,7 +6,8 @@ Return : 'success' if done.
 Called by : start.js.
 */
 
-require_once('./common.php');
+require_once('./config.php');
+require_once('./async-functions.php');
 
 if(!is_dir(DATAS_DIR_PATH)) {
 	if(!mkdir(DATAS_DIR_PATH)) {

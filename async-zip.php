@@ -6,7 +6,8 @@ Return : The path to the created zip.
 Called by : async.js.
 */
 
-require_once('./common.php');
+require_once('./config.php');
+require_once('./async-functions.php');
 
 if(isset($_GET['dir']) && inScopeDirectory($_GET['dir'])) {
 

@@ -6,7 +6,8 @@ Return : 'success' if done.
 Called by : async.js.
 */
 
-require_once('./common.php');
+require_once('./config.php');
+require_once('./async-functions.php');
 
 if(isset($_GET['parent']) && inScopeDirectory($_GET['parent'])) {
 	if(isset($_GET['dir'])) {

@@ -6,13 +6,26 @@ Return : A JSON object representing the content of the directory.
 Called by : async.js.
 */
 
-require_once('./common.php');
+require_once('./config.php');
+require_once('./async-functions.php');
 
-if(isset($_GET['dir']) && inScopeDirectory($_GET['dir'])) {
-	browseDirectory($_GET['dir']);
-}
-else {
-	echo 'failure';
+if(isset($_GET['dir'])) {
+
+	if($_GET['dir'] === 'datas') {
+		browseDirectory(DATAS_DIR_PATH);
+	}
+
+	else if($_GET['dir'] === 'recycle') {
+		browseDirectory(RECYCLE_DIR_PATH);
+	}
+
+	else {
+
+		if(inRecycleDirectory($_GET['dir']) || inDatasDirectory($_GET['dir'])) {
+			browseDirectory($_GET['dir']);
+		}
+	}
+
 }
 
 function browseDirectory($dir) {
@@ -20,6 +33,8 @@ function browseDirectory($dir) {
 	if($tree = dir($dir)) {
 
 		$response = [];
+		array_push($response, $dir); // Parent.
+		array_push($response, array()); // Children.
 
 		while($item = $tree->read()) {
 		
@@ -29,7 +44,7 @@ function browseDirectory($dir) {
 				if($item === '..') {
 				
 					if(!inRootDirectory($dir)) {
-						array_push($response,
+						array_push($response[1],
 							array(
 								'type' => 'parent',
 								'label' => $item,
@@ -44,7 +59,7 @@ function browseDirectory($dir) {
 				else {
 					
 					if(is_file($dir . '/' . $item)) {
-						array_push($response,
+						array_push($response[1],
 							array(
 								'type' => 'file',
 								'label' => $item,
@@ -54,7 +69,7 @@ function browseDirectory($dir) {
 						);
 					}
 					else {
-						array_push($response,
+						array_push($response[1],
 							array(
 								'type' => 'subfolder',
 								'label' => $item,
