@@ -22,7 +22,7 @@
 				delete: 'Supprimer',
 				download: 'Télécharger',
 				emptyRecycle: 'Vider la corbeille',
-				toData: 'Afficher le dossier utilisateur',
+				toData: 'Afficher les données',
 				toRecycle: 'Afficher la corbeille'
 			},
 			action: {
@@ -47,7 +47,7 @@
 				delete: 'Delete',
 				download: 'Download',
 				emptyRecycle: 'Empty recycle bin',
-				toData: 'Display the user directory',
+				toData: 'Display the datas',
 				toRecycle: 'Display the recycle bin'
 			},
 			action: {
@@ -61,8 +61,8 @@
 		
 	}
 
-	document.getElementById('to-datas-bt').title = lab.button.toData;
-	document.getElementById('to-recycle-bt').title = lab.button.toRecycle;
+	document.getElementById('to-datas-bt').textContent = lab.button.toData;
+	document.getElementById('to-recycle-bt').textContent = lab.button.toRecycle;
 	document.getElementById('create-directory-bt').textContent = lab.button.createDir;
 	document.getElementById('empty-recycle-bt').textContent = lab.button.emptyRecycle;
 
