@@ -1,8 +1,8 @@
 <?php 
 
 /* 
-Server side job : Build a zip of the selected directory.
-Return : The path to the created zip.
+Server side job : build a zip of the selected directory.
+Return : the path to the created zip.
 Called by : async.js.
 */
 

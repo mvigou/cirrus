@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // Check if the user is in the root directory.
 function inRootDirectory($dir) {

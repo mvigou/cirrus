@@ -1,8 +1,8 @@
 <?php 
 
 /* 
-Server side job : Browse content of the selected directory.
-Return : A JSON object representing the content of the directory.
+Server side job : browse content of the selected directory.
+Return : a JSON object representing the content of the directory.
 Called by : async.js.
 */
 

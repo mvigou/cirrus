@@ -1,7 +1,7 @@
 <?php 
 
 /* 
-Server side job : Create a new directory in the current directory.
+Server side job : create a new directory in the current directory.
 Return : 'success' if done.
 Called by : async.js.
 */

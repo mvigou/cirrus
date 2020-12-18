@@ -1,18 +1,29 @@
 /* --- Asynchronous functions. --- */
 
 
-	function ajaxManager(script, args, callback) {
+	function ajaxManager(method, target, args, callback) {
 
-		let url = './' + script + '.php?';
+		let url = target;
 		
-		for(let arg of args) {
-			url += arg.name + '=' + encodeURIComponent(arg.value) + '&';
+		if(method === 'GET') {
+			url += '?';
+			for(let arg of args) {
+				url += arg.name + '=' + encodeURIComponent(arg.value) + '&';
+			}
 		}
-		
+
 		let req = new XMLHttpRequest();
-		req.open('GET', url, true);
+		req.open(method, url, true);
 		req.onload = () => callback(req.responseText);
-		req.send(null);
+
+		if(method === 'GET') {
+			req.send(null);
+		}
+		else { // POST
+			req.send(args);
+		}
+
+
 
 	}
 
@@ -28,17 +39,47 @@
 	function browseDirectory(dir) {
 		
 		ajaxManager(
-			// Script.
-			'async-browse',
-			// Arguments.
+			'GET',
+			'./async-browse.php',
 			[{ name: 'dir', value: dir }],
-			// Callback.
 			(response) => {
 				currentDir = (JSON.parse(response)[0]);
 				buildItems(JSON.parse(response)[1]);
 				buildTree(JSON.parse(response)[0]);
 			}
 		);
+
+	}
+
+	function sendFiles() {
+
+		// 1. Configure an input element.
+		let inputElm = document.createElement('input');
+		inputElm.setAttribute('type', 'file');
+		inputElm.setAttribute('multiple', 'true');
+		
+		// 3. Proceed when submitted.
+		inputElm.onchange = (e) => {
+			
+			let formData = new FormData();
+			formData.append('parentDir', currentDir);
+			for(let i = 0, l = inputElm.files.length; i < l; i++) {
+				formData.append("file-" + i, inputElm.files[i]);
+			}
+
+			ajaxManager(
+				'POST',
+				'./async-send.php',
+				formData,
+				(response) => {
+					browseDirectory(currentDir);
+				}
+			);
+
+		}
+		
+		// 2. Active the element.
+		inputElm.click();
 
 	}
 
@@ -58,7 +99,7 @@
 				'<button class="dial__bt" onclick="dial()">' +
 					lab.button.cancel +
 				'</button>'
-			);	
+			);
 			
 		}
 		
@@ -66,11 +107,9 @@
 		else {
 
 			ajaxManager(
-				// Script.
-				'async-create',
-				// Arguments.
+				'GET',
+				'./async-create.php',
 				[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
-				// Callback.
 				(response) => {
 					if(response === 'success') {
 						browseDirectory(currentDir);
@@ -107,11 +146,9 @@
 		else {
 
 			ajaxManager(
-				// Script.
-				'async-remove',
-				// Arguments.
+				'GET',
+				'./async-remove.php',
 				[{ name: 'elm', value: elm }],
-				// Callback.
 				(response) => {
 					if(response === 'success') {
 						browseDirectory(currentDir);
@@ -144,11 +181,9 @@
 	function downloadDirectory(dir) {
 
 		ajaxManager(
-			// Script.
-			'async-zip',
-			// Arguments.
+			'GET',
+			'./async-zip.php',
 			[{ name: 'dir', value: dir }],
-			// Callback.
 			(pathToZip) => {
 				if(pathToZip !== 'failure') {
 					// Offers the download of the generated zip.

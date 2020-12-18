@@ -21,6 +21,7 @@
 				createDir: 'Créer un dossier',
 				delete: 'Supprimer',
 				download: 'Télécharger',
+				send: 'Envoyer des fichiers',
 				emptyRecycle: 'Vider la corbeille',
 				toData: 'Afficher les données',
 				toRecycle: 'Afficher la corbeille'
@@ -46,6 +47,7 @@
 				createDir: 'Create directory',
 				delete: 'Delete',
 				download: 'Download',
+				send: 'Upload files',
 				emptyRecycle: 'Empty recycle bin',
 				toData: 'Display the datas',
 				toRecycle: 'Display the recycle bin'
@@ -53,7 +55,7 @@
 			action: {
 				remove: 'Remove the selection ?',
 				emptyRecycle: 'The recycle bin will be emptied: all items will be permanently deleted.',
-				nameNewdir: 'Please type the name of the directory :',
+				nameNewdir: 'Please type the name of the directory :'
 			},
 			error: 'An error has occurred. The following message has been returned : ',
 			latestMod: 'Latest modification at'
@@ -65,15 +67,14 @@
 	document.getElementById('to-recycle-bt').textContent = lab.button.toRecycle;
 	document.getElementById('create-directory-bt').textContent = lab.button.createDir;
 	document.getElementById('empty-recycle-bt').textContent = lab.button.emptyRecycle;
+	document.getElementById('send-content-bt').textContent = lab.button.send;
 
 // Start the application.
 
 	ajaxManager(
-		// Script.
-		'async-init',
-		// Arguments.
+		'GET',
+		'./async-init.php',
 		[],
-		// Callback.
 		(response) => {
 			if(response === 'success') {
 				browseDirectory('datas');
