@@ -73,7 +73,7 @@
 
 	ajaxManager(
 		'GET',
-		'./async-init.php',
+		'./static/php/async-init.php',
 		[],
 		(response) => {
 			if(response === 'success') {

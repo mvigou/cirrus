@@ -8,7 +8,7 @@ function inRootDirectory($dir) {
 // Check if the user is within the authorized perimeter (data or recycle directory).
 function inScopeDirectory($elm) {
 
-	$regex = '/^\.\/';
+	$regex = '/^\.\.\/\.\.\/';
 	$regex .= array_slice(explode('/', DATAS_DIR_PATH), -1)[0];
 	$regex .= '|';
 	$regex .= array_slice(explode('/', RECYCLE_DIR_PATH), -1)[0];
@@ -21,7 +21,7 @@ function inScopeDirectory($elm) {
 // Check if the user is within the datas directory.
 function inDatasDirectory($elm) {
 
-	$regex = '/^\.\/';
+	$regex = '/^\.\.\/\.\.\/';
 	$regex .= array_slice(explode('/', DATAS_DIR_PATH), -1)[0];
 	$regex .= '/';
 
@@ -32,7 +32,7 @@ function inDatasDirectory($elm) {
 // Check if the user is within the recycle directory.
 function inRecycleDirectory($elm) {
 	
-	$regex = '/^\.\/';
+	$regex = '/^\.\.\/\.\.\/';
 	$regex .= array_slice(explode('/', RECYCLE_DIR_PATH), -1)[0];
 	$regex .= '/';
 

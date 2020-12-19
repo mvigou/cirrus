@@ -23,8 +23,6 @@
 			req.send(args);
 		}
 
-
-
 	}
 
 	function ajaxErrorHandler(error) {
@@ -40,7 +38,7 @@
 		
 		ajaxManager(
 			'GET',
-			'./async-browse.php',
+			'./static/php/async-browse.php',
 			[{ name: 'dir', value: dir }],
 			(response) => {
 				currentDir = (JSON.parse(response)[0]);
@@ -69,7 +67,7 @@
 
 			ajaxManager(
 				'POST',
-				'./async-send.php',
+				'./static/php/async-send.php',
 				formData,
 				(response) => {
 					browseDirectory(currentDir);
@@ -108,7 +106,7 @@
 
 			ajaxManager(
 				'GET',
-				'./async-create.php',
+				'./static/php/async-create.php',
 				[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
 				(response) => {
 					if(response === 'success') {
@@ -147,7 +145,7 @@
 
 			ajaxManager(
 				'GET',
-				'./async-remove.php',
+				'./static/php/async-remove.php',
 				[{ name: 'elm', value: elm }],
 				(response) => {
 					if(response === 'success') {
@@ -182,7 +180,7 @@
 
 		ajaxManager(
 			'GET',
-			'./async-zip.php',
+			'./static/php/async-zip.php',
 			[{ name: 'dir', value: dir }],
 			(pathToZip) => {
 				if(pathToZip !== 'failure') {
@@ -223,9 +221,9 @@
 	function buildTree(dir) {
 
 		UI.browserTree.innerHTML = '';
-		let tree = '.';
+		let tree = '../..';
 		
-		for(let subDirs of dir.slice(2).split('/')) {
+		for(let subDirs of dir.slice(2).split('/').slice(2)) {
 					
 			tree += '/';
 			tree += subDirs;
@@ -233,7 +231,7 @@
 			UI.browserTree.innerHTML += 
 			'<pre> / </pre>' +
 			'<a href="#" onclick="browseDirectory(\'' + tree + '\')">' + subDirs + '</a>';
-		
+
 		}
 
 		UI.browserTree.classList.remove('bwr__tree-nav--updated');

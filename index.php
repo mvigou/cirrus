@@ -11,12 +11,12 @@
 	
 	<?php 
 	
-	require_once('./config.php');
+	require_once('./static/php/config.php');
 
 	// Not authenticated ? Login first !
 	if(isset($_SESSION['token'])) { ?>
 
-		<script src="./app-login.js"></script>
+		<script src="./static/js/app-login.js"></script>
 
 		<x-log-form></x-log-form>
 
@@ -81,8 +81,8 @@
 		
 			</main>
 		
-			<script src="./app-functions.js"></script>
-			<script src="./app-start.js"></script>
+			<script src="./static/js/app-functions.js"></script>
+			<script src="./static/js/app-start.js"></script>
 		
 	<?php } ?>
 
