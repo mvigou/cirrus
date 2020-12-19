@@ -72,11 +72,13 @@
 	document.getElementById('send-files-bt').title = lab.button.send;
 	document.getElementById('switch-theme-bt').title = lab.button.theme;
 
+	document.documentElement.lang = LANG;
+
 // Start the application.
 
 	ajaxManager(
 		'GET',
-		'./static/php/async-init.php',
+		'./app/php/init.php',
 		[],
 		(response) => {
 			if(response === 'success') {

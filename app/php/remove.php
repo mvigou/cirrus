@@ -7,7 +7,7 @@ Called by : async.js.
 */
 
 require_once('./config.php');
-require_once('./async-functions.php');
+require_once('./functions.php');
 
 if(isset($_GET['elm'])) {
 

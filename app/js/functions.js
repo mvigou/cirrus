@@ -38,7 +38,7 @@
 		
 		ajaxManager(
 			'GET',
-			'./static/php/async-browse.php',
+			'./app/php/browse.php',
 			[{ name: 'dir', value: dir }],
 			(response) => {
 				currentDir = (JSON.parse(response)[0]);
@@ -67,7 +67,7 @@
 
 			ajaxManager(
 				'POST',
-				'./static/php/async-send.php',
+				'./app/php/send.php',
 				formData,
 				(response) => {
 					browseDirectory(currentDir);
@@ -106,7 +106,7 @@
 
 			ajaxManager(
 				'GET',
-				'./static/php/async-create.php',
+				'./app/php/create.php',
 				[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
 				(response) => {
 					if(response === 'success') {
@@ -145,7 +145,7 @@
 
 			ajaxManager(
 				'GET',
-				'./static/php/async-remove.php',
+				'./app/php/remove.php',
 				[{ name: 'elm', value: elm }],
 				(response) => {
 					if(response === 'success') {
@@ -180,7 +180,7 @@
 
 		ajaxManager(
 			'GET',
-			'./static/php/async-zip.php',
+			'./app/php/zip.php',
 			[{ name: 'dir', value: dir }],
 			(pathToZip) => {
 				if(pathToZip !== 'failure') {

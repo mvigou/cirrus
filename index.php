@@ -1,22 +1,22 @@
 <?php session_start(); ?>
 
 <!DOCTYPE html>
-	<html lang="fr">
+	<html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="./static/css/style.css">
+		<link rel="stylesheet" href="./app/css/style.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>MEEC | My Eco-responsible and Ethical Cloud</title>
 	</head>
 	
 	<?php 
 	
-	require_once('./static/php/config.php');
+	require_once('./app/php/config.php');
 
 	// Not authenticated ? Login first !
 	if(isset($_SESSION['token'])) { ?>
 
-		<script src="./static/js/app-login.js"></script>
+		<script src="./app/js/login.js"></script>
 
 		<x-log-form></x-log-form>
 
@@ -82,8 +82,8 @@
 		
 			</main>
 		
-			<script src="./static/js/app-functions.js"></script>
-			<script src="./static/js/app-start.js"></script>
+			<script src="./app/js/functions.js"></script>
+			<script src="./app/js/start.js"></script>
 		
 	<?php } ?>
 

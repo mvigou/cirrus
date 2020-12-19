@@ -11,7 +11,7 @@ Called by : async.js.
 if(isset($_POST['parentDir']) && isset($_FILES)) {
 
 	require_once('./config.php');
-	require_once('./async-functions.php');
+	require_once('./functions.php');
 
 	if(inDatasDirectory($_POST['parentDir'])) {
 
