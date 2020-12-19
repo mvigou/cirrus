@@ -6,8 +6,6 @@ Return : a JSON object representing the content of the directory.
 Called by : async.js.
 */
 
-
-
 require_once('./config.php');
 require_once('./functions.php');
 

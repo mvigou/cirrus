@@ -28,8 +28,11 @@
 	function ajaxErrorHandler(error) {
 
 		dial(
-			'<p>' + lab.error + '<i>' + error + '</i></p>' +
-			'<button onclick="dial()">' + lab.button.close + '</button>'			
+			`<p> 
+				${lab.error}
+				<i>${error}</i>
+			</p>
+			<button onclick="dial()"> ${ lab.button.close } </button>`
 		);
 
 	}
@@ -87,16 +90,16 @@
 		if(dir === null) {
 			
 			dial(
-				'<label for="input">' + 
-					lab.action.nameNewdir + 
-				'</label>' +
-				'<input type="text" id="input" />' +
-				'<button class="dial__bt" onclick="createDirectory(this.previousSibling.value)">' + 
-					lab.button.confirm + 
-				'</button>' +
-				'<button class="dial__bt" onclick="dial()">' +
-					lab.button.cancel +
-				'</button>'
+				`<label>
+					${lab.action.nameNewdir}
+					<input type="text" id="input" />
+				</label>
+				<button 
+					class="dial__bt" 
+					onclick="createDirectory(this.parentNode.querySelector('input').value)">
+					${lab.button.confirm}
+				</button>
+				<button class="dial__bt" onclick="dial()">${lab.button.cancel}</button>`
 			);
 			
 		}
@@ -129,13 +132,17 @@
 		if(!confirm) {
 						
 			dial(
-				'<p>' + lab.action.remove + '</p>' +
-				'<button class="dial__bt dial__bt--danger" onclick="removeElm(\'' + elm + '\', true)">' + 
-					lab.button.confirm + 
-				'</button>' +
-				'<button class="dial__bt" onclick="dial()">' + 
-					lab.button.cancel + 
-				'</button>'
+				`<p>${lab.action.remove}</p>
+				<button
+					class="dial__bt dial__bt--danger" 
+					onclick="removeElm(\'${elm}\', true)"> 
+					${lab.button.confirm}
+				</button>
+				<button 
+					class="dial__bt"
+					onclick="dial()"> 
+					${lab.button.cancel} 
+				</button>`
 			);
 
 		}
@@ -165,13 +172,17 @@
 	function emptyRecycle() {
 
 		dial(
-			'<p>' + lab.action.emptyRecycle + '</p>' +
-			'<button class="dial__bt dial__bt--danger" onclick="removeElm(\'\', true)">' + 
-				lab.button.confirm + 
-			'</button>' +
-			'<button class="dial__bt" onclick="dial()">' + 
-				lab.button.cancel + 
-			'</button>'
+			`<p>${lab.action.emptyRecycle}</p>
+			<button 
+				class="dial__bt dial__bt--danger"
+				onclick="removeElm(\'\', true)">
+				${lab.button.confirm} 
+			</button>
+			<button 
+				class="dial__bt"
+				onclick="dial()"> 
+				${lab.button.cancel} 
+			</button>`
 		);
 
 	}
@@ -229,8 +240,7 @@
 			tree += subDirs;
 			
 			UI.browserTree.innerHTML += 
-			'<pre> / </pre>' +
-			'<a href="#" onclick="browseDirectory(\'' + tree + '\')">' + subDirs + '</a>';
+			`<pre> / </pre><a href="#" onclick="browseDirectory(\'${tree}\')">${subDirs}</a>`;
 
 		}
 
