@@ -24,19 +24,22 @@ label, input
 	margin: 10px 0
 	display: block
 
-button
+svg
+	fill: var(--theme-color-b)
+	padding: 5px
+	width: 25px
+	&:hover
+		fill: var(--theme-color-a)
+
+button, a
 	background-color: transparent
-	background-color: var(--theme-color-e)
-	border-radius: 3px
 	border: none
-	color: var(--theme-color-c)
+	color: var(--theme-color-f)
 	cursor: pointer
 	font-family: Josefin, sans-serif
-	font-size: 0.85em
-	margin-right: 5px
-	padding: 10px 15px
+	font-size: 1em
 	&:hover
-		background-color: var(--theme-color-a)
+		color: var(--theme-color-a)
 
 /* Specifics */
 
@@ -48,13 +51,12 @@ body
 	--theme-color-d: #eee
 	--theme-color-e: #333
 	--theme-color-f: #666
-	color: var(--theme-color-e)
-	font-family: Josefin, sans-serif
-	margin: 0
-	display: flex
-	justify-content: center
-	height: 100vh
 	align-items: center
+	color: var(--theme-color-e)
+	display: grid
+	font-family: Josefin, sans-serif
+	height: 100vh
+	margin: 0
 	&.--in-datas
 		.datas-feature
 			display: block
@@ -66,29 +68,21 @@ body
 		.recycle-feature
 			display: block
 
-.browser
-	width: 75vh
-	height: 500px
-	overflow-y: auto
-	scrollbar-color: var(--theme-color-a)
-	scrollbar-width: thin
-	padding-right: 15px
+.bwr
+	margin: auto
+	max-width: 768px
 	
 	&__nav
-		width: 75vh
-		position: absolute
 		background-color: var(--theme-color-c)
-		z-index: 2
-		border-bottom: solid 1px var(--theme-color-d)
 		display: flex
-		padding-bottom: 15px
-		&__svg
-			fill: var(--theme-color-a)
-			width: 35px
-			margin-right: 15px
-
+		max-width: 768px
+		width: 100%
+		&__bt
+			border-right: solid 1px var(--theme-color-d)
+			max-width: 100px
+			text-decoration: underline
+	
 	&__tree-nav
-		margin-top: 60px
 		align-items: center
 		animation: none 0.25s ease
 		display: flex
@@ -100,52 +94,55 @@ body
 			animation-name: entry-from-left
 
 	&__list
+		box-sizing: border-box
+		height: 400px
 		margin: 0
+		overflow-y: auto
 		padding: 0
+		padding-right: 15px
+		scrollbar-color: var(--theme-color-a)
+		scrollbar-width: thin
 
 	&__item
-		align-items: center
 		border-bottom: solid 1px var(--theme-color-d)
 		border-left: solid 5px var(--theme-color-c)
-		display: grid
+		display: flex
 		fill: var(--theme-color-b)
-		grid-template-columns: 5fr auto
 		justify-content: space-between
 		padding: 0 5px
 		&:last-of-type
 			border-bottom: none
 		&:hover
-			fill: var(--theme-color-a)
 			border-left-color: var(--theme-color-a)
+			fill: var(--theme-color-a)
+		
 		&__link
 			align-items: center
 			display: flex
 			text-decoration: none
-			&__title
-				color: var(--theme-color-e)
-				font-size: 1em
-				font-weight: normal
-				text-decoration: underline var(--theme-color-d)
-			&__info
-				color: var(--theme-color-f)
-				margin-top: -15px
-				font-size: 0.85em 
-			&__svg
-				fill: inherit
-				margin-right: 5px
-				max-width: 30px
-				min-width: 30px
-	
-		&__actions
-			display: flex
-			&__a:first-child
+		
+		&__title
+			color: var(--theme-color-e)
+			font-size: 1em
+			font-weight: normal
+			margin-left: 5px
+			text-decoration: underline var(--theme-color-d)
+		
+		&__info
+			color: var(--theme-color-f)
+			font-size: 0.85em 
+			margin-left: 5px
+			margin-top: -15px
+		
+		&__bt, &__a
+			display: inline-block
+			padding: 10px
+			vertical-align: middle
+			&:first-child
 				border-right: solid 1px var(--theme-color-d)
-			&__svg
-				fill: var(--theme-color-b)
-				width: 20px
-				padding: 10px
-				&:hover
-					fill: var(--theme-color-a)
+				
+		&__svg
+			fill: inherit
 
 .dial
 	&--visible
@@ -161,5 +158,10 @@ body
 		margin: auto
 		max-width: 30ch
 	&__bt
+		border-radius: 3px
+		margin-right: 5px
+		padding: 8px 12px
+		border: solid 1px var(--theme-color-b)
 		&--danger
-			background-color: var(--danger-color)
+			color: var(--danger-color)
+			

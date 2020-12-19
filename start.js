@@ -5,8 +5,8 @@
 
 	const UI = {
 		dial: document.querySelector('.dial'),
-		browserTree: document.querySelector('.browser__tree-nav'),
-		browserList: document.querySelector('.browser__list')
+		browserTree: document.querySelector('.bwr__tree-nav'),
+		browserList: document.querySelector('.bwr__list')
 	};
 
 	let lab;
@@ -48,7 +48,7 @@
 				delete: 'Delete',
 				download: 'Download',
 				send: 'Upload files',
-				emptyRecycle: 'Empty recycle bin',
+				emptyRecycle: 'Empty the recycle',
 				toData: 'Display the datas',
 				toRecycle: 'Display the recycle bin'
 			},
@@ -63,11 +63,11 @@
 		
 	}
 
-	document.getElementById('to-datas-bt').textContent = lab.button.toData;
-	document.getElementById('to-recycle-bt').textContent = lab.button.toRecycle;
-	document.getElementById('create-directory-bt').textContent = lab.button.createDir;
-	document.getElementById('empty-recycle-bt').textContent = lab.button.emptyRecycle;
-	document.getElementById('send-content-bt').textContent = lab.button.send;
+	document.getElementById('to-datas-bt').title = lab.button.toData;
+	document.getElementById('to-recycle-bt').title = lab.button.toRecycle;
+	document.getElementById('create-directory-bt').title = lab.button.createDir;
+	document.getElementById('empty-recycle-bt').title = lab.button.emptyRecycle;
+	document.getElementById('send-files-bt').title = lab.button.send;
 
 // Start the application.
 

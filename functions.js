@@ -236,9 +236,9 @@
 		
 		}
 
-		UI.browserTree.classList.remove('browser__tree-nav--updated');
+		UI.browserTree.classList.remove('bwr__tree-nav--updated');
 		void UI.browserTree.offsetWidth;
-		UI.browserTree.classList.add('browser__tree-nav--updated');
+		UI.browserTree.classList.add('bwr__tree-nav--updated');
 		
 	}
 
@@ -264,16 +264,16 @@
 			let template = '';
 
 			template += // Common parts for parent, files and subfolders.
-			'<li class="browser__item">';
+			'<li class="bwr__item">';
 			
 				template += item.type === 'file' ?
 				// Files only.
-				'<a class="browser__item__link" href="' + item.path + '">':
+				'<a class="bwr__item__link" href="' + item.path + '">':
 				// Parent and subfolders only.
-				'<a class="browser__item__link" href="#" onclick="browseDirectory(\'' + item.path + '\')">';
+				'<a class="bwr__item__link" href="#" onclick="browseDirectory(\'' + item.path + '\')">';
 				
 					template += // Common parts for parent, files and subfolders.
-					'<svg class="browser__item__link__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
+					'<svg class="bwr__item__svg" viewBox="3 3 18 18" xmlns="http://www.w3.org/2000/svg">';
 				
 						template += item.type === 'file' ?
 						// Files only.
@@ -284,10 +284,10 @@
 					template += // Common parts for parent, files and subfolders.
 					'</svg>' +
 					'<div>' +
-						'<h3 class="browser__item__link__title">' + item.label + '</h3>';
+						'<h3 class="bwr__item__title">' + item.label + '</h3>';
 						// Files only.
 						if(item.type === 'file') {
-							template += '<p class="browser__item__link__info">' + lab.latestMod + ' ' + item.lastMod + '</p>';
+							template += '<p class="bwr__item__info">' + lab.latestMod + ' ' + item.lastMod + '</p>';
 						}
 					template +=
 					'</div>' +
@@ -296,33 +296,33 @@
 				// Common parts for files and subfolders.
 				if(item.type === 'file' || item.type === 'subfolder') {
 					template += 
-					'<div class="browser__item__actions">';
+					'<div>';
 
 						template += item.type === 'file' ?
 						// Files only.
-						'<a class="browser__item__actions__a" href="' + item.path + '" title="' + lab.button.download + '" download>' :
+						'<a class="bwr__item__a" href="' + item.path + '" title="' + lab.button.download + '" download>' :
 						// Subfolders only.
-						'<a class="browser__item__actions__a" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + lab.button.download + '">';
+						'<button class="bwr__item__bt" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + lab.button.download + '">';
 
 							// Common parts for files and subfolders.
 							template +=
-							'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +
 								'<path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/>' +
-							'</svg>' +
-
-						'</a>';
+							'</svg>';
 
 						template += item.type === 'file' ?
 						// Files only.
-						'<a class="browser__item__actions__a" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">' :
-						// Parent and subfolders only.
-						'<a class="browser__item__actions__a" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">';
-						
-							template += 
-							'<svg class="browser__item__actions__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +			
+						'</a>' :
+						// Subfolders only.
+						'</button>';
+
+						// Common parts for files and subfolders.
+						template +=
+						'<button class="bwr__item__bt" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">' +
+							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +			
 								'<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>' +							
 							'</svg>' +
-						'</a>' +
+						'</button>' +
 					'</div>' ;
 					
 				}
