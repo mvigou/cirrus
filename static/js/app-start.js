@@ -24,7 +24,8 @@
 				send: 'Envoyer des fichiers',
 				emptyRecycle: 'Vider la corbeille',
 				toData: 'Afficher les données',
-				toRecycle: 'Afficher la corbeille'
+				toRecycle: 'Afficher la corbeille',
+				theme: 'Basculer entre thème clair / thème sombre'
 			},
 			action: {
 				remove: 'Supprimer la sélection ?',
@@ -50,7 +51,8 @@
 				send: 'Upload files',
 				emptyRecycle: 'Empty the recycle',
 				toData: 'Display the datas',
-				toRecycle: 'Display the recycle bin'
+				toRecycle: 'Display the recycle bin',
+				theme: 'Switch between light / dark theme'
 			},
 			action: {
 				remove: 'Remove the selection ?',
@@ -68,6 +70,7 @@
 	document.getElementById('create-directory-bt').title = lab.button.createDir;
 	document.getElementById('empty-recycle-bt').title = lab.button.emptyRecycle;
 	document.getElementById('send-files-bt').title = lab.button.send;
+	document.getElementById('switch-theme-bt').title = lab.button.theme;
 
 // Start the application.
 

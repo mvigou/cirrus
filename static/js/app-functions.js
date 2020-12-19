@@ -197,11 +197,11 @@
 
 /* --- Display or templating functions. --- */
 
+	// Switch between light / dark theme.
+	function switchTheme() { document.body.classList.toggle('--darkmode'); }
 
 	// Switch some properties between datas and recycle directories.
-	function switchToDir(dir) {
-		document.body.setAttribute('class', '--in-' + dir);
-	}
+	function switchToDir(dir) { document.body.classList.toggle('--in-recycle'); }
 
 	// Add a dial when some HTML is provided.
 	function dial(html) {
