@@ -3,7 +3,7 @@
 /* 
 Server side job : upload one or many files in parentDir.
 Return : 'success' if done.
-Called by : async.js.
+Called by : /app/js/functions.js.
 */
 
 if(isset($_POST['parentDir']) && isset($_FILES)) {

@@ -3,7 +3,7 @@
 /* 
 Server side job : move to the recycle directory / remove permanently a file or a directory and its content.
 Return : 'success' if done.
-Called by : async.js.
+Called by : /app/js/functions.js.
 */
 
 require_once('./config.php');

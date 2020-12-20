@@ -3,7 +3,7 @@
 /* 
 Server side job : browse content of the selected directory.
 Return : a JSON object representing the content of the directory.
-Called by : async.js.
+Called by : /app/js/functions.js.
 */
 
 require_once('./config.php');

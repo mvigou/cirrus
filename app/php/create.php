@@ -3,7 +3,7 @@
 /* 
 Server side job : create a new directory in the current directory.
 Return : 'success' if done.
-Called by : async.js.
+Called by : /app/js/functions.js.
 */
 
 require_once('./config.php');

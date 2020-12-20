@@ -1,4 +1,4 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteRule datas /app/php/access.php
+RewriteRule datas /app/php/read.php

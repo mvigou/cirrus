@@ -70,7 +70,7 @@
 
 			ajaxManager(
 				'POST',
-				'./app/php/send.php',
+				'./app/php/upload.php',
 				formData,
 				(response) => {
 					browseDirectory(currentDir);
@@ -187,23 +187,25 @@
 
 	}
 
-	function downloadDirectory(dir) {
+	function downloadElm(elm) {
 
 		ajaxManager(
 			'GET',
-			'./app/php/zip.php',
-			[{ name: 'dir', value: dir }],
-			(pathToZip) => {
-				if(pathToZip !== 'failure') {
-					// Offers the download of the generated zip.
+			'./app/php/download.php',
+			[{ name: 'elm', value: elm }],
+			(pathToElm) => {
+				if(pathToElm !== '') {
+					// Offers the download the elm.
 					let aElm = document.createElement('a');
-					aElm.href = pathToZip;
+					aElm.setAttribute('download', '');
+					aElm.href = pathToElm;
 					aElm.click();
-				}	
+				}
 			}
 		);
 
 	}
+
 
 
 /* --- Display or templating functions. --- */
@@ -304,35 +306,19 @@
 				// Common parts for files and subfolders.
 				if(item.type === 'file' || item.type === 'subfolder') {
 					template += 
-					'<div>';
-
-						template += item.type === 'file' ?
-						// Files only.
-						'<a class="bwr__item__a" href="' + item.path + '" title="' + lab.button.download + '" download>' :
-						// Subfolders only.
-						'<button class="bwr__item__bt" href="#" onclick="downloadDirectory(\'' + item.path + '\')" title="' + lab.button.download + '">';
-
-							// Common parts for files and subfolders.
-							template +=
+					'<div>' +
+						'<button class="bwr__item__bt" href="#" onclick="downloadElm(\'' + item.path + '\')" title="' + lab.button.download + '">' +
 							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +
 								'<path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/>' +
-							'</svg>';
-
-						template += item.type === 'file' ?
-						// Files only.
-						'</a>' :
-						// Subfolders only.
-						'</button>';
-
-						// Common parts for files and subfolders.
-						template +=
+							'</svg>' +
+						'</button>' +
 						'<button class="bwr__item__bt" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">' +
 							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +			
 								'<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>' +							
 							'</svg>' +
 						'</button>' +
-					'</div>' ;
-					
+					'</div>';
+						
 				}
 			
 			// Common parts for parent, files and subfolders.
