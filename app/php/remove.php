@@ -11,8 +11,8 @@ require_once('./functions.php');
 
 if(isset($_GET['elm'])) {
 
-	// Empty request ? Empty recycle bin.
-	if($_GET['elm'] === '') {
+	// Empty recycle bin.
+	if($_GET['elm'] === 'RECYCLE') {
 		$_GET['elm'] = RECYCLE_DIR_PATH;	
 	}
 

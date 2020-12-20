@@ -1,7 +1,7 @@
 <?php session_start();
 
 function redirect($url) {
-    header('Location:../../' . $url);
+    header('Location: /' . $url);
     exit;
 }
 
@@ -18,8 +18,34 @@ if(isset($_POST['log-email']) && isset($_POST['log-password'])) {
 
 				// Is the password provided equal to the one registered ?
 				if(password_verify($_POST['log-password'], file_get_contents('../users/' . USERNAME))) {
-                    $_SESSION['token'] = 'eeee';
-                    redirect(null);
+					
+					// Purge the temporary directory.
+					require_once('./remove.php');
+					removeDir(TEMP_DIR_PATH);
+
+					// If necessary, (re)create user folders.
+					if(!is_dir(DATAS_DIR_PATH)) {
+						if(!mkdir(DATAS_DIR_PATH)) {
+							echo error_get_last()['message'];
+						}
+					}
+					if(!is_dir(RECYCLE_DIR_PATH)) {
+						if(!mkdir(RECYCLE_DIR_PATH)) {
+							echo error_get_last()['message'];
+						}
+					}
+					if(!is_dir(TEMP_DIR_PATH)) {
+						if(!mkdir(TEMP_DIR_PATH)) {
+							echo error_get_last()['message'];
+						}
+					}
+
+					// Create a user token then redirect to app.
+					$_SESSION['token'] = session_id();
+					redirect(null);
+				
+					exit;
+				
                 }
                 
 				redirect('?log-error=invalid-creedentials');

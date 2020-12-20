@@ -6,8 +6,6 @@ Return : 'success' if done.
 Called by : async.js.
 */
 
-// TO DO : What about security ? Limitations ?
-
 if(isset($_POST['parentDir']) && isset($_FILES)) {
 
 	require_once('./config.php');

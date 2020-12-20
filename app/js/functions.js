@@ -175,7 +175,7 @@
 			`<p>${lab.action.emptyRecycle}</p>
 			<button 
 				class="dial__bt dial__bt--danger"
-				onclick="removeElm(\'\', true)">
+				onclick="removeElm(\'RECYCLE\', true)">
 				${lab.button.confirm} 
 			</button>
 			<button 

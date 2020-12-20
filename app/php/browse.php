@@ -11,14 +11,15 @@ require_once('./functions.php');
 
 if(isset($_GET['dir'])) {
 
-	if($_GET['dir'] === 'datas') {
+	// Keyword DATAS.
+	if($_GET['dir'] === 'DATAS') {
 		browseDirectory(DATAS_DIR_PATH);
 	}
-
-	else if($_GET['dir'] === 'recycle') {
+	// Keyword RECYCLE.
+	else if($_GET['dir'] === 'RECYCLE') {
 		browseDirectory(RECYCLE_DIR_PATH);
 	}
-
+	// Provided (and authorized) directory.
 	else {
 
 		if(inRecycleDirectory($_GET['dir']) || inDatasDirectory($_GET['dir'])) {

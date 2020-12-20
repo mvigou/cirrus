@@ -65,6 +65,7 @@
 		
 	}
 
+	document.documentElement.lang = LANG;
 	document.getElementById('to-datas-bt').title = lab.button.toData;
 	document.getElementById('to-recycle-bt').title = lab.button.toRecycle;
 	document.getElementById('create-directory-bt').title = lab.button.createDir;
@@ -72,22 +73,7 @@
 	document.getElementById('send-files-bt').title = lab.button.send;
 	document.getElementById('switch-theme-bt').title = lab.button.theme;
 
-	document.documentElement.lang = LANG;
-
 // Start the application.
-
-	ajaxManager(
-		'GET',
-		'./app/php/init.php',
-		[],
-		(response) => {
-			if(response === 'success') {
-				browseDirectory('datas');
-			}
-			else {
-				ajaxErrorHandler(response);
-			}
-		}
-	);
-
+		
+	browseDirectory('DATAS');
 	let currentDir = '';
