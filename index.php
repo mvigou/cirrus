@@ -9,19 +9,22 @@
 		<title>MEEC | My Eco-responsible and Ethical Cloud</title>
 	</head>
 	
-	<?php 
-	
-	require_once('./app/php/config.php');
+	<?php require_once('./app/php/config.php');
 
 	// Not authenticated ? Login first !
-	if(isset($_SESSION['token'])) { ?>
+	if(!isset($_SESSION['token'])) {
 
+		// Use form as a component. ?>
 		<script src="./app/js/login.js"></script>
-
-		<x-log-form></x-log-form>
-
-	<?php }
+		
+		<log-form>
+			<?php if(isset($_GET['log-error'])) {
+				echo '<em slot="log-error">' . $_GET['log-error'] . '</em>';
+			} ?>
+		</log-form>
 	
+	<?php }
+
 	// Authenticated.
 	else { ?>
 
