@@ -9,32 +9,36 @@ Called by : /app/js/functions.js.
 require_once('./config.php');
 require_once('./security.php');
 
-if(isset($_GET['elm'])) {
+if(verifyAccess()) {
 
-	// Empty recycle bin.
-	if($_GET['elm'] === 'RECYCLE') {
-		$_GET['elm'] = RECYCLE_DIR_PATH;	
-	}
+	if(isset($_GET['elm'])) {
 
-	// Request made from the datas directory ? MOVE to recycle.
-	if(inDatasDirectory($_GET['elm'])) {
-		moveToRecycle($_GET['elm']);
-		echo 'success';
-	}
-	
-	// Request made from the recycle directory ? REMOVE permanently.
-	else if(inRecycleDirectory($_GET['elm'])) {
+		// Empty recycle bin.
+		if($_GET['elm'] === 'RECYCLE') {
+			$_GET['elm'] = RECYCLE_DIR_PATH;	
+		}
+
+		// Request made from the datas directory ? MOVE to recycle.
+		if(inDatasDirectory($_GET['elm'])) {
+			moveToRecycle($_GET['elm']);
+			echo 'success';
+		}
 		
-		if(is_file($_GET['elm'])) {
-			removeFile($_GET['elm']);
+		// Request made from the recycle directory ? REMOVE permanently.
+		else if(inRecycleDirectory($_GET['elm'])) {
+			
+			if(is_file($_GET['elm'])) {
+				removeFile($_GET['elm']);
+			}
+			else {
+				removeDir($_GET['elm']);
+			}
+			echo 'success';
+		
 		}
-		else {
-			removeDir($_GET['elm']);
-		}
-		echo 'success';
-	
-	}
 
+	}
+	
 }
 
 function moveToRecycle ($elm) {
