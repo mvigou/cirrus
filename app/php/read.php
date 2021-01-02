@@ -24,7 +24,3 @@ if(verifyAccess()) {
 	header('Location: ../../' . $destPath);
 	
 }
-
-else {
-	header('Location: /?log-error=not-connected');
-}
