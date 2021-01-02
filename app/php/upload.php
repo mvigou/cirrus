@@ -9,7 +9,7 @@ Called by : /app/js/functions.js.
 if(isset($_POST['parentDir']) && isset($_FILES)) {
 
 	require_once('./config.php');
-	require_once('./functions.php');
+	require_once('./security.php');
 
 	if(inDatasDirectory($_POST['parentDir'])) {
 

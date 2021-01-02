@@ -41,7 +41,7 @@ if(isset($_POST['log-email']) && isset($_POST['log-password'])) {
 					}
 
 					// Create a user token then redirect to app.
-					require_once('./functions.php');
+					require_once('./security.php');
 					createAccess();
 					redirect(null);
 					exit;

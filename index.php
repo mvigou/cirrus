@@ -10,7 +10,7 @@
 	</head>
 	<body>
 	
-	<?php require_once('./app/php/functions.php');
+	<?php require_once('./app/php/security.php');
 
 	// Not authenticated ? Login first !
 	if(!verifyAccess()) { ?>

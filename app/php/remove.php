@@ -7,7 +7,7 @@ Called by : /app/js/functions.js.
 */
 
 require_once('./config.php');
-require_once('./functions.php');
+require_once('./security.php');
 
 if(isset($_GET['elm'])) {
 

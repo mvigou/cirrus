@@ -9,7 +9,7 @@ Called by : /app/js/functions.js.
 if(isset($_SESSION['token'])) {
 	
 	require_once('./config.php');
-	require_once('./functions.php');
+	require_once('./security.php');
 
 	if(isset($_GET['elm']) && inScopeDirectory($_GET['elm'])) {
 	
