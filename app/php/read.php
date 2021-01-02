@@ -6,10 +6,11 @@ Return : a redirection to the accessible file.
 Called by : .htaccess by handling the request URI.
 */
 
-if(isset($_SESSION['token'])) {
-	
-	require_once('./config.php');
+require_once('./config.php');
+require_once('./security.php');
 
+if(verifyAccess()) {
+	
 	$filename = array_slice(explode( '/', urldecode($_SERVER['REQUEST_URI'])), -1)[0];
 	$origPath = '../../' . urldecode($_SERVER['REQUEST_URI']); // Permanent path (protected by .htaccess, inaccessible to users).
 	$readableDir = TEMP_DIR_PATH . '/' . session_id();
