@@ -6,10 +6,10 @@ Return : a path to the accessible file or directory (as a zip).
 Called by : /app/js/functions.js.
 */
 
-if(isset($_SESSION['token'])) {
-	
-	require_once('./config.php');
-	require_once('./security.php');
+require_once('./config.php');
+require_once('./security.php');
+
+if(verifyAccess()) {
 
 	if(isset($_GET['elm']) && inScopeDirectory($_GET['elm'])) {
 	
