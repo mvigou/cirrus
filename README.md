@@ -45,8 +45,8 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Encadrer le nommage des dossiers.
 * (TODO) Renommer un dossier.
 * Télécharger un dossier et son contenu au format compressé Zip.
-* Déplacer un dossier vers la corbeille. (sécurisé URL ?)
-* Supprimer définitivement un dossier (sécurisé URL ?)
+* Déplacer un dossier vers la corbeille.
+* Supprimer définitivement un dossier.
 
 ### Opérations sur les fichiers
 
@@ -54,8 +54,8 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Consulter un fichier depuis le navigateur.
 * (TODO) Renommer un fichier.
 * Télécharger un fichier.
-* Déplacer un fichier vers la corbeille. (sécurisé URL ?)
-* Supprimer définitivement un fichier. (sécurisé URL ?)
+* Déplacer un fichier vers la corbeille.
+* Supprimer définitivement un fichier.
 
 ### Sécurité
 
