@@ -9,26 +9,30 @@ Called by : /app/js/functions.js.
 require_once('./config.php');
 require_once('./functions.php');
 
-if(isset($_GET['dir'])) {
+if(verifyAccess()) {
 
-	// Keyword DATAS.
-	if($_GET['dir'] === 'DATAS') {
-		browseDirectory(DATAS_DIR_PATH);
-	}
-	// Keyword RECYCLE.
-	else if($_GET['dir'] === 'RECYCLE') {
-		browseDirectory(RECYCLE_DIR_PATH);
-	}
-	// Provided (and authorized) directory.
-	else {
-
-		if(inRecycleDirectory($_GET['dir']) || inDatasDirectory($_GET['dir'])) {
-			browseDirectory($_GET['dir']);
+	if(isset($_GET['dir'])) {
+	
+		// Keyword DATAS.
+		if($_GET['dir'] === 'DATAS') {
+			browseDirectory(DATAS_DIR_PATH);
 		}
+		// Keyword RECYCLE.
+		else if($_GET['dir'] === 'RECYCLE') {
+			browseDirectory(RECYCLE_DIR_PATH);
+		}
+		// Provided (and authorized) directory.
+		else {
+	
+			if(inRecycleDirectory($_GET['dir']) || inDatasDirectory($_GET['dir'])) {
+				browseDirectory($_GET['dir']);
+			}
+		}
+	
 	}
 
 }
-
+	
 function browseDirectory($dir) {
 	
 	if($tree = dir($dir)) {
