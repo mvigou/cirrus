@@ -1,4 +1,31 @@
-<?php
+<?php session_start();
+
+// Create an authorized access.
+function createAccess() {
+
+	$_SESSION['token'] = session_id();
+	$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
+
+}
+
+// Verify an access.
+function verifyAccess() {
+
+	return 
+		$_SESSION['token'] === session_id() && 
+		$_SESSION['browser'] === $_SERVER['HTTP_USER_AGENT'] ? 
+		true : false;
+
+}
+
+// Destroy a session.
+function destroyAccess() {
+
+	$_SESSION = array();
+	session_destroy();
+	header('Location: /');
+	
+}
 
 // Check if the user is in the root directory.
 function inRootDirectory($dir) {

@@ -41,9 +41,9 @@ if(isset($_POST['log-email']) && isset($_POST['log-password'])) {
 					}
 
 					// Create a user token then redirect to app.
-					$_SESSION['token'] = session_id();
+					require_once('./functions.php');
+					createAccess();
 					redirect(null);
-				
 					exit;
 				
                 }
