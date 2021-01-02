@@ -2,3 +2,4 @@ Options -Indexes
 
 RewriteEngine On
 RewriteRule datas /app/php/read.php
+RewriteRule recycle /app/php/read.php
