@@ -5,7 +5,13 @@
 
 	const UI = {
 		dial: document.querySelector('.dial'),
-		browserTree: document.querySelector('.bwr__tree-nav'),
+		loader:
+			{
+				container: document.querySelector('.loader'),
+				info: document.querySelector('.loader__info'),
+				progress: document.querySelector('.loader__progress')
+			},
+		browserTree: document.querySelector('.bwr__nav__tree'),
 		browserList: document.querySelector('.bwr__list')
 	};
 

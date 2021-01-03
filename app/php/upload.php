@@ -14,13 +14,9 @@ if(verifyAccess()) {
 	if(isset($_POST['parentDir']) && isset($_FILES)) {
 
 		if(inDatasDirectory($_POST['parentDir'])) {
-
-			foreach($_FILES as $file) {
 		
-				move_uploaded_file($file['tmp_name'], $_POST['parentDir'] . '/' . $file['name']);
+			move_uploaded_file($_FILES['file']['tmp_name'], $_POST['parentDir'] . '/' . $_FILES['file']['name']);		
 		
-			}
-
 		}
 
 	}

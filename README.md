@@ -28,6 +28,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 * Traductions française / anglaise.
 * Boîte de dialogue personnalisée.
+* Suivi des téléchargements.
 * Thème clair, thème sombre.
 * (TODO) Faire persister le choix du thème.
 
@@ -42,7 +43,9 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Opérations sur les dossiers
 
 * Créer un dossier vide.
+* (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
 * (TODO) Encadrer le nommage des dossiers.
+* (TODO / BUG) Gérer l'utilisation ou non de certains caractères problématiques tels que ' (problème d'échappement).
 * (TODO) Renommer un dossier.
 * Télécharger un dossier et son contenu au format compressé Zip.
 * Déplacer un dossier vers la corbeille.
@@ -51,6 +54,9 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Opérations sur les fichiers
 
 * Mettre en ligne un ou plusieurs fichiers à la fois.
+* (TODO) Gérer les erreurs de transferts.
+* (TODO) Prévenir l'écrasement de fichier pendant l'envoi.
+* (TODO / BUG) Gérer l'utilisation ou non de certains caractères problématiques tels que ' (problème d'échappement).
 * Consulter un fichier depuis le navigateur.
 * (TODO) Renommer un fichier.
 * Télécharger un fichier.

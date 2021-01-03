@@ -59,24 +59,57 @@
 		inputElm.setAttribute('type', 'file');
 		inputElm.setAttribute('multiple', 'true');
 		
-		// 3. Proceed when submitted.
+		// 3. Proceed when submitted, one element at once.
 		inputElm.onchange = (e) => {
+				
+			let i = 0;
+			UI.loader.container.classList.add('loader--visible');
+			send(inputElm.files[i]);
 			
-			let formData = new FormData();
-			formData.append('parentDir', currentDir);
-			for(let i = 0, l = inputElm.files.length; i < l; i++) {
-				formData.append("file-" + i, inputElm.files[i]);
+			function send(file) {
+				
+				// Init loader.
+				UI.loader.progress.style.width = '0';
+				UI.loader.info.textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
+
+				// Build formData.
+				let formData = new FormData();
+				formData.append('parentDir', currentDir);
+				formData.append("file", file);
+
+				// Request.
+				let req = new XMLHttpRequest();
+				req.open('POST', './app/php/upload.php', true);
+
+				req.upload.onprogress = (e) => {
+					UI.loader.progress.style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
+				};			
+					
+				req.onload = () => {
+
+					i++;
+					
+					// Are they others files to upload ?
+					if(inputElm.files.length > i) {
+						send(inputElm.files[i]);
+					}
+					
+					// Else, end.
+					else {
+						browseDirectory(currentDir);
+						setTimeout(
+							() => UI.loader.container.classList.remove('loader--visible'),
+							1000
+						);
+
+					}
+					
+				} 
+				
+				req.send(formData);
+			
 			}
-
-			ajaxManager(
-				'POST',
-				'./app/php/upload.php',
-				formData,
-				(response) => {
-					browseDirectory(currentDir);
-				}
-			);
-
+			
 		}
 		
 		// 2. Active the element.
@@ -245,10 +278,6 @@
 			`<pre> / </pre><a href="#" onclick="browseDirectory(\'${tree}\')">${subDirs}</a>`;
 
 		}
-
-		UI.browserTree.classList.remove('bwr__tree-nav--updated');
-		void UI.browserTree.offsetWidth;
-		UI.browserTree.classList.add('bwr__tree-nav--updated');
 		
 	}
 
