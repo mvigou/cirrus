@@ -9,12 +9,6 @@
 	@media screen and (min-width: 768px)
 		@content
 	
-@keyframes entry-from-left
-	from	
-		transform: translate(-15px)	
-	to
-		transform: initial
-
 a
 	color: inherit
 	&:hover
@@ -42,7 +36,6 @@ button, a
 		color: var(--main-color)
 
 /* Specifics */
-
 body
 	--danger-color: #f33
 	--bg-color: #fff
@@ -53,11 +46,13 @@ body
 	--main-color: #a00c3d
 	align-items: center
 	background-color: var(--bg-color)
+	box-sizing: border-box
 	color: var(--font-color-hight)
 	display: grid
 	font-family: Josefin, sans-serif
 	height: 100vh
 	margin: 0
+	min-width: 300px
 	.datas-feature
 		display: block
 	.recycle-feature
@@ -76,47 +71,64 @@ body
 		--main-color: #a00c3d
 
 .bwr
-	margin: auto
-	max-width: 768px
-	
+	@include medium-screen	
+		margin: auto
+		max-width: 768px
+		padding: 140px 0 45px 0
+		
 	&__nav
-		display: flex
+		background-color: var(--bg-color)
+		max-width: 768px
+		padding: 15px 0
+		position: fixed
+		top: 0
+		width: 100%
+
+		&__actions, &__tree
+			display: flex
+			align-items: center
+			flex-wrap: wrap
+		
 		&__bt
 			border-right: solid 1px var(--border-color)
-			max-width: 100px
 			text-decoration: underline
 			&:last-of-type
-				margin-left: auto
 				border-right: none
-				margin-right: 22px
+				margin-left: auto
+				margin-right: 12px
 	
-	&__tree-nav
-		align-items: center
-		animation: none 0.25s ease
-		display: flex
-		pre
-			font-family: Josefin, sans-serif
-		a:last-of-type
-			font-weight: bold
-		&--updated
-			animation-name: entry-from-left
+		&__tree
+			animation: none 0.25s ease
+			background-color: var(--border-color)
+			margin-top: 10px
+			padding: 0 10px
+			pre
+				font-family: Josefin, sans-serif		
+	
+
+
+
+
+
+
+
 
 	&__list
 		box-sizing: border-box
-		height: 400px
 		margin: 0
 		overflow-y: auto
 		padding: 0
-		padding-right: 15px
 		scrollbar-width: thin
 
 	&__item
+		align-items: center
 		border-bottom: solid 1px var(--border-color)
 		border-left: solid 5px var(--bg-color)
-		display: flex
+		display: grid
 		fill: var(--fill-color)
+		grid-template-columns: minmax(250px, 1fr) auto
 		justify-content: space-between
-		padding: 0 5px
+		
 		&:last-of-type
 			border-bottom: none
 		&:hover
@@ -126,7 +138,6 @@ body
 		&__link
 			align-items: center
 			display: flex
-			flex: 1
 			text-decoration: none
 
 		&__title
@@ -143,11 +154,16 @@ body
 			margin-top: -15px
 		
 		&__bt, &__a
-			display: inline-block
-			padding: 10px
+			display: block
 			vertical-align: middle
 			&:first-child
-				border-right: solid 1px var(--border-color)
+				border-bottom: solid 1px var(--border-color)
+			@include medium-screen			
+				display: inline-block
+				padding: 10px
+				&:first-child
+					border-bottom: none
+					border-right: solid 1px var(--border-color)
 				
 		&__svg
 			fill: inherit
@@ -167,9 +183,30 @@ body
 		max-width: 30ch
 	&__bt
 		border-radius: 3px
+		border: solid 1px var(--fill-color)
 		margin-right: 5px
 		padding: 8px 12px
-		border: solid 1px var(--fill-color)
 		&--danger
 			color: var(--danger-color)
-			
+
+.loader
+	display: none
+	&--visible
+		background-color: var(--bg-color)
+		bottom: 0
+		display: block
+		left: 0
+		padding: 10px 0 0 0
+		position: fixed
+		right: 0
+		text-align: center
+		
+		>div
+			background-color: var(--main-color)
+			box-sizing: border-box
+			height: 10px
+			width: 0
+		
+		>p
+			margin: 0
+		
