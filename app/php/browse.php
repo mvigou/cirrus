@@ -1,4 +1,4 @@
-<?php 
+<?php session_start();
 
 /* 
 Server side job : browse content of the selected directory.
@@ -10,22 +10,22 @@ require_once('./config.php');
 require_once('./security.php');
 
 if(verifyAccess()) {
-
-	if(isset($_GET['dir'])) {
 	
+	if(isset($_POST['dir'])) {
+		
 		// Keyword DATAS.
-		if($_GET['dir'] === 'DATAS') {
+		if($_POST['dir'] === 'DATAS') {
 			browseDirectory(DATAS_DIR_PATH);
 		}
 		// Keyword RECYCLE.
-		else if($_GET['dir'] === 'RECYCLE') {
+		else if($_POST['dir'] === 'RECYCLE') {
 			browseDirectory(RECYCLE_DIR_PATH);
 		}
 		// Provided (and authorized) directory.
 		else {
 	
-			if(inRecycleDirectory($_GET['dir']) || inDatasDirectory($_GET['dir'])) {
-				browseDirectory($_GET['dir']);
+			if(inRecycleDirectory($_POST['dir']) || inDatasDirectory($_POST['dir'])) {
+				browseDirectory($_POST['dir']);
 			}
 		}
 	

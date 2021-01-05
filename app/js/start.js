@@ -36,7 +36,7 @@
 			action: {
 				remove: 'Supprimer la sélection ?',
 				emptyRecycle: 'La corbeille sera vidée : tous les éléments seront définitivement supprimés.',
-				nameNewdir: 'Veuillez saisir le nom du dossier :'
+				nameNewdir: 'Veuillez saisir le nom du dossier. Dans un souci de portabilité, certains caractères peuvent être remplacés.'
 			},
 			error: 'Une erreur est survenue. Le message suivant a été renvoyé : ',
 			latestMod: 'Dernière modification le'
@@ -63,7 +63,7 @@
 			action: {
 				remove: 'Remove the selection ?',
 				emptyRecycle: 'The recycle bin will be emptied: all items will be permanently deleted.',
-				nameNewdir: 'Please type the name of the directory :'
+				nameNewdir: 'Please type the name of the directory. For the sake of portability, some characters may be replaced.'
 			},
 			error: 'An error has occurred. The following message has been returned : ',
 			latestMod: 'Latest modification at'

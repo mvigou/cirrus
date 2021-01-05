@@ -44,11 +44,10 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 * Créer un dossier vide.
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
-* (TODO) Encadrer le nommage des dossiers.
-* (TODO / BUG) Gérer l'utilisation ou non de certains caractères problématiques tels que ' (problème d'échappement).
 * (TODO) Renommer un dossier.
 * Télécharger un dossier et son contenu au format compressé Zip.
 * Déplacer un dossier vers la corbeille.
+* (TODO) Restorer un dossier depuis la corbeille.
 * Supprimer définitivement un dossier.
 
 ### Opérations sur les fichiers
@@ -61,6 +60,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Renommer un fichier.
 * Télécharger un fichier.
 * Déplacer un fichier vers la corbeille.
+* (TODO) Restorer un fichier depuis la corbeille.
 * Supprimer définitivement un fichier.
 
 ### Sécurité
@@ -74,6 +74,8 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Divers
 
 * Purge automatique des dossiers temporaires à chaque authentification réussie.
+* (TODO) Mise en cache à voir / Service worker ?
+* (TODO) Intégrer une gestion de license ?
 
 ### Personnalisation
 

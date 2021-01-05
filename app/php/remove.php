@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 
 /* 
 Server side job : move to the recycle directory / remove permanently a file or a directory and its content.
@@ -11,27 +11,27 @@ require_once('./security.php');
 
 if(verifyAccess()) {
 
-	if(isset($_GET['elm'])) {
+	if(isset($_POST['elm'])) {
 
 		// Empty recycle bin.
-		if($_GET['elm'] === 'RECYCLE') {
-			$_GET['elm'] = RECYCLE_DIR_PATH;	
+		if($_POST['elm'] === 'RECYCLE') {
+			$_POST['elm'] = RECYCLE_DIR_PATH;	
 		}
 
 		// Request made from the datas directory ? MOVE to recycle.
-		if(inDatasDirectory($_GET['elm'])) {
-			moveToRecycle($_GET['elm']);
+		if(inDatasDirectory($_POST['elm'])) {
+			moveToRecycle($_POST['elm']);
 			echo 'success';
 		}
 		
 		// Request made from the recycle directory ? REMOVE permanently.
-		else if(inRecycleDirectory($_GET['elm'])) {
+		else if(inRecycleDirectory($_POST['elm'])) {
 			
-			if(is_file($_GET['elm'])) {
-				removeFile($_GET['elm']);
+			if(is_file($_POST['elm'])) {
+				removeFile($_POST['elm']);
 			}
 			else {
-				removeDir($_GET['elm']);
+				removeDir($_POST['elm']);
 			}
 			echo 'success';
 		

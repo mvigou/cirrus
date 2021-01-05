@@ -1,4 +1,4 @@
-<?php session_start();
+<?php // session_start() is not required : this script is always called an other.
 
 // Create an authorized access.
 function createAccess() {
@@ -11,11 +11,13 @@ function createAccess() {
 // Verify an access.
 function verifyAccess() {
 
-	return 
-		$_SESSION['token'] === session_id() && 
-		$_SESSION['browser'] === $_SERVER['HTTP_USER_AGENT'] ? 
-		true : false;
-
+	if(isset($_SESSION['token']) && isset($_SESSION['browser'])) {
+		if($_SESSION['token'] === session_id() && $_SESSION['browser'] === $_SERVER['HTTP_USER_AGENT']) {
+			return true;
+		}	
+	}
+	return false;
+	
 }
 
 // Destroy a session.
@@ -29,7 +31,7 @@ function destroyAccess() {
 
 // Check if the user is in the root directory.
 function inRootDirectory($dir) {
-	return urldecode($dir) === DATAS_DIR_PATH || urldecode($dir) === RECYCLE_DIR_PATH ? true : false;
+	return $dir === DATAS_DIR_PATH || $dir === RECYCLE_DIR_PATH ? true : false;
 }
 
 // Check if the user is within the authorized perimeter (data or recycle directory).
@@ -41,7 +43,7 @@ function inScopeDirectory($elm) {
 	$regex .= array_slice(explode('/', RECYCLE_DIR_PATH), -1)[0];
 	$regex .= '/';
 
-	return preg_match($regex, urldecode($elm)) ? true : false;
+	return preg_match($regex, $elm) ? true : false;
 
 }
 
@@ -52,7 +54,7 @@ function inDatasDirectory($elm) {
 	$regex .= array_slice(explode('/', DATAS_DIR_PATH), -1)[0];
 	$regex .= '/';
 
-	return preg_match($regex, urldecode($elm)) ? true : false;
+	return preg_match($regex, $elm) ? true : false;
 
 }
 
@@ -63,6 +65,6 @@ function inRecycleDirectory($elm) {
 	$regex .= array_slice(explode('/', RECYCLE_DIR_PATH), -1)[0];
 	$regex .= '/';
 
-	return preg_match($regex, urldecode($elm)) ? true : false;
+	return preg_match($regex, $elm) ? true : false;
 
 }

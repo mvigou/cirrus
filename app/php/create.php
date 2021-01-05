@@ -1,4 +1,4 @@
-<?php 
+<?php session_start();
 
 /* 
 Server side job : create a new directory in the current directory.
@@ -11,10 +11,13 @@ require_once('./security.php');
 
 if(verifyAccess()) {
 
-	if(isset($_GET['parent']) && inScopeDirectory($_GET['parent'])) {
-		if(isset($_GET['dir'])) {
-			echo mkdir($_GET['parent'] . '/' . $_GET['dir']) ? 'success' : error_get_last()['message'];
-		}
-	}
+	if(isset($_POST['parent']) && inScopeDirectory($_POST['parent'])) {
 
+		if(isset($_POST['dir'])) {
+			
+			echo mkdir($_POST['parent'] . '/' . $_POST['dir']) ? 'success' : error_get_last()['message'];
+
+		}
+
+	}
 }

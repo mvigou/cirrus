@@ -11,10 +11,10 @@ require_once('./security.php');
 
 if(verifyAccess()) {
 
-	if(isset($_GET['elm']) && inScopeDirectory($_GET['elm'])) {
+	if(isset($_POST['elm']) && inScopeDirectory($_POST['elm'])) {
 	
-		$filename = array_slice(explode( '/', urldecode($_GET['elm'])), -1)[0];
-		$origPath = urldecode($_GET['elm']); // Permanent path (protected by .htaccess, inaccessible to users).
+		$filename = array_slice(explode( '/', $_POST['elm']), -1)[0];
+		$origPath = $_POST['elm']; // Permanent path (protected by .htaccess, inaccessible to users).
 		$destPath = ''; // Random and temporary path (accessible to users).
 		$destDir = TEMP_DIR_PATH . '/' . session_id();
 		
@@ -36,7 +36,7 @@ if(verifyAccess()) {
 			$zip = new ZipArchive();
 			$zip->open($destPath, ZipArchive::CREATE);
 		
-			buildZip($zip, $filename, $_GET['elm']);
+			buildZip($zip, $filename, $_POST['elm']);
 			
 			// If the selected directory was empty, add the directory itself to the zip.
 			if($zip->count() === 0) {

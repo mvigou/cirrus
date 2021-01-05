@@ -1,4 +1,4 @@
-<?php 
+<?php session_start();
 
 /* 
 Server side job : upload one or many files in parentDir.

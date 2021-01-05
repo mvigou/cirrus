@@ -1,31 +1,22 @@
 /* --- Asynchronous functions. --- */
 
-
-	function ajaxManager(method, target, args, callback) {
-
-		let url = target;
+	ajaxManager = (target, args, callback) => {
 		
-		if(method === 'GET') {
-			url += '?';
-			for(let arg of args) {
-				url += arg.name + '=' + encodeURIComponent(arg.value) + '&';
-			}
-		}
-
 		let req = new XMLHttpRequest();
-		req.open(method, url, true);
+
+		req.open('POST', target, true);
 		req.onload = () => callback(req.responseText);
 
-		if(method === 'GET') {
-			req.send(null);
+		let formData = new FormData();
+		for(let arg of args) {
+			formData.append(arg.name, arg.value);
 		}
-		else { // POST
-			req.send(args);
-		}
+		
+		req.send(formData);
 
-	}
+	};
 
-	function ajaxErrorHandler(error) {
+	ajaxErrorHandler = (error) => {
 
 		dial(
 			`<p> 
@@ -35,24 +26,24 @@
 			<button onclick="dial()"> ${ lab.button.close } </button>`
 		);
 
-	}
+	};
 
-	function browseDirectory(dir) {
+	browseDirectory = (dir) => {
 		
 		ajaxManager(
-			'GET',
 			'./app/php/browse.php',
 			[{ name: 'dir', value: dir }],
 			(response) => {
-				currentDir = (JSON.parse(response)[0]);
-				buildItems(JSON.parse(response)[1]);
-				buildTree(JSON.parse(response)[0]);
+				response = JSON.parse(response);
+				currentDir = response[0];
+				buildItems(response[1]);
+				buildTree(response[0]);
 			}
 		);
 
-	}
+	};
 
-	function sendFiles() {
+	uploadFiles = () => {
 
 		// 1. Configure an input element.
 		let inputElm = document.createElement('input');
@@ -89,7 +80,7 @@
 
 					i++;
 					
-					// Are they others files to upload ?
+					// Are they others files to upload ? Recursive.
 					if(inputElm.files.length > i) {
 						send(inputElm.files[i]);
 					}
@@ -104,22 +95,22 @@
 
 					}
 					
-				} 
+				};
 				
 				req.send(formData);
 			
 			}
 			
-		}
+		};
 		
-		// 2. Active the element.
+		// 2. Automatically active the input element.
 		inputElm.click();
 
-	}
+	};
 
-	function createDirectory(dir = null) {
+	createDirectory = (dir = null) => {
 
-		// No name for directory ? Ask for it first.
+		// No name typed yet ? Ask for it first.
 		if(dir === null) {
 			
 			dial(
@@ -139,11 +130,10 @@
 		
 		// Name provided ? Proceed.
 		else {
-
+		
 			ajaxManager(
-				'GET',
 				'./app/php/create.php',
-				[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
+				[{ name: 'parent', value: currentDir },{ name: 'dir', value: buildValidName(dir) }],
 				(response) => {
 					if(response === 'success') {
 						browseDirectory(currentDir);
@@ -157,9 +147,9 @@
 
 		}
 
-	}
+	};
 
-	function removeElm(elm, confirm = false) {
+	removeElm = (elm, confirm = false) => {
 
 		// Confirm is false ? Ask for an user confirmation first.
 		if(!confirm) {
@@ -168,7 +158,7 @@
 				`<p>${lab.action.remove}</p>
 				<button
 					class="dial__bt dial__bt--danger" 
-					onclick="removeElm(\'${elm}\', true)"> 
+					onclick="removeElm('${escapeApostrophe(elm)}', ${true})">
 					${lab.button.confirm}
 				</button>
 				<button 
@@ -184,7 +174,6 @@
 		else {
 
 			ajaxManager(
-				'GET',
 				'./app/php/remove.php',
 				[{ name: 'elm', value: elm }],
 				(response) => {
@@ -200,9 +189,27 @@
 
 		}
 
-	}
+	};
 
-	function emptyRecycle() {
+	downloadElm = (elm) => {
+
+		ajaxManager(
+			'./app/php/download.php',
+			[{ name: 'elm', value: elm }],
+			(pathToElm) => {
+				if(pathToElm !== '') {
+					// Automatically offers the download the elm.
+					let aElm = document.createElement('a');
+					aElm.setAttribute('download', '');
+					aElm.href = pathToElm;
+					aElm.click();
+				}
+			}
+		);
+
+	};
+
+	emptyRecycle = () => {
 
 		dial(
 			`<p>${lab.action.emptyRecycle}</p>
@@ -218,39 +225,17 @@
 			</button>`
 		);
 
-	}
-
-	function downloadElm(elm) {
-
-		ajaxManager(
-			'GET',
-			'./app/php/download.php',
-			[{ name: 'elm', value: elm }],
-			(pathToElm) => {
-				if(pathToElm !== '') {
-					// Offers the download the elm.
-					let aElm = document.createElement('a');
-					aElm.setAttribute('download', '');
-					aElm.href = pathToElm;
-					aElm.click();
-				}
-			}
-		);
-
-	}
-
-
+	};
 
 /* --- Display or templating functions. --- */
 
-	// Switch between light / dark theme.
-	function switchTheme() { document.body.classList.toggle('--darkmode'); }
-
-	// Switch some properties between datas and recycle directories.
-	function switchToDir(dir) { document.body.classList.toggle('--in-recycle'); }
+	buildValidName = (string) => string.replace(/<|>|\:|\"|\/|\\|\||\?|\*/g, '-');
+	escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
+	switchDir = (dir) => document.body.classList.toggle('--in-recycle');
+	switchTheme = () => document.body.classList.toggle('--darkmode');
 
 	// Add a dial when some HTML is provided.
-	function dial(html) {
+	dial = (html) => {
 
 		if(html != undefined) {
 			UI.dial.querySelector('div').innerHTML = html;
@@ -261,10 +246,10 @@
 			UI.dial.classList.remove('dial--visible');
 		}
 
-	}
+	};
 
 	// Build a navigable tree.
-	function buildTree(dir) {
+	buildTree = (dir) => {
 
 		UI.browserTree.innerHTML = '';
 		let tree = '../..';
@@ -275,14 +260,14 @@
 			tree += subDirs;
 			
 			UI.browserTree.innerHTML += 
-			`<pre> / </pre><a href="#" onclick="browseDirectory(\'${tree}\')">${subDirs}</a>`;
+			`<pre> / </pre><a href="#" onclick="browseDirectory('${escapeApostrophe(tree)}')">${subDirs}</a>`;
 
 		}
 		
-	}
+	};
 
 	// Build a file or a folder element.
-	function buildItems(items) {
+	buildItems = (items) => {
 
 		UI.browserList.innerHTML = '';
 		
@@ -298,8 +283,11 @@
 				case 'parent':
 					item.path = item.directory.substr(0, item.directory.lastIndexOf('/'));
 					break;
-			};
-			
+			}
+
+			// Prevent issue between apostrophe and template. 
+			item.path = escapeApostrophe(item.path);
+	
 			let template = '';
 
 			template += // Common parts for parent, files and subfolders.
@@ -309,7 +297,7 @@
 				// Files only.
 				'<a class="bwr__item__link" href="' + item.path + '">':
 				// Parent and subfolders only.
-				'<a class="bwr__item__link" href="#" onclick="browseDirectory(\'' + item.path + '\')">';
+				`<a class="bwr__item__link" href="#" onclick="browseDirectory('${item.path}')">`;
 				
 					template += // Common parts for parent, files and subfolders.
 					'<svg class="bwr__item__svg" viewBox="3 3 18 18" xmlns="http://www.w3.org/2000/svg">';
@@ -336,12 +324,12 @@
 				if(item.type === 'file' || item.type === 'subfolder') {
 					template += 
 					'<div>' +
-						'<button class="bwr__item__bt" href="#" onclick="downloadElm(\'' + item.path + '\')" title="' + lab.button.download + '">' +
+						`<button class="bwr__item__bt" onclick="downloadElm('${item.path}')" title="${lab.button.download}">` +
 							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +
 								'<path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/>' +
 							'</svg>' +
 						'</button>' +
-						'<button class="bwr__item__bt" href="#" onclick="removeElm(\'' + item.path + '\')" title="' + lab.button.delete + '">' +
+						`<button class="bwr__item__bt" onclick="removeElm('${item.path}')" title="${lab.button.delete}">` +
 							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +			
 								'<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>' +							
 							'</svg>' +
@@ -357,4 +345,4 @@
 
 		}
 
-	}
+	};
