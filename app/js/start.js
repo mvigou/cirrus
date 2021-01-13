@@ -83,5 +83,22 @@
 
 // Start the application.
 		
-	browseDirectory('DATAS');
-	let currentDir = '';
+	// Reloading some user background.
+	if(localStorage.getItem('mode') === 'dark') {
+		toDarkTheme();
+	}
+
+	if(getLocalItem('currentDir')) {
+		browseDirectory(getLocalItem('currentDir'));
+	
+		if(getLocalItem('mainDir') === 'RECYCLE') {
+			toRecycleDirTheme();
+		}
+
+	}
+
+	else {
+		browseDirectory('DATAS');
+
+	}		
+		

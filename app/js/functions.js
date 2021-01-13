@@ -1,6 +1,6 @@
 "use strict";
 
-/* --- Asynchronous functions. --- */
+/* --- Asynchronous works. --- */
 
 	const ajaxManager = (target, args, callback) => {
 		
@@ -37,7 +37,7 @@
 			[{ name: 'dir', value: dir }],
 			(response) => {
 				response = JSON.parse(response);
-				currentDir = response[0];
+				setLocalItem('currentDir', response[0]);
 				buildItems(response[1]);
 				buildTree(response[0]);
 			}
@@ -84,7 +84,7 @@
 
 				// Build formData.
 				let formData = new FormData();
-				formData.append('parentDir', currentDir);
+				formData.append('parentDir', getLocalItem('currentDir'));
 				formData.append("file", file);
 
 				// Request.
@@ -106,7 +106,7 @@
 					
 					// Else, end.
 					else {
-						browseDirectory(currentDir);
+						browseDirectory(getLocalItem('currentDir'));
 						setTimeout(
 							() => UI.loader.container.classList.remove('loader--visible'),
 							1000
@@ -152,10 +152,10 @@
 		
 			ajaxManager(
 				'./app/php/create.php',
-				[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
+				[{ name: 'parent', value: getLocalItem('currentDir') },{ name: 'dir', value: dir }],
 				(response) => {
 					if(response === 'success') {
-						browseDirectory(currentDir);
+						browseDirectory(getLocalItem('currentDir'));
 						dial();
 					}
 					else {
@@ -197,7 +197,7 @@
 				[{ name: 'elm', value: elm }],
 				(response) => {
 					if(response === 'success') {
-						browseDirectory(currentDir);
+						browseDirectory(getLocalItem('currentDir'));
 						dial();
 					}
 					else {
@@ -246,11 +246,50 @@
 
 	};
 
-/* --- Display or templating functions. --- */
+/* --- Manipulate data persistence. --- */
+
+	const getLocalItem = (item) => localStorage.getItem(item);
+	const setLocalItem = (item, value) => localStorage.setItem(item, value);
+	
+/* --- Modify strings. --- */
 
 	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
-	const switchDir = (dir) => document.body.classList.toggle('--in-recycle');
-	const switchTheme = () => document.body.classList.toggle('--darkmode');
+
+/* --- Affect the appearance of the interface. --- */
+
+	const toRecycleDirTheme = () => {
+		document.body.classList.add('--in-recycle');
+		setLocalItem('mainDir', 'RECYCLE');
+	}
+
+	const toDataDirTheme = () => {
+		document.body.classList.remove('--in-recycle');
+		setLocalItem('mainDir', 'DATAS');
+	}
+
+	const switchMainDir = (dir) => {
+		dir === 'RECYCLE' ?
+			toRecycleDirTheme():
+			toDataDirTheme();
+	}
+	
+	const toDarkTheme = () => {	
+		document.body.classList.add('--darkmode');
+		setLocalItem('mode', 'dark');
+	}
+
+	const toLightTheme = () => {
+		document.body.classList.remove('--darkmode');
+		setLocalItem('mode', 'light');
+	}
+
+	const switchTheme = () => {
+		document.body.classList.contains('--darkmode') ?
+			toLightTheme():
+			toDarkTheme();
+	}
+
+/* --- Display or templating functions. --- */
 
 	// Add a dial when some HTML is provided.
 	const dial = (html) => {

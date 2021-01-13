@@ -30,7 +30,6 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Boîte de dialogue personnalisée.
 * Suivi des téléchargements.
 * Thème clair, thème sombre.
-* (TODO) Faire persister le choix du thème.
 
 ### Explorateur
 
@@ -75,6 +74,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Purge automatique des dossiers temporaires à chaque authentification réussie.
 * (TODO) Mise en cache à voir / Service worker ?
 * (TODO) Intégrer une gestion de license ?
+* (TODO) Ajouter les prérequis techniques au présent README
 
 ### Personnalisation
 
