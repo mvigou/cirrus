@@ -55,7 +55,6 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Mettre en ligne un ou plusieurs fichiers à la fois.
 * (TODO) Gérer les erreurs de transferts.
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi.
-* (TODO / BUG) Gérer l'utilisation ou non de certains caractères problématiques tels que ' (problème d'échappement).
 * Consulter un fichier depuis le navigateur.
 * (TODO) Renommer un fichier.
 * Télécharger un fichier.

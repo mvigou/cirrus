@@ -45,6 +45,23 @@
 
 	};
 
+	const accessFile = (filename) => {
+
+		ajaxManager(
+			'./app/php/access.php',
+			[{ name: 'filename', value: filename }],
+			(response) => {
+				if(response != 'failure') {
+					window.location.href = response;
+				}
+				else {
+					ajaxErrorHandler(response);
+				}
+			}
+		);
+
+	}
+
 	const uploadFiles = () => {
 
 		// 1. Configure an input element.
@@ -297,7 +314,7 @@
 			
 				template += item.type === 'file' ?
 				// Files only.
-				'<a class="bwr__item__link" href="' + item.path + '">':
+				`<a class="bwr__item__link" href="#" onclick="accessFile('${item.path}')">` :
 				// Parent and subfolders only.
 				`<a class="bwr__item__link" href="#" onclick="browseDirectory('${item.path}')">`;
 				
