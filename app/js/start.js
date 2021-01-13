@@ -1,3 +1,5 @@
+"use strict";
+
 // Set the language of the interface.
 
 	// Supported: fr / en. Switch to one or another to translate the application.

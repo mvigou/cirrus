@@ -1,6 +1,8 @@
+"use strict";
+
 /* --- Asynchronous functions. --- */
 
-	ajaxManager = (target, args, callback) => {
+	const ajaxManager = (target, args, callback) => {
 		
 		let req = new XMLHttpRequest();
 
@@ -16,7 +18,7 @@
 
 	};
 
-	ajaxErrorHandler = (error) => {
+	const ajaxErrorHandler = (error) => {
 
 		dial(
 			`<p> 
@@ -28,7 +30,7 @@
 
 	};
 
-	browseDirectory = (dir) => {
+	const browseDirectory = (dir) => {
 		
 		ajaxManager(
 			'./app/php/browse.php',
@@ -43,7 +45,7 @@
 
 	};
 
-	uploadFiles = () => {
+	const uploadFiles = () => {
 
 		// 1. Configure an input element.
 		let inputElm = document.createElement('input');
@@ -108,7 +110,7 @@
 
 	};
 
-	createDirectory = (dir = null) => {
+	const createDirectory = (dir = null) => {
 
 		// No name typed yet ? Ask for it first.
 		if(dir === null) {
@@ -149,7 +151,7 @@
 
 	};
 
-	removeElm = (elm, confirm = false) => {
+	const removeElm = (elm, confirm = false) => {
 
 		// Confirm is false ? Ask for an user confirmation first.
 		if(!confirm) {
@@ -191,7 +193,7 @@
 
 	};
 
-	downloadElm = (elm) => {
+	const downloadElm = (elm) => {
 
 		ajaxManager(
 			'./app/php/download.php',
@@ -209,7 +211,7 @@
 
 	};
 
-	emptyRecycle = () => {
+	const emptyRecycle = () => {
 
 		dial(
 			`<p>${lab.action.emptyRecycle}</p>
@@ -229,13 +231,13 @@
 
 /* --- Display or templating functions. --- */
 
-	buildValidName = (string) => string.replace(/<|>|\:|\"|\/|\\|\||\?|\*/g, '-');
-	escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
-	switchDir = (dir) => document.body.classList.toggle('--in-recycle');
-	switchTheme = () => document.body.classList.toggle('--darkmode');
+	const buildValidName = (string) => string.replace(/<|>|\:|\"|\/|\\|\||\?|\*/g, '-');
+	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
+	const switchDir = (dir) => document.body.classList.toggle('--in-recycle');
+	const switchTheme = () => document.body.classList.toggle('--darkmode');
 
 	// Add a dial when some HTML is provided.
-	dial = (html) => {
+	const dial = (html) => {
 
 		if(html != undefined) {
 			UI.dial.querySelector('div').innerHTML = html;
@@ -249,7 +251,7 @@
 	};
 
 	// Build a navigable tree.
-	buildTree = (dir) => {
+	const buildTree = (dir) => {
 
 		UI.browserTree.innerHTML = '';
 		let tree = '../..';
@@ -267,7 +269,7 @@
 	};
 
 	// Build a file or a folder element.
-	buildItems = (items) => {
+	const buildItems = (items) => {
 
 		UI.browserList.innerHTML = '';
 		

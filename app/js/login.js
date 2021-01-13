@@ -1,3 +1,5 @@
+"use strict";
+
 customElements.define('log-form', class extends HTMLElement {
 
 	constructor() {
