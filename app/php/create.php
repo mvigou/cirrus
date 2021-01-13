@@ -15,7 +15,7 @@ if(verifyAccess()) {
 
 		if(isset($_POST['dir'])) {
 			
-			echo mkdir($_POST['parent'] . '/' . $_POST['dir']) ? 'success' : error_get_last()['message'];
+			echo mkdir($_POST['parent'] . '/' . buildValidName($_POST['dir'])) ? 'success' : error_get_last()['message'];
 
 		}
 

@@ -152,7 +152,7 @@
 		
 			ajaxManager(
 				'./app/php/create.php',
-				[{ name: 'parent', value: currentDir },{ name: 'dir', value: buildValidName(dir) }],
+				[{ name: 'parent', value: currentDir },{ name: 'dir', value: dir }],
 				(response) => {
 					if(response === 'success') {
 						browseDirectory(currentDir);
@@ -248,7 +248,6 @@
 
 /* --- Display or templating functions. --- */
 
-	const buildValidName = (string) => string.replace(/<|>|\:|\"|\/|\\|\||\?|\*/g, '-');
 	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 	const switchDir = (dir) => document.body.classList.toggle('--in-recycle');
 	const switchTheme = () => document.body.classList.toggle('--darkmode');

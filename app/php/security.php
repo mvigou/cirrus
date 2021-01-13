@@ -68,3 +68,9 @@ function inRecycleDirectory($elm) {
 	return preg_match($regex, $elm) ? true : false;
 
 }
+
+function buildValidName($rawName) {
+
+	return str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $rawName);
+
+}
