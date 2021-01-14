@@ -17,6 +17,10 @@
 		browserList: document.querySelector('.bwr__list')
 	};
 
+	const VAR = {
+		filesInCurrentDir: []
+	};
+
 	let lab;
 
 	if(LANG === 'fr') {

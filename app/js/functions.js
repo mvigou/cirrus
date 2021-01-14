@@ -25,7 +25,7 @@
 				${lab.error}
 				<i>${error}</i>
 			</p>
-			<button onclick="dial()"> ${ lab.button.close } </button>`
+			<button onclick="dial(null)"> ${ lab.button.close } </button>`
 		);
 
 	};
@@ -126,7 +126,7 @@
 		inputElm.click();
 
 	};
-
+	
 	const createDirectory = (dir = null) => {
 
 		// No name typed yet ? Ask for it first.
@@ -142,7 +142,7 @@
 					onclick="createDirectory(this.parentNode.querySelector('input').value)">
 					${lab.button.confirm}
 				</button>
-				<button class="dial__bt" onclick="dial()">${lab.button.cancel}</button>`
+				<button class="dial__bt" onclick="dial(null)">${lab.button.cancel}</button>`
 			);
 			
 		}
@@ -156,7 +156,7 @@
 				(response) => {
 					if(response === 'success') {
 						browseDirectory(getLocalItem('currentDir'));
-						dial();
+						dial(null);
 					}
 					else {
 						ajaxErrorHandler(response);
@@ -182,7 +182,7 @@
 				</button>
 				<button 
 					class="dial__bt"
-					onclick="dial()"> 
+					onclick="dial(null)"> 
 					${lab.button.cancel} 
 				</button>`
 			);
@@ -198,7 +198,7 @@
 				(response) => {
 					if(response === 'success') {
 						browseDirectory(getLocalItem('currentDir'));
-						dial();
+						dial(null);
 					}
 					else {
 						ajaxErrorHandler(response);
@@ -239,7 +239,7 @@
 			</button>
 			<button 
 				class="dial__bt"
-				onclick="dial()"> 
+				onclick="dial(null)"> 
 				${lab.button.cancel} 
 			</button>`
 		);
@@ -294,7 +294,7 @@
 	// Add a dial when some HTML is provided.
 	const dial = (html) => {
 
-		if(html != undefined) {
+		if(html != null) {
 			UI.dial.querySelector('div').innerHTML = html;
 			UI.dial.classList.add('dial--visible');
 		}
@@ -327,8 +327,11 @@
 	const buildItems = (items) => {
 
 		UI.browserList.innerHTML = '';
+		VAR.filesInCurrentDir = [];
 		
 		for(let item of items) {
+
+			VAR.filesInCurrentDir.push(item.label);
 
 			switch(item.type) {
 				case 'file':
