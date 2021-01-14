@@ -1,7 +1,20 @@
 "use strict";
 
-/* --- Asynchronous works. --- */
+// Handling user confirmation
 
+	// Save when mousedown/touchstart and mouseup/touchend start.
+	const watchClic = (watchedClic) => CLICK[watchedClic] = performance.now();
+
+	// Compare the time spent between mousedown and the corresponding mouseup.
+	const confirmClic = () => CLICK[1] - CLICK[0] > 1000 ? true : false;
+
+// Data correction
+
+	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
+
+// Work with the server (AJAX)
+
+	// Create an AJAX request using POST.
 	const ajaxManager = (target, args, callback) => {
 		
 		let req = new XMLHttpRequest();
@@ -18,18 +31,7 @@
 
 	};
 
-	const ajaxErrorHandler = (error) => {
-
-		dial(
-			`<p> 
-				${lab.error}
-				<i>${error}</i>
-			</p>
-			<button onclick="dial(null)"> ${ lab.button.close } </button>`
-		);
-
-	};
-
+	// Browse the content of the current directory.
 	const browseDirectory = (dir) => {
 		
 		ajaxManager(
@@ -37,7 +39,7 @@
 			[{ name: 'dir', value: dir }],
 			(response) => {
 				response = JSON.parse(response);
-				setLocalItem('currentDir', response[0]);
+				localStorage.setItem('currentDir', response[0]);
 				buildItems(response[1]);
 				buildTree(response[0]);
 			}
@@ -45,6 +47,7 @@
 
 	};
 
+	// Copy the selected file to a temporary directory where it will be available.
 	const accessFile = (filename) => {
 
 		ajaxManager(
@@ -62,6 +65,7 @@
 
 	}
 
+	// Upload selected files in the current directory.
 	const uploadFiles = () => {
 
 		// 1. Configure an input element.
@@ -78,16 +82,13 @@
 			
 			function send(file) {
 				
-				// Init loader.
 				UI.loader.progress.style.width = '0';
 				UI.loader.info.textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
 
-				// Build formData.
 				let formData = new FormData();
-				formData.append('parentDir', getLocalItem('currentDir'));
+				formData.append('parentDir', localStorage.getItem('currentDir'));
 				formData.append("file", file);
 
-				// Request.
 				let req = new XMLHttpRequest();
 				req.open('POST', './app/php/upload.php', true);
 
@@ -106,7 +107,7 @@
 					
 					// Else, end.
 					else {
-						browseDirectory(getLocalItem('currentDir'));
+						browseDirectory(localStorage.getItem('currentDir'));
 						setTimeout(
 							() => UI.loader.container.classList.remove('loader--visible'),
 							1000
@@ -127,6 +128,7 @@
 
 	};
 	
+	// Create a new empty directory.
 	const createDirectory = (dir = null) => {
 
 		// No name typed yet ? Ask for it first.
@@ -152,10 +154,10 @@
 		
 			ajaxManager(
 				'./app/php/create.php',
-				[{ name: 'parent', value: getLocalItem('currentDir') },{ name: 'dir', value: dir }],
+				[{ name: 'parent', value: localStorage.getItem('currentDir') },{ name: 'dir', value: dir }],
 				(response) => {
 					if(response === 'success') {
-						browseDirectory(getLocalItem('currentDir'));
+						browseDirectory(localStorage.getItem('currentDir'));
 						dial(null);
 					}
 					else {
@@ -168,36 +170,17 @@
 
 	};
 
-	const removeElm = (elm, confirm = false) => {
+	// Remove a file, a directory.
+	const removeElm = (elm) => {
 
-		// Confirm is false ? Ask for an user confirmation first.
-		if(!confirm) {
-						
-			dial(
-				`<p>${lab.action.remove}</p>
-				<button
-					class="dial__bt dial__bt--danger" 
-					onclick="removeElm('${escapeApostrophe(elm)}', ${true})">
-					${lab.button.confirm}
-				</button>
-				<button 
-					class="dial__bt"
-					onclick="dial(null)"> 
-					${lab.button.cancel} 
-				</button>`
-			);
-
-		}
-
-		// Confirm is true ? Proceed.
-		else {
-
+		if(confirmClic()) {
+		
 			ajaxManager(
 				'./app/php/remove.php',
 				[{ name: 'elm', value: elm }],
 				(response) => {
 					if(response === 'success') {
-						browseDirectory(getLocalItem('currentDir'));
+						browseDirectory(localStorage.getItem('currentDir'));
 						dial(null);
 					}
 					else {
@@ -205,11 +188,12 @@
 					}		
 				}
 			);
-
+		
 		}
 
 	};
 
+	// Copy the selected file or directory to a temporary directory where it will be available for download.
 	const downloadElm = (elm) => {
 
 		ajaxManager(
@@ -228,43 +212,16 @@
 
 	};
 
-	const emptyRecycle = () => {
-
-		dial(
-			`<p>${lab.action.emptyRecycle}</p>
-			<button 
-				class="dial__bt dial__bt--danger"
-				onclick="removeElm(\'RECYCLE\', true)">
-				${lab.button.confirm} 
-			</button>
-			<button 
-				class="dial__bt"
-				onclick="dial(null)"> 
-				${lab.button.cancel} 
-			</button>`
-		);
-
-	};
-
-/* --- Manipulate data persistence. --- */
-
-	const getLocalItem = (item) => localStorage.getItem(item);
-	const setLocalItem = (item, value) => localStorage.setItem(item, value);
-	
-/* --- Modify strings. --- */
-
-	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
-
-/* --- Affect the appearance of the interface. --- */
+// Work with the user interface (appearence)
 
 	const toRecycleDirTheme = () => {
 		document.body.classList.add('--in-recycle');
-		setLocalItem('mainDir', 'RECYCLE');
+		localStorage.setItem('mainDir', 'RECYCLE');
 	}
 
 	const toDataDirTheme = () => {
 		document.body.classList.remove('--in-recycle');
-		setLocalItem('mainDir', 'DATAS');
+		localStorage.setItem('mainDir', 'DATAS');
 	}
 
 	const switchMainDir = (dir) => {
@@ -275,12 +232,12 @@
 	
 	const toDarkTheme = () => {	
 		document.body.classList.add('--darkmode');
-		setLocalItem('mode', 'dark');
+		localStorage.setItem('mode', 'dark');
 	}
 
 	const toLightTheme = () => {
 		document.body.classList.remove('--darkmode');
-		setLocalItem('mode', 'light');
+		localStorage.setItem('mode', 'light');
 	}
 
 	const switchTheme = () => {
@@ -289,7 +246,7 @@
 			toDarkTheme();
 	}
 
-/* --- Display or templating functions. --- */
+// Work with the user interface (structure)
 
 	// Add a dial when some HTML is provided.
 	const dial = (html) => {
@@ -302,6 +259,19 @@
 			UI.dial.querySelector('div').innerHTML = '';
 			UI.dial.classList.remove('dial--visible');
 		}
+
+	};
+
+	// Displays some error messages.
+	const ajaxErrorHandler = (error) => {
+
+		dial(
+			`<p> 
+				${lab.error}
+				<i>${error}</i>
+			</p>
+			<button onclick="dial(null)"> ${ lab.button.close } </button>`
+		);
 
 	};
 
@@ -327,11 +297,8 @@
 	const buildItems = (items) => {
 
 		UI.browserList.innerHTML = '';
-		VAR.filesInCurrentDir = [];
 		
 		for(let item of items) {
-
-			VAR.filesInCurrentDir.push(item.label);
 
 			switch(item.type) {
 				case 'file':
@@ -369,32 +336,38 @@
 						'<path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" />';
 			
 					template += // Common parts for parent, files and subfolders.
-					'</svg>' +
-					'<div>' +
-						'<h3 class="bwr__item__title">' + item.label + '</h3>';
+					`</svg>
+					<div>
+						<h3 class="bwr__item__title">${item.label}</h3>`;
 						// Files only.
 						if(item.type === 'file') {
-							template += '<p class="bwr__item__info">' + lab.latestMod + ' ' + item.lastMod + '</p>';
+							template += `<p class="bwr__item__info">${lab.latestMod} ${item.lastMod}</p>`;
 						}
 					template +=
-					'</div>' +
-				'</a>';
+					`</div>
+				</a>`;
 
 				// Common parts for files and subfolders.
 				if(item.type === 'file' || item.type === 'subfolder') {
 					template += 
-					'<div>' +
-						`<button class="bwr__item__bt" onclick="downloadElm('${item.path}')" title="${lab.button.download}">` +
-							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +
-								'<path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/>' +
-							'</svg>' +
-						'</button>' +
-						`<button class="bwr__item__bt" onclick="removeElm('${item.path}')" title="${lab.button.delete}">` +
-							'<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">' +			
-								'<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>' +							
-							'</svg>' +
-						'</button>' +
-					'</div>';
+					`<div>
+						<button class="bwr__item__bt" onclick="downloadElm('${item.path}')" title="${lab.button.download}">
+							<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">
+								<path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/>
+							</svg>
+						</button>
+						<button 
+							class="bwr__item__bt" 	
+							ontouchstart="watchClic(0)"
+							ontouchend="watchClic(1), removeElm('${item.path}')"
+							onmousedown="watchClic(0)"
+							onmouseup="watchClic(1), removeElm('${item.path}')"
+							title="${lab.button.delete}">
+							<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">			
+								<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>						
+							</svg>
+						</button>
+					</div>`;
 						
 				}
 			
