@@ -23,7 +23,7 @@ if(verifyAccess()) {
 		}
 
 		copy($origPath, $destPath);
-		echo $destPath;
+		echo relPathFromClient($destPath);
 
 	}
 	

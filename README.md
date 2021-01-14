@@ -75,6 +75,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Mise en cache à voir / Service worker ?
 * (TODO) Intégrer une gestion de license ?
 * (TODO) Ajouter les prérequis techniques au présent README
+* (TODO) IMPORTANT : fixer la redirection htaccess des document pour être fonctionnel dans n'importe quelle architecture. 
 
 ### Personnalisation
 

@@ -70,7 +70,9 @@ function inRecycleDirectory($elm) {
 }
 
 function buildValidName($rawName) {
-
 	return str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $rawName);
+}
 
+function relPathFromClient($relPathFromServer) {
+	return str_replace('../../', './', $relPathFromServer);
 }

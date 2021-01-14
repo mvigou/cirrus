@@ -48,7 +48,7 @@ if(verifyAccess()) {
 		}
 		
 		// Return the complete path to the file or the zip as an AJAX response.
-		echo $destPath;
+		echo relPathFromClient($destPath);
 
 	}
 
