@@ -3,10 +3,15 @@
 // Handling user confirmation
 
 	// Save when mousedown/touchstart and mouseup/touchend start.
-	const watchClic = (watchedClic) => CLICK[watchedClic] = performance.now();
+	const watchClic = (watchedClic) => {
+		
+		CLICK[watchedClic] = performance.now();
+		UI.progressClick.classList.toggle('pgr-click--active');
+
+	}
 
 	// Compare the time spent between mousedown and the corresponding mouseup.
-	const confirmClic = () => CLICK[1] - CLICK[0] > 1000 ? true : false;
+	const confirmClic = () => CLICK[1] - CLICK[0] > 750 ? true : false;
 
 // Data correction
 
@@ -58,7 +63,7 @@
 					window.location.href = response;
 				}
 				else {
-					ajaxErrorHandler(response);
+					alert(`${lab.error} : \n\n ${response}`);
 				}
 			}
 		);
@@ -77,13 +82,13 @@
 		inputElm.onchange = (e) => {
 				
 			let i = 0;
-			UI.loader.container.classList.add('loader--visible');
+			UI.progressUpload.classList.add('pgr-upload--active');
 			send(inputElm.files[i]);
 			
 			function send(file) {
 				
-				UI.loader.progress.style.width = '0';
-				UI.loader.info.textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
+				UI.progressUpload.querySelector('div').style.width = '0';
+				UI.progressUpload.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
 
 				let formData = new FormData();
 				formData.append('parentDir', localStorage.getItem('currentDir'));
@@ -93,7 +98,7 @@
 				req.open('POST', './app/php/upload.php', true);
 
 				req.upload.onprogress = (e) => {
-					UI.loader.progress.style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
+					UI.progressUpload.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
 				};			
 					
 				req.onload = () => {
@@ -109,7 +114,7 @@
 					else {
 						browseDirectory(localStorage.getItem('currentDir'));
 						setTimeout(
-							() => UI.loader.container.classList.remove('loader--visible'),
+							() => UI.progressUpload.classList.remove('pgr-upload--active'),
 							1000
 						);
 
@@ -136,15 +141,15 @@
 			
 			dial(
 				`<label>
-					${lab.action.nameNewdir}
+					${lab.nameNewdir}
 					<input type="text" id="input" />
 				</label>
 				<button 
 					class="dial__bt" 
 					onclick="createDirectory(this.parentNode.querySelector('input').value)">
-					${lab.button.confirm}
+					${lab.bt.confirm}
 				</button>
-				<button class="dial__bt" onclick="dial(null)">${lab.button.cancel}</button>`
+				<button class="dial__bt" onclick="dial(null)">${lab.bt.cancel}</button>`
 			);
 			
 		}
@@ -161,7 +166,7 @@
 						dial(null);
 					}
 					else {
-						ajaxErrorHandler(response);
+						alert(`${lab.error} : \n\n ${response}`);
 					}
 				}
 			);
@@ -184,7 +189,7 @@
 						dial(null);
 					}
 					else {
-						ajaxErrorHandler(response);
+						alert(`${lab.error} : \n\n ${response}`);
 					}		
 				}
 			);
@@ -262,23 +267,10 @@
 
 	};
 
-	// Displays some error messages.
-	const ajaxErrorHandler = (error) => {
-
-		dial(
-			`<p> 
-				${lab.error}
-				<i>${error}</i>
-			</p>
-			<button onclick="dial(null)"> ${ lab.button.close } </button>`
-		);
-
-	};
-
 	// Build a navigable tree.
 	const buildTree = (dir) => {
 
-		UI.browserTree.innerHTML = '';
+		UI.browserNavTree.innerHTML = '';
 		let tree = '../..';
 		
 		for(let subDirs of dir.slice(2).split('/').slice(2)) {
@@ -286,7 +278,7 @@
 			tree += '/';
 			tree += subDirs;
 			
-			UI.browserTree.innerHTML += 
+			UI.browserNavTree.innerHTML += 
 			`<pre> / </pre><a href="#" onclick="browseDirectory('${escapeApostrophe(tree)}')">${subDirs}</a>`;
 
 		}
@@ -341,7 +333,7 @@
 						<h3 class="bwr__item__title">${item.label}</h3>`;
 						// Files only.
 						if(item.type === 'file') {
-							template += `<p class="bwr__item__info">${lab.latestMod} ${item.lastMod}</p>`;
+							template += `<p class="bwr__item__mess">${lab.latestMod} ${item.lastMod}</p>`;
 						}
 					template +=
 					`</div>
@@ -351,7 +343,7 @@
 				if(item.type === 'file' || item.type === 'subfolder') {
 					template += 
 					`<div>
-						<button class="bwr__item__bt" onclick="downloadElm('${item.path}')" title="${lab.button.download}">
+						<button class="bwr__item__bt" onclick="downloadElm('${item.path}')" title="${lab.bt.download}">
 							<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">
 								<path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/>
 							</svg>
@@ -362,7 +354,7 @@
 							ontouchend="watchClic(1), removeElm('${item.path}')"
 							onmousedown="watchClic(0)"
 							onmouseup="watchClic(1), removeElm('${item.path}')"
-							title="${lab.button.delete}">
+							title="${lab.bt.delete}">
 							<svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">			
 								<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>						
 							</svg>
