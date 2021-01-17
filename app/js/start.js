@@ -1,7 +1,5 @@
 "use strict";
-	
-const CLICK = [0, 0];
-	
+
 // If known, restore theme preference.
 if(localStorage.getItem('mode') === 'dark') {
 	toDarkTheme();

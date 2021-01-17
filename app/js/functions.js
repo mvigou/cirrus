@@ -2,17 +2,81 @@
 
 // Handling user confirmation
 
-	// Save when mousedown/touchstart and mouseup/touchend start.
-	const watchClic = (watchedClic) => {
-		
-		CLICK[watchedClic] = performance.now();
-		UI.progressClick.classList.toggle('pgr-click--active');
-
+	const ACTION = {
+		click: {
+			start: {
+				name: '',
+				time: 0
+			},
+			end: {
+				name: '',
+				time: 0
+			}
+		},
+		touch: {
+			start: {
+				x: 0,
+				y: 0,
+				time: 0
+			},
+			end: {
+				x: 0,
+				y: 0,
+				time: 0
+			}
+		}
 	}
+	
+	/* Process.
+	
+	The origin and time of the mousedown/touchstart event are recorded (watchConfirmClick / watchConfirmTouch); the same information is recorded for the mouseup/touchend event (watchConfirmClick / watchConfirmTouch). The time between the two events is then compared (validConfirmClick / validConfirmTouch) : if it is greater than a given value, the action is validated, otherwise, it is canceled. If the user moves out of the origin during the mousedown/touchstart event, a mouseleave/touchmove event is triggered and the action will be canceled when the click/touch is released elsewhere (cancelConfirm). Caution: if the user returns to release the click on the origin AFTER a mouseleave event has occurred, the action may be considered valid.
 
-	// Compare the time spent between mousedown and the corresponding mouseup.
-	const confirmClic = () => CLICK[1] - CLICK[0] > 750 ? true : false;
+	*/
 
+	const watchConfirmClick = (step, action) => {
+		ACTION.click[step].name = action;
+		ACTION.click[step].time = performance.now();
+		UI.progressClick.classList.toggle('pgr-click--active');
+	};
+
+	const validConfirmClick = () => {
+		UI.progressClick.classList.remove('pgr-click--active');
+		return ACTION.click.start.name === ACTION.click.end.name && (ACTION.click.end.time - ACTION.click.start.time) >= 750 ?
+			true : false;
+	};
+	
+	const watchConfirmTouch = (step, event) => {;
+		
+		if(step === 'start') {
+			ACTION.touch.start.x = event.touches[0].clientX;
+			ACTION.touch.start.y = event.touches[0].clientY;
+			ACTION.touch.start.time = performance.now();
+			UI.progressClick.classList.add('pgr-click--active');
+			event.preventDefault();	
+		}
+		
+		else {
+			ACTION.touch.end.x = event.changedTouches[0].clientX;
+			ACTION.touch.end.y = event.changedTouches[0].clientY;
+			ACTION.touch.end.time = performance.now();
+			UI.progressClick.classList.remove('pgr-click--active');
+		}
+		
+	};
+	
+	const validConfirmTouch = () => {
+		
+		UI.progressClick.classList.remove('pgr-click--active');	
+		
+		if(ACTION.touch.start.x === ACTION.touch.end.x && ACTION.touch.start.y === ACTION.touch.end.y && (ACTION.touch.end.time - ACTION.touch.start.time) >= 750 ) {
+			return true;
+		}
+		return false;
+			
+	};
+		
+	const cancelConfirm = () => UI.progressClick.classList.remove('pgr-click--active');
+		
 // Data correction
 
 	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
@@ -178,7 +242,7 @@
 	// Remove a file, a directory.
 	const removeElm = (elm) => {
 
-		if(confirmClic()) {
+		if(validConfirmClick() || validConfirmTouch()) {
 		
 			ajaxManager(
 				'./app/php/remove.php',
@@ -350,10 +414,10 @@
 						</button>
 						<button 
 							class="bwr__item__bt" 	
-							ontouchstart="watchClic(0)"
-							ontouchend="watchClic(1), removeElm('${item.path}')"
-							onmousedown="watchClic(0)"
-							onmouseup="watchClic(1), removeElm('${item.path}')"
+							ontouchstart="watchConfirmClick(0)"
+							ontouchend="watchConfirmClick(1), removeElm('${item.path}')"
+							onmousedown="watchConfirmClick(0)"
+							onmouseup="watchConfirmClick(1), removeElm('${item.path}')"
 							title="${lab.bt.delete}">
 							<svg class="dangerous" viewBox="-3 -3 30 30">			
 								<path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>						
