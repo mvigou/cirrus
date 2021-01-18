@@ -31,7 +31,7 @@ UI.browserNavActions.appendChild(
 			attributes: {
 				class: 'bwr__nav__bt datas-feature',
 				onclick: 'browseDirectory(\'RECYCLE\'), switchMainDir(\'RECYCLE\')',
-				title: lab.bt.toDataRecycleDir
+				title: lab.bt.toRecycleDir
 			}
 		}
 	)

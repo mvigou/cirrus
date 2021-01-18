@@ -20,8 +20,10 @@ if(LANG === 'en') {
 			toRecycleDir: 'Display the recycle bin',
 			switchTheme: 'Switch between light / dark theme'
 		},
+		file: 'File',
+		directory: 'Directory',
 		error: 'An error has occurred. The following message has been returned',
-		latestMod: 'Latest modification at',
+		latestMod: 'Modified at',
 		confirmPress: 'Release the pressure on the option to confirm. Release elsewhere to cancel.',
 		nameNewdir: 'Please type the name of the directory. For the sake of portability, some characters may be replaced.'
 	};
@@ -43,8 +45,10 @@ else {
 			toRecycleDir: 'Afficher la corbeille',
 			switchTheme: 'Basculer entre thème clair / thème sombre'
 		},
+		file: 'Fichier',
+		directory: 'Dossier',
 		error: 'Une erreur est survenue. Le message suivant a été renvoyé',
-		latestMod: 'Dernière modification le',
+		latestMod: 'Modifié le',
 		confirmPress: 'Relâchez la pression sur l\'option pour confirmer. Relâchez ailleurs pour annuler.',
 		nameNewdir: 'Veuillez saisir le nom du dossier. Dans un souci de portabilité, certains caractères peuvent être remplacés.'
 	};
