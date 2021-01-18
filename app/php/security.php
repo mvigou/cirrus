@@ -1,4 +1,4 @@
-<?php // session_start() is not required : this script is always called an other.
+<?php // session_start() is not required : this script is always called by an other.
 
 // Create an authorized access.
 function createAccess() {
@@ -37,13 +37,7 @@ function inRootDirectory($dir) {
 // Check if the user is within the authorized perimeter (data or recycle directory).
 function inScopeDirectory($elm) {
 
-	$regex = '/^\.\.\/\.\.\/';
-	$regex .= array_slice(explode('/', DATAS_DIR_PATH), -1)[0];
-	$regex .= '|';
-	$regex .= array_slice(explode('/', RECYCLE_DIR_PATH), -1)[0];
-	$regex .= '/';
-
-	return preg_match($regex, $elm) ? true : false;
+	return inDatasDirectory($elm) || inRecycleDirectory($elm) ? true : false;
 
 }
 
