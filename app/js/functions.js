@@ -41,7 +41,7 @@
 
 	const validConfirmClick = () => {
 		UI.progressClick.classList.remove('pgr-click--active');
-		return ACTION.click.start.name === ACTION.click.end.name && (ACTION.click.end.time - ACTION.click.start.time) >= 750 ?
+		return ACTION.click.start.name === ACTION.click.end.name && (ACTION.click.end.time - ACTION.click.start.time) >= 600 ?
 			true : false;
 	};
 	
@@ -67,7 +67,7 @@
 		
 		UI.progressClick.classList.remove('pgr-click--active');	
 		
-		if(ACTION.touch.start.x === ACTION.touch.end.x && ACTION.touch.start.y === ACTION.touch.end.y && (ACTION.touch.end.time - ACTION.touch.start.time) >= 750 ) {
+		if(ACTION.touch.start.x === ACTION.touch.end.x && ACTION.touch.start.y === ACTION.touch.end.y && (ACTION.touch.end.time - ACTION.touch.start.time) >= 600) {
 			return true;
 		}
 		return false;

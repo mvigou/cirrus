@@ -27,7 +27,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Interface
 
 * Traductions française / anglaise.
-* Boîte de dialogue personnalisée.
+* Boîte de dialogue personnalisée (en cours de suppression).
 * Suivi des téléchargements.
 * Thème clair, thème sombre.
 
@@ -65,6 +65,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 * (TODO) Créer un compte utilisateur.
 * Accès au contenu soumis à authentification.
+* Confirmation par clic long des actions dites "dangereuses" (support souris / appareil tactile).
 * (TODO) Sécuriser le dossier app/users où sont stockés les identifiants hachés.
 * Blocage de l'accès direct aux contenus par leur URLs.
 * Navigation restreinte aux seuls dossiers données et corbeille. 
