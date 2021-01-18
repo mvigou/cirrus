@@ -36,9 +36,7 @@ function inRootDirectory($dir) {
 
 // Check if the user is within the authorized perimeter (data or recycle directory).
 function inScopeDirectory($elm) {
-
 	return inDatasDirectory($elm) || inRecycleDirectory($elm) ? true : false;
-
 }
 
 // Check if the user is within the datas directory.

@@ -1,8 +1,6 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteRule datas /app/php/read.php
-RewriteRule recycle /app/php/read.php
-
-php_value upload_max_filesize 25M
-php_value post_max_size 150M
+RewriteRule datas "-" [F]
+RewriteRule recycle "-" [F]
+RewriteRule app/users "-" [F]

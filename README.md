@@ -66,9 +66,8 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Créer un compte utilisateur.
 * Accès au contenu soumis à authentification.
 * Confirmation par clic long des actions dites "dangereuses" (support souris / appareil tactile).
-* (TODO) Sécuriser le dossier app/users où sont stockés les identifiants hachés.
 * Blocage de l'accès direct aux contenus par leur URLs.
-* Navigation restreinte aux seuls dossiers données et corbeille. 
+* Navigation utilisateur restreinte aux seuls dossiers données et corbeille. 
 
 ### Divers
 
@@ -76,7 +75,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Mise en cache à voir / Service worker ?
 * (TODO) Intégrer une gestion de license ?
 * (TODO) Ajouter les prérequis techniques au présent README
-* (TODO) IMPORTANT : fixer la redirection htaccess des document pour être fonctionnel dans n'importe quelle architecture. 
+* (TODO) IMPORTANT : faire un point sur upload_max_filesize & post_max_size.
 
 ### Personnalisation
 
