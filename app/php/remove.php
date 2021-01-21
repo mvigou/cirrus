@@ -82,8 +82,8 @@ function removeDir($dir) {
 
 	}
 
-	// If not corresponding to the recycle directory, remove also this parent directory.
-	if($dir !== RECYCLE_DIR_PATH) {
+	// If not corresponding to the recycle or temp directories, remove also the parent directory.
+	if($dir !== RECYCLE_DIR_PATH && $dir !== TEMP_DIR_PATH) {
 		rmdir($dir);
 	}
 	

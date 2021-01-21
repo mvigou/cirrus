@@ -19,27 +19,34 @@ if(isset($_POST['log-email']) && isset($_POST['log-password'])) {
 				// Is the password provided equal to the one registered ?
 				if(password_verify($_POST['log-password'], file_get_contents('../users/' . USERNAME))) {
 					
-					// Purge the temporary directory.
-					require_once('./remove.php');
-					removeDir(TEMP_DIR_PATH);
+					require_once('./config.php');
 
-					// If necessary, (re)create user folders.
+					// If necessary, create the user data directory.
 					if(!is_dir(DATAS_DIR_PATH)) {
 						if(!mkdir(DATAS_DIR_PATH)) {
 							echo error_get_last()['message'];
 						}
 					}
+
+					// If necessary, create the recycle directory.
 					if(!is_dir(RECYCLE_DIR_PATH)) {
 						if(!mkdir(RECYCLE_DIR_PATH)) {
 							echo error_get_last()['message'];
 						}
 					}
+
+					// If necessary, create the temp directory.
 					if(!is_dir(TEMP_DIR_PATH)) {
 						if(!mkdir(TEMP_DIR_PATH)) {
 							echo error_get_last()['message'];
 						}
 					}
-
+					// Else, purge its content.
+					else {
+						require_once('./remove.php');
+						removeDir(TEMP_DIR_PATH);
+					}
+					
 					// Create a user token then redirect to app.
 					require_once('./security.php');
 					createAccess();
@@ -47,7 +54,6 @@ if(isset($_POST['log-email']) && isset($_POST['log-password'])) {
 					exit;
 				
                 }
-                
 				redirect('?log-error=invalid-creedentials');
 			}
 			redirect('?log-error=unknown-user');        
