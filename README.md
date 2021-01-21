@@ -20,13 +20,26 @@ L'utilisation d'un cloud est dans tous les cas polluant, donc **si vous pouvez v
 * Maîtriser la consommation en données et en énergie du service en lui-même (**R**esponsable).
 * Rester autonomes et (auto) héberger eux-même un service facilement maintenable, car sans dépendances ni base de données (**R**ésilient).
 
+## Exigences techniques
+
+### Installation
+
+- REQUIS : un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran. Il y a toutefois peu de chance que vous puissiez redéfinir ces limitations.
+- REQUIS : PHP version 7 ou plus.
+
+### Utilisation
+
+- REQUIS : un navigateur web moderne tel que Mozilla Firefox, Google Chrome où l'un de ses dérivés.
+- REQUIS : JavaScript (activé par défaut sur la plupart des navigateurs web modernes).
+- RECOMMANDE : L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs web modernes), dans l'intérêt du confort utilisateur (mémorisation du dernier dossier visité, des préférences de thème...).
+
 ## Fonctionnalités
 
 Note: cette liste tient également lieu de feuille de route partielle ; la fonctionnalité décrite est alors précédée de la mention (TODO).
 
 ### Interface
 
-* Traductions française / anglaise.
+* Traduction française / anglaise.
 * Boîte de dialogue personnalisée (en cours de suppression).
 * Suivi des téléchargements.
 * Thème clair, thème sombre.
@@ -67,15 +80,13 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Accès au contenu soumis à authentification.
 * Confirmation par clic long des actions dites "dangereuses" (support souris / appareil tactile).
 * Blocage de l'accès direct aux contenus par leur URLs.
-* Navigation utilisateur restreinte aux seuls dossiers données et corbeille. 
+* Navigation utilisateur restreinte aux seuls dossiers "datas" et "recycle". 
 
 ### Divers
 
 * Purge automatique des dossiers temporaires à chaque authentification réussie.
 * (TODO) Mise en cache à voir / Service worker ?
 * (TODO) Intégrer une gestion de license ?
-* (TODO) Ajouter les prérequis techniques au présent README
-* (TODO) IMPORTANT : faire un point sur upload_max_filesize & post_max_size.
 
 ### Personnalisation
 
