@@ -1,6 +1,23 @@
 "use strict";
 
-// Handling user confirmation
+/*--- --- --- --- --- --- --- --- --- ---
+			Data correction
+--- --- --- --- --- --- --- --- --- ---*/
+
+
+const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
+
+
+/*--- --- --- --- --- --- --- --- --- ---
+		Handling user confirmation
+--- --- --- --- --- --- --- --- --- ---*/
+
+
+	/* Process.
+	
+	The origin and time of the mousedown/touchstart event are recorded (watchConfirmClick / watchConfirmTouch); the same information is recorded for the mouseup/touchend event (watchConfirmClick / watchConfirmTouch). The time between the two events is then compared (validConfirmClick / validConfirmTouch) : if it is greater than a given value, the action is validated, otherwise, it is canceled. If the user moves out of the origin during the mousedown/touchstart event, a mouseleave/touchmove event is triggered and the action will be canceled when the click/touch is released elsewhere (cancelConfirm). Caution: if the user returns to release the click on the origin AFTER a mouseleave event has occurred, the action may be considered valid.
+
+	*/
 
 	const ACTION = {
 		click: {
@@ -26,12 +43,6 @@
 			}
 		}
 	}
-	
-	/* Process.
-	
-	The origin and time of the mousedown/touchstart event are recorded (watchConfirmClick / watchConfirmTouch); the same information is recorded for the mouseup/touchend event (watchConfirmClick / watchConfirmTouch). The time between the two events is then compared (validConfirmClick / validConfirmTouch) : if it is greater than a given value, the action is validated, otherwise, it is canceled. If the user moves out of the origin during the mousedown/touchstart event, a mouseleave/touchmove event is triggered and the action will be canceled when the click/touch is released elsewhere (cancelConfirm). Caution: if the user returns to release the click on the origin AFTER a mouseleave event has occurred, the action may be considered valid.
-
-	*/
 
 	const watchConfirmClick = (step, action) => {
 		ACTION.click[step].name = action;
@@ -76,14 +87,12 @@
 		
 	const cancelConfirm = () => UI.progressClick.classList.remove('pgr-click--active');
 		
-// Data correction
 
-	// Prevent issue between apostrophe and template. 
-	const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
+/*--- --- --- --- --- --- --- --- --- ---
+		Work with the server (AJAX)
+--- --- --- --- --- --- --- --- --- ---*/
 
-// Work with the server (AJAX)
 
-	// Create an AJAX request using POST.
 	const ajaxManager = (target, args, callback) => {
 		
 		let req = new XMLHttpRequest();
@@ -100,188 +109,270 @@
 
 	};
 
-	// Browse the content of the current directory.
-	const browseDirectory = (dir) => {
-		
-		ajaxManager(
-			'./app/php/browse.php',
-			[{ name: 'dir', value: dir }],
-			(response) => {
-				response = JSON.parse(response);
-				localStorage.setItem('currentDir', response[0]);
-				buildItems(response[1]);
-				buildTree(response[0]);
-			}
-		);
-
-	};
-
-	// Copy the selected file to a temporary directory where it will be available.
-	const accessFile = (filename) => {
-
-		ajaxManager(
-			'./app/php/access.php',
-			[{ name: 'filename', value: filename }],
-			(response) => {
-				if(response != 'failure') {
-					window.location.href = response;
-				}
-				else {
-					alert(`${lab.error} : \n\n ${response}`);
-				}
-			}
-		);
-
-	}
-
-	// Upload selected files in the current directory.
-	const uploadFiles = () => {
-
-		// 1. Configure an input element.
-		let inputElm = document.createElement('input');
-		inputElm.setAttribute('type', 'file');
-		inputElm.setAttribute('multiple', 'true');
-		
-		// 3. Proceed when submitted, one element at once.
-		inputElm.onchange = (e) => {
-				
-			let i = 0;
-			UI.progressUpload.classList.add('pgr-upload--active');
-			send(inputElm.files[i]);
-			
-			function send(file) {
-				
-				UI.progressUpload.querySelector('div').style.width = '0';
-				UI.progressUpload.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
-
-				let formData = new FormData();
-				formData.append('parentDir', localStorage.getItem('currentDir'));
-				formData.append("file", file);
-
-				let req = new XMLHttpRequest();
-				req.open('POST', './app/php/upload.php', true);
-
-				req.upload.onprogress = (e) => {
-					UI.progressUpload.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
-				};			
-					
-				req.onload = () => {
-
-					i++;
-					
-					// Are they others files to upload ? Recursive.
-					if(inputElm.files.length > i) {
-						send(inputElm.files[i]);
-					}
-					
-					// Else, end.
-					else {
-						browseDirectory(localStorage.getItem('currentDir'));
-						setTimeout(
-							() => UI.progressUpload.classList.remove('pgr-upload--active'),
-							1000
-						);
-
-					}
-					
-				};
-				
-				req.send(formData);
-			
-			}
-			
-		};
-		
-		// 2. Automatically active the input element.
-		inputElm.click();
-
-	};
+	/* 
+		Job : log somes errors in a log file (and propose to explore it).
+		Expected response : absolutely nothing if it's done. 
+		From : /app/php/log.php
+	*/
 	
-	// Create a new empty directory.
-	const createDirectory = (dir = null) => {
+		const ajaxErrorLog = (serverLog, clientLog) => {
 
-		// No name typed yet ? Ask for it first.
-		if(dir === null) {
-			
-			dial(
-				`<label>
-					${lab.nameNewdir}
-					<input type="text" id="input" />
-				</label>
-				<button 
-					class="dial__bt" 
-					onclick="createDirectory(this.parentNode.querySelector('input').value)">
-					${lab.bt.confirm}
-				</button>
-				<button class="dial__bt" onclick="dial(null)">${lab.bt.cancel}</button>`
-			);
-			
-		}
-		
-		// Name provided ? Proceed.
-		else {
-		
 			ajaxManager(
-				'./app/php/create.php',
-				[{ name: 'parent', value: localStorage.getItem('currentDir') },{ name: 'dir', value: dir }],
+				'./app/php/log.php',
+				[{ name: 'serverLog', value: serverLog }, { name: 'clientLog', value: clientLog }],
 				(response) => {
-					if(response === 'success') {
-						browseDirectory(localStorage.getItem('currentDir'));
-						dial(null);
-					}
-					else {
-						alert(`${lab.error} : \n\n ${response}`);
-					}
+					UI.logInfo.innerHTML = response === '' ?
+						// Error logged.
+						`${lab.logErrorTrue} <a href="error-logs.html" target="_blank">error-logs.html</a> (en).` :
+						// Error not logged.
+						UI.logInfo.innerHTML = lab.logErrorFalse
+					UI.logInfo.classList.add('log-info--active');
+					setTimeout(
+						() => UI.logInfo.classList.remove('log-info--active'),
+						3000
+					);
 				}
 			);
 
 		}
 
-	};
-
-	// Remove a file, a directory.
-	const removeElm = (elm) => {
-
-		if(validConfirmClick() || validConfirmTouch()) {
-		
+	/* 
+		Job : browse content of the selected directory.
+		Expected response : a JSON representing the content of the directory.
+		From : /app/php/browse.php
+	*/
+	
+		const browseDirectory = (dir) => {
+			
 			ajaxManager(
-				'./app/php/remove.php',
-				[{ name: 'elm', value: elm }],
-				(response) => {
-					if(response === 'success') {
-						browseDirectory(localStorage.getItem('currentDir'));
-						dial(null);
+				'./app/php/browse.php',
+				[{ name: 'dir', value: dir }],
+				(resp) => {
+					try {
+						let datas = JSON.parse(resp);
+						localStorage.setItem('currentDir', datas[0]);
+						buildItems(datas[1]);
+						buildTree(datas[0]);
 					}
-					else {
-						alert(`${lab.error} : \n\n ${response}`);
+					catch(e) {
+						ajaxErrorLog(resp, 'A JSON object was expected but the server sent something else.');
 					}		
 				}
 			);
-		
+
+		};
+
+	/* 
+		Job : copy the request file in a random, temporary and unprotected directory.
+		Expected response : a JSON with the redirection to the accessible file. 
+		From : /app/php/access.php
+	*/
+
+		const accessFile = (filename) => {
+
+			ajaxManager(
+				'./app/php/access.php',
+				[{ name: 'filename', value: filename }],
+				(resp) => {
+					try {
+						window.location.href = JSON.parse(resp);
+					}
+					catch(e) {
+						ajaxErrorLog(resp, 'A JSON object was expected but the server sent something else.');
+					}
+				}
+			);
+
 		}
 
-	};
+	/* 
+		Job : upload one or many files in parentDir.
+		Return : absolutely nothing if it's done.
+		To : /app/js/functions.js | uploadFiles
+	*/
 
-	// Copy the selected file or directory to a temporary directory where it will be available for download.
-	const downloadElm = (elm) => {
+		const uploadFiles = () => {
 
-		ajaxManager(
-			'./app/php/download.php',
-			[{ name: 'elm', value: elm }],
-			(pathToElm) => {
-				if(pathToElm !== '') {
-					// Automatically offers the download the elm.
-					let aElm = document.createElement('a');
-					aElm.setAttribute('download', '');
-					aElm.href = pathToElm;
-					aElm.click();
+			// 1. Configure an input element.
+			let inputElm = document.createElement('input');
+			inputElm.setAttribute('type', 'file');
+			inputElm.setAttribute('multiple', 'true');
+			
+			// 3. Proceed when submitted, one element at once.
+			inputElm.onchange = (e) => {
+					
+				let i = 0;
+				UI.progressUpload.classList.add('pgr-upload--active');
+				send(inputElm.files[i]);
+				
+				function send(file) {
+					
+					UI.progressUpload.querySelector('div').style.width = '0';
+					UI.progressUpload.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
+
+					let formData = new FormData();
+					formData.append('parentDir', localStorage.getItem('currentDir'));
+					formData.append("file", file);
+
+					let req = new XMLHttpRequest();
+					req.open('POST', './app/php/upload.php', true);
+
+					req.upload.onprogress = (e) => {
+						UI.progressUpload.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
+					};			
+						
+					req.onload = () => {
+
+						i++;
+						
+						// Are they others files to upload ? Recursive.
+						if(inputElm.files.length > i) {
+							send(inputElm.files[i]);
+						}
+						
+						// Else, end.
+						else {
+							browseDirectory(localStorage.getItem('currentDir'));
+							setTimeout(
+								() => UI.progressUpload.classList.remove('pgr-upload--active'),
+								1000
+							);
+
+						}
+						
+					};
+					
+					req.send(formData);
+				
 				}
+				
+			};
+			
+			// 2. Automatically active the input element.
+			inputElm.click();
+
+		};
+	
+	/* 
+		Job : create a new directory in the current directory.
+		Expected response : absolutely nothing if it's done (empty string).
+		From : /app/php/create.php
+	*/
+
+		const createDirectory = (dir = null) => {
+
+			// No name typed yet ? Ask for it first.
+			if(dir === null) {
+				
+				dial(
+					`<label>
+						${lab.nameNewdir}
+						<input type="text" id="input" />
+					</label>
+					<button 
+						class="dial__bt" 
+						onclick="createDirectory(this.parentNode.querySelector('input').value), dial(null)">
+						${lab.bt.confirm}
+					</button>
+					<button class="dial__bt" onclick="dial(null)">${lab.bt.cancel}</button>`
+				);
+				
 			}
-		);
+			
+			// Name provided ? Proceed.
+			else {
+			
+				ajaxManager(
+					'./app/php/create.php',
+					[{ name: 'parent', value: localStorage.getItem('currentDir') },{ name: 'dir', value: dir }],
+					(resp) => {
+						try { 
+							if(resp !== '') {
+								throw new Error('An empty string was expected but the server sent something else.');
+							}
+							browseDirectory(localStorage.getItem('currentDir'));
+						}
+						catch(error) {
+							ajaxErrorLog(resp, error);
+						}
+					}
+				);
 
-	};
+			}
 
-// Work with the user interface (appearence)
+		};
+
+
+	/* 
+		Job : move to the recycle directory / remove permanently a file or a directory and its content.
+		Expected response : absolutely nothing if it's done (empty string).
+		From : /app/php/remove.php
+	*/
+	
+		const removeElm = (elm) => {
+
+			if(validConfirmClick() || validConfirmTouch()) {
+			
+				ajaxManager(
+					'./app/php/remove.php',
+					[{ name: 'elm', value: elm }],
+					(resp) => {
+						try { 
+							if(resp !== '') {
+								throw new Error('An empty string was expected but the server sent something else.');
+							}
+							browseDirectory(localStorage.getItem('currentDir')); 
+						}
+						catch(error) {
+							ajaxErrorLog(resp, error);
+						}
+					}
+				);
+			
+			}
+
+		};
+
+	/* 
+		Job : copy the request file in a random, temporary and unprotected directory.
+		Expected response : a JSON containing the path to the accessible file or directory (as a zip). 
+		From : /app/php/download.php
+	*/
+
+		const downloadElm = (elm) => {
+
+			ajaxManager(
+				'./app/php/download.php',
+				[{ name: 'elm', value: elm }],
+				(resp) => {
+					try {
+						let pathToElm = JSON.parse(resp);
+						try {
+							if(pathToElm === '') {
+								throw new Error();
+							}
+							let aElm = document.createElement('a');
+							aElm.setAttribute('download', '');
+							aElm.href = pathToElm;
+							aElm.click();
+						}
+						catch(error) {
+							ajaxErrorLog(resp, 'A path was expected but the server sent an empty string.');
+						}
+					}
+					catch(error) {
+						ajaxErrorLog(resp, 'A JSON object was expected but the server sent something else or nothing.');
+					}
+				}
+			);
+
+		};
+
+
+/*--- --- --- --- --- --- --- --- --- ---
+	Update user interface (appearence)
+--- --- --- --- --- --- --- --- --- ---*/
+
 
 	const toRecycleDirTheme = () => {
 		document.body.classList.add('--in-recycle');
@@ -315,9 +406,11 @@
 			toDarkTheme();
 	}
 
-// Work with the user interface (structure)
 
-	// Add a dial when some HTML is provided.
+/*--- --- --- --- --- --- --- --- --- ---
+	Update user interface (structure)
+--- --- --- --- --- --- --- --- --- ---*/
+
 	const dial = (html) => {
 
 		if(html != null) {
@@ -331,7 +424,6 @@
 
 	};
 
-	// Build a navigable tree.
 	const buildTree = (dir) => {
 
 		UI.browserNavTree.innerHTML = '';
@@ -369,7 +461,6 @@
 		
 	};
 
-	// Build a file or a folder element.
 	const buildItems = (items) => {
 
 		UI.browserList.innerHTML = '';

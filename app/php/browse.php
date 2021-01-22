@@ -1,9 +1,14 @@
-<?php session_start();
+<?php 
+
+session_start();
+ini_set('display_errors', true);
+ini_set('html_errors', false);
+error_reporting(E_ALL);
 
 /* 
-Server side job : browse content of the selected directory.
-Return : a JSON object representing the content of the directory.
-Called by : /app/js/functions.js.
+Job : browse content of the selected directory.
+Return : a JSON representing the content of the directory.
+To : /app/js/functions.js | browseDirectory
 */
 
 require_once('./config.php');

@@ -1,9 +1,14 @@
-<?php session_start();
+<?php 
+
+session_start();
+ini_set('display_errors', true);
+ini_set('html_errors', false);
+error_reporting(E_ALL);
 
 /* 
-Server side job : if the user is authenticated, copy the resquest file in a random, temporary and unprotected directory.
-Return : a path to the accessible file or directory (as a zip). 
-Called by : /app/js/functions.js.
+Job : copy the request file in a random, temporary and unprotected directory.
+Return : a JSON containing the path to the accessible file or directory (as a zip). 
+To : /app/js/functions.js | downloadElm
 */
 
 require_once('./config.php');
@@ -44,11 +49,11 @@ if(verifyAccess()) {
 			}
 			
 			$zip->close();
-					
+			
 		}
 		
 		// Return the complete path to the file or the zip as an AJAX response.
-		echo relPathFromClient($destPath);
+		echo json_encode(relPathFromClient($destPath));
 
 	}
 

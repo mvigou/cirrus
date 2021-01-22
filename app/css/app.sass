@@ -78,7 +78,6 @@ body
 		--fill-color: #555
 		--font-color-hight: #fff
 		--font-color-low: #999
-		--main-color: #a00c3d
 
 .bwr
 	@include medium-screen	
@@ -258,3 +257,30 @@ body
 			position: absolute
 			text-align: center
 			width: 240px
+
+.log-info
+	background-color: var(--main-color)
+	border-radius: 3px
+	top: 15px
+	box-sizing: border-box
+	color: #fff
+	margin-bottom: 0
+	margin: 15px
+	padding: 15px
+	position: fixed
+	text-align: center
+	transform: translateY(-200px)
+	transition: transform 0.25s ease
+	@include medium-screen
+		margin-top: 0
+		margin-right: -180px
+		max-width: 360px
+		right: 50%
+		width: 100%
+
+	&--active
+		transform: initial
+
+	a:hover
+		color: #fff
+		

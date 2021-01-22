@@ -136,6 +136,8 @@ UI.dial = chess(
 	]}
 );
 
+UI.logInfo = chess({ type: 'p', attributes: { class: 'log-info' }});
+
 UI.browserNav.appendChild(UI.browserNavActions);
 UI.browserNav.appendChild(UI.browserNavTree);
 UI.browser.appendChild(UI.browserNav);
@@ -145,5 +147,6 @@ UI.main.appendChild(UI.browser);
 UI.main.appendChild(UI.progressClick);
 UI.main.appendChild(UI.progressUpload);
 UI.main.appendChild(UI.dial);
+UI.main.appendChild(UI.logInfo);
 
 document.body.appendChild(UI.main);

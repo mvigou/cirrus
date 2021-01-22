@@ -1,9 +1,14 @@
-<?php session_start();
+<?php 
+
+session_start();
+ini_set('display_errors', true);
+ini_set('html_errors', false);
+error_reporting(E_ALL);
 
 /* 
-Server side job : move to the recycle directory / remove permanently a file or a directory and its content.
-Return : 'success' if done.
-Called by : /app/js/functions.js.
+Job : move to the recycle directory / remove permanently a file or a directory and its content.
+Return : absolutely nothing if it's done.
+To : /app/js/functions.js | removeElm
 */
 
 require_once('./config.php');
@@ -21,7 +26,6 @@ if(verifyAccess()) {
 		// Request made from the datas directory ? MOVE to recycle.
 		if(inDatasDirectory($_POST['elm'])) {
 			moveToRecycle($_POST['elm']);
-			echo 'success';
 		}
 		
 		// Request made from the recycle directory ? REMOVE permanently.
@@ -33,7 +37,6 @@ if(verifyAccess()) {
 			else {
 				removeDir($_POST['elm']);
 			}
-			echo 'success';
 		
 		}
 

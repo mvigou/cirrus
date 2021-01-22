@@ -85,9 +85,8 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Divers
 
 * Purge automatique des dossiers temporaires à chaque authentification réussie.
+* (TODO) Revoir le timing de la purge automatique des dossiers temporaires (idéalement, suppression à la déconnexion).
+* Journalisation des erreurs.
+* (TODO) Mettre en place une purge automatique du journal d'erreur.
 * (TODO) Mise en cache à voir / Service worker ?
 * (TODO) Intégrer une gestion de license ?
-
-### Personnalisation
-
-* Sélection de la langue de l'interface depuis le fichier "app/start.js" (suivant traductions disponibles).
