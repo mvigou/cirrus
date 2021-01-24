@@ -268,27 +268,29 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			
 			// Name provided ? Proceed.
 			else {
-			
-				ajaxManager(
-					'./app/php/create.php',
-					[{ name: 'parent', value: localStorage.getItem('currentDir') },{ name: 'dir', value: dir }],
-					(resp) => {
-						try { 
-							if(resp !== '') {
-								throw new Error('An empty string was expected but the server sent something else.');
+				let dirs = dir.split('&&');
+				for(let dir of dirs) {
+					if(dir.trim() !== '') {
+						ajaxManager(
+							'./app/php/create.php',
+							[{ name: 'parent', value: localStorage.getItem('currentDir') },{ name: 'dir', value: dir.trim() }],
+							(resp) => {
+								try { 
+									if(resp !== '') {
+										throw new Error('An empty string was expected but the server sent something else.');
+									}
+									browseDirectory(localStorage.getItem('currentDir'));
+									UI.createDirForm.reset();
+									toggleActive(UI.createDirForm);
+								}
+								catch(error) {
+									ajaxErrorLog(resp, error);
+								}
 							}
-							browseDirectory(localStorage.getItem('currentDir'));
-							UI.createDirForm.reset();
-							toggleActive(UI.createDirForm);
-						}
-						catch(error) {
-							ajaxErrorLog(resp, error);
-						}
+						);
 					}
-				);
-
+				}
 			}
-
 		};
 
 
