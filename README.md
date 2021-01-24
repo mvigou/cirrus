@@ -51,6 +51,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Navigation libre dans l'arborescence des dossiers.
 * Accès rapide aux dossiers parents, depuis le dossier courant jusqu'à la racine.
 * Vider la corbeille.
+* (TODO) Afficher plus d'informations sur les fichiers et dossiers (taille, type, nb d'enfants...).
 
 ### Opérations sur les dossiers
 
@@ -65,7 +66,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Opérations sur les fichiers
 
 * Mettre en ligne un ou plusieurs fichiers à la fois.
-* (TODO) Gérer les erreurs de transferts.
+* (TODO) Gérer les erreurs de transferts (ZIP ?).
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi.
 * Consulter un fichier depuis le navigateur.
 * (TODO) Renommer un fichier.

@@ -47,11 +47,11 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 	const watchConfirmClick = (step, action) => {
 		ACTION.click[step].name = action;
 		ACTION.click[step].time = performance.now();
-		UI.progressClick.classList.toggle('pgr-click--active');
+		setPop('holding', lab.confirmPress);
 	};
 
 	const validConfirmClick = () => {
-		UI.progressClick.classList.remove('pgr-click--active');
+		unsetPop();
 		return ACTION.click.start.name === ACTION.click.end.name && (ACTION.click.end.time - ACTION.click.start.time) >= 600 ?
 			true : false;
 	};
@@ -61,7 +61,7 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			ACTION.touch.start.x = event.touches[0].clientX;
 			ACTION.touch.start.y = event.touches[0].clientY;
 			ACTION.touch.start.time = performance.now();
-			UI.progressClick.classList.add('pgr-click--active');
+			setPop('holding', lab.confirmPress);
 			event.preventDefault();	
 		}
 		
@@ -69,14 +69,14 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			ACTION.touch.end.x = event.changedTouches[0].clientX;
 			ACTION.touch.end.y = event.changedTouches[0].clientY;
 			ACTION.touch.end.time = performance.now();
-			UI.progressClick.classList.remove('pgr-click--active');
+			unsetPop();
 		}
 		
 	};
 	
 	const validConfirmTouch = () => {
 		
-		UI.progressClick.classList.remove('pgr-click--active');	
+		unsetPop();	
 		
 		if(ACTION.touch.start.x === ACTION.touch.end.x && ACTION.touch.start.y === ACTION.touch.end.y && (ACTION.touch.end.time - ACTION.touch.start.time) >= 600) {
 			return true;
@@ -85,7 +85,7 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			
 	};
 		
-	const cancelConfirm = () => UI.progressClick.classList.remove('pgr-click--active');
+	const cancelConfirm = () => unsetPop();
 		
 
 /*--- --- --- --- --- --- --- --- --- ---
@@ -121,14 +121,14 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 				'./app/php/log.php',
 				[{ name: 'serverLog', value: serverLog }, { name: 'clientLog', value: clientLog }],
 				(response) => {
-					UI.logInfo.innerHTML = response === '' ?
+					setPop('watching', response === '' ?
 						// Error logged.
 						`${lab.logErrorTrue} <a href="error-logs.html" target="_blank">error-logs.html</a> (en).` :
 						// Error not logged.
-						UI.logInfo.innerHTML = lab.logErrorFalse
-					UI.logInfo.classList.add('log-info--active');
+						lab.logErrorFalse
+					);
 					setTimeout(
-						() => UI.logInfo.classList.remove('log-info--active'),
+						() => unsetPop(),
 						3000
 					);
 				}
@@ -406,10 +406,18 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			toDarkTheme();
 	}
 
+	const setPop = (action, htmlContent) => {
+		UI.pop.querySelector('.pop__mess').innerHTML = htmlContent;
+		UI.pop.classList.add('pop--' + action);
+	}
+
+	const unsetPop = () => UI.pop.setAttribute('class', 'pop');
+
 
 /*--- --- --- --- --- --- --- --- --- ---
 	Update user interface (structure)
 --- --- --- --- --- --- --- --- --- ---*/
+
 
 	const dial = (html) => {
 
@@ -550,14 +558,14 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 								{ // Remove item button.
 									type: 'button',
 									attributes: {
-										class: 'bwr__item__bt',
+										class: 'bwr__item__bt dangerous',
 										onmousedown: 'watchConfirmClick(\'start\', \'remove-' + escapedPath + '\')',
 										onmouseup: 'watchConfirmClick(\'end\', \'remove-' + escapedPath + '\'), removeElm(\'' + escapedPath + '\')',
 										onmouseleave: 'cancelConfirm()',
 										ontouchmove: 'cancelConfirm()',
 										title: lab.bt.delete
 									},
-									html: '<svg class="dangerous" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+									html: '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
 									events: [
 										{
 											type: 'touchstart',

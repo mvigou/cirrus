@@ -10,13 +10,15 @@
 		@content
 
 @keyframes setScaleTransform
-	100%
+	to
 		transform: scale(1.5)
 
-@keyframes setOpacity
-	100%
+@keyframes fade
+	from
+		opacity: 0
+	to
 		opacity: 1
-
+	
 a
 	color: inherit
 	&:hover
@@ -26,15 +28,14 @@ label, input
 	margin: 10px 0
 	display: block
 
+h4
+	margin-top: 0
+	margin-bottom: 5px
+
 svg
 	fill: var(--fill-color)
 	padding: 5px
 	width: 25px
-	&:hover
-		fill: var(--main-color)
-
-.dangerous:hover
-	fill: var(--danger-color)
 
 button, a
 	background-color: transparent
@@ -45,10 +46,17 @@ button, a
 	font-size: 1em
 	&:hover
 		color: var(--main-color)
+		svg
+			fill: var(--main-color)
+
+
+.dangerous:hover
+	svg
+		fill: var(--danger-color)
 
 /* Specifics */
 body
-	--danger-color: #f33
+	--danger-color: #c22
 	--bg-color: #fff
 	--border-color: #eee
 	--fill-color: #ccc
@@ -209,78 +217,74 @@ body
 		>p
 			margin: 0
 
-.pgr-click
-	display: none
-	&--active
-		background-color: var(--bg-color)
-		bottom: 50%
-		box-sizing: border-box
-		display: initial
-		height: 175px
-		left: 50%
-		margin-left: -150px
-		margin-top: -87.5px
-		padding: 30px
-		position: fixed
-		right: 50%
-		top: 50%
-		width: 300px
-		z-index: 2
-		.pgr-click__tiles-ct
-			animation: setScaleTransform 0.15s ease-out 0.45s 1 forwards
-			display: grid
-			grid-template-columns: 15px 15px
-			justify-content: center
-			margin-bottom: 5px
-		.pgr-click__tile
-			animation: setOpacity 0.15s ease-out 0s 1 forwards
-			background-color: var(--danger-color)
-			height: 15px
-			opacity: 0
-			width: 15px
-			&:first-of-type
-				animation-delay: 0s
-				border-top-left-radius: 3px
-			&:nth-of-type(2)
-				animation-delay: 0.15s
-				border-top-right-radius: 3px
-			&:nth-of-type(3)
-				animation-delay: 0.30s
-				border-bottom-left-radius: 3px
-			&:last-of-type
-				animation-delay: 0.45s
-				border-bottom-right-radius: 3px
-		.pgr-click__mess
-			animation: setOpacity 0.15s 0.45s 1 forwards
-			color: inherit
-			opacity: 0
-			position: absolute
-			text-align: center
-			width: 240px
-
-.log-info
-	background-color: var(--main-color)
-	border-radius: 3px
-	top: 15px
+.pop
+	align-items: center
+	background-color: var(--bg-color)
+	border-left: none
+	border: solid 1px var(--border-color)
+	box-shadow: 0 0 15px 5px var(--fill-color)
 	box-sizing: border-box
-	color: #fff
-	margin-bottom: 0
-	margin: 15px
-	padding: 15px
+	display: flex
+	justify-content: center
+	left: 0
+	margin-top: -107.5px
+	max-width: 300px
+	padding: 30px 15px
 	position: fixed
-	text-align: center
-	transform: translateY(-200px)
-	transition: transform 0.25s ease
-	@include medium-screen
-		margin-top: 0
-		margin-right: -180px
-		max-width: 360px
-		right: 50%
-		width: 100%
+	top: 50%
+	transform: translateX(-100vw)
+	transition: transform 0.125s ease
+	z-index: 2
 
-	&--active
+	&--holding // State when pressure is maintained.
+		--mess-anim: fade 0.10s 0.50s 1 both
+		--tile-a-anim: fade .2s ease-out 0s 1 both
+		--tile-b-anim: fade .2s ease-out .2s 1 both
+		--tile-c-anim: fade .2s ease-out .4s 1 both
+		--tile-ct-anim: setScaleTransform 0.10s ease-out 0.50s 1 both
 		transform: initial
 
-	a:hover
-		color: #fff
+	&--watching // State when temporary pop up.
+		--mess-anim: fade 0.10s 2.9s 1 both reverse
+		--tile-a-anim: fade .2s ease-out 0.75s 1 both reverse
+		--tile-b-anim: fade .2s ease-out 1.5s 1 both reverse
+		--tile-c-anim: fade .2s ease-out 2.25s 1 both reverse
+		--tile-ct-anim: none
+		transform: initial
+
+	>div
+		align-items: center
+		display: flex
+		grid-template-columns: auto 2fr
+
+	.pop__tiles-ct
+		animation: var(--tile-ct-anim)
+		display: grid
+		gap: 5px
+		grid-template-rows: 12px 12px 12px
+		justify-content: center
+		margin-left: 15px
 		
+	.pop__tile
+		background-color: var(--danger-color)
+		border-radius: 50%
+		&:first-of-type
+			animation: var(--tile-a-anim)
+			height: 4px
+			margin-right: auto
+			width: 4px
+		&:nth-of-type(2)
+			animation: var(--tile-b-anim)
+			height: 8px
+			margin-left: auto
+			width: 8px
+		&:nth-of-type(3)
+			animation: var(--tile-c-anim)
+			height: 12px
+			margin-right: auto
+			width: 12px
+		
+	.pop__mess
+		animation: var(--mess-anim)
+		line-height: 22px
+		margin-left: 30px
