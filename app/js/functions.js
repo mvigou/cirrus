@@ -254,50 +254,81 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 		};
 	
 	/* 
-		Job : create a new directory in the current directory.
+		Job : create multiple directories quickly.
 		Expected response : absolutely nothing if it's done (empty string).
 		From : /app/php/create.php
 	*/
+	const createDirectory = (dir = null, parent = null) => {
+		
+		/*
+		Example : parent1>>child1&&child2||parent2>>child3>>child4||parent3
+		1. Separate parents with ||
+		2. Separate levels with >>
+		2. Separate children with &&
+		*/
 
-		const createDirectory = (dir = null) => {
-
-			// No name typed yet ? Ask for it first.
-			if(dir === null) {
-				UI.createDirForm.classList.add('create-dir-form--active');
-			}
-			
-			// Name provided ? Proceed.
-			else {
-				let dirs = dir.split('&&');
-				for(let dir of dirs) {
-					if(dir.trim() !== '') {
-						ajaxManager(
-							'./app/php/create.php',
-							[{ name: 'parent', value: localStorage.getItem('currentDir') },{ name: 'dir', value: dir.trim() }],
-							(resp) => {
-								try { 
-									if(resp !== '') {
-										throw new Error('An empty string was expected but the server sent something else.');
-									}
-									browseDirectory(localStorage.getItem('currentDir'));
-									UI.createDirForm.reset();
-									toggleActive(UI.createDirForm);
+		// No name typed yet ? Ask for it first.
+		if(dir === null) {
+			UI.createDirForm.classList.add('create-dir-form--active');
+		}
+		
+		// Infos provided ? Analyze...
+		else if(dir !== null && parent === null) {
+			if(dir !== '' && parent !== '') {
+				let parents = dir.split('||');
+				for(let parent of parents) {
+					let basePath = localStorage.getItem('currentDir');
+					let levels = parent.split('>>');
+					for(let level of levels) {
+						let children = level.split('&&');
+						if(children !== undefined && children.length > 1) {
+							for(let child of children) {		
+								child = child.trim();
+								if(child.length >= 1) {
+									createDirectory(child, basePath);
 								}
-								catch(error) {
-									ajaxErrorLog(resp, error);
-								}
+							}	
+						}
+						else {
+							level = level.trim();
+							if(level.length >= 1) {
+								createDirectory(level, basePath);		
 							}
-						);
+							basePath += '/' + level;	
+						}	
+					}
+				}	
+			}	
+		}
+
+		// Infos analyzed ? Proceed !
+		else {
+			ajaxManager(
+				'./app/php/create.php',
+				[{ name: 'parent', value: parent },{ name: 'dir', value: dir }],
+				(resp) => {
+					try { 
+						if(resp !== '') {
+							throw new Error('An empty string was expected but the server sent something else.');
+						}
+						browseDirectory(localStorage.getItem('currentDir'));
+						UI.createDirForm.reset();
+						toggleActive(UI.createDirForm);
+					}
+					catch(error) {
+						ajaxErrorLog(resp, error);
 					}
 				}
-			}
-		};
-
-
+			);			
+			
+		}
+	
+	}			
+		
 	/* 
-		Job : move to the recycle directory / remove permanently a file or a directory and its content.
-		Expected response : absolutely nothing if it's done (empty string).
-		From : /app/php/remove.php
+	Job : move to the recycle directory / remove permanently a file or a directory and its content.
+	Expected response : absolutely nothing if it's done (empty string).
+	From : /app/php/remove.php
 	*/
 	
 		const removeElm = (elm) => {
