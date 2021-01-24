@@ -202,7 +202,7 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			inputElm.onchange = (e) => {
 					
 				let i = 0;
-				UI.progressUpload.classList.add('pgr-upload--active');
+				toggleActive(UI.progressUpload);
 				send(inputElm.files[i]);
 				
 				function send(file) {
@@ -234,7 +234,7 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 						else {
 							browseDirectory(localStorage.getItem('currentDir'));
 							setTimeout(
-								() => UI.progressUpload.classList.remove('pgr-upload--active'),
+								() => toggleActive(UI.progressUpload),
 								1000
 							);
 
@@ -263,20 +263,7 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 
 			// No name typed yet ? Ask for it first.
 			if(dir === null) {
-				
-				dial(
-					`<label>
-						${lab.nameNewdir}
-						<input type="text" id="input" />
-					</label>
-					<button 
-						class="dial__bt" 
-						onclick="createDirectory(this.parentNode.querySelector('input').value), dial(null)">
-						${lab.bt.confirm}
-					</button>
-					<button class="dial__bt" onclick="dial(null)">${lab.bt.cancel}</button>`
-				);
-				
+				UI.createDirForm.classList.add('create-dir-form--active');
 			}
 			
 			// Name provided ? Proceed.
@@ -291,6 +278,8 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 								throw new Error('An empty string was expected but the server sent something else.');
 							}
 							browseDirectory(localStorage.getItem('currentDir'));
+							UI.createDirForm.reset();
+							toggleActive(UI.createDirForm);
 						}
 						catch(error) {
 							ajaxErrorLog(resp, error);
@@ -406,6 +395,8 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 			toDarkTheme();
 	}
 
+	const toggleActive = (elm) => elm.classList.toggle('--active');
+
 	const setPop = (action, htmlContent) => {
 		UI.pop.querySelector('.pop__mess').innerHTML = htmlContent;
 		UI.pop.classList.add('pop--' + action);
@@ -418,19 +409,6 @@ const escapeApostrophe = (string) => string.replace(/\'/g, '\\\'');
 	Update user interface (structure)
 --- --- --- --- --- --- --- --- --- ---*/
 
-
-	const dial = (html) => {
-
-		if(html != null) {
-			UI.dial.querySelector('div').innerHTML = html;
-			UI.dial.classList.add('dial--visible');
-		}
-		else {
-			UI.dial.querySelector('div').innerHTML = '';
-			UI.dial.classList.remove('dial--visible');
-		}
-
-	};
 
 	const buildTree = (dir) => {
 
