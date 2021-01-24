@@ -56,6 +56,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Opérations sur les dossiers
 
 * Créer un dossier vide.
+* Créer plusieurs dossier en une seule action.
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
 * (TODO) Renommer un dossier.
 * Télécharger un dossier et son contenu au format compressé Zip.
