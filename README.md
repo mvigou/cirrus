@@ -91,4 +91,4 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Journalisation des erreurs.
 * (TODO) Mettre en place une purge automatique du journal d'erreur.
 * (TODO) Mise en cache à voir / Service worker ?
-* (TODO) Intégrer une gestion de license ?
+* (TODO) Intégrer une gestion de license ? (limitation des fonctionnalité (switch theme, créer de multiple dossiers))
