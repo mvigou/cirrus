@@ -83,7 +83,7 @@ const uploadFiles = () => {
 			formData.append("file", file);
 
 			let req = new XMLHttpRequest();
-			req.open('POST', './app/php/upload.php', true);
+			req.open('POST', './app/server/upload.php', true);
 
 			req.upload.onprogress = (e) => {
 				UI.progressUpload.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';

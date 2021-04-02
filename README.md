@@ -24,7 +24,7 @@ L'utilisation d'un cloud est dans tous les cas polluant, donc **si vous pouvez v
 
 ### Installation
 
-- REQUIS : un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran. Il y a toutefois peu de chance que vous puissiez redéfinir ces limitations.
+- REQUIS : un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran.
 - REQUIS : PHP version 7 ou plus.
 
 ### Utilisation
@@ -39,56 +39,62 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Interface
 
-* Traduction française / anglaise.
-* Boîte de dialogue personnalisée (en cours de suppression).
-* Suivi des téléchargements.
+* Confirmation des actions dites "dangereuses" avec méthode novatrice.
+* Suivi de la progression des téléchargements de fichiers.
 * Thème clair, thème sombre.
+* Traduction française / anglaise.
 
 ### Explorateur
 
-* Sélection du dossier parent (utilisateur, corbeille).
-* Restitution de l'arborescence des dossiers conforme à la réalité.
-* Navigation libre dans l'arborescence des dossiers.
-* Accès rapide aux dossiers parents, depuis le dossier courant jusqu'à la racine.
-* Vider la corbeille.
 * (TODO) Afficher plus d'informations sur les fichiers et dossiers (taille, type, nb d'enfants...).
+* Accès rapide aux dossiers parents, depuis le dossier courant jusqu'à la racine.
+* Navigation dans l'arborescence des dossiers.
+* Purge de la corbeille.
+* Restitution de l'arborescence des dossiers conforme à la réalité.
+* Sélection du dossier parent (utilisateur, corbeille).
 
 ### Opérations sur les dossiers
 
-* Créer un dossier vide.
-* Créer plusieurs dossier en une seule action.
-* (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
+* (TODO) Mise en ligne d'un ou plusieurs dossiers à la fois.
 * (TODO) Renommer un dossier.
-* Télécharger un dossier et son contenu au format compressé Zip.
-* Déplacer un dossier vers la corbeille.
 * (TODO) Restorer un dossier depuis la corbeille.
-* Supprimer définitivement un dossier.
+* Création d'un dossier vide.
+* Création de plusieurs dossiers en une seule action.
+* Déplacement d'un dossier vers la corbeille.
+* Suppression définitive d'un dossier.
+* Téléchargement d'un dossier et de son contenu au format compressé Zip.
 
 ### Opérations sur les fichiers
 
-* Mettre en ligne un ou plusieurs fichiers à la fois.
 * (TODO) Gérer les erreurs de transferts (ZIP ?).
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi.
-* Consulter un fichier depuis le navigateur.
 * (TODO) Renommer un fichier.
-* Télécharger un fichier.
-* Déplacer un fichier vers la corbeille.
 * (TODO) Restorer un fichier depuis la corbeille.
-* Supprimer définitivement un fichier.
+* Aperçu d'un fichier depuis le navigateur (suivant support).
+* Déplacement d'un fichier vers la corbeille.
+* Mise en ligne d'un ou plusieurs fichiers à la fois.
+* Suppression définitive d'un fichier.
+* Téléchargement d'un fichier.
+
+### Opérations utilisateurs
+
+* (TODO) Création de comptes utilisateurs supplémentaires.
+* Assistant de création d'un compte "Propriétaire" à l'installation. 
 
 ### Sécurité
 
-* (TODO) Créer un compte utilisateur.
-* Accès au contenu soumis à authentification.
-* Confirmation par clic long des actions dites "dangereuses" (support souris / appareil tactile).
-* Blocage de l'accès direct aux contenus par leur URLs.
-* Navigation utilisateur restreinte aux seuls dossiers "datas" et "recycle". 
+* Accès utilisateur restreint aux seuls dossiers "datas" et "recycle". 
+* Accès à l'arborescence des contenus soumis à authentification.
+* Journalisation des erreurs dans un fichier dédié.
+* Verrouillage de l'accès via URL au dossier "datas" et son contenu (.htaccess).
+* Verrouillage de l'accès via URL au dossier "recycle" et son contenu (.htaccess).
+* Verrouillage de l'accès via URL au dossier "users" et son contenu (.htaccess).
 
 ### Divers
 
-* Purge automatique des dossiers temporaires à chaque authentification réussie.
-* (TODO) Revoir le timing de la purge automatique des dossiers temporaires (idéalement, suppression à la déconnexion).
-* Journalisation des erreurs.
+* (TODO) Intégrer une gestion de license ? (limitation des fonctionnalité ? Message toutes les X actions ?)
 * (TODO) Mettre en place une purge automatique du journal d'erreur.
 * (TODO) Mise en cache à voir / Service worker ?
-* (TODO) Intégrer une gestion de license ? (limitation des fonctionnalité (switch theme, créer de multiple dossiers))
+* (TODO) Revoir le timing de la purge automatique des dossiers temporaires (idéalement, suppression à la déconnexion).
+* Installation automatique au démarrage.
+* Purge automatique des dossiers temporaires à chaque authentification réussie.

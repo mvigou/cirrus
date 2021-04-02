@@ -3,4 +3,4 @@ Options -Indexes
 RewriteEngine On
 RewriteRule datas "-" [F]
 RewriteRule recycle "-" [F]
-RewriteRule app/users "-" [F]
+RewriteRule users "-" [F]

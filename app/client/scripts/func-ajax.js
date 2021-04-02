@@ -12,7 +12,7 @@ const ajaxPost = (req) => {
 			}
 	
 			fetch(
-				'./app/php/' + req.script, {
+				'./app/server/' + req.script, {
 					method: 'POST',
 					body: formData
 				}

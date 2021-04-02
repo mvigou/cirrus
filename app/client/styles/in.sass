@@ -1,0 +1,68 @@
+@font-face
+	font-display: swap
+	font-family: 'Josefin'
+	src: url("/app/client/styles/josefin-sans-regular.woff2") format("woff2")
+
+html
+	font-size: 16px
+
+body
+	--bg-color: #fff
+	--border-color: #eee
+	--danger-color: #c22
+	--fill-color: #ccc
+	--font-color-hight: #333
+	--font-color-low: #666
+	--main-color: #a00c3d
+	background-color: var(--bg-color)
+	box-sizing: border-box
+	color: var(--font-color-hight)	
+	font-family: Josefin, sans-serif
+	margin: 0
+
+header
+	border-bottom: solid 1px var(--border-color)
+	padding: 36px 48px
+	@media screen and (min-width: 768px)
+		padding: 60px 72px
+
+h1
+	color: var(--font-color-low)
+	margin: 0
+	text-align: right
+
+h2
+	color: var(--main-color)
+	margin-top: 0
+
+a
+	color: inherit
+
+form
+	border-radius: 12px
+	box-sizing: border-box
+	padding: 24px 36px
+	@media screen and (min-width: 768px)
+		padding: 60px 72px
+
+label
+	display: block
+	margin-bottom: 36px
+
+	span
+		color: var(--font-color-low)
+		display: block
+		font-size: 0.85rem
+
+input
+	background-color: transparent
+	border: none
+	border-bottom: solid 1px var(--fill-color) 
+	color: var(--font-color-low)
+	display: block
+	font-size: 1rem
+	margin-top: 6px
+
+	&:focus
+		border-bottom-color: var(--main-color)
+		outline: none
