@@ -132,12 +132,6 @@ UI.progressUpload = chess(
 	]}
 );
 
-UI.dial = chess(
-	{ type: 'div', attributes: { class: 'dial' }, children: [
-		{ type: 'div', attributes: { class: 'dial__content' }}	
-	]}
-);
-
 UI.createDirForm = chess(
 	{ 
 		type: 'form', 
@@ -167,6 +161,5 @@ UI.browser.appendChild(UI.browserList);
 UI.main.appendChild(UI.browser);
 UI.main.appendChild(UI.pop);
 UI.main.appendChild(UI.progressUpload);
-UI.main.appendChild(UI.dial);
 
 document.body.appendChild(UI.main);
