@@ -5,7 +5,7 @@ const ajaxPost = (req) => {
 	return new Promise(
 	
 		(resolve, reject) => {
-			
+
 			let formData = new FormData();
 			for(const arg of req.args) {
 				formData.append(arg.name, arg.value);
@@ -39,11 +39,19 @@ const ajaxPost = (req) => {
 const ajaxLog = (origin, log) => {
 
 	ajaxPost(
-		'log',
-		[
-			{ name: 'origin', value: origin },
-			{ name: 'log', value: log }
-		],
+		{
+			script: 'log.php',
+			args: [
+				{ 
+					name: 'origin', 
+					value: origin
+				},
+				{ 
+					name: 'log',
+					value: log
+				}
+			]
+		},
 	)
 	.then( // Expected response : absolutely nothing if it's done. 
 		response => { 
