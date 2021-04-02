@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 /* 
 Job : browse content of the selected directory.
 Return : a JSON representing the content of the directory.
-To : /app/js/functions.js | browseDirectory
+To : browseDirectory
 */
 
 require_once('./config.php');

@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 /* 
 Job : create a new directory in the current directory.
 Return : absolutely nothing if it's done.
-To : /app/js/functions.js | createDirectory
+To : createDirectory
 */
 
 require_once('./config.php');

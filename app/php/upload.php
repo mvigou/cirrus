@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 /* 
 Job : upload one or many files in parentDir.
 Return : absolutely nothing if it's done.
-To : /app/js/functions.js | uploadFiles
+To : uploadFiles
 */
 
 require_once('./config.php');

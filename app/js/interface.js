@@ -1,5 +1,8 @@
 "use strict";
 
+// https://github.com/AwebsomeFr/chess
+const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.text:t.html&&(e.innerHTML=t.html),t.attributes)for(let n in t.attributes)e.setAttribute(n,t.attributes[n]);if(t.events)for(let n of t.events)e.addEventListener(n.type,n.function);if(t.children)for(let n of t.children)e.appendChild(chess(n));return e}
+
 const UI = {};
 
 UI.main = chess({ type: 'main' });

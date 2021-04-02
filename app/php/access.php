@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 /* 
 Job : copy the request file in a random, temporary and unprotected directory.
 Return : a JSON with the redirection to the accessible file. 
-To : /app/js/functions.js | accessFile
+To : accessFile
 */
 
 require_once('./config.php');

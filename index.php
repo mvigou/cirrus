@@ -27,10 +27,11 @@
 	// Access granted. 
 	else { ?>
 
-		<script src="./app/js/chess.js"></script>
 		<script src="./app/js/i18n.js"></script>
+		<script src="./app/js/func-ajax.js"></script>
+		<script src="./app/js/func-core.js"></script>
+		<script src="./app/js/func-ui.js"></script>	
 		<script src="./app/js/interface.js"></script>
-		<script src="./app/js/functions.js"></script>
 		<script src="./app/js/start.js"></script>
 	
 	<?php } ?>

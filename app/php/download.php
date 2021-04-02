@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 /* 
 Job : copy the request file in a random, temporary and unprotected directory.
 Return : a JSON containing the path to the accessible file or directory (as a zip). 
-To : /app/js/functions.js | downloadElm
+To : downloadElm
 */
 
 require_once('./config.php');
@@ -53,7 +53,7 @@ if(verifyAccess()) {
 		}
 		
 		// Return the complete path to the file or the zip as an AJAX response.
-		echo json_encode(relPathFromClient($destPath));
+		echo relPathFromClient($destPath);
 
 	}
 
