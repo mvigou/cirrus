@@ -4,6 +4,7 @@
 
 	const toRecycleDirTheme = () => {
 		document.body.classList.add('--in-recycle');
+		toggleAddDirForm(false);
 		localStorage.setItem('mainDir', 'RECYCLE');
 	};
 
@@ -16,6 +17,23 @@
 		dir === 'RECYCLE' ?
 			toRecycleDirTheme():
 			toDataDirTheme();
+	};
+
+	const toggleAddDirForm = (open) => {
+		const addFormElm = document.querySelector('.add-dir-form');
+		if(addFormElm.classList.contains('--enabled') || open === false) {
+			addFormElm.classList.remove('--enabled');
+		}
+		else {
+			addFormElm.classList.add('--enabled');
+			addFormElm.querySelector('input').focus();
+		}
+	}
+
+	const toggleEdition = () => {
+		document.body.classList.contains('--edition') ?
+			document.body.classList.remove('--edition'):
+			document.body.classList.add('--edition');
 	};
 
 	const toDarkTheme = () => {	
@@ -34,14 +52,6 @@
 			toDarkTheme();
 	};
 
-	const toggleEdition = () => {
-		document.body.classList.contains('--edition') ?
-			document.body.classList.remove('--edition'):
-			document.body.classList.add('--edition');
-	};
-
-	const toggleActive = elm => elm.classList.toggle('--active');
-
 	const setPop = (type, content) => {
 		
 		UI.pop.querySelector('.pop__content').innerHTML = content;
@@ -57,6 +67,8 @@
 	};
 
 	const unsetPop = () => UI.pop.setAttribute('class', 'pop');
+
+	const toogleProgressBar = () => UI.progressBar.classList.toggle('--enabled');
 
 /* --- Handling user confirmation --- */
 
@@ -139,7 +151,7 @@
 	const buildTree = dir => {
 
 		UI.browserNavTree.innerHTML = '';
-		let tree = '../..';
+		let tree = '';
 		
 		for(let subDirs of dir.slice(2).split('/').slice(2)) {
 					
@@ -159,11 +171,19 @@
 				chess(
 					{
 						type: 'a',
-						text: subDirs, 
 						attributes: {
-							href: '#',
-							onclick: 'browseDirectory(\'' + escapeApostrophe(tree) + '\')'
-						}
+							href: tree,
+						},
+						events: [
+							{
+								type: 'click',
+								function: e => {
+									browseDirectory('../..' + e.target.pathname);
+									e.preventDefault();
+								} 
+							}
+						],
+						text: subDirs 
 					}
 				)
 			);
@@ -172,7 +192,7 @@
 		
 	};
 
-	const buildItems = items => {
+	const buildItems = (items, dir) => {
 
 		UI.browserList.innerHTML = '';
 		
@@ -180,17 +200,15 @@
 
 			switch(item.type) {
 				case 'file':
-					item.path = item.directory + '/' + item.label;
+					item.path = dir + '/' + item.label;
 					break;
 				case 'subfolder':
-					item.path = item.directory + '/' + item.label;
+					item.path = dir + '/' + item.label;
 					break;
 				case 'parent':
-					item.path = item.directory.substr(0, item.directory.lastIndexOf('/'));
+					item.path = dir.substr(0, dir.lastIndexOf('/'));
 					break;
 			}
-
-			let escapedPath = escapeApostrophe(item.path);
 
 			let itemElm = chess(
 				{
@@ -210,10 +228,10 @@
 									type: 'click',
 									function: () => {
 										if(item.type === 'file') {
-											accessFile(escapedPath);
+											accessFile(item.path);
 										}
 										else {
-											browseDirectory(escapedPath);
+											browseDirectory(item.path);
 										}
 									}
 								},
@@ -278,7 +296,7 @@
 									events: [
 										{
 											type: 'click',
-											function: () => downloadElm(escapedPath)
+											function: () => downloadElm(item.path)
 										}
 									],
 									html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>'
@@ -293,13 +311,13 @@
 									events: [
 										{
 											type: 'mousedown',
-											function: () => watchConfirmClick('start', escapedPath)
+											function: () => watchConfirmClick('start', item.path)
 										},
 										{
 											type: 'mouseup',
 											function: () => {
-												watchConfirmClick('end', escapedPath),
-												removeElm(escapedPath)
+												watchConfirmClick('end', item.path),
+												removeElm(item.path)
 											}
 										},
 										{

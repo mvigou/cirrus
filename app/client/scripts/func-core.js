@@ -1,9 +1,7 @@
 "use strict";
 
-const escapeApostrophe = string => string.replace(/\'/g, '\\\'');
-
 const browseDirectory = dir => {
-	
+
 	ajaxPost(
 		{
 			script: 'browse.php',
@@ -20,7 +18,7 @@ const browseDirectory = dir => {
 			try {
 				const datas = JSON.parse(response);
 				localStorage.setItem('currentDir', datas[0]);
-				buildItems(datas[1]);
+				buildItems(datas[1], datas[0]);
 				buildTree(datas[0]);
 			}
 			catch(e) {
@@ -43,13 +41,13 @@ const uploadFiles = () => {
 	inputElm.onchange = (e) => {
 			
 		let i = 0;
-		toggleActive(UI.progressUpload);
+		toogleProgressBar();
 		send(inputElm.files[i]);
 		
 		function send(file) {
 			
-			UI.progressUpload.querySelector('div').style.width = '0';
-			UI.progressUpload.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
+			UI.progressBar.querySelector('div').style.width = '0';
+			UI.progressBar.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
 
 			let formData = new FormData();
 			formData.append('parentDir', localStorage.getItem('currentDir'));
@@ -59,7 +57,7 @@ const uploadFiles = () => {
 			req.open('POST', './app/server/upload.php', true);
 
 			req.upload.onprogress = (e) => {
-				UI.progressUpload.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
+				UI.progressBar.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
 			};			
 				
 			req.onload = () => { // Expected response : absolutely nothing if it's done.
@@ -75,7 +73,7 @@ const uploadFiles = () => {
 				else {
 					browseDirectory(localStorage.getItem('currentDir'));
 					setTimeout(
-						() => toggleActive(UI.progressUpload),
+						() => toogleProgressBar(),
 						1000
 					);
 
@@ -242,13 +240,8 @@ const createDirectory = (dir = null, parent = null) => {
 	2. Separate children with &&
 	*/
 
-	// No name typed yet ? Ask for it first.
-	if(dir === null) {
-		document.querySelector('.add-dir-form').classList.add('add-dir-form--active');
-	}
-	
 	// Infos provided ? Analyze...
-	else if(dir !== null && parent === null) {
+	if(dir !== null && parent === null) {
 		if(dir !== '' && parent !== '') {
 			let parents = dir.split('||');
 			for(let parent of parents) {
@@ -298,7 +291,6 @@ const createDirectory = (dir = null, parent = null) => {
 				if(response === 'success') {
 					browseDirectory(localStorage.getItem('currentDir'));
 					document.querySelector('.add-dir-form').reset();
-					toggleActive(document.querySelector('.add-dir-form')); 
 				}
 				else {
 					throw new Error(response);

@@ -18,17 +18,13 @@ if(verifyAccess()) {
 	
 	if(isset($_POST['dir'])) {
 		
-		// Keyword DATAS.
 		if($_POST['dir'] === 'DATAS') {
 			browseDirectory(DATAS_DIR_PATH);
 		}
-		// Keyword RECYCLE.
 		else if($_POST['dir'] === 'RECYCLE') {
 			browseDirectory(RECYCLE_DIR_PATH);
 		}
-		// Provided (and authorized) directory.
 		else {
-	
 			if(inRecycleDirectory($_POST['dir']) || inDatasDirectory($_POST['dir'])) {
 				browseDirectory($_POST['dir']);
 			}
@@ -40,63 +36,58 @@ if(verifyAccess()) {
 	
 function browseDirectory($dir) {
 	
-	if($tree = dir($dir)) {
+	$response = [];
+	array_push($response, $dir); // Parent directory.
+	array_push($response, array()); // Children.
 
-		$response = [];
-		array_push($response, $dir); // Parent.
-		array_push($response, array()); // Children.
+	$arrFiles = [];
+	$arrDir = [];
 
-		while($item = $tree->read()) {
-		
-			if($item !== '.') {
-				
-				// To parent folder.
-				if($item === '..') {
-				
-					if(!inRootDirectory($dir)) {
-						array_push($response[1],
-							array(
-								'type' => 'parent',
-								'label' => $item,
-								'directory' => $dir
-							)
-						);
-					}
-				
-				}
-				
-				// To children.
-				else {
-					
-					if(is_file($dir . '/' . $item)) {
-						array_push($response[1],
-							array(
-								'type' => 'file',
-								'label' => $item,
-								'directory' => $dir,
-								'lastMod' => date('Y-m-d / H:i', filemtime($dir . '/' . $item))
-							)
-						);
-					}
-					else {
-						array_push($response[1],
-							array(
-								'type' => 'subfolder',
-								'label' => $item,
-								'directory' => $dir
-							)
-						);
-					}
-		
-				}
+	foreach(array_diff(scandir($dir), array('.')) as $item) {
+
+		// Parent directory.
+		if($item === '..') {
+			if(!inRootDirectory($dir)) {
+				array_push($response[1],
+					array(
+						'type' => 'parent',
+						'label' => $item
+					)
+				);
+			}
+		}
+		else {
+			// Sub directory.
+			if(is_dir($dir . '/' . $item)) {
+				array_push($arrDir, $item);
+			}
+			// File.
+			else {
+				array_push($arrFiles, $item);
 			}
 
 		}
 
-		$tree->close();
-
-		echo json_encode($response);
-
 	}
+
+	foreach($arrDir as $item) {
+		array_push($response[1],
+			array(
+				'type' => 'subfolder',
+				'label' => $item
+			)
+		);
+	}
+
+	foreach($arrFiles as $item) {
+		array_push($response[1],
+			array(
+				'type' => 'file',
+				'label' => $item,
+			)
+		);
+	}
+	
+	echo json_encode($response);
 
 }
