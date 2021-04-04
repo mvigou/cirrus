@@ -9,22 +9,26 @@ if(LANG === 'en') {
 	
 	lab = {
 		bt: {
-			add: 'Add',
-			createDir: 'Create directory',
+			createDir: 'Create a directory',
 			delete: 'Delete (hold to validate)',
 			download: 'Download',
-			sendFiles: 'Upload files',
 			emptyRecycle: 'Empty the recycle (hold to validate)',
+			rename: 'Rename files and directories',
+			open: 'Open',
+			sendFiles: 'Upload files',
+			switchTheme: 'Switch between light / dark theme',
 			toDataDir: 'Display the datas',
 			toRecycleDir: 'Display the recycle bin',
-			switchTheme: 'Switch between light / dark theme'
+			confirm: 'Confirm'
+		},
+		pop: {
+			confirmPress: 'Release on the option to confirm. Release elsewhere to cancel.',
+			duplicateContent: 'This name is already taken.',
+			loggedError: 'An error occurred during the processing of this action (<a href="logs.html" target="_blank">learn more</a>).'
 		},
 		file: 'File',
 		directory: 'Directory',
-		logErrorTrue: '<h4>Error</h4>You can learn more about it by reading the file ',
-		logErrorFalse: '<h4>Error</h4>And cirrus was unable to log it, sorry.',
-		latestMod: 'Modified at',
-		confirmPress: '<h4>Dangerous Action</h4> Release on the option to confirm. Release elsewhere to cancel.',
+		latestMod: 'Modified at'
 	};
 	
 }
@@ -33,22 +37,26 @@ else {
 	
 	lab = {
 		bt: {
-			add: 'Ajouter',
 			createDir: 'Créer un dossier',
 			delete: 'Supprimer (maintenir pour valider)',
 			download: 'Télécharger',
-			sendFiles: 'Envoyer des fichiers',
 			emptyRecycle: 'Vider la corbeille (maintenir pour valider)',
+			rename: 'Renommer des fichiers et des dossiers',
+			open: 'Ouvrir',
+			sendFiles: 'Envoyer des fichiers',
+			switchTheme: 'Basculer entre thème clair / thème sombre',
 			toDataDir: 'Afficher les données',
 			toRecycleDir: 'Afficher la corbeille',
-			switchTheme: 'Basculer entre thème clair / thème sombre'
+			confirm: 'Valider'
+		},
+		pop: {
+			confirmPress: 'Relâchez sur l\'option pour supprimer. Relâchez ailleurs pour annuler.',
+			duplicateContent: 'Ce nom est déjà pris.',
+			loggedError: 'Une erreur est survenue pendant le traitement de cette action (<a href="logs.html" target="_blank">en savoir plus</a>).'
 		},
 		file: 'Fichier',
 		directory: 'Dossier',
-		logErrorTrue: '<h4>Erreur</h4> Vous pouvez en apprendre plus en lisant le fichier ',
-		logErrorFalse: '<h4>Erreur</h4>Et cirrus n\'a pas pu la consigner, désolé.',
 		latestMod: 'Modifié le',
-		confirmPress: '<h4>Action dangereuse</h4> Relâchez sur l\'option pour valider. Relâchez ailleurs pour annuler.'
 	};
 	
 }

@@ -53,17 +53,6 @@ const ajaxLog = (origin, log) => {
 			]
 		},
 	)
-	.then( // Expected response : absolutely nothing if it's done. 
-		response => { 
-			setPop('watching', response === '' ?
-				`${lab.logErrorTrue} <a href="error-logs.html" target="_blank">error-logs.html</a> (en).` :
-				lab.logErrorFalse
-			);
-			setTimeout(
-				() => unsetPop(),
-				3000
-			);
-		}
-	)
+	.then(response => setPop('warning', lab.pop.loggedError));
 
 };

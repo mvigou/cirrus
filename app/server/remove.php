@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 /* 
 Job : move to the recycle directory / remove permanently a file or a directory and its content.
-Return : absolutely nothing if it's done.
+Return : success if it's done.
 To : removeElm
 */
 
@@ -39,6 +39,8 @@ if(verifyAccess()) {
 			}
 		
 		}
+
+		echo 'success';
 
 	}
 	

@@ -31,7 +31,7 @@ L'utilisation d'un cloud est dans tous les cas polluant, donc **si vous pouvez v
 
 - REQUIS : un navigateur web moderne tel que Mozilla Firefox, Google Chrome où l'un de ses dérivés.
 - REQUIS : JavaScript (activé par défaut sur la plupart des navigateurs web modernes).
-- RECOMMANDE : L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs web modernes), dans l'intérêt du confort utilisateur (mémorisation du dernier dossier visité, des préférences de thème...).
+- REQUIS : L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs web modernes).
 
 ## Fonctionnalités
 
@@ -47,38 +47,39 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Explorateur
 
 * (TODO) Afficher plus d'informations sur les fichiers et dossiers (taille, type, nb d'enfants...).
+* (TODO) Ordre de tri à préciser.
 * Accès rapide aux dossiers parents, depuis le dossier courant jusqu'à la racine.
 * Navigation dans l'arborescence des dossiers.
 * Purge de la corbeille.
-* Restitution de l'arborescence des dossiers conforme à la réalité.
+* Arborescence des dossiers conforme à la réalité.
 * Sélection du dossier parent (utilisateur, corbeille).
 
 ### Opérations sur les dossiers
 
-* (TODO) Mise en ligne d'un ou plusieurs dossiers à la fois.
-* (TODO) Renommer un dossier.
-* (TODO) Restorer un dossier depuis la corbeille.
-* Création d'un dossier vide.
-* Création de plusieurs dossiers en une seule action.
-* Déplacement d'un dossier vers la corbeille.
-* Suppression définitive d'un dossier.
-* Téléchargement d'un dossier et de son contenu au format compressé Zip.
+* (TODO) Copier un dossier.
+* (TODO) Déplacer un dossier.
+* (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
+* Créer un ou plusieurs dossiers vides.
+* Placer un dossier dans la corbeille.
+* Renommer un dossier.
+* Supprimer définitivement un dossier.
+* Télécharger un dossier et son contenu au format compressé Zip.
 
 ### Opérations sur les fichiers
 
-* (TODO) Gérer les erreurs de transferts (ZIP ?).
-* (TODO) Prévenir l'écrasement de fichier pendant l'envoi.
-* (TODO) Renommer un fichier.
-* (TODO) Restorer un fichier depuis la corbeille.
-* Aperçu d'un fichier depuis le navigateur (suivant support).
-* Déplacement d'un fichier vers la corbeille.
-* Mise en ligne d'un ou plusieurs fichiers à la fois.
-* Suppression définitive d'un fichier.
-* Téléchargement d'un fichier.
+* (TODO) Copier un fichier.
+* (TODO) Déplacer un fichier.
+* (TODO) Prévenir l'écrasement de fichier pendant l'envoi ?
+* Déplacer un fichier vers la corbeille.
+* Mettre en ligne un ou plusieurs fichiers à la fois.
+* Prévisualiser un fichier dans le navigateur (suivant support).
+* Renommer un fichier.
+* Supprimer définitivement un fichier.
+* Télécharger un fichier.
 
 ### Opérations utilisateurs
 
-* (TODO) Création de comptes utilisateurs supplémentaires.
+* (TODO) Créer des comptes utilisateurs supplémentaires.
 * Assistant de création d'un compte "Propriétaire" à l'installation. 
 
 ### Sécurité

@@ -32,33 +32,6 @@ const browseDirectory = dir => {
 
 };
 
-const accessFile = filename => {
-
-	ajaxPost(
-		{
-			script: 'access.php',
-			args: [
-				{ 
-					name: 'filename', 
-					value: filename 
-				}
-			]
-		}
-	)
-	.then( // Expected response : a JSON with the redirection to the accessible file.
-		response => {
-			try {
-				window.location.href = JSON.parse(response);
-			}
-			catch(e) {
-				throw new Error('A JSON object was expected but the server sent something else.')
-			}
-		}
-	)
-	.catch(error => ajaxLog('accessFile', error ));
-
-};
-
 const uploadFiles = () => {
 
 	// 1. Configure an input element.
@@ -121,6 +94,84 @@ const uploadFiles = () => {
 
 };
 
+const accessFile = filename => {
+
+	ajaxPost(
+		{
+			script: 'access.php',
+			args: [
+				{ 
+					name: 'filename', 
+					value: filename 
+				}
+			]
+		}
+	)
+	.then( // Expected response : a JSON with the redirection to the accessible file.
+		response => {
+			try {
+				window.location.href = JSON.parse(response);
+			}
+			catch(e) {
+				throw new Error('A JSON object was expected but the server sent something else.')
+			}
+		}
+	)
+	.catch(error => ajaxLog('accessFile', error ));
+
+};
+
+const renameElm = (oldName, newName, elm) => {
+
+	if(newName.length >= 1) {
+
+		if(oldName !== newName) {
+			
+			ajaxPost(
+				{
+					script: 'rename.php',
+					args: [
+						{ 
+							name: 'oldName', 
+							value: oldName
+						},
+						{ 
+							name: 'newName', 
+							value: newName 
+						},
+						{
+							name: 'parentDir',
+							value: localStorage.getItem('currentDir')
+						}
+					]
+				}
+			)
+			.then(
+				response => {
+					if(response === 'success') {
+						browseDirectory(localStorage.getItem('currentDir'));
+					}
+					else if(response === 'duplicate') {
+						setPop('warning', lab.pop.duplicateContent);
+						elm.value = oldName;
+					}
+					else {
+						throw new Error(response);
+					}
+				}
+			)
+			.catch(error => ajaxLog('renameElm', error));
+
+		}
+
+	}
+
+	else {
+		elm.value = oldName;
+	}
+
+};
+
 const removeElm = elm => {
 
 	if(validConfirmClick() || validConfirmTouch()) {
@@ -136,9 +187,9 @@ const removeElm = elm => {
 				]
 			}
 		)
-		.then( // Expected response : absolutely nothing if it's done (empty string).
+		.then(
 			response => {
-				if(response === '') {
+				if(response === 'success') {
 					browseDirectory(localStorage.getItem('currentDir')); 
 				}
 				else {
@@ -193,7 +244,7 @@ const createDirectory = (dir = null, parent = null) => {
 
 	// No name typed yet ? Ask for it first.
 	if(dir === null) {
-		UI.createDirForm.classList.add('create-dir-form--active');
+		document.querySelector('.add-dir-form').classList.add('add-dir-form--active');
 	}
 	
 	// Infos provided ? Analyze...
@@ -242,12 +293,12 @@ const createDirectory = (dir = null, parent = null) => {
 				]
 			}
 		)
-		.then( // Expected response : absolutely nothing if it's done (empty string).
+		.then(
 			response => {
-				if(response === '') {
+				if(response === 'success') {
 					browseDirectory(localStorage.getItem('currentDir'));
-					UI.createDirForm.reset();
-					toggleActive(UI.createDirForm); 
+					document.querySelector('.add-dir-form').reset();
+					toggleActive(document.querySelector('.add-dir-form')); 
 				}
 				else {
 					throw new Error(response);
