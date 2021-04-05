@@ -1,7 +1,7 @@
 /app/auth
+/app/pages/install/remove-install.bash
 /app/users
 /datas
-/install
 /recycle
 /temp
 logs.html

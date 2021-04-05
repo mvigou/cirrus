@@ -6,7 +6,7 @@
 			<html>
 			<head>
 				<meta charset="UTF-8">
-				<link rel="stylesheet" href="/app/client/styles/in.css">
+				<link rel="stylesheet" href="/app/client/css/in.css">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<title>cirrus | création de compte</title>
 			</head>
@@ -14,7 +14,7 @@
 				<header>
 					<h1>cirrus</h1>
 				</header>
-				<form action="/app/server/user-create.php" method="POST">
+				<form action="/app/server/user-sign-in.php" method="POST">
 					<h2>Créer un compte</h2>
 					<label>
 						Nom d'utilisateur
@@ -54,7 +54,7 @@
 					/>
 					<button type="submit">Valider</button>
 				</form>
-				<script src="/app/client/scripts/sign-in.js"></script>
+				<script src="/app/client/js/sign-in.js"></script>
 			</body>
 		</html>
 		

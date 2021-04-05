@@ -21,7 +21,6 @@ if(
 				
 				require_once('./remove.php');
 				
-				
 				if(!is_dir(TEMP_DIR_PATH)) {
 					mkdir(TEMP_DIR_PATH);
 				}
@@ -37,3 +36,4 @@ if(
 }
 
 header('Location: /');
+exit();

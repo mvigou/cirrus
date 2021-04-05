@@ -1,27 +1,28 @@
-<?php 
+<?php session_start(); ?>
 
-	// Allow to create an user. Will only work if there is no user yet.
-	if(!is_dir('./app/users')) {
-
-		define('AUTH_DIR_PATH', './app/auth/createUser');
-		define('AUTH_FILENAME', hash('sha512', 'install-start-auth'));
-		
-		if(!is_dir(AUTH_DIR_PATH)) {
-			if(mkdir(AUTH_DIR_PATH, 0777, true)) {
-				touch(AUTH_DIR_PATH . '/' . AUTH_FILENAME);
-			}
-		}
+<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/app/client/css/app.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Cirrus | Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces</title>
+	</head>
+	<body>
 	
-		header('Location: /app/client/sign-in/?auth=' . AUTH_FILENAME);	
+	<?php require_once('./app/server/security.php');
 
-	}
+	if(verifyAccess()) { ?>
+		<script src="/app/client/js/i18n.js"></script>
+		<script src="/app/client/js/func-ajax.js"></script>
+		<script src="/app/client/js/func-core.js"></script>
+		<script src="/app/client/js/func-ui.js"></script>	
+		<script src="/app/client/js/interface.js"></script>
+		<script src="/app/client/js/start.js"></script>
+	<?php }
+	else { 
+		header('Location: /app/pages/log-in');
+	} ?>
 
-	// Will automatically delete installation files and redirect to the login page.
-	else {
-
-		rename('./index.php', './install.php');
-		rename('./app.php', './index.php');
-		unlink('./install.php');
-		header('Location: /app/client/log-in');	
-
-	}
+</body>
+</html>
