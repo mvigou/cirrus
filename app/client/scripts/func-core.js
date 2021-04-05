@@ -231,57 +231,21 @@ const downloadElm = elm => {
 
 };	
 
-const createDirectory = (dir = null, parent = null) => {
-	
-	/*
-	Example : parent1>>child1&&child2||parent2>>child3>>child4||parent3
-	1. Separate parents with ||
-	2. Separate levels with >>
-	2. Separate children with &&
-	*/
+const createDirectory = dirs => {
 
-	// Infos provided ? Analyze...
-	if(dir !== null && parent === null) {
-		if(dir !== '' && parent !== '') {
-			let parents = dir.split('||');
-			for(let parent of parents) {
-				let basePath = localStorage.getItem('currentDir');
-				let levels = parent.split('>>');
-				for(let level of levels) {
-					let children = level.split('&&');
-					if(children !== undefined && children.length > 1) {
-						for(let child of children) {		
-							child = child.trim();
-							if(child.length >= 1) {
-								createDirectory(child, basePath);
-							}
-						}	
-					}
-					else {
-						level = level.trim();
-						if(level.length >= 1) {
-							createDirectory(level, basePath);		
-						}
-						basePath += '/' + level;	
-					}	
-				}
-			}	
-		}	
-	}
+	if(dirs !== '' ) {
 
-	// Infos analyzed ? Proceed !
-	else {
 		ajaxPost(
 			{
 				script: 'create.php',
 				args: [
-					{ 
-						name: 'parent', 
-						value: parent 
+					{
+						name: 'parent',
+						value: localStorage.getItem('currentDir')
 					},
 					{ 
-						name: 'dir', 
-						value: dir 
+						name: 'dirs', 
+						value: dirs 
 					}
 				]
 			}
@@ -298,6 +262,7 @@ const createDirectory = (dir = null, parent = null) => {
 			}
 		)
 		.catch(error => ajaxLog('createDirectory', error));	
-	}
+	
+	}	
 
 }
