@@ -12,20 +12,17 @@
 	
 	<?php require_once('./app/server/security.php');
 
-	if(!verifyAccess()) { 
-		header('Location: /app/client/log-in');
-	}
-	
-	else { ?>
-
+	if(verifyAccess()) { ?>
 		<script src="/app/client/scripts/i18n.js"></script>
 		<script src="/app/client/scripts/func-ajax.js"></script>
 		<script src="/app/client/scripts/func-core.js"></script>
 		<script src="/app/client/scripts/func-ui.js"></script>	
 		<script src="/app/client/scripts/interface.js"></script>
 		<script src="/app/client/scripts/start.js"></script>
-	
-	<?php } ?>
+	<?php }
+	else { 
+		header('Location: /app/client/log-in');
+	} ?>
 
 </body>
 </html>

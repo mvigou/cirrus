@@ -12,7 +12,7 @@ if(
 
 		require_once('./config.php');
 
-		define('USERNAME', hash('md5', $_POST['user-name']));
+		define('USERNAME', hash('sha512', $_POST['user-name']));
 		define('FILENAME', USERS_DIR_PATH . '/' . USERNAME);
 		
 		if(file_exists(FILENAME)) {
