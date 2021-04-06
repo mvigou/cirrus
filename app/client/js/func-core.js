@@ -4,7 +4,7 @@ const browseDirectory = dir => {
 
 	ajaxPost(
 		{
-			script: 'browse.php',
+			script: 'ct-browse.php',
 			args: [
 				{ 
 					name: 'dir', 
@@ -26,9 +26,45 @@ const browseDirectory = dir => {
 			}
 		}
 	)
-	.catch(error => ajaxLog('browseDirectory', error ));
+	.catch(error => ajaxLog('browseDirectory', error));
 
 };
+
+const createDirectory = dirs => {
+
+	if(dirs !== '' ) {
+
+		ajaxPost(
+			{
+				script: 'ct-create.php',
+				args: [
+					{
+						name: 'parent',
+						value: localStorage.getItem('currentDir')
+					},
+					{ 
+						name: 'dirs', 
+						value: dirs 
+					}
+				]
+			}
+		)
+		.then(
+			response => {
+				if(response === 'success') {
+					browseDirectory(localStorage.getItem('currentDir'));
+					document.querySelector('.add-dir-form').reset();
+				}
+				else {
+					throw new Error(response);
+				}
+			}
+		)
+		.catch(error => ajaxLog('createDirectory', error));	
+	
+	}	
+
+}
 
 const uploadFiles = () => {
 
@@ -54,7 +90,7 @@ const uploadFiles = () => {
 			formData.append("file", file);
 
 			let req = new XMLHttpRequest();
-			req.open('POST', './app/server/upload.php', true);
+			req.open('POST', './app/server/ct-upload.php', true);
 
 			req.upload.onprogress = (e) => {
 				UI.progressBar.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
@@ -92,11 +128,11 @@ const uploadFiles = () => {
 
 };
 
-const accessFile = filename => {
+const openFile = filename => {
 
 	ajaxPost(
 		{
-			script: 'access.php',
+			script: 'ct-open.php',
 			args: [
 				{ 
 					name: 'filename', 
@@ -115,7 +151,7 @@ const accessFile = filename => {
 			}
 		}
 	)
-	.catch(error => ajaxLog('accessFile', error ));
+	.catch(error => ajaxLog('openFile', error));
 
 };
 
@@ -127,7 +163,7 @@ const renameElm = (oldName, newName, elm) => {
 			
 			ajaxPost(
 				{
-					script: 'rename.php',
+					script: 'ct-rename.php',
 					args: [
 						{ 
 							name: 'oldName', 
@@ -170,42 +206,11 @@ const renameElm = (oldName, newName, elm) => {
 
 };
 
-const removeElm = elm => {
-
-	if(validConfirmClick() || validConfirmTouch()) {
-
-		ajaxPost(
-			{
-				script: 'remove.php',
-				args: [
-					{ 
-						name: 'elm', 
-						value: elm 
-					}
-				]
-			}
-		)
-		.then(
-			response => {
-				if(response === 'success') {
-					browseDirectory(localStorage.getItem('currentDir')); 
-				}
-				else {
-					throw new Error(response);
-				}
-			}
-		)
-		.catch(error => ajaxLog('removeElm', error));
-
-	}
-
-};
-
 const downloadElm = elm => {
 
 	ajaxPost(
 		{
-			script: 'download.php',
+			script: 'ct-download.php',
 			args: [
 				{ 
 					name: 'elm', 
@@ -229,23 +234,19 @@ const downloadElm = elm => {
 	)
 	.catch(error => ajaxLog('downloadElm', error));
 
-};	
+};
 
-const createDirectory = dirs => {
+const removeElm = elm => {
 
-	if(dirs !== '' ) {
+	if(validConfirmClick() || validConfirmTouch()) {
 
 		ajaxPost(
 			{
-				script: 'create.php',
+				script: 'ct-remove.php',
 				args: [
-					{
-						name: 'parent',
-						value: localStorage.getItem('currentDir')
-					},
 					{ 
-						name: 'dirs', 
-						value: dirs 
+						name: 'elm', 
+						value: elm 
 					}
 				]
 			}
@@ -253,16 +254,15 @@ const createDirectory = dirs => {
 		.then(
 			response => {
 				if(response === 'success') {
-					browseDirectory(localStorage.getItem('currentDir'));
-					document.querySelector('.add-dir-form').reset();
+					browseDirectory(localStorage.getItem('currentDir')); 
 				}
 				else {
 					throw new Error(response);
 				}
 			}
 		)
-		.catch(error => ajaxLog('createDirectory', error));	
-	
-	}	
+		.catch(error => ajaxLog('removeElm', error));
 
-}
+	}
+
+};

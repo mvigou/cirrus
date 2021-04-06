@@ -40,7 +40,7 @@ const ajaxLog = (origin, log) => {
 
 	ajaxPost(
 		{
-			script: 'log.php',
+			script: 'cir-log.php',
 			args: [
 				{ 
 					name: 'origin', 

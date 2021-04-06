@@ -1,17 +1,12 @@
 <?php 
 
-session_start();
-ini_set('display_errors', true);
-ini_set('html_errors', false);
-error_reporting(E_ALL);
-
 /* 
 Job : log somes errors in a log file.
 Return : Return : absolutely nothing if it's done. 
-To : ajaxErrorLog
+To : ajaxLog
 */
 
-define('ERROR_LOGS_FILENAME', '../../logs.html');
+require_once('./cir-config.php');
 
 if(!file_exists(ERROR_LOGS_FILENAME)) {
 	file_put_contents(ERROR_LOGS_FILENAME, '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cirrus | error logs</title><link rel="stylesheet" href="./app/client/css/log.css"></head><body><main>');

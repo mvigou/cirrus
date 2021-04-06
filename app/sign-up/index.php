@@ -1,6 +1,6 @@
 <?php if(isset($_GET['auth'])) { 
 
-	if(is_file('../../auth/createUser/' . $_GET['auth'])) { ?>
+	if(is_file('../auth/sign-up/' . $_GET['auth'])) { ?>
 	
 		<!DOCTYPE html>
 			<html>
@@ -14,7 +14,7 @@
 				<header>
 					<h1>cirrus</h1>
 				</header>
-				<form action="/app/server/user-sign-in.php" method="POST">
+				<form action="/app/server/usr-sign-up.php" method="POST">
 					<h2>Créer un compte</h2>
 					<label>
 						Nom d'utilisateur
@@ -54,7 +54,7 @@
 					/>
 					<button type="submit">Valider</button>
 				</form>
-				<script src="/app/client/js/sign-in.js"></script>
+				<script src="/app/client/js/sign-up.js"></script>
 			</body>
 		</html>
 		

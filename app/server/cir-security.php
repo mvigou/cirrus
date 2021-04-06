@@ -1,6 +1,5 @@
-<?php // session_start() is not required : this script is always called by an other.
+<?php
 
-// Create an authorized access.
 function createAccess() {
 
 	$_SESSION['token'] = session_id();
@@ -8,7 +7,14 @@ function createAccess() {
 
 }
 
-// Verify an access.
+function destroyAccess() {
+
+	$_SESSION = array();
+	session_destroy();
+	header('Location: /');
+	
+}
+
 function verifyAccess() {
 
 	if(isset($_SESSION['token']) && isset($_SESSION['browser'])) {
@@ -20,26 +26,14 @@ function verifyAccess() {
 	
 }
 
-// Destroy a session.
-function destroyAccess() {
-
-	$_SESSION = array();
-	session_destroy();
-	header('Location: ../../');
-	
-}
-
-// Check if the user is in the root directory.
 function inRootDirectory($dir) {
 	return $dir === DATAS_DIR_PATH || $dir === RECYCLE_DIR_PATH ? true : false;
 }
 
-// Check if the user is within the authorized perimeter (data or recycle directory).
 function inScopeDirectory($elm) {
 	return inDatasDirectory($elm) || inRecycleDirectory($elm) ? true : false;
 }
 
-// Check if the user is within the datas directory.
 function inDatasDirectory($elm) {
 
 	$regex = '/^\.\.\/\.\.\/';
@@ -50,7 +44,6 @@ function inDatasDirectory($elm) {
 
 }
 
-// Check if the user is within the recycle directory.
 function inRecycleDirectory($elm) {
 	
 	$regex = '/^\.\.\/\.\.\/';

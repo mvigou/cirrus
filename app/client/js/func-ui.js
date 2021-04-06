@@ -233,7 +233,7 @@
 								type: 'click',
 								function: () => {
 									if(item.type === 'file') {
-										accessFile(item.path);
+										openFile(item.path);
 									}
 									else {
 										browseDirectory(item.path);

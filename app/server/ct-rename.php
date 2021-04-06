@@ -1,18 +1,13 @@
 <?php
 
-session_start();
-ini_set('display_errors', true);
-ini_set('html_errors', false);
-error_reporting(E_ALL);
-
 /* 
 Job : rename a file or a directory.
 Return : success if it's done.
 To : renameElm
 */
 
-require_once('./config.php');
-require_once('./security.php');
+require_once('./cir-config.php');
+require_once('./cir-security.php');
 
 if(verifyAccess()) {
 

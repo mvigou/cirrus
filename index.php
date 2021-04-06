@@ -10,18 +10,34 @@
 	</head>
 	<body>
 	
-	<?php require_once('./app/server/security.php');
+	<?php
+	
+	require_once('./app/server/cir-security.php');
 
+	// Identified user ? Start the app.
 	if(verifyAccess()) { ?>
+
 		<script src="/app/client/js/i18n.js"></script>
 		<script src="/app/client/js/func-ajax.js"></script>
 		<script src="/app/client/js/func-core.js"></script>
 		<script src="/app/client/js/func-ui.js"></script>	
 		<script src="/app/client/js/interface.js"></script>
 		<script src="/app/client/js/start.js"></script>
+	
 	<?php }
-	else { 
-		header('Location: /app/pages/log-in');
+
+	// Unidentified user ?
+	else {
+
+		// Users exist ? Ask for log in.
+		if(is_dir('./app/users')) {
+			header('Location: /app/sign-in');
+			exit();
+		}
+
+		// No user yet ? Ask for create the first.
+		header('Location: /app/server/cir-install.php');
+		exit();
 	} ?>
 
 </body>

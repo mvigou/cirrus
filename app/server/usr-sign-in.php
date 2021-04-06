@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 
 if(
 	isset($_POST['user-name']) && 
@@ -10,7 +10,7 @@ if(
 		preg_match('/^[a-zA-Z0-9.?!\-_*+=\/|\\()[\]#$@%]{8,24}$/', $_POST['user-pass'])		
 	){
 
-		require_once('./config.php');
+		require_once('./cir-config.php');
 
 		define('USERNAME', hash('sha512', $_POST['user-name']));
 		define('FILENAME', USERS_DIR_PATH . '/' . USERNAME);
@@ -19,7 +19,7 @@ if(
 					
 			if(password_verify($_POST['user-pass'], file_get_contents(FILENAME))) {
 				
-				require_once('./remove.php');
+				require_once('./ct-remove.php');
 				
 				if(!is_dir(TEMP_DIR_PATH)) {
 					mkdir(TEMP_DIR_PATH);

@@ -1,18 +1,13 @@
 <?php 
 
-session_start();
-ini_set('display_errors', true);
-ini_set('html_errors', false);
-error_reporting(E_ALL);
-
 /* 
-Job : copy the request file in a random, temporary and unprotected directory.
+Job : copy the requested file in a random, temporary and unprotected directory.
 Return : a JSON containing the path to the accessible file or directory (as a zip). 
 To : downloadElm
 */
 
-require_once('./config.php');
-require_once('./security.php');
+require_once('./cir-config.php');
+require_once('./cir-security.php');
 
 if(verifyAccess()) {
 

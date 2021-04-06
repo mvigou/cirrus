@@ -1,11 +1,13 @@
-<?php if(
+<?php 
+
+if(
 	isset($_POST['user-name']) && 
 	isset($_POST['user-pass']) && 
 	isset($_POST['user-pass-conf']) &&
 	isset($_POST['auth'])
 ){
 
-	define('PATH_AUTH', '../auth/createUser/' . $_POST['auth']);
+	define('PATH_AUTH', '../auth/sign-up/' . $_POST['auth']);
 
 	if(is_file(PATH_AUTH)) {
 
@@ -18,7 +20,7 @@
 
 			// TODO Check if there is not user with the same name yet !
 			
-			require('./config.php');
+			require('./cir-config.php');
 		
 			if(!is_dir(DATAS_DIR_PATH)) {
 				mkdir(DATAS_DIR_PATH);

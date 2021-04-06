@@ -1,18 +1,13 @@
 <?php 
 
-session_start();
-ini_set('display_errors', true);
-ini_set('html_errors', false);
-error_reporting(E_ALL);
-
 /* 
 Job : browse content of the selected directory.
 Return : a JSON representing the content of the directory.
 To : browseDirectory
 */
 
-require_once('./config.php');
-require_once('./security.php');
+require_once('./cir-config.php');
+require_once('./cir-security.php');
 
 if(verifyAccess()) {
 	
