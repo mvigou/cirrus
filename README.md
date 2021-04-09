@@ -42,7 +42,6 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Confirmation des actions dites "dangereuses" avec méthode novatrice.
 * Suivi de la progression des téléchargements de fichiers.
 * Thème clair, thème sombre.
-* Traduction française / anglaise.
 
 ### Explorateur
 

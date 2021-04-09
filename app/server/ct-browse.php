@@ -14,10 +14,10 @@ if(verifyAccess()) {
 	if(isset($_POST['dir'])) {
 		
 		if($_POST['dir'] === 'DATAS') {
-			browseDirectory(DATAS_DIR_PATH);
+			browseDirectory(CONTENT_DIR);
 		}
 		else if($_POST['dir'] === 'RECYCLE') {
-			browseDirectory(RECYCLE_DIR_PATH);
+			browseDirectory(RECYCLE_DIR);
 		}
 		else {
 			if(inRecycleDirectory($_POST['dir']) || inDatasDirectory($_POST['dir'])) {

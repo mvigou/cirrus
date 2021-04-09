@@ -16,7 +16,7 @@ if(verifyAccess()) {
 		$filename = array_slice(explode( '/', $_POST['elm']), -1)[0];
 		$origPath = $_POST['elm']; // Permanent path (protected by .htaccess, inaccessible to users).
 		$destPath = ''; // Random and temporary path (accessible to users).
-		$destDir = TEMP_DIR_PATH . '/' . session_id();
+		$destDir = TEMP_DIR . '/' . session_id();
 		
 		if(!is_dir($destDir)) {
 			mkdir($destDir);

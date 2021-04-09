@@ -8,8 +8,8 @@ To : ajaxLog
 
 require_once('./cir-config.php');
 
-if(!file_exists(ERROR_LOGS_FILENAME)) {
-	file_put_contents(ERROR_LOGS_FILENAME, '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cirrus | error logs</title><link rel="stylesheet" href="./app/client/css/log.css"></head><body><main>');
+if(!file_exists(LOGS_FILE)) {
+	file_put_contents(LOGS_FILE, '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cirrus | error logs</title><link rel="stylesheet" href="./logs.css"></head><body><main>');
 }
 
 logError($_POST['origin'], $_POST['log']);
@@ -18,7 +18,7 @@ function logError($origin, $log) {
 
 	file_put_contents(
 		
-		ERROR_LOGS_FILENAME,
+		LOGS_FILE,
 
 		"<p>
 			<b>Log:</b> ${log} <br/>

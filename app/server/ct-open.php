@@ -15,7 +15,7 @@ if(verifyAccess()) {
 		
 		$filename = array_slice(explode( '/', $_POST['filename']), -1)[0];
 		$origPath = $_POST['filename']; // Permanent path (protected by .htaccess, inaccessible for all).
-		$readableDir = TEMP_DIR_PATH . '/' . session_id();
+		$readableDir = TEMP_DIR . '/' . session_id();
 		$destPath = $readableDir . '/' . $filename; // Random and temporary path (accessible to users only).
 
 		if(!is_dir($readableDir)) {

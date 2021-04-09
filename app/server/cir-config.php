@@ -5,9 +5,17 @@ ini_set('display_errors', true);
 ini_set('html_errors', false);
 error_reporting(E_ALL);
 
-define('DATAS_DIR_PATH', '../../datas');
-define('RECYCLE_DIR_PATH', '../../recycle');
-define('TEMP_DIR_PATH', '../../temp');
-define('USERS_DIR_PATH', '../users/');
-define('SIGN_UP_AUTH_DIR_PATH', '../auth/sign-up');
-define('ERROR_LOGS_FILENAME', '../../logs.html');
+define('TEMP_DIR', '../../temp');
+
+define('DATAS', '../../datas');
+
+define('CONTENT_DIR', DATAS . '/content');
+define('RECYCLE_DIR', DATAS . '/recyle');
+
+define('OWNERS_DIR', DATAS . '/users/owners');
+define('VIEWERS_DIR', DATAS . '/users/viewers');
+
+define('SIGN_UP_OWNER_AUTH_DIR', DATAS . '/auth/sign-up-as-owner');
+define('SIGN_UP_VIEWER_AUTH_DIR', DATAS . '/auth/sign-up-as-viewer');
+
+define('LOGS_FILE', '../../pages/logs/index.html');

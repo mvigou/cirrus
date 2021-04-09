@@ -15,7 +15,7 @@ if(verifyAccess()) {
 
 		// Empty recycle bin.
 		if($_POST['elm'] === 'RECYCLE') {
-			$_POST['elm'] = RECYCLE_DIR_PATH;	
+			$_POST['elm'] = RECYCLE_DIR;	
 		}
 
 		// Request made from the datas directory ? MOVE to recycle.
@@ -47,7 +47,7 @@ function moveToRecycle ($elm) {
 	
 	// From, to.
 	$origPath = $elm;
-	$destPath = RECYCLE_DIR_PATH . '/' . $filename;
+	$destPath = RECYCLE_DIR . '/' . $filename;
 
 	// Delete possibly identical files and directories before continuing.
 	if(is_file($destPath)) {
@@ -83,7 +83,7 @@ function removeDir($dir) {
 	}
 
 	// If not corresponding to the recycle or temp directories, remove also the parent directory.
-	if($dir !== RECYCLE_DIR_PATH && $dir !== TEMP_DIR_PATH) {
+	if($dir !== RECYCLE_DIR && $dir !== TEMP_DIR) {
 		rmdir($dir);
 	}
 	

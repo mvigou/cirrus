@@ -1,20 +1,5 @@
 <?php
 
-function createAccess() {
-
-	$_SESSION['token'] = session_id();
-	$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
-
-}
-
-function destroyAccess() {
-
-	$_SESSION = array();
-	session_destroy();
-	header('Location: /');
-	
-}
-
 function verifyAccess() {
 
 	if(isset($_SESSION['token']) && isset($_SESSION['browser'])) {
@@ -27,7 +12,7 @@ function verifyAccess() {
 }
 
 function inRootDirectory($dir) {
-	return $dir === DATAS_DIR_PATH || $dir === RECYCLE_DIR_PATH ? true : false;
+	return $dir === CONTENT_DIR || $dir === RECYCLE_DIR ? true : false;
 }
 
 function inScopeDirectory($elm) {
@@ -36,8 +21,8 @@ function inScopeDirectory($elm) {
 
 function inDatasDirectory($elm) {
 
-	$regex = '/^\.\.\/\.\.\/';
-	$regex .= array_slice(explode('/', DATAS_DIR_PATH), -1)[0];
+	$regex = '/^\.\.\/\.\.\/datas\/';
+	$regex .= array_slice(explode('/', CONTENT_DIR), -1)[0];
 	$regex .= '/';
 
 	return preg_match($regex, $elm) ? true : false;
@@ -46,8 +31,8 @@ function inDatasDirectory($elm) {
 
 function inRecycleDirectory($elm) {
 	
-	$regex = '/^\.\.\/\.\.\/';
-	$regex .= array_slice(explode('/', RECYCLE_DIR_PATH), -1)[0];
+	$regex = '/^\.\.\/\.\.\/datas\/';
+	$regex .= array_slice(explode('/', RECYCLE_DIR), -1)[0];
 	$regex .= '/';
 
 	return preg_match($regex, $elm) ? true : false;

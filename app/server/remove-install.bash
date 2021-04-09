@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo rm  ../../datas/ ../../recycle/ ../../temp/ ../../logs.html ../users/ ../auth/ -r;
+sudo rm  ../../datas/ ../../temp ../../pages/logs/index.html -r;

@@ -13,11 +13,11 @@ if(verifyAccess()) {
 
 	if(isset($_POST['oldName']) && isset($_POST['newName']) && isset($_POST['parentDir'])) {
 
-        define('OLD_PATH', $_POST['parentDir'] . '/' . $_POST['oldName']);
-        define('NEW_PATH', $_POST['parentDir'] . '/' . buildValidName($_POST['newName']));
+        $oldPath = $_POST['parentDir'] . '/' . $_POST['oldName'];
+        $newPath = $_POST['parentDir'] . '/' . buildValidName($_POST['newName']);
 
-        if(!is_file(NEW_PATH) && !is_dir(NEW_PATH)) {
-            if(rename(OLD_PATH, NEW_PATH)) {
+        if(!is_file($newPath) && !is_dir($newPath)) {
+            if(rename($oldPath, $newPath)) {
                 echo 'success';
             }
         }
