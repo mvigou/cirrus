@@ -78,7 +78,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Opérations d'administration
 
-* (TODO) Créer de liens d'inscription d'utilisateurs the type "owner".
+* (TODO) Créer de liens d'inscription d'utilisateurs the type "publisher".
 * (TODO) Supprimer des comptes (à préciser)
 * Assistant de création d'un compte "Propriétaire" à l'installation. 
 * Créer de liens d'inscription d'utilisateurs the type "viewer".

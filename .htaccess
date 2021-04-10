@@ -1,4 +1,7 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteRule datas "-" [F]
+RewriteRule datas/auth "-" [F]
+RewriteRule datas/content "-" [F]
+RewriteRule datas/recycle "-" [F]
+RewriteRule datas/users "-" [F]

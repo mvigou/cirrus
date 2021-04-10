@@ -7,8 +7,8 @@ const lab = {
 	},
 	title: {
 		invit: 'Invitations',
-		ownerRights: 'Droits : ajouter, consulter, supprimer du contenu.',
-		owners: 'Propriétaires',
+		publisherRights: 'Droits : ajouter, consulter, supprimer du contenu.',
+		publishers: 'Editeurs',
 		viewerRights: 'Droits : consulter du contenu.',
 		viewers: 'Visualiseurs'
 	},

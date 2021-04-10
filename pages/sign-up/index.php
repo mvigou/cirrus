@@ -2,7 +2,7 @@
 
 if(isset($_GET['role']) && isset($_GET['auth'])) { 
 
-	if($_GET['role'] === 'owner' || $_GET['role'] === 'viewer') {
+	if($_GET['role'] === 'owner' || $_GET['role'] === 'publisher' || $_GET['role'] === 'viewer') {
 		
 		if(is_file('../../datas/auth/sign-up-as-' . $_GET['role'] . '/' . $_GET['auth'])) { ?>
 

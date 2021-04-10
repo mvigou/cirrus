@@ -18,6 +18,6 @@ const lab = {
 	pop: {
 		confirmPress: 'Relâchez sur l\'option pour supprimer. Relâchez ailleurs pour annuler.',
 		duplicateContent: 'Ce nom est déjà pris.',
-		loggedError: 'Une erreur est survenue pendant le traitement de cette action (<a href="./pages/logs" target="_blank">en savoir plus</a>).'
+		loggedError: 'Une erreur est survenue pendant le traitement de cette action (<a href="./datas/logs" target="_blank">en savoir plus</a>).'
 	},
 };

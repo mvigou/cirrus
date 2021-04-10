@@ -2,15 +2,15 @@
 
 require_once('./config.php');
 
-if(verifyAccess()) {
+if(verifyAccess() && $_SESSION['isOwner'] === true) {
 
 	if(isset($_POST['role'])) {
 
 		$auth = hash('sha512', random_bytes(24));
 		$role = null;
 
-		if($_POST['role'] === 'owner') {
-			$role = SIGN_UP_OWNER_AUTH_DIR . '/' . $auth;
+		if($_POST['role'] === 'publisher') {
+			$role = SIGN_UP_PUBLISHER_AUTH_DIR . '/' . $auth;
 		}
 
 		if($_POST['role'] === 'viewer') {

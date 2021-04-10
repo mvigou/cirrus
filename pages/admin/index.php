@@ -3,7 +3,7 @@
 require_once('../../app/server/config.php');
 require_once('../../app/server/config.php');
 
-if(verifyAccess()) { ?>
+if(verifyAccess() && $_SESSION['isOwner'] === true) { ?>
 
 	<!DOCTYPE html>
 		<html lang="fr">

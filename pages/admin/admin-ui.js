@@ -61,11 +61,11 @@ UI.main.appendChild(
 					children: [
 						{
 							type: 'h3',
-							text: lab.title.owners
+							text: lab.title.publishers
 						},
 						{
 							type: 'p',
-							text: lab.title.ownerRights
+							text: lab.title.publisherRights
 						},
 						{
 							type: 'button',
@@ -75,7 +75,7 @@ UI.main.appendChild(
 							events: [
 								{
 									type: 'click',
-									function: () => createInvit('owner')
+									function: () => createInvit('publisher')
 								}
 							],
 							html: '<svg class="admin__svg" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>' + lab.bt.createInvit
@@ -88,7 +88,7 @@ UI.main.appendChild(
 							events: [
 								{
 									type: 'click',
-									function: () => browseInvit('owner')
+									function: () => browseInvit('publisher')
 								}
 							],
 							
@@ -102,7 +102,7 @@ UI.main.appendChild(
 							events: [
 								{
 									type: 'click',
-									function: () => removeInvit('owner')
+									function: () => removeInvit('publisher')
 								}
 							],
 							html: '<svg class="admin__svg" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>' + lab.bt.removeInvit
