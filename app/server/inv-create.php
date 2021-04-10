@@ -2,7 +2,7 @@
 
 require_once('./config.php');
 
-if(verifyAccess() && $_SESSION['isOwner'] === true) {
+if(verifyAccess() && $_SESSION['userRole'] === 'owner') {
 
 	if(isset($_POST['role'])) {
 

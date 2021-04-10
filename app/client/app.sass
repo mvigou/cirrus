@@ -33,27 +33,40 @@ body
 	font-family: Josefin, sans-serif
 	height: 100vh
 	margin: 0
-	&.--in-recycle
-		.datas-feature
-			display: none
-		.recycle-feature
-			display: block
-	&.--darkmode
-		--bg-color: #222
-		--border-color: #444	
-		--base-color: #bbb
-		--hovered-color: #fff
-		--light-color: #333
-	&.--edition
-		.non-editable
-			display: none
-		.editable
-			display: block
 
-.datas-feature
-	display: block
-.recycle-feature, .editable
+.publisher-ft, 
+.recycle-ft,
+.editable
 	display: none
+
+.--dark-mode
+	--bg-color: #222
+	--border-color: #444	
+	--base-color: #bbb
+	--hovered-color: #fff
+	--light-color: #333
+	
+// Editable boxes.
+
+.--edit-mode
+	.non-editable 		
+		display: none
+	.editable
+		display: block
+
+// Features visible by owner and publishers, hidden for viewers.
+
+.--publisher
+	.publisher-ft
+		display: block
+
+// Features for the recycle directory.
+
+.--in-recycle
+	.recycle-ft
+		display: block
+	.datas-ft
+		display: none
 
 a
 	color: inherit

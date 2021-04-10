@@ -20,7 +20,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Display the data directory.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt recycle-feature',
+					class: 'bwr__nav__bt recycle-ft',
 					title: lab.bt.toDataDir
 				},
 				events: [
@@ -37,7 +37,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Display the recycle directory.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-feature',
+					class: 'bwr__nav__bt datas-ft publisher-ft',
 					title: lab.bt.toRecycleDir
 				},
 				events: [
@@ -54,7 +54,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Open a window to upload files.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-feature',
+					class: 'bwr__nav__bt datas-ft publisher-ft',
 					title: lab.bt.sendFiles
 				},
 				events: [
@@ -68,7 +68,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Display a form to create directories.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-feature',
+					class: 'bwr__nav__bt datas-ft publisher-ft',
 					title: lab.bt.createDir
 				},
 				events: [
@@ -113,7 +113,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Toggle between normal and edition mode.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-feature',
+					class: 'bwr__nav__bt datas-ft publisher-ft',
 					title: lab.bt.rename
 				},
 				events: [
@@ -127,7 +127,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Empty the recycle bin.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt recycle-feature',
+					class: 'bwr__nav__bt recycle-ft',
 					title: lab.bt.emptyRecycle
 				},
 				events: [

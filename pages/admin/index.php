@@ -1,9 +1,8 @@
 <?php 
 
 require_once('../../app/server/config.php');
-require_once('../../app/server/config.php');
 
-if(verifyAccess() && $_SESSION['isOwner'] === true) { ?>
+if(verifyAccess() && $_SESSION['userRole'] === 'owner') { ?>
 
 	<!DOCTYPE html>
 		<html lang="fr">

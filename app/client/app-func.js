@@ -369,23 +369,23 @@ const toggleAddDirForm = (open) => {
 }
 
 const toggleEdition = () => {
-	document.body.classList.contains('--edition') ?
-		document.body.classList.remove('--edition'):
-		document.body.classList.add('--edition');
+	document.body.classList.contains('--edit-mode') ?
+		document.body.classList.remove('--edit-mode'):
+		document.body.classList.add('--edit-mode');
 };
 
 const toDarkTheme = () => {	
-	document.body.classList.add('--darkmode');
+	document.body.classList.add('--dark-mode');
 	localStorage.setItem('mode', 'dark');
 };
 
 const toLightTheme = () => {
-	document.body.classList.remove('--darkmode');
+	document.body.classList.remove('--dark-mode');
 	localStorage.setItem('mode', 'light');
 };
 
 const switchTheme = () => {
-	document.body.classList.contains('--darkmode') ?
+	document.body.classList.contains('--dark-mode') ?
 		toLightTheme():
 		toDarkTheme();
 };
@@ -655,7 +655,7 @@ const buildItems = (items, dir) => {
 							{
 								type: 'button',
 								attributes: {
-									class: 'bwr__item__button',
+									class: 'bwr__item__button publisher-ft',
 									title: lab.bt.delete
 								},
 								events: [

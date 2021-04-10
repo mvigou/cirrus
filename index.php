@@ -19,8 +19,16 @@
 		<script src="./app/client/app-func.js"></script>
 		<script src="./app/client/app-ui.js"></script>
 		<script src="./app/client/app-pref.js"></script>
+
+		<?php if($_SESSION['userRole'] === 'owner' || $_SESSION['userRole'] === 'publisher') { ?>
+
+			<script>
+				document.body.classList.add('--publisher');
+			</script>
+
+		<?php }
 	
-	<?php }
+	}
 
 	// Unidentified user ?
 	else {
