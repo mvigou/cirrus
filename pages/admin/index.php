@@ -1,7 +1,7 @@
 <?php 
 
-require_once('../../app/server/cir-config.php');
-require_once('../../app/server/cir-security.php');
+require_once('../../app/server/config.php');
+require_once('../../app/server/config.php');
 
 if(verifyAccess()) { ?>
 

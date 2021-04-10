@@ -10,7 +10,7 @@ if(
 		preg_match('/^[a-zA-Z0-9.?!\-_*+=\/|\\()[\]#$@%]{8,24}$/', $_POST['user-pass'])		
 	){
 
-		require('./cir-config.php');
+		require('./config.php');
 		$hashUserName = hash('sha512', $_POST['user-name']);
 		$userFilePath = null;
 
@@ -27,12 +27,13 @@ if(
 				$_SESSION['token'] = session_id();
 				$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 			}
-
+			
 		}
-
+		
 	}
-
+	
 }
 
+clearTempDir();
 header('Location: ../../');
 exit();

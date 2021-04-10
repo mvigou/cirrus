@@ -6,8 +6,7 @@ Return : a JSON containing the path to the accessible file or directory (as a zi
 To : downloadElm
 */
 
-require_once('./cir-config.php');
-require_once('./cir-security.php');
+require_once('./config.php');
 
 if(verifyAccess()) {
 
@@ -16,7 +15,7 @@ if(verifyAccess()) {
 		$filename = array_slice(explode( '/', $_POST['elm']), -1)[0];
 		$origPath = $_POST['elm']; // Permanent path (protected by .htaccess, inaccessible to users).
 		$destPath = ''; // Random and temporary path (accessible to users).
-		$destDir = TEMP_DIR . '/' . session_id();
+		$destDir = buildTempDir();
 		
 		if(!is_dir($destDir)) {
 			mkdir($destDir);
@@ -48,7 +47,7 @@ if(verifyAccess()) {
 		}
 		
 		// Return the complete path to the file or the zip as an AJAX response.
-		echo relPathFromClient($destPath);
+		echo str_replace('../../', './', $destPath);
 
 	}
 

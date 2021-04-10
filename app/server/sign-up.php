@@ -15,7 +15,7 @@ if(
 			
 	){
 
-		require('./cir-config.php');
+		require('./config.php');
 		$authFilePath = null;
 		$userDirPath;
 

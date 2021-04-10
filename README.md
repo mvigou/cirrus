@@ -39,19 +39,18 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Interface
 
-* Confirmation des actions dites "dangereuses" avec méthode novatrice.
-* Suivi de la progression des téléchargements de fichiers.
-* Thème clair, thème sombre.
+* Actions dites "dangereuses" gérées de façon novatrice (maintien du clic / de la pression).
+* Thème clair.
+* Thème sombre.
 
 ### Explorateur
 
 * (TODO) Afficher plus d'informations sur les fichiers et dossiers (taille, type, nb d'enfants...).
 * (TODO) Ordre de tri à préciser.
-* Accès rapide aux dossiers parents, depuis le dossier courant jusqu'à la racine.
-* Navigation dans l'arborescence des dossiers.
-* Purge de la corbeille.
-* Arborescence des dossiers conforme à la réalité.
-* Sélection du dossier parent (utilisateur, corbeille).
+* Accéder rapidement aux dossiers parents grâce à un arbre d'arborescence.
+* Naviguer dans une arborescence de dossiers conforme à la réalité.
+* Purger la corbeille.
+* Changer de dossier parent (utilisateur, corbeille).
 
 ### Opérations sur les dossiers
 
@@ -59,7 +58,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Déplacer un dossier.
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
 * Créer un ou plusieurs dossiers vides.
-* Placer un dossier dans la corbeille.
+* Mettre un dossier à la corbeille.
 * Renommer un dossier.
 * Supprimer définitivement un dossier.
 * Télécharger un dossier et son contenu au format compressé Zip.
@@ -69,32 +68,32 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Copier un fichier.
 * (TODO) Déplacer un fichier.
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi ?
-* Déplacer un fichier vers la corbeille.
+* Mettre un fichier à la corbeille.
 * Mettre en ligne un ou plusieurs fichiers à la fois.
 * Prévisualiser un fichier dans le navigateur (suivant support).
 * Renommer un fichier.
+* Suivi de la progression des téléchargements de fichiers.
 * Supprimer définitivement un fichier.
 * Télécharger un fichier.
 
-### Opérations utilisateurs
+### Opérations d'administration
 
-* (TODO) Créer des comptes utilisateurs supplémentaires.
+* (TODO) Créer de liens d'inscription d'utilisateurs the type "owner".
+* (TODO) Supprimer des comptes (à préciser)
 * Assistant de création d'un compte "Propriétaire" à l'installation. 
+* Créer de liens d'inscription d'utilisateurs the type "viewer".
 
 ### Sécurité
 
-* Accès utilisateur restreint aux seuls dossiers "datas" et "recycle". 
-* Accès à l'arborescence des contenus soumis à authentification.
+* Accès utilisateur authentifié restreint aux seuls dossiers "content" et "recycle". 
+* Accès à l'arborescence des contenus soumise à authentification préalable.
 * Journalisation des erreurs dans un fichier dédié.
+* Purge complète du dossier temporaire chaque fois que 10 dossiers temporaires ont été générés.
+* Purge complète du dossier temporaire à chaque authentification réussie.
 * Verrouillage de l'accès via URL au dossier "datas" et son contenu (.htaccess).
-* Verrouillage de l'accès via URL au dossier "recycle" et son contenu (.htaccess).
-* Verrouillage de l'accès via URL au dossier "users" et son contenu (.htaccess).
 
 ### Divers
 
 * (TODO) Intégrer une gestion de license ? (limitation des fonctionnalité ? Message toutes les X actions ?)
 * (TODO) Mettre en place une purge automatique du journal d'erreur.
 * (TODO) Mise en cache à voir / Service worker ?
-* (TODO) Revoir le timing de la purge automatique des dossiers temporaires (idéalement, suppression à la déconnexion).
-* Installation automatique au démarrage.
-* Purge automatique des dossiers temporaires à chaque authentification réussie.

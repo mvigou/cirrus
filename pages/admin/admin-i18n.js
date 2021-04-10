@@ -2,22 +2,23 @@
 
 const lab = {
 	mess: {
-		invitEmpty: 'Il n\'y a encore aucun lien d\'inscription actif.',
-		invitCreated: 'Invitation générée ! Transmettez le lien suivant à la personne de votre choix.',
-		invitDeleted: 'Tous les liens d\'inscription actifs ont été révoqués.'
+		invitEmpty: 'Il n\'y a aucun lien d\'inscription actif de ce type.',
+		invitDeleted: 'Tous les liens d\'inscription encore actifs de ce type ont été révoqués.'
 	},
 	title: {
 		invit: 'Invitations',
-		invitViewer: 'Viewers',
-		messBox: 'Messages'
+		ownerRights: 'Droits : ajouter, consulter, supprimer du contenu.',
+		owners: 'Propriétaires',
+		viewerRights: 'Droits : consulter du contenu.',
+		viewers: 'Visualiseurs'
 	},
 	role: {
-		invit: 'Générez des liens d\'inscription pour permettre à d\'autres d\'accéder à votre cirrus. Chaque lien est utilisable une fois.'
+		invit: 'Générez des liens d\'inscription à usage unique permettant à d\'autres d\'accéder à votre cirrus.'
 	},
 	bt: {
 		back: 'Retour',
 		createInvit: 'Générer un lien d\'inscription',
 		browseInvit: 'Afficher les liens actifs',
-		removeInvit: 'Tout révoquer'
+		removeInvit: 'Tout supprimer'
 	},
 };

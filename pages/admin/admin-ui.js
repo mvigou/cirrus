@@ -19,15 +19,6 @@ UI.main.appendChild(
 	)
 );
 
-UI.main.appendChild(
-	chess(
-		{
-			type: 'h2',
-			text: lab.title.messBox
-		}
-	)
-);
-
 UI.messBox = chess(
 	{
 		type: 'div',
@@ -42,25 +33,39 @@ UI.main.appendChild(UI.messBox);
 UI.main.appendChild(
 	chess(
 		{
+			type: 'h2',
+			text: lab.title.invit
+		}
+	)
+);
+
+UI.main.appendChild(
+	chess(
+		{
+			type: 'p',
+			text: lab.role.invit
+		}
+	)
+);
+
+UI.main.appendChild(
+	chess(
+		{
 			type: 'div',
 			attributes: {
-				class: 'signUpUrls-ct'
+				class: 'admin__invit'
 			},
 			children: [
 				{
 					type: 'div',
 					children: [
 						{
-							type: 'h2',
-							text: lab.title.invit
+							type: 'h3',
+							text: lab.title.owners
 						},
 						{
 							type: 'p',
-							text: lab.role.invit
-						},
-						{
-							type: 'h3',
-							text: lab.title.invitViewer
+							text: lab.title.ownerRights
 						},
 						{
 							type: 'button',
@@ -70,7 +75,7 @@ UI.main.appendChild(
 							events: [
 								{
 									type: 'click',
-									function: () => createInvit()
+									function: () => createInvit('owner')
 								}
 							],
 							html: '<svg class="admin__svg" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>' + lab.bt.createInvit
@@ -83,7 +88,7 @@ UI.main.appendChild(
 							events: [
 								{
 									type: 'click',
-									function: () => browseInvit()
+									function: () => browseInvit('owner')
 								}
 							],
 							
@@ -97,7 +102,7 @@ UI.main.appendChild(
 							events: [
 								{
 									type: 'click',
-									function: () => removeInvit()
+									function: () => removeInvit('owner')
 								}
 							],
 							html: '<svg class="admin__svg" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>' + lab.bt.removeInvit
@@ -105,10 +110,58 @@ UI.main.appendChild(
 					]
 				},
 				{
-					type: 'ul',
-					attributes: {
-						class: 'signUpList'
-					}
+					type: 'div',
+					children: [
+						{
+							type: 'h3',
+							text: lab.title.viewers
+						},
+						{
+							type: 'p',
+							text: lab.title.viewerRights
+
+						},
+						{
+							type: 'button',
+							attributes: {
+								class: 'admin__bt'
+							},
+							events: [
+								{
+									type: 'click',
+									function: () => createInvit('viewer')
+								}
+							],
+							html: '<svg class="admin__svg" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>' + lab.bt.createInvit
+						},
+						{
+							type: 'button',
+							attributes: {
+								class: 'admin__bt'
+							},
+							events: [
+								{
+									type: 'click',
+									function: () => browseInvit('viewer')
+								}
+							],
+							
+							html: '<svg class="admin__svg" viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/></svg>' + lab.bt.browseInvit
+						},
+						{
+							type: 'button',
+							attributes: {
+								class: 'admin__bt'
+							},
+							events: [
+								{
+									type: 'click',
+									function: () => removeInvit('viewer')
+								}
+							],
+							html: '<svg class="admin__svg" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>' + lab.bt.removeInvit
+						}
+					]
 				}
 			]
 		}

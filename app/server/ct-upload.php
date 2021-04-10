@@ -6,8 +6,7 @@ Return : absolutely nothing if it's done.
 To : uploadFiles
 */
 
-require_once('./cir-config.php');
-require_once('./cir-security.php');
+require_once('./config.php');
 
 if(verifyAccess()) {
 	if(isset($_POST['parentDir']) && isset($_FILES)) {

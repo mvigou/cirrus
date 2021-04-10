@@ -6,8 +6,7 @@ Return : a JSON representing the content of the directory.
 To : browseDirectory
 */
 
-require_once('./cir-config.php');
-require_once('./cir-security.php');
+require_once('./config.php');
 
 if(verifyAccess()) {
 	
@@ -42,7 +41,7 @@ function browseDirectory($dir) {
 
 		// Parent directory.
 		if($item === '..') {
-			if(!inRootDirectory($dir)) {
+			if($dir !== CONTENT_DIR && $dir !== RECYCLE_DIR) {
 				array_push($response[1],
 					array(
 						'type' => 'parent',

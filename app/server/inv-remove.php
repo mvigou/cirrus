@@ -1,21 +1,32 @@
 <?php
 
-/* 
-Job : get all active invitations.
-Return : a json array of all valid create account url.
-To : browseInvit
-*/
-
-require_once('./cir-config.php');
-require_once('./cir-security.php');
+require_once('./config.php');
 
 if(verifyAccess()) {
 
-	$auths = array_diff(scandir(SIGN_UP_VIEWER_AUTH_DIR), array('.', '..'));
-	$response = array();
+	if(isset($_POST['role'])) {
 
-	foreach($auths as $auth) {
-		unlink(SIGN_UP_VIEWER_AUTH_DIR . '/' . $auth);
+		$role = null;
+
+		if($_POST['role'] === 'owner') {
+			$role = SIGN_UP_OWNER_AUTH_DIR;
+		}
+
+		if($_POST['role'] === 'viewer') {
+			$role = SIGN_UP_VIEWER_AUTH_DIR;
+		}
+
+		if($role !== null) {
+
+			$auths = array_diff(scandir($role), array('.', '..'));
+			$response = array();
+		
+			foreach($auths as $auth) {
+				unlink($role . '/' . $auth);
+			}
+			
+		}
+
 	}
-	
+
 }

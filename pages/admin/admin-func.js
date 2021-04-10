@@ -57,31 +57,39 @@ const ajaxLog = (origin, log) => {
 
 };
 
-const createInvit = () => {
+const createInvit = (role) => {
 
 	ajaxPost(
 		{
 			script: 'inv-create.php',
-			args: []
+			args: [
+				{
+					name: 'role',
+					value: role
+				}
+			]
 		}
 	)
 	.then( 
 		response => {
-		   UI.messBox.innerHTML = `
-		   	${lab.mess.invitCreated}<br/>
-			   <a href="${response}">${response}</a>`;
+		   UI.messBox.innerHTML = `<a href="${response}">${response}</a>`;
 		}
 	)
 	.catch(error => ajaxLog('createInvit', error));
 
 };
 
-const removeInvit = () => {
+const removeInvit = (role) => {
 
 	ajaxPost(
 		{
 			script: 'inv-remove.php',
-			args: []
+			args: [
+				{
+					name: 'role',
+					value: role
+				}
+			]
 		}
 	)
 	.then( 
@@ -93,12 +101,17 @@ const removeInvit = () => {
 
 };
 
-const browseInvit = () => {
+const browseInvit = (role) => {
 
 	ajaxPost(
 		{
 			script: 'inv-browse.php',
-			args: []
+			args: [
+				{
+					name: 'role',
+					value: role
+				}
+			]
 		}
 	)
 	.then( 

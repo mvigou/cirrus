@@ -202,13 +202,20 @@ const openFile = filename => {
 			]
 		}
 	)
-	.then( // Expected response : a JSON with the redirection to the accessible file.
+	.then( // Expected response : a string with the redirection to the accessible file.
 		response => {
 			try {
-				window.location.href = JSON.parse(response);
+
+
+				// TO DO : TEST HERE IF STRING ?
+
+				window.location.href = response;
+			
+			
+			
 			}
 			catch(e) {
-				throw new Error('A JSON object was expected but the server sent something else.')
+				throw new Error('A string was expected but the server sent something else.')
 			}
 		}
 	)
@@ -315,6 +322,9 @@ const removeElm = elm => {
 		.then(
 			response => {
 				if(response === 'success') {
+					if(elm === 'RECYCLE') {
+						localStorage.setItem('currentDir', '../../datas/recyle');
+					}
 					browseDirectory(localStorage.getItem('currentDir')); 
 				}
 				else {

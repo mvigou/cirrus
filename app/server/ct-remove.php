@@ -6,8 +6,7 @@ Return : success if it's done.
 To : removeElm
 */
 
-require_once('./cir-config.php');
-require_once('./cir-security.php');
+require_once('./config.php');
 
 if(verifyAccess()) {
 

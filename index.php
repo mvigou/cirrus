@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php require_once('./app/server/config.php'); ?>
 
 <!DOCTYPE html>
 	<html lang="fr">
@@ -12,8 +12,6 @@
 	
 	<?php
 	
-	require_once('./app/server/cir-security.php');
-
 	// Identified user ? Start the app.
 	if(verifyAccess()) { ?>
 
@@ -34,7 +32,7 @@
 		}
 
 		// Else, launch installation.
-		header('Location: ./app/server/cir-install.php');
+		header('Location: ./app/server/install.php');
 		exit();
 	} ?>
 

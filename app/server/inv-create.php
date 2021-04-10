@@ -1,15 +1,30 @@
 <?php
 
-require_once('./cir-config.php');
-require_once('./cir-security.php');
+require_once('./config.php');
 
 if(verifyAccess()) {
 
-	$auth = hash('sha512', random_bytes(24));
+	if(isset($_POST['role'])) {
 
-	if(touch(SIGN_UP_VIEWER_AUTH_DIR . '/' . $auth)) {
-		echo '../../pages/sign-up/?role=viewer&auth=' . $auth;
-		
+		$auth = hash('sha512', random_bytes(24));
+		$role = null;
+
+		if($_POST['role'] === 'owner') {
+			$role = SIGN_UP_OWNER_AUTH_DIR . '/' . $auth;
+		}
+
+		if($_POST['role'] === 'viewer') {
+			$role = SIGN_UP_VIEWER_AUTH_DIR . '/' . $auth;
+		}
+
+		if($role !== null) {
+
+			if(touch($role)) {
+				echo '../../pages/sign-up/?role=' . $_POST['role'] . '&auth=' . $auth;
+			}
+
+		}
+	
 	}
 
 }

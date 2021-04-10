@@ -1,10 +1,11 @@
 <?php 
 
-require_once('./cir-config.php');
+require_once('./config.php');
 
 if(!is_dir(DATAS)) {
 
 	mkdir(DATAS);
+	mkdir(TEMP_DIR);
 
 	mkdir(CONTENT_DIR);
 	mkdir(RECYCLE_DIR);
