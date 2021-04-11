@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 	<html lang="fr">
 	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="./app/client/app.css">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="./app/client/cirrus-favicon.png" />
+		<link rel="stylesheet" href="./app/client/app.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Cirrus | Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces</title>
 	</head>
 	<body>

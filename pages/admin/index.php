@@ -7,9 +7,10 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 	<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<meta charset="UTF-8">
-			<link rel="stylesheet" href="./admin.css">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="icon" href="../../app/client/cirrus-favicon.png" />
+			<link rel="stylesheet" href="./admin.css" />
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title>cirrus | admin</title>
 		</head>
 		<body>

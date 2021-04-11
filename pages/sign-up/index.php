@@ -9,9 +9,10 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 			<!DOCTYPE html>
 				<html lang="fr">
 				<head>
-					<meta charset="UTF-8">
-					<link rel="stylesheet" href="./sign-up.css">
-					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<link rel="icon" href="../../app/client/cirrus-favicon.png" />
+					<link rel="stylesheet" href="./sign-up.css" />
+					<meta charset="UTF-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 					<title>cirrus | création de compte</title>
 				</head>
 				<body>
