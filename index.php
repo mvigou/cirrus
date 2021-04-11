@@ -12,7 +12,6 @@
 	
 	<?php
 	
-	// Identified user ? Start the app.
 	if(isAuthenticated()) { ?>
 
 		<script src="./app/client/app-i18n.js"></script>
@@ -20,28 +19,22 @@
 		<script src="./app/client/app-ui.js"></script>
 		<script src="./app/client/app-pref.js"></script>
 
-		<?php if($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'publisher') { ?>
-
-			<script>
-				document.body.classList.add('--publisher');
-			</script>
-
-		<?php }
+		<?php if(hasWritingRights()) { 
+			echo "<script>document.body.classList.add('--publisher');</script>";
+		}
 	
 	}
 
-	// Unidentified user ?
 	else {
 
-		// Data folder exists ? Ask for log in.
 		if(is_dir('./datas')) {
 			header('Location: ./pages/sign-in');
 			exit();
 		}
 
-		// Else, launch installation.
 		header('Location: ./app/server/install.php');
 		exit();
+
 	} ?>
 
 </body>
