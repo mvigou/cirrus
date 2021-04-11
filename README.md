@@ -22,78 +22,82 @@ L'utilisation d'un cloud est dans tous les cas polluant, donc **si vous pouvez v
 
 ## Exigences techniques
 
-### Installation
+### Côté serveur
 
-- REQUIS : un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran.
-- REQUIS : PHP version 7 ou plus.
+- Un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran.
+- PHP version 7 ou plus.
 
-### Utilisation
+### Côté client
 
-- REQUIS : un navigateur web moderne tel que Mozilla Firefox, Google Chrome où l'un de ses dérivés.
-- REQUIS : JavaScript (activé par défaut sur la plupart des navigateurs web modernes).
-- REQUIS : L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs web modernes).
+- Un navigateur web moderne tel que Mozilla Firefox, Google Chrome où l'un de ses dérivés.
+- JavaScript (activé par défaut sur la plupart des navigateurs web modernes).
+- L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs cités plus haut).
 
 ## Fonctionnalités
 
 Note: cette liste tient également lieu de feuille de route partielle ; la fonctionnalité décrite est alors précédée de la mention (TODO).
 
-### Interface
-
-* Actions dites "dangereuses" gérées de façon novatrice (maintien du clic / de la pression).
-* Thème clair.
-* Thème sombre.
-
 ### Explorateur
 
 * (TODO) Afficher plus d'informations sur les fichiers et dossiers (taille, type, nb d'enfants...).
 * (TODO) Ordre de tri à préciser.
-* Accéder rapidement aux dossiers parents grâce à un arbre d'arborescence.
-* Naviguer dans une arborescence de dossiers conforme à la réalité.
-* Purger la corbeille.
-* Changer de dossier parent (utilisateur, corbeille).
+* Accès rapide aux dossiers parents grâce à un arbre d'arborescence.
+* Sélection du dossier racine (content, recycle).
+* Navigation dans l'arborescence des dossiers.
+* Purge la corbeille.
 
 ### Opérations sur les dossiers
 
-* (TODO) Copier un dossier.
-* (TODO) Déplacer un dossier.
+* (TODO) Copie.
+* (TODO) Déplacement.
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
-* Créer un ou plusieurs dossiers vides.
-* Mettre un dossier à la corbeille.
-* Renommer un dossier.
-* Supprimer définitivement un dossier.
-* Télécharger un dossier et son contenu au format compressé Zip.
+* Accès au contenu.
+* Création groupée.
+* Création simple.
+* Renommage.
+* Suppression (vers corbeille).
+* Suppression définitive (depuis corbeille).
+* Téléchargement (format compressé Zip).
 
 ### Opérations sur les fichiers
 
-* (TODO) Copier un fichier.
-* (TODO) Déplacer un fichier.
+* (TODO) Copie.
+* (TODO) Déplacement.
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi ?
-* Mettre un fichier à la corbeille.
-* Mettre en ligne un ou plusieurs fichiers à la fois.
-* Prévisualiser un fichier dans le navigateur (suivant support).
-* Renommer un fichier.
-* Suivi de la progression des téléchargements de fichiers.
-* Supprimer définitivement un fichier.
-* Télécharger un fichier.
+* Mise en ligne groupée.
+* Mise en ligne simple.
+* Prévisualisation.
+* Renommage.
+* Suppression (vers corbeille).
+* Suppression définitive (depuis corbeille).
+* Téléchargement.
 
 ### Opérations d'administration
 
-* (TODO) Créer de liens d'inscription d'utilisateurs the type "publisher".
-* (TODO) Supprimer des comptes (à préciser)
-* Assistant de création d'un compte "Propriétaire" à l'installation. 
-* Créer de liens d'inscription d'utilisateurs the type "viewer".
+* (TODO) Suppression de comptes (action propriétaire)
+* Création autonome de comptes utilisateur de type "visualiseur" sur invitation.
+* Création autonome de comptes utilisateur de type "éditeur" sur invitation.
+* Création d'un compte "propriétaire" automatique à l'installation. 
+* Création et suppression de liens d'inscription utilisateur the type "visualiseur".
+* Création et suppression de liens d'inscription utilisateur the type "éditeur".
 
 ### Sécurité
 
-* Accès utilisateur authentifié restreint aux seuls dossiers "content" et "recycle". 
-* Accès à l'arborescence des contenus soumise à authentification préalable.
-* Journalisation des erreurs dans un fichier dédié.
-* Purge complète du dossier temporaire chaque fois que 10 dossiers temporaires ont été générés.
-* Purge complète du dossier temporaire à chaque authentification réussie.
-* Verrouillage de l'accès via URL au dossier "datas" et son contenu (.htaccess).
+* Accès direct via URL au dossier "datas" et à son contenu protégé (.htaccess / hors dossier "temp").
+* Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
+* Accès utilisateur soumis à authentification préalable.
+* Options d'édition disponibles relatives au rôle utilisateur (limitations côté client). 
+* Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés.
+* Purge automatique du dossier temporaire à chaque authentification réussie.
 
 ### Divers
 
+* (TODO) Alerte de nouveau contenu pour rafraichissement chez les différents utilisateurs connectés en même temps ?
 * (TODO) Intégrer une gestion de license ? (limitation des fonctionnalité ? Message toutes les X actions ?)
+* (TODO) Journaliser les erreurs de connexion.
 * (TODO) Mettre en place une purge automatique du journal d'erreur.
 * (TODO) Mise en cache à voir / Service worker ?
+* Actions dites "dangereuses" gérées de façon novatrice (maintien du clic / de la pression).
+* Journalisation des erreurs dans un fichier dédié (à améliorer).
+* Suivi de la progression de mise en ligne de fichier(s).
+* Thème clair / Thème sombre.
