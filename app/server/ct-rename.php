@@ -8,23 +8,27 @@ To : renameElm
 
 require_once('./config.php');
 
-if(verifyAccess()) {
+if(isAuthenticated()) {
 
-	if(isset($_POST['oldName']) && isset($_POST['newName']) && isset($_POST['parentDir'])) {
+	if(hasWritingRights()) {
 
-        $oldPath = $_POST['parentDir'] . '/' . $_POST['oldName'];
-        $newPath = $_POST['parentDir'] . '/' . buildValidName($_POST['newName']);
+		if(isset($_POST['oldName']) && isset($_POST['newName']) && isset($_POST['parentDir'])) {
 
-        if(!is_file($newPath) && !is_dir($newPath)) {
-            if(rename($oldPath, $newPath)) {
-                echo 'success';
-            }
-        }
+			$oldPath = $_POST['parentDir'] . '/' . $_POST['oldName'];
+			$newPath = $_POST['parentDir'] . '/' . buildValidName($_POST['newName']);
 
-        else {
-            echo 'duplicate';
-        }
+			if(!is_file($newPath) && !is_dir($newPath)) {
+				if(rename($oldPath, $newPath)) {
+					echo 'success';
+				}
+			}
 
-    }
+			else {
+				echo 'duplicate';
+			}
+
+		}
+
+	}
 
 }

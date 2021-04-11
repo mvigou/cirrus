@@ -2,7 +2,7 @@
 
 require_once('../../app/server/config.php');
 
-if(verifyAccess() && $_SESSION['userRole'] === 'owner') { ?>
+if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 
 	<!DOCTYPE html>
 		<html lang="fr">

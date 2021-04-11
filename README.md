@@ -86,7 +86,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Accès direct via URL au dossier "datas" et à son contenu protégé (.htaccess / hors dossier "temp").
 * Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
 * Accès utilisateur soumis à authentification préalable.
-* Options d'édition disponibles relatives au rôle utilisateur (limitations côté client). 
+* Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
 * Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés.
 * Purge automatique du dossier temporaire à chaque authentification réussie.
 

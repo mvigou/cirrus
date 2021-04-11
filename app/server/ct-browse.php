@@ -8,7 +8,7 @@ To : browseDirectory
 
 require_once('./config.php');
 
-if(verifyAccess()) {
+if(isAuthenticated()) {
 	
 	if(isset($_POST['dir'])) {
 		
@@ -59,9 +59,7 @@ function browseDirectory($dir) {
 			else {
 				array_push($arrFiles, $item);
 			}
-
 		}
-
 	}
 
 	foreach($arrDir as $item) {

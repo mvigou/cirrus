@@ -8,33 +8,37 @@ To : removeElm
 
 require_once('./config.php');
 
-if(verifyAccess()) {
+if(isAuthenticated()) {
 
-	if(isset($_POST['elm'])) {
+	if(hasWritingRights()) {
 
-		// Empty recycle bin.
-		if($_POST['elm'] === 'RECYCLE') {
-			$_POST['elm'] = RECYCLE_DIR;	
-		}
+		if(isset($_POST['elm'])) {
 
-		// Request made from the datas directory ? MOVE to recycle.
-		if(inDatasDirectory($_POST['elm'])) {
-			moveToRecycle($_POST['elm']);
-		}
-		
-		// Request made from the recycle directory ? REMOVE permanently.
-		else if(inRecycleDirectory($_POST['elm'])) {
+			// Empty recycle bin.
+			if($_POST['elm'] === 'RECYCLE') {
+				$_POST['elm'] = RECYCLE_DIR;	
+			}
+
+			// Request made from the datas directory ? MOVE to recycle.
+			if(inDatasDirectory($_POST['elm'])) {
+				moveToRecycle($_POST['elm']);
+			}
 			
-			if(is_file($_POST['elm'])) {
-				removeFile($_POST['elm']);
+			// Request made from the recycle directory ? REMOVE permanently.
+			else if(inRecycleDirectory($_POST['elm'])) {
+				
+				if(is_file($_POST['elm'])) {
+					removeFile($_POST['elm']);
+				}
+				else {
+					removeDir($_POST['elm']);
+				}
+			
 			}
-			else {
-				removeDir($_POST['elm']);
-			}
-		
-		}
 
-		echo 'success';
+			echo 'success';
+
+		}
 
 	}
 	

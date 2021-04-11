@@ -13,14 +13,14 @@
 	<?php
 	
 	// Identified user ? Start the app.
-	if(verifyAccess()) { ?>
+	if(isAuthenticated()) { ?>
 
 		<script src="./app/client/app-i18n.js"></script>
 		<script src="./app/client/app-func.js"></script>
 		<script src="./app/client/app-ui.js"></script>
 		<script src="./app/client/app-pref.js"></script>
 
-		<?php if($_SESSION['userRole'] === 'owner' || $_SESSION['userRole'] === 'publisher') { ?>
+		<?php if($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'publisher') { ?>
 
 			<script>
 				document.body.classList.add('--publisher');

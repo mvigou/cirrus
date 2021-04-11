@@ -8,7 +8,7 @@ To : openFile
 
 require_once('./config.php');
 
-if(verifyAccess()) {
+if(isAuthenticated()) {
 
 	if(isset($_POST['filename'])) {
 		

@@ -21,11 +21,29 @@ define('SIGN_UP_VIEWER_AUTH_DIR', DATAS . '/auth/sign-up-as-viewer');
 define('TEMP_DIR', DATAS . '/temp');
 define('LOGS_DIR', DATAS . '/logs');
 
-function verifyAccess() {
+function isAuthenticated() {
 	if(isset($_SESSION['token']) && isset($_SESSION['browser'])) {
 		if($_SESSION['token'] === session_id() && $_SESSION['browser'] === $_SERVER['HTTP_USER_AGENT']) {
 			return true;
 		}	
+	}
+	return false;
+}
+
+function hasOwnerRights() {
+	if(isset($_SESSION['role'])) {
+		if($_SESSION['role'] === 'owner') {
+			return true;
+		}
+	}
+	return false;
+}
+
+function hasWritingRights() {
+	if(isset($_SESSION['role'])) {
+		if($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'publisher') {
+			return true;
+		}
 	}
 	return false;
 }
