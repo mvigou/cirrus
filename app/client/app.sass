@@ -24,8 +24,8 @@ body
 	--base-color: #666
 	--bg-color: #fff
 	--border-color: #ccc
-	--hovered-color: #a00c3d
-	--light-color: #eee
+	--cirrus-color: #2db4e1
+	--hovered-color: #000
 	background-color: var(--bg-color)
 	box-sizing: border-box
 	color: var(--base-color)
@@ -40,17 +40,16 @@ body
 	display: none
 
 .--dark-mode
+	--base-color: #bbb
 	--bg-color: #222
 	--border-color: #444	
-	--base-color: #bbb
 	--hovered-color: #fff
-	--light-color: #333
 	
 // Editable boxes.
 
 .--edit-mode
 	.non-editable 		
-		display: none
+		display: none !important
 	.editable
 		display: block
 
@@ -81,6 +80,17 @@ button
 	display: block
 	height: 48px
 	width: 48px
+
+	&::before
+		border-radius: 50%
+		content: ""
+		display: inline-block
+		height: 9px
+		margin: 0 auto 6px auto
+		width: 9px	
+	&:hover::before
+		background-color: var(--cirrus-color)
+
 	&:hover
 		color: var(--hovered-color)
 		svg
@@ -91,11 +101,11 @@ input
 	color: var(--font-color-high)
 	border: none
 	border-bottom: solid 1px var(--border-color) 
-	padding: 6px 0
+	padding-bottom: 3px
 	margin: 6px 0
 	&:focus
 		outline: none
-		border-bottom-color: var(--hovered-color)
+		border-bottom-color: var(--cirrus-color)
 
 svg
 	vertical-align: middle
@@ -114,6 +124,10 @@ svg
 		position: sticky
 		top: 0
 
+		&__logo
+			width: 36px
+			margin-top: 20px
+
 		&__tree
 			align-items: center
 			border-top: solid 1px var(--border-color)
@@ -127,7 +141,7 @@ svg
 			pre
 				font-family: Josefin, sans-serif	
 		
-		&__bt:nth-of-type(7)
+		button:nth-of-type(7)
 			margin-left: auto
 		
 	&__list
@@ -135,11 +149,14 @@ svg
 		padding: 0
 	
 	&__item
-		border-bottom: solid 1px var(--light-color)
 		display: grid
-		grid-template-columns: 1fr auto
-		padding: 0px 24px
+		grid-template-columns: 1fr auto auto
+		padding: 6px 12px 6px 18px
+		border-left: solid 6px transparent
 
+		&:hover
+			border-color: var(--cirrus-color)
+			
 		&__a
 			align-items: center
 			display: flex
@@ -152,13 +169,8 @@ svg
 
 			svg
 				width: 18px
-				margin-right: 6px
-
-		&__button + button
-			border-top: solid 1px var(--light-color)
-	
-		&__button-svg
-			width: 18px
+				margin-right: 12px
+				fill: var(--cirrus-color)
 
 .pgr-bar
 	background-color: var(--bg-color)
@@ -177,24 +189,20 @@ svg
 	>p
 		margin: 0
 
-.pop
-	align-items: center
-	background-color: var(--bg-color)
-	border: solid 1px var(--border-color)
-	border-left: none
-	box-shadow: 0 0 15px 5px var(--border-color)
+.pop	
 	box-sizing: border-box
 	display: flex
+	flex-direction: column
+	height: 220px
 	justify-content: center
-	left: 0
-	margin-top: -107.5px
-	max-width: 300px
-	padding: 30px 15px
+	left: 50%
+	margin-left: -110px
+	margin-top: -110px
 	position: fixed
+	text-align: center
 	top: 50%
 	transform: translateX(-100vw)
-	transition: transform 0.125s ease
-	z-index: 2
+	width: 220px
 
 	&--confirm // State when pressure is maintained.
 		--mess-anim: fade 0.10s 0.50s 1 both
@@ -212,18 +220,12 @@ svg
 		--tile-ct-anim: none
 		transform: initial
 
-	>div
-		align-items: center
-		display: flex
-		grid-template-columns: auto 2fr
-
-	.pop__tiles-ct
+	.pop__tiles-ct	
 		animation: var(--tile-ct-anim)
 		display: grid
-		gap: 5px
-		grid-template-rows: 12px 12px 12px
+		gap: 6px
 		justify-content: center
-		margin-left: 15px
+		margin-bottom: 30px
 		
 	.pop__tile
 		background-color: var(--hovered-color)
@@ -231,23 +233,26 @@ svg
 		&:first-of-type
 			animation: var(--tile-a-anim)
 			height: 4px
-			margin-right: auto
+			margin-top: auto
 			width: 4px
 		&:nth-of-type(2)
 			animation: var(--tile-b-anim)
 			height: 8px
-			margin-left: auto
+			margin-bottom: auto
+			margin-left: 6px
 			width: 8px
 		&:nth-of-type(3)
 			animation: var(--tile-c-anim)
 			height: 12px
-			margin-right: auto
+			margin-top: auto
 			width: 12px
 		
 	.pop__content
 		animation: var(--mess-anim)
-		line-height: 22px
-		margin-left: 30px
+		background-color: var(--hovered-color)
+		border-radius: 6px
+		color: var(--bg-color)
+		padding: 24px
 
 .add-dir-form
 	display: none

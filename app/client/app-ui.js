@@ -17,10 +17,19 @@ UI.browserNav = chess(
 			class: 'bwr__nav' 
 		},
 		children: [
+			{
+				type: 'img',
+				attributes: {
+					'alt': 'logo cirrus',
+					'class': 'bwr__nav__logo',
+					'src': './app/client/cirrus-logo.svg',
+					'title': 'cirrus'
+				}
+			},
 			{ // BUTTON | Display the data directory.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt recycle-ft',
+					class: 'recycle-ft',
 					title: lab.bt.toDataDir
 				},
 				events: [
@@ -37,7 +46,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Display the recycle directory.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-ft publisher-ft',
+					class: 'datas-ft publisher-ft non-editable',
 					title: lab.bt.toRecycleDir
 				},
 				events: [
@@ -54,7 +63,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Open a window to upload files.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-ft publisher-ft',
+					class: 'datas-ft publisher-ft non-editable',
 					title: lab.bt.sendFiles
 				},
 				events: [
@@ -68,7 +77,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Display a form to create directories.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-ft publisher-ft',
+					class: 'datas-ft publisher-ft non-editable',
 					title: lab.bt.createDir
 				},
 				events: [
@@ -113,7 +122,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Toggle between normal and edition mode.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt datas-ft publisher-ft',
+					class: 'datas-ft publisher-ft',
 					title: lab.bt.rename
 				},
 				events: [
@@ -127,7 +136,7 @@ UI.browserNav = chess(
 			{ // BUTTON | Empty the recycle bin.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt recycle-ft',
+					class: 'recycle-ft',
 					title: lab.bt.emptyRecycle
 				},
 				events: [
@@ -167,7 +176,6 @@ UI.browserNav = chess(
 			{ // BUTTON | Toggle between light and dark theme.
 				type: 'button',
 				attributes: {
-					class: 'bwr__nav__bt',
 					title: lab.bt.switchTheme
 				},
 				events: [
@@ -184,14 +192,12 @@ UI.browserNav = chess(
 
 UI.pop = chess(
 	{ type: 'div', attributes: { class: 'pop prg-click' }, children: [
-		{ type: 'div', children: [
-			{ type: 'div', attributes: { class: 'pop__tiles-ct' }, children: [   
-				{ type: 'div', attributes: { class: 'pop__tile' }},
-				{ type: 'div', attributes: { class: 'pop__tile' }},
-				{ type: 'div', attributes: { class: 'pop__tile' }}	
-			]},
-			{ type: 'div', attributes: { class: 'pop__content' }}
-		]}
+		{ type: 'div', attributes: { class: 'pop__tiles-ct' }, children: [   
+			{ type: 'div', attributes: { class: 'pop__tile' }},
+			{ type: 'div', attributes: { class: 'pop__tile' }},
+			{ type: 'div', attributes: { class: 'pop__tile' }}	
+		]},
+		{ type: 'div', attributes: { class: 'pop__content' }}
 	]}
 );
 

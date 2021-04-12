@@ -5,14 +5,13 @@
 		<link rel="stylesheet" href="./sign-in.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>cirrus | connexion</title>
+		<title>cirrus | se connecter</title>
 	</head>
 	<body>
 		<header>
-			<h1>cirrus</h1>
+			<h1>cirrus | <span>se connecter</span></h1>
 		</header>
 		<form action="../../app/server/sign-in.php" method="POST">
-			<h2>Connexion</h2>
 			<label>
 				Nom d'utilisateur
 				<input 
@@ -33,7 +32,7 @@
 					pattern="[a-zA-Z0-9.?!\-_*+=/|\\()[\]#$@%]{8,24}" 
 				/>
 			</label>
-			<button type="submit">Valider</button>
+			<button title="valider" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
 		</form>
     </body>
 </html>

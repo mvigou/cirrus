@@ -13,14 +13,13 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 					<link rel="stylesheet" href="./sign-up.css" />
 					<meta charset="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-					<title>cirrus | création de compte</title>
+					<title>cirrus | créer un compte</title>
 				</head>
 				<body>
 					<header>
-						<h1>cirrus</h1>
+						<h1>cirrus | <span>créer un compte</span></h1>
 					</header>
 					<form action="../../app/server/sign-up.php" method="POST">
-						<h2>Créer un compte</h2>
 						<label>
 							Nom d'utilisateur
 							<span>8 à 16 lettres et/ou chiffres</span>
@@ -62,7 +61,7 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 							name="auth"
 							value="<?php echo $_GET['auth'] ?>"
 						/>
-						<button type="submit">Valider</button>
+						<button title="valider" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
 					</form>
 					<script src="./sign-up.js"></script>
 				</body>

@@ -7,62 +7,103 @@ html
 	font-size: 16px
 
 body
+	--base-color: #666
 	--bg-color: #fff
-	--border-color: #eee
-	--danger-color: #c22
-	--fill-color: #ccc
-	--font-color-hight: #333
-	--font-color-low: #666
-	--main-color: #a00c3d
+	--border-color: #ccc
+	--cirrus-color: #2db4e1
+	--hovered-color: #000
 	background-color: var(--bg-color)
 	box-sizing: border-box
-	color: var(--font-color-hight)	
+	color: var(--base-color)	
+	display: flex
+	flex-direction: column-reverse
 	font-family: Josefin, sans-serif
 	margin: 0
-
+	min-height: 100vh
+	@media screen and ( min-width: 768px)
+		display: grid
+		grid-template-columns: 400px auto
+		
 header
-	border-bottom: solid 1px var(--border-color)
-	padding: 36px 48px
-	@media screen and (min-width: 768px)
-		padding: 60px 72px
+	align-items: center
+	background-color: #222
+	background-image: url("../../app/client/cirrus-logo.svg")
+	background-position: center 24px 
+	background-repeat: no-repeat
+	background-size: 72px
+	box-sizing: border-box
+	padding: 12px
+	text-align: center
+	@media screen and ( min-width: 768px)
+		background-position: center 
+		background-size: 50%
+		display: flex
+		flex-direction: column
+		justify-content: end
 
 h1
-	color: var(--font-color-low)
-	margin: 0
-	text-align: right
-
-h2
-	color: var(--main-color)
-	margin-top: 0
+	color: var(--bg-color)
+	font-size: 1.125rem
+	margin-top: 96px
+	span
+		color: var(--cirrus-color)
 
 a
 	color: inherit
 
+svg
+	fill: var(--base-color)
+	vertical-align: middle
+	width: 24px
+
 form
-	border-radius: 12px
-	box-sizing: border-box
-	padding: 24px 36px
-	@media screen and (min-width: 768px)
-		padding: 60px 72px
+	margin: auto
+	padding: 36px
+	@media screen and ( min-width: 768px)
+		margin: auto 0 
 
 label
 	display: block
 	margin-bottom: 36px
-
+	color: var(--hovered-color)
 	span
-		color: var(--font-color-low)
+		color: var(--base-color)
 		display: block
-		font-size: 0.85rem
+		font-size: 0.9rem
 
 input
 	background-color: transparent
 	border: none
-	border-bottom: solid 1px var(--fill-color) 
-	color: var(--font-color-low)
+	border-bottom: solid 1px var(--border-color) 
+	width: 100%
+	color: var(--base-color)
 	display: block
 	font-size: 1rem
-	margin-top: 6px
-
+	margin-top: 12px
+	padding-bottom: 3px
 	&:focus
-		border-bottom-color: var(--main-color)
+		border-bottom-color: var(--cirrus-color)
 		outline: none
+
+button
+	background-color: transparent
+	border: none
+	cursor: pointer
+	display: block
+	height: 48px
+	margin-left: auto
+	margin-right: 36px
+	width: 48px
+	&::before
+		border-radius: 50%
+		content: ""
+		display: inline-block
+		height: 9px
+		margin: 0 auto 6px auto
+		width: 9px	
+	&:focus, &:hover
+		outline: none
+		&::before
+			background-color: var(--cirrus-color)
+		svg
+			fill: var(--hovered-color)

@@ -628,75 +628,72 @@ const buildItems = (items, dir) => {
 	
 		if(item.type === 'file' || item.type === 'subfolder') {
 		
+			// BUTTON | Allow to download the file or the directory as a zip.
 			itemElm.appendChild(
 				chess(
 					{
-						type: 'div',
-						attributes: {
-							class: 'non-editable'
+						type: 'button', 
+						attributes: { 
+							class: 'bwr__item__button non-editable',
+							title: lab.bt.download
 						},
-						// BUTTON | Allow to download the file or the directory as a zip.
-						children: [
+						events: [
 							{
-								type: 'button', 
-								attributes: { 
-									class: 'bwr__item__button',
-									title: lab.bt.download
-								},
-								events: [
-									{
-										type: 'click',
-										function: () => downloadElm(item.path)
-									}
-								],
-								html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>'
-							},
-							// BUTTON | Allow to remove the file or the directory.
-							{
-								type: 'button',
-								attributes: {
-									class: 'bwr__item__button publisher-ft',
-									title: lab.bt.delete
-								},
-								events: [
-									{
-										type: 'mousedown',
-										function: () => watchConfirmClick('start', item.path)
-									},
-									{
-										type: 'mouseup',
-										function: () => {
-											watchConfirmClick('end', item.path),
-											removeElm(item.path)
-										}
-									},
-									{
-										type: 'mouseleave',
-										function: () => cancelConfirm()
-									},
-									{
-										type: 'touchstart',
-										function: e => watchConfirmTouch('start', e)
-									},
-									{
-										type: 'touchend',
-										function: e => { 
-											watchConfirmTouch('end', e);
-											removeElm(item.path);
-										}
-									},
-									{
-										type: 'touchmove',
-										function: () => cancelConfirm()
-									}
-								],
-								html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+								type: 'click',
+								function: () => downloadElm(item.path)
 							}
-						]
+						],
+						html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>'
 					}
 				)
 			);
-			
+
+			 // BUTTON | Allow to remove the file or the directory.
+			itemElm.appendChild(
+				chess(
+					{
+						type: 'button',
+						attributes: {
+							class: 'bwr__item__button publisher-ft non-editable',
+							title: lab.bt.delete
+						},
+						events: [
+							{
+								type: 'mousedown',
+								function: () => watchConfirmClick('start', item.path)
+							},
+							{
+								type: 'mouseup',
+								function: () => {
+									watchConfirmClick('end', item.path),
+									removeElm(item.path)
+								}
+							},
+							{
+								type: 'mouseleave',
+								function: () => cancelConfirm()
+							},
+							{
+								type: 'touchstart',
+								function: e => watchConfirmTouch('start', e)
+							},
+							{
+								type: 'touchend',
+								function: e => { 
+									watchConfirmTouch('end', e);
+									removeElm(item.path);
+								}
+							},
+							{
+								type: 'touchmove',
+								function: () => cancelConfirm()
+							}
+						],
+						html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+					}
+				)
+			);
+
 		}
 		
 		UI.browserList.appendChild(itemElm);
