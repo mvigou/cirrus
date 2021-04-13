@@ -5,6 +5,7 @@ ini_set('display_errors', true);
 ini_set('html_errors', false);
 error_reporting(E_ALL);
 
+define('LANG', 'fr');
 define('DATAS', '../../datas');
 
 define('CONTENT_DIR', DATAS . '/content');

@@ -1,0 +1,20 @@
+{
+	"bt": {
+		"emptyMessBox": "Vider la boîte de messages",
+		"invitBrowse": "Afficher les liens actifs",
+		"invitCreate": "Générer un lien d'inscription",
+		"invitRemove": "Tout supprimer"
+	},
+	"page": {
+		"invitDesc": "Générez des liens d'inscription à usage unique permettant à d'autres d'accéder à votre cirrus.",
+		"invitPubRole": "Editeurs (accès, ajout et suppression de contenu)",
+		"invitTitle": "Invitations",
+		"invitViewRole": "Visualiseurs (accès au contenu)",
+		"role": "administration"
+	},
+	"server": {
+		"error": "Une erreur est survenue pendant le traitement de votre requête.",
+		"invitEmpty": "Aucun lien d'inscription actif de ce type.",
+		"invitRemoved": "Les liens d'inscription encore actifs de ce type ont été supprimés."
+	}
+}

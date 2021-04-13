@@ -1,5 +1,14 @@
 "use strict";
 
+const UI = { messBox: document.querySelector('.admin__mess-box') };
+
+const writeMessBox = html => {
+	UI.messBox.innerHTML += `<p>${html}</p>`;
+	UI.messBox.scrollTop = UI.messBox.scrollHeight;
+};
+
+const emptyMessBox = () => UI.messBox.innerHTML = '';
+
 const ajaxPost = (req) => {
 
 	return new Promise(
@@ -53,7 +62,7 @@ const ajaxLog = (origin, log) => {
 			]
 		},
 	)
-	.then(response => setPop('warning', lab.pop.loggedError));
+	.then(() => writeMessBox(UI.messBox.getAttribute('data-mess-server-error')))
 
 };
 
@@ -72,7 +81,7 @@ const createInvit = (role) => {
 	)
 	.then( 
 		response => {
-		   UI.messBox.innerHTML = `<a href="${response}">${response}</a>`;
+		   writeMessBox(`<a href="${response}">${response}</a>`);
 		}
 	)
 	.catch(error => ajaxLog('createInvit', error));
@@ -94,7 +103,7 @@ const removeInvit = (role) => {
 	)
 	.then( 
 		response => {
-			UI.messBox.innerHTML = lab.mess.invitDeleted
+			writeMessBox(UI.messBox.getAttribute('data-mess-invit-removed'));
 		}
 	)
 	.catch(error => ajaxLog('removeInvit', error));
@@ -116,30 +125,18 @@ const browseInvit = (role) => {
 	)
 	.then( 
 		response => {
-			try {
-				
+			try {	
 				const signUpUrls = JSON.parse(response);
-				UI.messBox.innerHTML = '';
-
 				if(signUpUrls.length > 0) {
-					for(const signUpUrl of signUpUrls) {
-						UI.messBox.appendChild(
-							chess(
-								{		
-									type: 'a',
-									attributes: {
-										href: signUpUrl,
-									},
-									text: signUpUrl
-								}
-							)
-						);
+					let html = '';
+					for(const signUpUrl of signUpUrls) {			
+						html += `<a href="${signUpUrl}">${signUpUrl}</a>`
 					}
+					writeMessBox(html);
 				}
 				else {
-					UI.messBox.innerHTML = lab.mess.invitEmpty;
+					writeMessBox(UI.messBox.getAttribute('data-mess-invit-empty'));
 				}
-				
 			}
 			catch(e) {
 				throw new Error('A JSON object was expected but the server sent something else.')
@@ -149,9 +146,3 @@ const browseInvit = (role) => {
 	.catch(error => ajaxLog('browseInvit', error));
 
 }
-
-const writeMess = (mess) => {
-	
-	UI.messBox.innerHTML += mess;
-
-};
