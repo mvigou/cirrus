@@ -1,0 +1,15 @@
+{
+	"bt": {
+		"valid": "Valider"
+	},
+	"page": {
+		"role": "créer un compte"
+	},
+	"label": {
+		"userName": "Nom d'utilisateur",
+		"userNameFormat": "8 à 16 lettres et/ou chiffres",
+		"userPass": "Mot de passe",
+		"userPassFormat": "8 à 24 lettres, chiffres et/ou . ? ! - _ * + = / | \\ ( ) [ ] # $ @ %",
+		"userPassConf": "Confirmation mot de passe "
+	}
+}

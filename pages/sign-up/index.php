@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+require('../../app/server/config.php');
+		
+$i18n = './i18n-' . LANG . '.json';
+$lab = json_decode(file_get_contents($i18n));
 
 if(isset($_GET['role']) && isset($_GET['auth'])) { 
 
@@ -7,22 +12,22 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 		if(is_file('../../datas/auth/sign-up-as-' . $_GET['role'] . '/' . $_GET['auth'])) { ?>
 
 			<!DOCTYPE html>
-				<html lang="fr">
+				<html lang="<?php echo LANG; ?>">
 				<head>
 					<link rel="icon" href="../../app/client/cirrus-favicon.png" />
-					<link rel="stylesheet" href="./sign-up.css" />
+					<link rel="stylesheet" href="./style.css" />
 					<meta charset="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-					<title>cirrus | créer un compte</title>
+					<title>cirrus | <?php echo $lab->page->role; ?></title>
 				</head>
 				<body>
 					<header>
-						<h1>cirrus | <span>créer un compte</span></h1>
+						<h1>cirrus | <span><?php echo $lab->page->role; ?></span></h1>
 					</header>
 					<form action="../../app/server/sign-up.php" method="POST">
 						<label>
-							Nom d'utilisateur
-							<span>8 à 16 lettres et/ou chiffres</span>
+							<?php echo $lab->label->userName; ?>
+							<span><?php echo $lab->label->userNameFormat; ?></span>
 							<input 
 								id="user-name" 
 								minlength="8"
@@ -32,8 +37,8 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 							/>
 						</label>
 						<label>
-							Mot de passe
-							<span>8 à 24 lettres, chiffres et/ou . ? ! - _ * + = / | \ ( ) [ ] # $ @ %</span>
+							<?php echo $lab->label->userPass; ?>
+							<span><?php echo $lab->label->userPassFormat; ?></span>
 							<input type="password" 
 								id="user-pass" 
 								minlength="8"
@@ -43,7 +48,7 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 							/>
 						</label>
 						<label>
-							Confirmation mot de passe
+							<?php echo $lab->label->userPassConf; ?>
 							<input type="password" 
 								id="user-pass-conf" 
 								minlength="8"
@@ -61,9 +66,9 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 							name="auth"
 							value="<?php echo $_GET['auth'] ?>"
 						/>
-						<button title="valider" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
+						<button title="<?php echo $lab->bt->valid; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
 					</form>
-					<script src="./sign-up.js"></script>
+					<script src="./script.js"></script>
 				</body>
 			</html>
 			

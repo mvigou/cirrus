@@ -2,12 +2,10 @@
 
 require('../../app/server/config.php');
 
-if(isAuthenticated() && $_SESSION['role'] === 'owner') { 
+$i18n = './i18n-' . LANG . '.json';
+$lab = json_decode(file_get_contents($i18n));
 
-	$i18n = './admin-i18n-' . LANG . '.json';
-	$lab = json_decode(file_get_contents($i18n));
-
-?>
+if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 
 	<!DOCTYPE html>
 
@@ -15,7 +13,7 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') {
 		
 		<head>
 			<link rel="icon" href="../../app/client/cirrus-favicon.png" />
-			<link rel="stylesheet" href="./admin.css" />
+			<link rel="stylesheet" href="./style.css" />
 			<meta charset="UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title>cirrus | <?php echo $lab->page->role; ?></title>
@@ -84,7 +82,7 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') {
 				
 			</section>
 
-			<script src="./admin-func.js"></script>
+			<script src="./script.js"></script>
 			
 		</body>
 	</html>

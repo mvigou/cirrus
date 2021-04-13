@@ -1,0 +1,12 @@
+{
+	"bt": {
+		"valid": "Valider"
+	},
+	"page": {
+		"role": "se connecter"
+	},
+	"label": {
+		"userName": "Nom d'utilisateur",
+		"userPass": "Mot de passe"
+	}
+}
