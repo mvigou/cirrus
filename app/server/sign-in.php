@@ -11,20 +11,20 @@ if(
 	){
 
 		require('./config.php');
-		$hashUserName = hash('sha512', $_POST['user-name']);
+		$userName = $_POST['user-name'];
 		$userFilePath = null;
 		$userRole = null;
 
-		if(file_exists(OWNERS_DIR . '/' . $hashUserName)) {
-			$userFilePath = OWNERS_DIR . '/' . $hashUserName;
+		if(file_exists(OWNERS_DIR . '/' . $userName)) {
+			$userFilePath = OWNERS_DIR . '/' . $userName;
 			$userRole = 'owner';
 		}
-		else if(file_exists(PUBLISHERS_DIR . '/' . $hashUserName)) {
-			$userFilePath = PUBLISHERS_DIR . '/' . $hashUserName;
+		else if(file_exists(PUBLISHERS_DIR . '/' . $userName)) {
+			$userFilePath = PUBLISHERS_DIR . '/' . $userName;
 			$userRole = 'publisher';
 		}
-		else if(file_exists(VIEWERS_DIR . '/' . $hashUserName)) {
-			$userFilePath = VIEWERS_DIR . '/' . $hashUserName;
+		else if(file_exists(VIEWERS_DIR . '/' . $userName)) {
+			$userFilePath = VIEWERS_DIR . '/' . $userName;
 			$userRole = 'viewer';
 		}
 		

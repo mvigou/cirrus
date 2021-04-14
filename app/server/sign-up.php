@@ -38,9 +38,9 @@ if(
 
 				// TODO Check if there is not user with the same name yet !
 				
-				$hashUserName = hash('sha512', $_POST['user-name']);
+				$userName = $_POST['user-name'];
 				$hashPassword = password_hash($_POST['user-pass'], PASSWORD_BCRYPT);
-				$userFileName = $userDirPath . '/' . $hashUserName;
+				$userFileName = $userDirPath . '/' . $userName;
 
 				touch($userFileName);
 				file_put_contents($userFileName, $hashPassword);
