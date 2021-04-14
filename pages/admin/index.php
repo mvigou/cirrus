@@ -16,13 +16,13 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 			<link rel="stylesheet" href="./style.css" />
 			<meta charset="UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<title>cirrus | <?php echo $lab->page->role; ?></title>
+			<title>cirrus | <?php echo $lab->page->title; ?></title>
 		</head>
 		
 		<body>
 
 			<header>
-				<h1>cirrus | <span><?php echo $lab->page->role; ?></span></h1>
+				<h1>cirrus | <span><?php echo $lab->page->title; ?></span></h1>
 			</header>
 		
 			<section class="admin">

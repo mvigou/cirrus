@@ -1,0 +1,26 @@
+{
+	"bt": {
+		"confirm": "Valider",
+		"createDir": "Créer un dossier",
+		"emptyRecycle": "Vider la corbeille (maintenir pour enclencher)",
+		"itemDownload": "Télécharger",
+		"itemOpen": "Ouvrir",
+		"itemRemove": "Supprimer (maintenir pour enclencher)",
+		"itemUpload": "Envoyer des fichiers",
+		"switchEdition": "Activer / désactiver le mode d'édition des fichiers et des dossiers",
+		"switchTheme": "Basculer entre thème clair / thème sombre",
+		"switchToData": "Afficher les données",
+		"switchToRecycle": "Afficher la corbeille"
+	},
+	"label": {
+		"dirName": "Nom du dossier à créer"
+	},
+	"page": {
+		"title": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces"
+	},
+	"mess": {
+		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
+		"duplicateContent": "Impossible : il y a déjà un fichier ou un dossier avec ce nom.",
+		"error": "Une erreur est survenue pendant le traitement de cette action."
+	}
+}

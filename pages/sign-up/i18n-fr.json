@@ -1,9 +1,9 @@
 {
 	"bt": {
-		"valid": "Valider"
+		"confirm": "Valider"
 	},
 	"page": {
-		"role": "créer un compte"
+		"title": "créer un compte"
 	},
 	"label": {
 		"userName": "Nom d'utilisateur",

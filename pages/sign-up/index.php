@@ -18,11 +18,11 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 					<link rel="stylesheet" href="./style.css" />
 					<meta charset="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-					<title>cirrus | <?php echo $lab->page->role; ?></title>
+					<title>cirrus | <?php echo $lab->page->title; ?></title>
 				</head>
 				<body>
 					<header>
-						<h1>cirrus | <span><?php echo $lab->page->role; ?></span></h1>
+						<h1>cirrus | <span><?php echo $lab->page->title; ?></span></h1>
 					</header>
 					<form action="../../app/server/sign-up.php" method="POST">
 						<label>
@@ -66,7 +66,7 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 							name="auth"
 							value="<?php echo $_GET['auth'] ?>"
 						/>
-						<button title="<?php echo $lab->bt->valid; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
+						<button title="<?php echo $lab->bt->confirm; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
 					</form>
 					<script src="./script.js"></script>
 				</body>

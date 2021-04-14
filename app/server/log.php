@@ -16,7 +16,7 @@ if(isset($_POST['origin']) && isset($_POST['log'])) {
 
 		touch($logsFile);
 
-		file_put_contents($logsFile, '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cirrus | error logs</title><style>@font-face{font-display:swap;font-family:"Josefin";src:url("../../app/client/app.woff2") format("woff2")}body{margin:0}main{--bg-color: #fff;--border-color: #eee;--danger-color: #f33;--fill-color: #ccc;--font-color-hight: #333;--font-color-low: #666;--main-color: #a00c3d;color:var(--font-color-hight);display:flex;flex-direction:column-reverse;font-family:Josefin,sans-serif}p{border-bottom:solid 1px var(--fill-color);margin:0 15px;padding:15px}b{color:var(--main-color)}</style></head><body><main>');
+		file_put_contents($logsFile, '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cirrus | error logs</title><style>@font-face{font-display:swap;font-family:"Josefin";src:url("../../app/client/josefin.woff2") format("woff2")}body{margin:0}main{--bg-color: #fff;--border-color: #eee;--danger-color: #f33;--fill-color: #ccc;--font-color-hight: #333;--font-color-low: #666;--main-color: #a00c3d;color:var(--font-color-hight);display:flex;flex-direction:column-reverse;font-family:Josefin,sans-serif}p{border-bottom:solid 1px var(--fill-color);margin:0 15px;padding:15px}b{color:var(--main-color)}</style></head><body><main>');
 		
 	}
 

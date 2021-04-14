@@ -1,11 +1,7 @@
 @font-face
 	font-display: swap
 	font-family: 'Josefin'
-	src: url("./app.woff2") format("woff2")
-
-@mixin medium-screen
-	@media screen and (min-width: 768px)
-		@content
+	src: url("./josefin.woff2") format("woff2")
 
 @keyframes setScaleTransform
 	to
@@ -73,6 +69,8 @@ a
 	&:hover
 		color: var(--hovered-color)
 
+// Interactive elements.
+
 button
 	background-color: transparent
 	border: none
@@ -80,7 +78,6 @@ button
 	display: block
 	height: 48px
 	width: 48px
-
 	&::before
 		border-radius: 50%
 		content: ""
@@ -88,29 +85,33 @@ button
 		height: 9px
 		margin: 0 auto 6px auto
 		width: 9px	
-	&:hover::before
-		background-color: var(--cirrus-color)
-
-	&:hover
-		color: var(--hovered-color)
+	&:focus, &:hover
+		outline: none
+		&::before
+			background-color: var(--cirrus-color)
 		svg
 			fill: var(--hovered-color)
 
 input
 	background-color: transparent
-	color: var(--font-color-high)
 	border: none
 	border-bottom: solid 1px var(--border-color) 
+	color: var(--base-color)
+	display: block
+	font-size: 1rem
+	margin-top: 12px
 	padding-bottom: 3px
-	margin: 6px 0
+	width: 100%
 	&:focus
-		outline: none
 		border-bottom-color: var(--cirrus-color)
+		outline: none
 
 svg
 	vertical-align: middle
 	fill: var(--base-color)
 	width: 24px
+
+// User interface container.
 
 .bwr
 		
@@ -172,6 +173,8 @@ svg
 				margin-right: 12px
 				fill: var(--cirrus-color)
 
+// Upload progression bar.
+
 .pgr-bar
 	background-color: var(--bg-color)
 	bottom: 0
@@ -188,6 +191,8 @@ svg
 		width: 0
 	>p
 		margin: 0
+
+// Pop up.
 
 .pop	
 	box-sizing: border-box
@@ -256,9 +261,8 @@ svg
 
 .add-dir-form
 	display: none
-		
-	button
-		display: initial
-
-.--enabled
-	display: block
+	&.--enabled
+		display: flex
+	label
+		position: absolute
+		top: -9999px	

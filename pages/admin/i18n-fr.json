@@ -10,7 +10,7 @@
 		"invitPubRole": "Editeurs (accès, ajout et suppression de contenu)",
 		"invitTitle": "Invitations",
 		"invitViewRole": "Visualiseurs (accès au contenu)",
-		"role": "administration"
+		"title": "administration"
 	},
 	"server": {
 		"error": "Une erreur est survenue pendant le traitement de votre requête.",
