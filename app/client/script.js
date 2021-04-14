@@ -62,7 +62,6 @@
 /* ### cirrus core functions ### */
 
 	const browseDirectory = dir => {
-
 		ajaxPost(
 			{
 				script: 'ct-browse.php',
@@ -498,7 +497,6 @@
 					
 			tree += '/';
 			tree += subDirs;
-			
 			UI.browserNavTree.appendChild(
 				chess(
 					{
@@ -513,13 +511,13 @@
 					{
 						type: 'a',
 						attributes: {
-							href: tree,
+							'href': tree
 						},
 						events: [
 							{
 								type: 'click',
 								function: e => {
-									browseDirectory('../../datas' + e.target.pathname);
+									browseDirectory('../../datas' + e.target.getAttribute('href'));
 									e.preventDefault();
 								} 
 							}
