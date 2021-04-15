@@ -12,7 +12,7 @@ if(isAuthenticated() && hasOwnerRights()) {
 			$role = SIGN_UP_PUBLISHER_AUTH_DIR;
 		}
 
-		if($_POST['role'] === 'viewer') {
+		else if($_POST['role'] === 'viewer') {
 			$role = SIGN_UP_VIEWER_AUTH_DIR;
 		}
 
