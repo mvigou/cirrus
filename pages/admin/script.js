@@ -1,6 +1,6 @@
 "use strict";
 
-const UI = { messBox: document.querySelector('.admin__mess-box') };
+const UI = { messBox: document.querySelector('.admin__mess__box') };
 
 const writeMessBox = html => {
 	UI.messBox.innerHTML += `<p>${html}</p>`;
@@ -9,6 +9,8 @@ const writeMessBox = html => {
 
 const emptyMessBox = () => UI.messBox.innerHTML = '';
 
+const ajaxLog = (origin, log) => writeMessBox('### ' + origin + ' ### ' + log);
+
 const ajaxPost = (req) => {
 
 	return new Promise(
@@ -16,8 +18,10 @@ const ajaxPost = (req) => {
 		(resolve, reject) => {
 
 			let formData = new FormData();
-			for(const arg of req.args) {
-				formData.append(arg.name, arg.value);
+			if(req.args !== undefined) {
+				for(const arg of req.args) {
+					formData.append(arg.name, arg.value);
+				}
 			}
 	
 			fetch(
@@ -27,14 +31,22 @@ const ajaxPost = (req) => {
 				}
 			).
 			then(
-				response => {					
-					if(response.ok) {
-						response.text().then(
-							response => resolve(response)
+				resp => {					
+					if(resp.ok) {
+						resp.text().then(
+							resp => {
+								try {
+									const parsedResp = JSON.parse(resp);
+									resolve(parsedResp);
+								}
+								catch(e) {
+									reject(UI.messBox.getAttribute('data-mess-notAJSON') + resp);
+								}	
+							}
 						)
 					}
 					else {
-						reject(new Error(response.status + ': ' + response.statusText));
+						reject(new Error(resp.status + ': ' + resp.statusText));
 					}
 				}
 			);
@@ -45,32 +57,11 @@ const ajaxPost = (req) => {
 
 };
 
-const ajaxLog = (origin, log) => {
+const browseInvits = role => {
 
 	ajaxPost(
 		{
-			script: 'log.php',
-			args: [
-				{ 
-					name: 'origin', 
-					value: origin
-				},
-				{ 
-					name: 'log',
-					value: log
-				}
-			]
-		},
-	)
-	.then(() => writeMessBox(UI.messBox.getAttribute('data-mess-server-error')))
-
-};
-
-const createInvit = (role) => {
-
-	ajaxPost(
-		{
-			script: 'inv-create.php',
+			script: 'browse-invits.php',
 			args: [
 				{
 					name: 'role',
@@ -80,19 +71,48 @@ const createInvit = (role) => {
 		}
 	)
 	.then( 
-		response => {
-		   writeMessBox(`<a href="${response}">${response}</a>`);
+		resp => {
+			if(resp.state === 'success') {
+				writeMessBox(resp.content);
+			}
+			else if(resp.state === 'empty') {
+				writeMessBox(UI.messBox.getAttribute('data-mess-empty'));
+			}
+		}
+	)
+	.catch(error => ajaxLog('browseInvits', error));
+
+}
+
+const createInvit = role => {
+
+	ajaxPost(
+		{
+			script: 'create-invit.php',
+			args: [
+				{
+					name: 'role',
+					value: role
+				}
+			]
+		}
+	)
+	.then(
+		resp => {
+			if(resp.state === 'success') {
+				writeMessBox(resp.content);
+			}
 		}
 	)
 	.catch(error => ajaxLog('createInvit', error));
 
 };
 
-const removeInvit = (role) => {
+const removeInvits = role => {
 
 	ajaxPost(
 		{
-			script: 'inv-remove.php',
+			script: 'remove-invits.php',
 			args: [
 				{
 					name: 'role',
@@ -102,47 +122,33 @@ const removeInvit = (role) => {
 		}
 	)
 	.then( 
-		response => {
-			writeMessBox(UI.messBox.getAttribute('data-mess-invit-removed'));
+		resp => {
+			if(resp.state === 'success') {
+				writeMessBox(UI.messBox.getAttribute('data-mess-success'));
+			}
+			else if(resp.state === 'empty') {
+				writeMessBox(UI.messBox.getAttribute('data-mess-empty'));
+			}
 		}
 	)
-	.catch(error => ajaxLog('removeInvit', error));
+	.catch(error => ajaxLog('removeInvits', error));
 
 };
 
-const browseInvit = (role) => {
+const browseUsers = () => {
 
 	ajaxPost(
-		{
-			script: 'inv-browse.php',
-			args: [
-				{
-					name: 'role',
-					value: role
-				}
-			]
+		{ 
+			script: 'browse-users.php' 
 		}
 	)
 	.then( 
-		response => {
-			try {	
-				const signUpUrls = JSON.parse(response);
-				if(signUpUrls.length > 0) {
-					let html = '';
-					for(const signUpUrl of signUpUrls) {			
-						html += `<a href="${signUpUrl}">${signUpUrl}</a>`
-					}
-					writeMessBox(html);
-				}
-				else {
-					writeMessBox(UI.messBox.getAttribute('data-mess-invit-empty'));
-				}
-			}
-			catch(e) {
-				throw new Error('A JSON object was expected but the server sent something else.')
+		resp => {
+			if(resp.state === 'success') {
+				writeMessBox(resp.content);
 			}
 		}
 	)
-	.catch(error => ajaxLog('browseInvit', error));
+	.catch(error => ajaxLog('browseUsers', error));
 
-}
+};

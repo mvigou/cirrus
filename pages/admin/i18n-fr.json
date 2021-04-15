@@ -1,20 +1,22 @@
 {
 	"bt": {
 		"emptyMessBox": "Vider la boîte de messages",
-		"invitBrowse": "Afficher les liens actifs",
-		"invitCreate": "Générer un lien d'inscription",
-		"invitRemove": "Tout supprimer"
+		"browseInvits": "Afficher les liens actifs",
+		"createInvits": "Générer un lien d'inscription à usage unique",
+		"removeInvits": "Tout supprimer",
+		"browseUsers": "Afficher les utilisateurs enregistrés"
 	},
-	"page": {
-		"invitDesc": "Générez des liens d'inscription à usage unique permettant à d'autres d'accéder à votre cirrus.",
-		"invitPubRole": "Editeurs (accès, ajout et suppression de contenu)",
-		"invitTitle": "Invitations",
-		"invitViewRole": "Visualiseurs (accès au contenu)",
-		"title": "administration"
+	"mess": {
+		"empty": "Aucun contenu de ce type.",
+		"success": "Action effectuée avec succès.",
+		"notAJSON": "L'application attendait du JSON, mais le serveur a renvoyé ceci : "
+
 	},
-	"server": {
-		"error": "Une erreur est survenue pendant le traitement de votre requête.",
-		"invitEmpty": "Aucun lien d'inscription actif de ce type.",
-		"invitRemoved": "Les liens d'inscription encore actifs de ce type ont été supprimés."
+	"title": {
+		"invitations": "Invitations",
+		"page": "administration",
+		"publishers": "Editeurs (accès, ajout et suppression de contenu)",
+		"users": "Utilisateurs",
+		"viewers": "Visualiseurs (accès au contenu)"
 	}
 }
