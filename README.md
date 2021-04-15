@@ -24,14 +24,23 @@ L'utilisation d'un cloud est dans tous les cas polluant, donc **si vous pouvez v
 
 ### Côté serveur
 
-- Un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran.
-- PHP version 7 ou plus.
+* Un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran.
+* PHP version 7 ou plus.
 
 ### Côté client
 
-- Un navigateur web moderne tel que Mozilla Firefox, Google Chrome où l'un de ses dérivés.
-- JavaScript (activé par défaut sur la plupart des navigateurs web modernes).
-- L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs cités plus haut).
+* Un navigateur web moderne tel que Mozilla Firefox, Google Chrome où l'un de ses dérivés.
+* JavaScript (activé par défaut sur la plupart des navigateurs web modernes).
+* L'API LocalStorage (disponible et activée par défaut sur la plupart des navigateurs cités plus haut).
+
+## Installation
+
+Pour installer cirrus :
+* Téléchargez et décompressez l'archive sur votre serveur (à la racine, ou ailleurs).
+* Atteignez le point d'entrée depuis votre navigateur web. Il vous sera alors proposé de créer le premier compte utilisateur (compte de type Propriétaire).
+* C'est tout : identifiez-vous ; vous pouvez désormais utiliser cirrus.
+
+Pour créer des comptes supplémentaires, rendez-vous sur /pages/admin après vous être identifié en tant que propriétaire pour accéder au panneau d'administration. 
 
 ## Fonctionnalités
 
@@ -74,6 +83,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Opérations d'administration
 
+* (TODO) Lister les comptes
 * (TODO) Suppression de comptes (action propriétaire)
 * Création autonome de comptes utilisateur de type "visualiseur" sur invitation.
 * Création autonome de comptes utilisateur de type "éditeur" sur invitation.
@@ -89,6 +99,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
 * Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés.
 * Purge automatique du dossier temporaire à chaque authentification réussie.
+* (TODO) Bloquer l'exécution de certains types de fichiers mis en ligne (PHP, par exemple). 
 
 ### Divers
 
