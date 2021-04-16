@@ -72,6 +72,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 * (TODO) Copie.
 * (TODO) Déplacement.
+* (TODO) Intégrer la prévisualisation des fichiers dans l'onglet courant.
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi ?
 * Mise en ligne groupée.
 * Mise en ligne simple.
@@ -83,7 +84,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Opérations d'administration
 
-* (TODO) Lister les comptes
+* Lister les comptes existants.
 * (TODO) Suppression de comptes (action propriétaire)
 * Création autonome de comptes utilisateur de type "visualiseur" sur invitation.
 * Création autonome de comptes utilisateur de type "éditeur" sur invitation.
@@ -93,7 +94,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Sécurité
 
-* Accès direct via URL au dossier "datas" et à son contenu protégé (.htaccess / hors dossier "temp").
+* Accès direct au contenu via URL impossible (protégé via .htaccess / hors dossier "datas/temp").
 * Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
 * Accès utilisateur soumis à authentification préalable.
 * Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
