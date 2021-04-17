@@ -106,7 +106,7 @@
 				]
 			},
 		)
-		.then(response => setPop('warning', UI.pop.getAttribute('data-mess-error')));
+		.then(response => setPopup('warning', UI.popup.getAttribute('data-mess-error')));
 
 	};
 
@@ -258,10 +258,10 @@
 					
 					switch(resp.content.type) {
 						case 'img':
-							setPreviewerImg(filePath, resp.content.path);
+							setPreviewImg(filePath, resp.content.path);
 							break;
 						case 'pdf':
-							setPreviewerPdf(filePath, resp.content.path);
+							setPreviewPdf(filePath, resp.content.path);
 							break;
 						default:
 							downloadUnpreviewedItem(filePath);
@@ -275,7 +275,7 @@
 
 	};
 
-	const openPreviewedItem = () => window.open(UI.previewer.getAttribute('data-item-tempPath'));
+	const openPreviewedItem = () => window.open(UI.preview.getAttribute('data-item-tempPath'));
 
 	const renameItem = (oldName, newName, elm) => {
 
@@ -308,7 +308,7 @@
 							browseDirectory(localStorage.getItem('currentDir'));
 						}
 						else if(response === 'duplicate') {
-							setPop('warning', UI.pop.getAttribute('data-mess-duplicateContent'));
+							setPopup('warning', UI.popup.getAttribute('data-mess-duplicateContent'));
 							elm.value = oldName;
 						}
 						else {
@@ -355,7 +355,7 @@
 		
 	};
 
-	const downloadPreviewedItem = () => downloadItem(UI.previewer.getAttribute('data-item-tempPath'));
+	const downloadPreviewedItem = () => downloadItem(UI.preview.getAttribute('data-item-tempPath'));
 
 	const downloadItem = src => {
 		let aElm = document.createElement('a');
@@ -400,8 +400,8 @@
 	};
 
 	const removePreviewedItem = () => {
-		removeItem(UI.previewer.getAttribute('data-item-sourcePath'));
-		unsetPreviewer();	
+		removeItem(UI.preview.getAttribute('data-item-sourcePath'));
+		unsetPreview();	
 	}
 
 /* ### cirrus UI functions ### */
@@ -428,11 +428,11 @@
 
 	const toggleAddDirForm = (open) => {
 		const addFormElm = document.querySelector('.add-dir-form');
-		if(addFormElm.classList.contains('--enabled') || open === false) {
-			addFormElm.classList.remove('--enabled');
+		if(addFormElm.classList.contains('--visible') || open === false) {
+			addFormElm.classList.remove('--visible');
 		}
 		else {
-			addFormElm.classList.add('--enabled');
+			addFormElm.classList.add('--visible');
 			addFormElm.querySelector('input').focus();
 		}
 	}
@@ -461,50 +461,50 @@
 
 	// Preview files.
 
-	const setPreviewer =  (sourcePath, tempPath) => {
-		UI.previewer.setAttribute('data-item-tempPath', tempPath);
-		UI.previewer.setAttribute('data-item-sourcePath', sourcePath);
-		UI.previewer.classList.add('--visible');
+	const setPreview =  (sourcePath, tempPath) => {
+		UI.preview.setAttribute('data-item-tempPath', tempPath);
+		UI.preview.setAttribute('data-item-sourcePath', sourcePath);
+		UI.preview.classList.add('--visible');
 	}
 
-	const unsetPreviewer = () => {
-		UI.previewerItem.innerHTML = '';
-		UI.previewer.classList.remove('--visible');
+	const unsetPreview = () => {
+		UI.previewItem.innerHTML = '';
+		UI.preview.classList.remove('--visible');
 	};
 
-	const setPreviewerImg = (sourcePath, tempPath) => {
+	const setPreviewImg = (sourcePath, tempPath) => {
 
-		UI.previewerItem.appendChild(
+		UI.previewItem.appendChild(
 			chess(
 				{
 					type: 'img',
 					attributes: {
-						'class': 'previewer__item__img',
+						'class': 'preview__item__img',
 						'src': tempPath
 					}
 				}
 			)
 		);
 
-		setPreviewer(sourcePath, tempPath);
+		setPreview(sourcePath, tempPath);
 
 	};
 
-	const setPreviewerPdf = (sourcePath, tempPath) => {
+	const setPreviewPdf = (sourcePath, tempPath) => {
 
-		UI.previewerItem.appendChild(
+		UI.previewItem.appendChild(
 			chess(
 				{
 					type: 'iframe',
 					attributes: {
-						'class': 'previewer__item__iframe',
+						'class': 'preview__item__iframe',
 						'src': tempPath
 					}
 				}
 			)
 		);
 
-		setPreviewer(sourcePath, tempPath);
+		setPreview(sourcePath, tempPath);
 
 	};
 
@@ -514,23 +514,23 @@
 
 	
 
-	const setPop = (type, content) => {
+	const setPopup = (type, content) => {
 		
-		UI.pop.querySelector('.pop__content').innerHTML = content;
-		UI.pop.classList.add('pop--' + type);
+		UI.popup.querySelector('.popup__content').innerHTML = content;
+		UI.popup.classList.add('popup--' + type);
 
 		if(type === 'warning') {
 			setTimeout(
-				() => unsetPop(),
+				() => unsetPopup(),
 				3000
 			);
 		}
 
 	};
 
-	const unsetPop = () => UI.pop.setAttribute('class', 'pop');
+	const unsetPopup = () => UI.popup.setAttribute('class', 'popup');
 
-	const toogleProgressBar = () => UI.progressBar.classList.toggle('--enabled');
+	const toogleProgressBar = () => UI.progressBar.classList.toggle('--visible');
 
 /* ### handling user confirmation ### */
 
@@ -568,11 +568,11 @@
 	const watchConfirmClick = (step, action) => {
 		ACTION.click[step].name = action;
 		ACTION.click[step].time = performance.now();
-		setPop('confirm', UI.pop.getAttribute('data-mess-confirmPress'));
+		setPopup('confirm', UI.popup.getAttribute('data-mess-confirmPress'));
 	};
 
 	const validConfirmClick = () => {
-		unsetPop();
+		unsetPopup();
 		return ACTION.click.start.name === ACTION.click.end.name && (ACTION.click.end.time - ACTION.click.start.time) >= 600 ?
 			true : false;
 	};
@@ -582,7 +582,7 @@
 			ACTION.touch.start.x = event.touches[0].clientX;
 			ACTION.touch.start.y = event.touches[0].clientY;
 			ACTION.touch.start.time = performance.now();
-			setPop('confirm', UI.pop.getAttribute('data-mess-confirmPress'));
+			setPopup('confirm', UI.popup.getAttribute('data-mess-confirmPress'));
 			event.preventDefault();	
 		}
 		
@@ -590,14 +590,14 @@
 			ACTION.touch.end.x = event.changedTouches[0].clientX;
 			ACTION.touch.end.y = event.changedTouches[0].clientY;
 			ACTION.touch.end.time = performance.now();
-			unsetPop();
+			unsetPopup();
 		}
 		
 	};
 
 	const validConfirmTouch = () => {
 		
-		unsetPop();	
+		unsetPopup();	
 		
 		if(ACTION.touch.start.x === ACTION.touch.end.x && ACTION.touch.start.y === ACTION.touch.end.y && (ACTION.touch.end.time - ACTION.touch.start.time) >= 600) {
 			return true;
@@ -606,20 +606,20 @@
 			
 	};
 		
-	const cancelConfirm = () => unsetPop();
+	const cancelConfirm = () => unsetPopup();
 
 /* ### change UI structure ### */
 
 	const buildTree = dir => {
 
-		UI.browserNavTree.innerHTML = '';
+		UI.tree.innerHTML = '';
 		let tree = '';
 		
 		for(let subDirs of dir.slice(3).split('/').slice(2)) {
 					
 			tree += '/';
 			tree += subDirs;
-			UI.browserNavTree.appendChild(
+			UI.tree.appendChild(
 				chess(
 					{
 						type: 'pre',
@@ -628,7 +628,7 @@
 				)
 			);
 
-			UI.browserNavTree.appendChild(
+			UI.tree.appendChild(
 				chess(
 					{
 						type: 'a',
@@ -655,7 +655,7 @@
 
 	const buildItems = (items, dir) => {
 
-		UI.browserList.innerHTML = '';
+		UI.list.innerHTML = '';
 		
 		for(let item of items) {
 
@@ -675,7 +675,7 @@
 				{
 					type: 'li',
 					attributes: { 
-						class: 'bwr__item'
+						class: 'list__item'
 					},
 				}
 			);
@@ -686,8 +686,8 @@
 					{ 
 						type: 'a',
 						attributes: { 
-							class: 'bwr__item__a non-editable',
-							title: UI.browserList.getAttribute('data-bt-openItem') 
+							class: 'list__item__a non-editable',
+							title: UI.list.getAttribute('data-bt-openItem') 
 						},
 						events: [
 							{
@@ -706,7 +706,7 @@
 							{
 								type: 'p',
 								attributes: {
-									class: 'bwr__item__title'
+									class: 'list__item__title'
 								},
 								html: item.type === 'file' ? 
 									`<svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg>${item.label}` :
@@ -758,7 +758,7 @@
 							type: 'button', 
 							attributes: { 
 								class: 'non-editable',
-								title: UI.browserList.getAttribute('data-bt-downloadItem')
+								title: UI.list.getAttribute('data-bt-downloadItem')
 							},
 							events: [
 								{
@@ -778,7 +778,7 @@
 							type: 'button',
 							attributes: {
 								class: 'publisher-ft non-editable',
-								title: UI.browserList.getAttribute('data-bt-removeItem')
+								title: UI.list.getAttribute('data-bt-removeItem')
 							},
 							events: [
 								{
@@ -819,7 +819,7 @@
 
 			}
 			
-			UI.browserList.appendChild(itemElm);
+			UI.list.appendChild(itemElm);
 
 		}
 
@@ -828,12 +828,12 @@
 /* ### UI variables ### */
 
 	const UI = {
-		browserList: document.querySelector('.bwr__list'),
-		browserNavTree: document.querySelector('.bwr__nav__tree'),
-		pop: document.querySelector('.pop'),
-		progressBar: document.querySelector('.pgr-bar'),
-		previewer: document.querySelector('.previewer'),
-		previewerItem: document.querySelector('.previewer__item')
+		list: document.querySelector('.list'),
+		tree: document.querySelector('.nav__tree'),
+		popup: document.querySelector('.popup'),
+		progressBar: document.querySelector('.upload-bar'),
+		preview: document.querySelector('.preview'),
+		previewItem: document.querySelector('.preview__item')
 	};
 
 	const emptyRecycleBt = document.getElementById('empty-recycle');

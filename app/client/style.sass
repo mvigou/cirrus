@@ -63,13 +63,13 @@ body
 	.datas-ft
 		display: none
 
+// Interactive elements.
+
 a
 	color: inherit
 	cursor: pointer
 	&:hover
 		color: var(--hovered-color)
-
-// Interactive elements.
 
 button
 	background-color: transparent
@@ -111,73 +111,66 @@ svg
 	fill: var(--base-color)
 	width: 24px
 
-// User interface container.
+// User interface.
 
-.bwr
-		
-	&__nav
+.nav
+	align-items: center
+	background-color: var(--bg-color)
+	box-sizing: border-box
+	display: flex
+	flex-wrap: wrap
+	padding: 12px 12px 0 12px
+	position: sticky
+	top: 0
+	&__logo
+		width: 36px
+		margin-top: 20px
+	&__tree
 		align-items: center
-		background-color: var(--bg-color)
-		box-sizing: border-box
+		border-top: solid 1px var(--border-color)
+		border-bottom: solid 1px var(--border-color)
 		display: flex
 		flex-wrap: wrap
-		padding: 12px 12px 0 12px
-		position: sticky
-		top: 0
+		margin-top: 12px
+		padding: 0 12px
+		width: 100%
+		pre
+			font-family: Josefin, sans-serif	
+	button:last-of-type
+		margin-left: auto
 
-		&__logo
-			width: 36px
-			margin-top: 20px
+.add-dir-form
+	display: none
+	&.--visible
+		display: flex
+	label
+		position: absolute
+		top: -9999px
 
-		&__tree
-			align-items: center
-			border-top: solid 1px var(--border-color)
-			border-bottom: solid 1px var(--border-color)
-			display: flex
-			flex-wrap: wrap
-			margin-top: 12px
-			padding: 0 12px
-			width: 100%
-			
-			pre
-				font-family: Josefin, sans-serif	
-		
-		button:last-of-type
-			margin-left: auto
-		
-	&__list
-		margin: 0
-		padding: 0
-	
+.list
+	margin: 0
+	padding: 0
 	&__item
+		border-left: solid 6px transparent
 		display: grid
 		grid-template-columns: 1fr auto auto
 		padding: 6px 12px 6px 18px
-		border-left: solid 6px transparent
-
 		&:hover
 			border-color: var(--cirrus-color)
-			
 		&__a
 			align-items: center
 			display: flex
 			&:hover
 				text-decoration: underline
-
 		&__title
 			display: flex
 			align-items: center
-
 			svg
 				width: 18px
 				margin-right: 12px
 				fill: var(--cirrus-color)
-
-
-
-
-
-.previewer
+	
+.preview
 	background-color: #000a
 	bottom: 0
 	display: none
@@ -221,10 +214,8 @@ svg
 			display: block
 			height: 100%
 			width: 100%
-
-// Upload progression bar.
-
-.pgr-bar
+			
+.upload-bar
 	background-color: var(--bg-color)
 	bottom: 0
 	display: none
@@ -233,17 +224,17 @@ svg
 	position: fixed
 	right: 0
 	text-align: center
-	>div		
+	&.--visible
+		display: block
+	&__progress // div	
 		background-color: var(--hovered-color)
 		box-sizing: border-box
 		height: 10px
 		width: 0
-	>p
+	&__message // p
 		margin: 0
 
-// Pop up.
-
-.pop	
+.popup	
 	box-sizing: border-box
 	display: flex
 	flex-direction: column
@@ -257,7 +248,6 @@ svg
 	top: 50%
 	transform: translateX(-100vw)
 	width: 220px
-
 	&--confirm // State when pressure is maintained.
 		--mess-anim: fade 0.10s 0.50s 1 both
 		--tile-a-anim: fade .2s ease-out 0s 1 both
@@ -265,7 +255,6 @@ svg
 		--tile-c-anim: fade .2s ease-out .4s 1 both
 		--tile-ct-anim: setScaleTransform 0.10s ease-out 0.50s 1 both
 		transform: initial
-
 	&--warning // State when temporary pop up.
 		--mess-anim: fade 0.10s 2.9s 1 both reverse
 		--tile-a-anim: fade .2s ease-out 0.75s 1 both reverse
@@ -273,15 +262,13 @@ svg
 		--tile-c-anim: fade .2s ease-out 2.25s 1 both reverse
 		--tile-ct-anim: none
 		transform: initial
-
-	.pop__tiles-ct	
+	&__tiles-ct	
 		animation: var(--tile-ct-anim)
 		display: grid
 		gap: 6px
 		justify-content: center
-		margin-bottom: 30px
-		
-	.pop__tile
+		margin-bottom: 30px	
+	&__tile
 		background-color: var(--hovered-color)
 		border-radius: 50%
 		&:first-of-type
@@ -300,19 +287,9 @@ svg
 			height: 12px
 			margin-top: auto
 			width: 12px
-		
-	.pop__content
+	&__content
 		animation: var(--mess-anim)
 		background-color: var(--hovered-color)
 		border-radius: 6px
 		color: var(--bg-color)
 		padding: 24px
-
-.add-dir-form
-	display: none
-	&.--enabled
-		display: flex
-	label
-		position: absolute
-		top: -9999px	
-
