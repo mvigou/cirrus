@@ -42,8 +42,8 @@ if(isAuthenticated()) { ?>
 				<!-- Open a window to upload files. -->
 				<button 
 					class="datas-ft publisher-ft non-editable"
-					onclick="uploadFiles()"
-					title="<?php echo $lab->bt->itemUpload; ?>">
+					onclick="uploadItems()"
+					title="<?php echo $lab->bt->uploadItem; ?>">
 					<svg viewBox="3 3 18 18"><path d="M10.4971 12.9823L10 12.4853L12.4853 10L14.9706 12.4853L14.4735 12.9823L12.8368 11.3456V16H12.1338V11.3456L10.4971 12.9823Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1571 3H6.63636C5.73262 3 5 3.73262 5 4.63636V19.3636C5 20.2674 5.73262 21 6.63636 21H18.0909C18.9946 21 19.7273 20.2674 19.7273 19.3636V7.57019L15.1571 3ZM6.63636 4.63636H13.1818V7.90909C13.1818 8.81283 13.9144 9.54545 14.8182 9.54545H18.0909V19.3636H6.63636V4.63636ZM14.8182 7.90909V4.97527L17.752 7.90909H14.8182Z"/></svg>
 				</button>
 				<!-- Display a form to create directories. -->
@@ -74,8 +74,8 @@ if(isAuthenticated()) { ?>
 				<button 
 					class="recycle-ft"
 					id="empty-recycle"
-					onmousedown="watchConfirmClick('start', 'empty-recycle')"
-					onmouseup="watchConfirmClick('end', 'empty-recycle'), removeElm('RECYCLE')"
+					onmousedown="watchConfirmClick('start', 'recycle')"
+					onmouseup="watchConfirmClick('end', 'recycle'), removeItem('RECYCLE')"
 					onmouseleave="cancelConfirm()"
 					title="<?php echo $lab->bt->emptyRecycle; ?>">
 					<svg viewBox="0 0 24 24"><path d="M18.5 15c-2.486 0-4.5 2.015-4.5 4.5s2.014 4.5 4.5 4.5c2.484 0 4.5-2.015 4.5-4.5s-2.016-4.5-4.5-4.5zm-.469 6.484l-1.688-1.637.695-.697.992.94 2.115-2.169.697.696-2.811 2.867zm-2.031-12.484v4.501c-.748.313-1.424.765-2 1.319v-5.82c0-.552.447-1 1-1s1 .448 1 1zm-4 0v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1s1 .448 1 1zm1.82 15h-11.82v-18h2v16h8.502c.312.749.765 1.424 1.318 2zm-6.82-16c.553 0 1 .448 1 1v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1zm14-4h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711v2zm-1 2v7.182c-.482-.115-.983-.182-1.5-.182l-.5.025v-7.025h2z"/></svg>
@@ -92,15 +92,53 @@ if(isAuthenticated()) { ?>
 			<!-- User content -->
 			<ul 
 				class="bwr__list"
-				data-bt-item-open="<?php echo $lab->bt->itemOpen; ?>"
-				data-bt-item-remove="<?php echo $lab->bt->itemRemove; ?>"
-				data-bt-item-download="<?php echo $lab->bt->itemDownload; ?>">
+				data-bt-openItem="<?php echo $lab->bt->openItem; ?>"
+				data-bt-removeItem="<?php echo $lab->bt->removeItem; ?>"
+				data-bt-downloadItem="<?php echo $lab->bt->downloadItem; ?>">
 			</ul>
+			<!-- Preview content -->
+			<div 
+				class="previewer" 
+				data-item-sourcePath=""
+				data-item-tempPath="">
+				<div>
+					<nav class="previewer__nav">
+						<!-- Allow to open the previewed item in another tab. -->
+						<button 
+							onclick="openPreviewedItem()"
+							title="<?php echo $lab->bt->openItemElsewhere; ?>">
+							<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>
+						</button>
+						<!-- Allow to download the previewed item. -->
+						<button 
+							onclick="downloadPreviewedItem()"
+							title="<?php echo $lab->bt->downloadItem; ?>">
+							<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>
+						</button>
+						<!-- Allow to remove the previewed item. -->
+						<button onclick="unsetPreviewer()" title="<?php echo $lab->bt->close; ?>">
+							<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+						</button>
+						<!-- Close the preview. -->
+						<button
+							onmousedown="watchConfirmClick('start', 'previewed-file')"
+							onmouseup="watchConfirmClick('end', 'previewed-file'), removePreviewedItem()"
+							onmouseleave="cancelConfirm()"
+							title="<?php echo $lab->bt->removeItem; ?>">
+							<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+						</button>
+					</nav>
+					<div class="previewer__item"></div>
+				</div>
+			</div>			
+
+
+
 			<!-- Pop up -->
 			<div 
 				class="pop prg-click"
-				data-mess-duplicate-content="<?php echo $lab->mess->duplicateContent; ?>"
-				data-mess-confirm-press="<?php echo $lab->mess->confirmPress; ?>"
+				data-mess-duplicateContent="<?php echo $lab->mess->duplicateContent; ?>"
+				data-mess-confirmPress="<?php echo $lab->mess->confirmPress; ?>"
 				data-mess-error="<?php echo $lab->mess->error; ?>">
 				<div class="pop__tiles-ct">
 					<div class="pop__tile"></div>

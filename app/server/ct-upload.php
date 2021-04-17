@@ -3,7 +3,7 @@
 /* 
 Job : upload one or many files in parentDir.
 Return : absolutely nothing if it's done.
-To : uploadFiles
+To : uploadItems
 */
 
 require_once('./config.php');

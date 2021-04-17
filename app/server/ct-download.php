@@ -3,7 +3,7 @@
 /* 
 Job : copy the requested file in a random, temporary and unprotected directory.
 Return : a JSON containing the path to the accessible file or directory (as a zip). 
-To : downloadElm
+To : downloadItem
 */
 
 require_once('./config.php');

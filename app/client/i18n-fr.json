@@ -1,16 +1,18 @@
 {
 	"bt": {
+		"close": "Fermer",
 		"confirm": "Valider",
 		"createDir": "Créer un dossier",
+		"downloadItem": "Télécharger",
 		"emptyRecycle": "Vider la corbeille (maintenir pour enclencher)",
-		"itemDownload": "Télécharger",
-		"itemOpen": "Ouvrir",
-		"itemRemove": "Supprimer (maintenir pour enclencher)",
-		"itemUpload": "Envoyer des fichiers",
+		"openItem": "Ouvrir",
+		"openItemElsewhere": "Ouvrir dans un nouvel onglet",
+		"removeItem": "Supprimer (maintenir pour enclencher)",
 		"switchEdition": "Activer / désactiver le mode d'édition des fichiers et des dossiers",
 		"switchTheme": "Basculer entre thème clair / thème sombre",
 		"switchToData": "Afficher les données",
-		"switchToRecycle": "Afficher la corbeille"
+		"switchToRecycle": "Afficher la corbeille",
+		"uploadItem": "Envoyer des fichiers"
 	},
 	"label": {
 		"dirName": "Nom du dossier à créer"

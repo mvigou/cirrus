@@ -3,7 +3,7 @@
 /* 
 Job : rename a file or a directory.
 Return : success if it's done.
-To : renameElm
+To : renameItem
 */
 
 require_once('./config.php');

@@ -3,7 +3,7 @@
 /* 
 Job : move to the recycle directory / remove permanently a file or a directory and its content.
 Return : success if it's done.
-To : removeElm
+To : removeItem
 */
 
 require_once('./config.php');

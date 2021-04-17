@@ -2,7 +2,58 @@
 
 /* ### AJAX functions ### */
 
-	const ajaxPost = (req) => {
+	const ajaxPostNew = req => {
+
+		return new Promise(
+		
+			(resolve, reject) => {
+
+				let formData = new FormData();
+				if(req.args !== undefined) {
+					for(const arg of req.args) {
+						formData.append(arg.name, arg.value);
+					}
+				}
+		
+				fetch(
+					'./app/server/' + req.script, {
+						method: 'POST',
+						body: formData
+					}
+				).
+				then(
+					resp => {					
+						if(resp.ok) {
+							resp.text().then(
+								resp => {
+									try {
+										const parsedResp = JSON.parse(resp);
+										resolve(parsedResp);
+									}
+									catch(e) {
+									
+										// TO ADD HERE !
+
+										reject('...' + resp);
+									
+									
+									}	
+								}
+							)
+						}
+						else {
+							reject(new Error(resp.status + ': ' + resp.statusText));
+						}
+					}
+				);
+
+			}
+
+		);
+
+	};
+
+	const ajaxPost = req => {
 
 		return new Promise(
 		
@@ -126,7 +177,7 @@
 
 	}
 
-	const uploadFiles = () => {
+	const uploadItems = () => {
 
 		// 1. Configure an input element.
 		let inputElm = document.createElement('input');
@@ -188,33 +239,35 @@
 
 	};
 
-	const openFile = filename => {
+	const openFile = filePath => {
 
-		ajaxPost(
+		ajaxPostNew(
 			{
-				script: 'ct-open.php',
+				script: 'open-file.php',
 				args: [
 					{ 
-						name: 'filename', 
-						value: filename 
+						name: 'filePath', 
+						value: filePath 
 					}
 				]
 			}
 		)
-		.then( // Expected response : a string with the redirection to the accessible file.
-			response => {
-				try {
+		.then(
+			resp => {
+				if(resp.state === 'success') {
+					
+					switch(resp.content.type) {
+						case 'img':
+							setPreviewerImg(filePath, resp.content.path);
+							break;
+						case 'pdf':
+							setPreviewerPdf(filePath, resp.content.path);
+							break;
+						default:
+							downloadUnpreviewedItem(filePath);
+							break;
 
-
-					// TO DO : TEST HERE IF STRING ?
-
-					window.location.href = response;
-				
-				
-				
-				}
-				catch(e) {
-					throw new Error('A string was expected but the server sent something else.')
+					}
 				}
 			}
 		)
@@ -222,7 +275,9 @@
 
 	};
 
-	const renameElm = (oldName, newName, elm) => {
+	const openPreviewedItem = () => window.open(UI.previewer.getAttribute('data-item-tempPath'));
+
+	const renameItem = (oldName, newName, elm) => {
 
 		if(newName.length >= 1) {
 
@@ -253,7 +308,7 @@
 							browseDirectory(localStorage.getItem('currentDir'));
 						}
 						else if(response === 'duplicate') {
-							setPop('warning', UI.pop.getAttribute('data-mess-duplicate-content'));
+							setPop('warning', UI.pop.getAttribute('data-mess-duplicateContent'));
 							elm.value = oldName;
 						}
 						else {
@@ -261,7 +316,7 @@
 						}
 					}
 				)
-				.catch(error => ajaxLog('renameElm', error));
+				.catch(error => ajaxLog('renameItem', error));
 
 			}
 
@@ -273,7 +328,7 @@
 
 	};
 
-	const downloadElm = elm => {
+	const downloadUnpreviewedItem = elm => {
 
 		ajaxPost(
 			{
@@ -286,24 +341,31 @@
 				]
 			}
 		)
-		.then( // Expected response : a string containing the path to the accessible file or directory (as a zip).
+		.then(
 			response => {
 				if(response !== '') {
-					let aElm = document.createElement('a');
-					aElm.setAttribute('download', '');
-					aElm.href = response;
-					aElm.click();
+					downloadItem(response);
 				}
 				else {
 					throw new Error('A path was expected but the server sent an empty string.');
 				}
 			}
 		)
-		.catch(error => ajaxLog('downloadElm', error));
-
+		.catch(error => ajaxLog('downloadUnpreviewedItem', error));
+		
 	};
 
-	const removeElm = elm => {
+	const downloadPreviewedItem = () => downloadItem(UI.previewer.getAttribute('data-item-tempPath'));
+
+	const downloadItem = src => {
+		let aElm = document.createElement('a');
+		aElm.setAttribute('download', '');
+		aElm.href = src;
+		aElm.click();
+		aElm.remove();
+	};
+
+	const removeItem = elm => {
 
 		if(validConfirmClick() || validConfirmTouch()) {
 
@@ -331,11 +393,16 @@
 					}
 				}
 			)
-			.catch(error => ajaxLog('removeElm', error));
+			.catch(error => ajaxLog('removeItem', error));
 
 		}
 
 	};
+
+	const removePreviewedItem = () => {
+		removeItem(UI.previewer.getAttribute('data-item-sourcePath'));
+		unsetPreviewer();	
+	}
 
 /* ### cirrus UI functions ### */
 
@@ -392,6 +459,61 @@
 			toDarkTheme();
 	};
 
+	// Preview files.
+
+	const setPreviewer =  (sourcePath, tempPath) => {
+		UI.previewer.setAttribute('data-item-tempPath', tempPath);
+		UI.previewer.setAttribute('data-item-sourcePath', sourcePath);
+		UI.previewer.classList.add('--visible');
+	}
+
+	const unsetPreviewer = () => {
+		UI.previewerItem.innerHTML = '';
+		UI.previewer.classList.remove('--visible');
+	};
+
+	const setPreviewerImg = (sourcePath, tempPath) => {
+
+		UI.previewerItem.appendChild(
+			chess(
+				{
+					type: 'img',
+					attributes: {
+						'class': 'previewer__item__img',
+						'src': tempPath
+					}
+				}
+			)
+		);
+
+		setPreviewer(sourcePath, tempPath);
+
+	};
+
+	const setPreviewerPdf = (sourcePath, tempPath) => {
+
+		UI.previewerItem.appendChild(
+			chess(
+				{
+					type: 'iframe',
+					attributes: {
+						'class': 'previewer__item__iframe',
+						'src': tempPath
+					}
+				}
+			)
+		);
+
+		setPreviewer(sourcePath, tempPath);
+
+	};
+
+
+
+
+
+	
+
 	const setPop = (type, content) => {
 		
 		UI.pop.querySelector('.pop__content').innerHTML = content;
@@ -446,7 +568,7 @@
 	const watchConfirmClick = (step, action) => {
 		ACTION.click[step].name = action;
 		ACTION.click[step].time = performance.now();
-		setPop('confirm', UI.pop.getAttribute('data-mess-confirm-press'));
+		setPop('confirm', UI.pop.getAttribute('data-mess-confirmPress'));
 	};
 
 	const validConfirmClick = () => {
@@ -460,7 +582,7 @@
 			ACTION.touch.start.x = event.touches[0].clientX;
 			ACTION.touch.start.y = event.touches[0].clientY;
 			ACTION.touch.start.time = performance.now();
-			setPop('confirm', UI.pop.getAttribute('data-mess-confirm-press'));
+			setPop('confirm', UI.pop.getAttribute('data-mess-confirmPress'));
 			event.preventDefault();	
 		}
 		
@@ -565,7 +687,7 @@
 						type: 'a',
 						attributes: { 
 							class: 'bwr__item__a non-editable',
-							title: UI.browserList.getAttribute('data-bt-item-open') 
+							title: UI.browserList.getAttribute('data-bt-openItem') 
 						},
 						events: [
 							{
@@ -617,7 +739,7 @@
 								{
 									type: 'blur',
 									function: e => {
-										renameElm(item.label, e.target.value, e.target);
+										renameItem(item.label, e.target.value, e.target);
 									}		
 								}
 							],
@@ -635,16 +757,16 @@
 						{
 							type: 'button', 
 							attributes: { 
-								class: 'bwr__item__button non-editable',
-								title: UI.browserList.getAttribute('data-bt-item-download')
+								class: 'non-editable',
+								title: UI.browserList.getAttribute('data-bt-downloadItem')
 							},
 							events: [
 								{
 									type: 'click',
-									function: () => downloadElm(item.path)
+									function: () => downloadUnpreviewedItem(item.path)
 								}
 							],
-							html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>'
+							html: '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>'
 						}
 					)
 				);
@@ -655,8 +777,8 @@
 						{
 							type: 'button',
 							attributes: {
-								class: 'bwr__item__button publisher-ft non-editable',
-								title: UI.browserList.getAttribute('data-bt-item-remove')
+								class: 'publisher-ft non-editable',
+								title: UI.browserList.getAttribute('data-bt-removeItem')
 							},
 							events: [
 								{
@@ -667,7 +789,7 @@
 									type: 'mouseup',
 									function: () => {
 										watchConfirmClick('end', item.path),
-										removeElm(item.path)
+										removeItem(item.path)
 									}
 								},
 								{
@@ -682,7 +804,7 @@
 									type: 'touchend',
 									function: e => { 
 										watchConfirmTouch('end', e);
-										removeElm(item.path);
+										removeItem(item.path);
 									}
 								},
 								{
@@ -690,7 +812,7 @@
 									function: () => cancelConfirm()
 								}
 							],
-							html: '<svg class="bwr__item__button-svg" viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+							html: '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
 						}
 					)
 				);
@@ -709,7 +831,9 @@
 		browserList: document.querySelector('.bwr__list'),
 		browserNavTree: document.querySelector('.bwr__nav__tree'),
 		pop: document.querySelector('.pop'),
-		progressBar: document.querySelector('.pgr-bar')
+		progressBar: document.querySelector('.pgr-bar'),
+		previewer: document.querySelector('.previewer'),
+		previewerItem: document.querySelector('.previewer__item')
 	};
 
 	const emptyRecycleBt = document.getElementById('empty-recycle');
@@ -725,7 +849,7 @@
 
 	emptyRecycleBt.ontouchend = e => {
 		watchConfirmTouch('end', e); 
-		removeElm('RECYCLE');
+		removeItem('RECYCLE');
 	}
 
 	emptyRecycleBt.ontouchmove = () => cancelConfirm();
