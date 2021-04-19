@@ -51,9 +51,9 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Afficher plus d'informations sur les fichiers et dossiers (taille, type, nb d'enfants...).
 * (TODO) Ordre de tri à préciser.
 * Accès rapide aux dossiers parents grâce à un arbre d'arborescence.
-* Sélection du dossier racine (content, recycle).
 * Navigation dans l'arborescence des dossiers.
 * Purge la corbeille.
+* Sélection du dossier racine (content, recycle).
 
 ### Opérations sur les dossiers
 
@@ -64,43 +64,44 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Création groupée.
 * Création simple.
 * Renommage.
-* Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de dossiers de même nom).
 * Suppression définitive (depuis corbeille).
+* Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de dossiers de même nom).
 * Téléchargement (format compressé Zip).
 
 ### Opérations sur les fichiers
 
+* (TODO) Améliorer le support des documents en prévisualisation.
 * (TODO) Copie.
 * (TODO) Déplacement.
-* (TODO) Intégrer la prévisualisation des fichiers dans l'onglet courant.
 * (TODO) Prévenir l'écrasement de fichier pendant l'envoi ?
 * Mise en ligne groupée.
 * Mise en ligne simple.
+* Prévisualisation des fichiers de type image et pdf dans l'onglet courant.
 * Prévisualisation.
 * Renommage.
-* Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de fichiers de même nom).
 * Suppression définitive (depuis corbeille).
+* Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de fichiers de même nom).
 * Téléchargement.
 
 ### Opérations d'administration
 
-* Lister les comptes existants.
 * (TODO) Suppression de comptes (action propriétaire)
 * Création autonome de comptes utilisateur de type "visualiseur" sur invitation.
 * Création autonome de comptes utilisateur de type "éditeur" sur invitation.
 * Création d'un compte "propriétaire" automatique à l'installation. 
 * Création et suppression de liens d'inscription utilisateur the type "visualiseur".
 * Création et suppression de liens d'inscription utilisateur the type "éditeur".
+* Lister les comptes existants.
 
 ### Sécurité
 
+* (TODO) Bloquer l'exécution de certains types de fichiers mis en ligne (PHP, par exemple). 
 * Accès direct au contenu via URL impossible (protégé via .htaccess / hors dossier "datas/temp").
 * Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
 * Accès utilisateur soumis à authentification préalable.
 * Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
 * Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés.
 * Purge automatique du dossier temporaire à chaque authentification réussie.
-* (TODO) Bloquer l'exécution de certains types de fichiers mis en ligne (PHP, par exemple). 
 
 ### Divers
 
