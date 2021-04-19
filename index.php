@@ -135,7 +135,7 @@ if(isAuthenticated()) { ?>
 			class="popup"
 			data-mess-duplicateContent="<?php echo $lab->mess->duplicateContent; ?>"
 			data-mess-confirmPress="<?php echo $lab->mess->confirmPress; ?>"
-			data-mess-error="<?php echo $lab->mess->error; ?>">
+			data-mess-notAJSON="<?php echo $lab->mess->notAJSON; ?>">
 			<div class="popup__tiles-ct">
 				<div class="popup__tile"></div>
 				<div class="popup__tile"></div>
@@ -149,7 +149,9 @@ if(isAuthenticated()) { ?>
 			<div class="upload-bar__progress"></div>
 		</div>
 	</main>
-	<script src="./app/client/script.js"></script>
+	<script src="./app/client/ajax.js"></script>
+	<script src="./app/client/ui.js"></script>
+	<script src="./app/client/start.js"></script>
 	<?php 
 		if(hasWritingRights()) { 
 			echo "<script>document.body.classList.add('--publisher');</script>"; 

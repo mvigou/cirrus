@@ -2,13 +2,13 @@
 
 require_once('./config.php');
 
-if(isset($_POST['filePath'])) {
-
-	if(isAuthenticated()) {
+if(isAuthenticated()) {
+	
+	if(isset($_POST['filePath'])) {
 		
 		$fileName = array_slice(explode( '/', $_POST['filePath']), -1)[0];
-		$fromPath = $_POST['filePath'];
 		$tempDirectory = buildTempDir();
+		$fromPath = $_POST['filePath'];
 		$toPath = $tempDirectory . '/' . $fileName;
 		
 		if(mkdir($tempDirectory)) {
@@ -31,7 +31,6 @@ if(isset($_POST['filePath'])) {
 		
 					default:
 						$fileType = '';
-						break;
 
 				}
 				

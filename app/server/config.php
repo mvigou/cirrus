@@ -72,7 +72,7 @@ function buildTempDir() {
 	return TEMP_DIR . '/' . hash('sha512', random_bytes(18));
 }
 function clearTempDir() {
-	require_once('./ct-remove.php');
+	require_once('./remove-item.php');
 	removeDir(TEMP_DIR);
 }
 

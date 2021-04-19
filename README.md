@@ -64,7 +64,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Création groupée.
 * Création simple.
 * Renommage.
-* Suppression (vers corbeille).
+* Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de dossiers de même nom).
 * Suppression définitive (depuis corbeille).
 * Téléchargement (format compressé Zip).
 
@@ -78,7 +78,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Mise en ligne simple.
 * Prévisualisation.
 * Renommage.
-* Suppression (vers corbeille).
+* Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de fichiers de même nom).
 * Suppression définitive (depuis corbeille).
 * Téléchargement.
 
