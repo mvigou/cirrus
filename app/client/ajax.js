@@ -53,7 +53,7 @@ const ajaxPost = req => {
 
 const ajaxLog = (origin, log) => {
 
-	ajaxPostNew(
+	ajaxPost(
 		{
 			script: 'log.php',
 			args: [
@@ -68,7 +68,7 @@ const ajaxLog = (origin, log) => {
 			]
 		}
 	)
-	.then(resp => setPopup('warning', log));
+	.then(resp => setPopup('warning', UI.popup.getAttribute('data-mess-error')));
 
 };
 

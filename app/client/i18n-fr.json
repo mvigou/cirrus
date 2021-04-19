@@ -23,7 +23,7 @@
 	"mess": {
 		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
 		"duplicateContent": "Impossible : il y a déjà un fichier ou un dossier avec ce nom.",
-		"error": "Une erreur est survenue pendant le traitement de cette action.",
-		"notAJSON": "L'application attendait du JSON, mais le serveur a renvoyé ceci : "
+		"error": "Une <a href='./datas/logs/errors.html' target='_blank'>erreur</a> est survenue pendant le traitement de cette action.",
+		"notAJSON": "The application was expecting JSON, but the server returned this: "
 	}
 }
