@@ -41,7 +41,7 @@ if(isAuthenticated()) {
 							'state' => 'success',
 							'content' => array(
 								"type" => $fileType,
-								"path" => $toPath
+								"path" => str_replace('../../', './', $toPath)
 							)
 						)
 					);
