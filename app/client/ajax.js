@@ -34,7 +34,7 @@ const ajaxPost = req => {
 									resolve(parsedResp);
 								}
 								catch(e) {
-									reject(UI.popup.getAttribute('data-mess-notAJSON') + resp);
+									reject("The application was expecting JSON, but the server returned this: " + resp);
 								}	
 							}
 						);
