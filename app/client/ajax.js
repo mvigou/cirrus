@@ -164,7 +164,7 @@ const uploadItems = () => {
 
 				const resp = JSON.parse(req.responseText);
 
-				if(resp.state === 'success') {
+				if(resp.success == true) {
 
 					if(resp.content.itemRenamed == true) {
 						setPopup('warning', file.name + UI.popup.getAttribute('data-mess-itemRenamed'));
@@ -185,6 +185,11 @@ const uploadItems = () => {
 						);	
 					}
 
+				}
+
+				else {
+					ajaxLog('uploadItems', resp.responseText);
+					toogleProgressBar();
 				}
 
 			};
