@@ -24,7 +24,7 @@ L'utilisation d'un cloud est dans tous les cas polluant, donc **si vous pouvez v
 
 ### Côté serveur
 
-* Un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran.
+* Un hébergement web (ou local) reposant sur un serveur Apache. **Important** : La plupart des fournisseurs d'hébergements mutualisés plafonnent la taille et le nombre de fichiers qu'il est possible de mettre en ligne simultanément. Orientez vos recherches du côté des valeurs de configuration PHP *upload_max_filesize* et *post_max_size* associées à votre prestataire si vous rencontrez des problèmes pour mettre en ligne vos documents alors qu'aucun message d'erreur n'apparaît à l'écran (note : chez OVH, les limites semblent respectivement être de 128 et 130 MO).
 * PHP version 7 ou plus.
 
 ### Côté client
@@ -73,9 +73,9 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Améliorer le support des documents en prévisualisation.
 * (TODO) Copie.
 * (TODO) Déplacement.
-* (TODO) Prévenir l'écrasement de fichier pendant l'envoi ?
 * Mise en ligne groupée.
 * Mise en ligne simple.
+* Renommage automatique à la mise en ligne en cas de doublon pour prévenir les écrasements.
 * Prévisualisation des fichiers de type image et pdf dans l'onglet courant.
 * Prévisualisation.
 * Renommage.
