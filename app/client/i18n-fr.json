@@ -22,7 +22,8 @@
 	},
 	"mess": {
 		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
-		"duplicateContent": "Impossible : il y a déjà un fichier ou un dossier avec ce nom.",
+		"duplicateItem": "Impossible : ce nom est déjà pris.",
+		"itemRenamed": " a été renommé car un autre fichier de même nom existe déjà.",
 		"error": "Une <a href='./datas/logs/errors.html' target='_blank'>erreur</a> est survenue pendant le traitement de cette action."
 	}
 }

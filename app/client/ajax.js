@@ -25,7 +25,7 @@ const ajaxPost = req => {
 					if(resp.ok) {
 						resp.text().then(
 							resp => {
-								/* 
+								/*
 								JSON expected in all cases.
 								PHP will be produce some string if an error has occurred.
 								*/
@@ -133,12 +133,11 @@ const createDirectory = dirs => {
 
 const uploadItems = () => {
 
-	// 1. Configure an input element.
 	let inputElm = document.createElement('input');
 	inputElm.setAttribute('type', 'file');
 	inputElm.setAttribute('multiple', 'true');
+	inputElm.click();
 	
-	// 3. Proceed when submitted, one element at once.
 	inputElm.onchange = (e) => {
 			
 		let i = 0;
@@ -152,7 +151,7 @@ const uploadItems = () => {
 
 			let formData = new FormData();
 			formData.append('parentDir', localStorage.getItem('currentDir'));
-			formData.append("file", file);
+			formData.append('file', file);
 
 			let req = new XMLHttpRequest();
 			req.open('POST', './app/server/upload-item.php', true);
@@ -161,25 +160,33 @@ const uploadItems = () => {
 				UI.progressBar.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
 			};			
 				
-			req.onload = () => { // Expected resp : absolutely nothing if it's done.
+			req.onload = () => {
 
-				i++;
-				
-				// Are they others files to upload ? Recursive.
-				if(inputElm.files.length > i) {
-					send(inputElm.files[i]);
-				}
-				
-				// Else, end.
-				else {
-					browseDirectory(localStorage.getItem('currentDir'));
-					setTimeout(
-						() => toogleProgressBar(),
-						1000
-					);
+				const resp = JSON.parse(req.responseText);
+
+				if(resp.state === 'success') {
+
+					if(resp.content.itemRenamed == true) {
+						setPopup('warning', file.name + UI.popup.getAttribute('data-mess-itemRenamed'));
+					}
+	
+					i++;
+					
+					// Are they others files to upload ? Recursive.
+					if(inputElm.files.length > i) {
+						send(inputElm.files[i]);
+					}
+
+					else {
+						browseDirectory(localStorage.getItem('currentDir'));
+						setTimeout(
+							() => toogleProgressBar(),
+							1000
+						);	
+					}
 
 				}
-				
+
 			};
 			
 			req.send(formData);
@@ -187,9 +194,6 @@ const uploadItems = () => {
 		}
 		
 	};
-	
-	// 2. Automatically active the input element.
-	inputElm.click();
 
 };
 
@@ -259,7 +263,7 @@ const renameItem = (oldName, newName, item) => {
 						browseDirectory(localStorage.getItem('currentDir'));
 					}
 					else if(resp.state === 'duplicate') {
-						setPopup('warning', UI.popup.getAttribute('data-mess-duplicateContent'));
+						setPopup('warning', UI.popup.getAttribute('data-mess-duplicateItem'));
 						item.value = oldName;
 					}
 				}

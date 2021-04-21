@@ -133,7 +133,8 @@ if(isAuthenticated()) { ?>
 		<!-- Popup -->
 		<div 
 			class="popup"
-			data-mess-duplicateContent="<?php echo $lab->mess->duplicateContent; ?>"
+			data-mess-duplicateItem="<?php echo $lab->mess->duplicateItem; ?>"
+			data-mess-itemRenamed="<?php echo $lab->mess->itemRenamed; ?>"
 			data-mess-confirmPress="<?php echo $lab->mess->confirmPress; ?>"
 			data-mess-error="<?php echo $lab->mess->error; ?>">
 			<div class="popup__tiles-ct">
