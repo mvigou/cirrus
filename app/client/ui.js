@@ -1,14 +1,5 @@
 "use strict";
 
-const UI = {
-	list: document.querySelector('.list'),
-	tree: document.querySelector('.nav__tree'),
-	popup: document.querySelector('.popup'),
-	progressBar: document.querySelector('.upload-bar'),
-	preview: document.querySelector('.preview'),
-	previewItem: document.querySelector('.preview__item')
-};
-
 // https://github.com/AwebsomeFr/chess
 const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.text:t.html&&(e.innerHTML=t.html),t.attributes)for(let n in t.attributes)e.setAttribute(n,t.attributes[n]);if(t.events)for(let n of t.events)e.addEventListener(n.type,n.function);if(t.children)for(let n of t.children)e.appendChild(chess(n));return e;};
 
@@ -71,19 +62,19 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 /* ### manage the preview box ### */
 
 	const setPreview =  (sourcePath, tempPath) => {
-		UI.preview.setAttribute('data-item-tempPath', tempPath);
-		UI.preview.setAttribute('data-item-sourcePath', sourcePath);
-		UI.preview.classList.add('--visible');
+		ui.preview.setAttribute('data-item-tempPath', tempPath);
+		ui.preview.setAttribute('data-item-sourcePath', sourcePath);
+		ui.preview.classList.add('--visible');
 	};
 
 	const unsetPreview = () => {
-		UI.previewItem.innerHTML = '';
-		UI.preview.classList.remove('--visible');
+		ui.previewItem.innerHTML = '';
+		ui.preview.classList.remove('--visible');
 	};
 
 	const setPreviewImg = (sourcePath, tempPath) => {
 
-		UI.previewItem.appendChild(
+		ui.previewItem.appendChild(
 			chess(
 				{
 					type: 'img',
@@ -101,7 +92,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 
 	const setPreviewPdf = (sourcePath, tempPath) => {
 
-		UI.previewItem.appendChild(
+		ui.previewItem.appendChild(
 			chess(
 				{
 					type: 'iframe',
@@ -119,14 +110,14 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 
 /* ### hide / unhide the upload progression bar ### */
 
-	const toogleProgressBar = () => UI.progressBar.classList.toggle('--visible');
+	const toogleProgressBar = () => ui.progressBar.classList.toggle('--visible');
 
 /* ### manage the popup  ### */
 
 	const setPopup = (type, content) => {
 		
-		UI.popup.querySelector('.popup__content').innerHTML = content;
-		UI.popup.classList.add('popup--' + type);
+		ui.popup.querySelector('.popup__content').innerHTML = content;
+		ui.popup.classList.add('popup--' + type);
 
 		if(type === 'warning') {
 			setTimeout(
@@ -137,7 +128,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 
 	};
 
-	const unsetPopup = () => UI.popup.setAttribute('class', 'popup');
+	const unsetPopup = () => ui.popup.setAttribute('class', 'popup');
 
 /* ### manage user confirmation ### */
 
@@ -175,7 +166,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 	const watchConfirmClick = (step, action) => {
 		ACTION.click[step].name = action;
 		ACTION.click[step].time = performance.now();
-		setPopup('confirm', UI.popup.getAttribute('data-mess-confirmPress'));
+		setPopup('confirm', lab.mess.confirmPress);
 	};
 
 	const validConfirmClick = () => {
@@ -189,7 +180,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 			ACTION.touch.start.x = event.touches[0].clientX;
 			ACTION.touch.start.y = event.touches[0].clientY;
 			ACTION.touch.start.time = performance.now();
-			setPopup('confirm', UI.popup.getAttribute('data-mess-confirmPress'));
+			setPopup('confirm', lab.mess.confirmPress);
 			event.preventDefault();	
 		}
 		
@@ -219,14 +210,14 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 
 	const buildTree = dir => {
 
-		UI.tree.innerHTML = '';
+		ui.tree.innerHTML = '';
 		let tree = '';
 		
 		for(let subDirs of dir.slice(3).split('/').slice(2)) {
 					
 			tree += '/';
 			tree += subDirs;
-			UI.tree.appendChild(
+			ui.tree.appendChild(
 				chess(
 					{
 						type: 'pre',
@@ -235,7 +226,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 				)
 			);
 
-			UI.tree.appendChild(
+			ui.tree.appendChild(
 				chess(
 					{
 						type: 'a',
@@ -262,7 +253,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 
 	const buildItems = (items, dir) => {
 
-		UI.list.innerHTML = '';
+		ui.list.innerHTML = '';
 		
 		for(let item of items) {
 
@@ -294,7 +285,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 						type: 'a',
 						attributes: { 
 							class: 'list__item__a non-editable',
-							title: UI.list.getAttribute('data-bt-openItem') 
+							title: lab.bt.openItem
 						},
 						events: [
 							{
@@ -365,7 +356,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 							type: 'button', 
 							attributes: { 
 								class: 'non-editable',
-								title: UI.list.getAttribute('data-bt-downloadItem')
+								title: lab.bt.downloadItem
 							},
 							events: [
 								{
@@ -385,7 +376,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 							type: 'button',
 							attributes: {
 								class: 'publisher-ft non-editable',
-								title: UI.list.getAttribute('data-bt-removeItem')
+								title: lab.bt.removeItem
 							},
 							events: [
 								{
@@ -426,7 +417,7 @@ const chess=t=>{let e=document.createElement(t.type);if(t.text?e.textContent=t.t
 
 			}
 			
-			UI.list.appendChild(itemElm);
+			ui.list.appendChild(itemElm);
 
 		}
 

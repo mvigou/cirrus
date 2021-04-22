@@ -68,7 +68,7 @@ const ajaxLog = (origin, log) => {
 			]
 		}
 	)
-	.then(resp => setPopup('warning', UI.popup.getAttribute('data-mess-error')));
+	.then(resp => setPopup('warning', lab.mess.error));
 
 };
 
@@ -146,8 +146,8 @@ const uploadItems = () => {
 		
 		function send(file) {
 			
-			UI.progressBar.querySelector('div').style.width = '0';
-			UI.progressBar.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
+			ui.progressBar.querySelector('div').style.width = '0';
+			ui.progressBar.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
 
 			let formData = new FormData();
 			formData.append('parentDir', localStorage.getItem('currentDir'));
@@ -157,7 +157,7 @@ const uploadItems = () => {
 			req.open('POST', './app/server/upload-item.php', true);
 
 			req.upload.onprogress = (e) => {
-				UI.progressBar.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
+				ui.progressBar.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
 			};			
 				
 			req.onload = () => {
@@ -167,7 +167,7 @@ const uploadItems = () => {
 				if(resp.success == true) {
 
 					if(resp.content.itemRenamed == true) {
-						setPopup('warning', file.name + UI.popup.getAttribute('data-mess-itemRenamed'));
+						setPopup('warning', file.name + lab.mess.itemRenamed);
 					}
 	
 					i++;
@@ -235,7 +235,7 @@ const openFile = filePath => {
 
 };
 
-const openPreviewedItem = () => window.open(UI.preview.getAttribute('data-item-tempPath'));
+const openPreviewedItem = () => window.open(ui.preview.getAttribute('data-item-tempPath'));
 
 const renameItem = (oldName, newName, item) => {
 
@@ -268,7 +268,7 @@ const renameItem = (oldName, newName, item) => {
 						browseDirectory(localStorage.getItem('currentDir'));
 					}
 					else if(resp.state === 'duplicate') {
-						setPopup('warning', UI.popup.getAttribute('data-mess-duplicateItem'));
+						setPopup('warning', lab.mess.duplicateItem);
 						item.value = oldName;
 					}
 				}
@@ -309,7 +309,7 @@ const downloadUnpreviewedItem = item => {
 	
 };
 
-const downloadPreviewedItem = () => downloadItem(UI.preview.getAttribute('data-item-tempPath'));
+const downloadPreviewedItem = () => downloadItem(ui.preview.getAttribute('data-item-tempPath'));
 
 const downloadItem = src => {
 	let aElm = document.createElement('a');
@@ -352,6 +352,6 @@ const removeItem = item => {
 };
 
 const removePreviewedItem = () => {
-	removeItem(UI.preview.getAttribute('data-item-sourcePath'));
+	removeItem(ui.preview.getAttribute('data-item-sourcePath'));
 	unsetPreview();
 };

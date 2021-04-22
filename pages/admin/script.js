@@ -1,13 +1,13 @@
 "use strict";
 
-const UI = { messBox: document.querySelector('.admin__mess__box') };
+const ui = { messBox: document.querySelector('.admin__mess__box') };
 
 const writeMessBox = html => {
-	UI.messBox.innerHTML += `<p>${html}</p>`;
-	UI.messBox.scrollTop = UI.messBox.scrollHeight;
+	ui.messBox.innerHTML += `<p>${html}</p>`;
+	ui.messBox.scrollTop = ui.messBox.scrollHeight;
 };
 
-const emptyMessBox = () => UI.messBox.innerHTML = '';
+const emptyMessBox = () => ui.messBox.innerHTML = '';
 
 const ajaxLog = (origin, log) => writeMessBox('### ' + origin + ' ### ' + log);
 
@@ -40,7 +40,7 @@ const ajaxPost = (req) => {
 									resolve(parsedResp);
 								}
 								catch(e) {
-									reject(UI.messBox.getAttribute('data-mess-notAJSON') + resp);
+									reject(ui.messBox.getAttribute('data-mess-notAJSON') + resp);
 								}	
 							}
 						)
@@ -76,7 +76,7 @@ const browseInvits = role => {
 				writeMessBox(resp.content);
 			}
 			else if(resp.state === 'empty') {
-				writeMessBox(UI.messBox.getAttribute('data-mess-empty'));
+				writeMessBox(ui.messBox.getAttribute('data-mess-empty'));
 			}
 		}
 	)
@@ -124,10 +124,10 @@ const removeInvits = role => {
 	.then( 
 		resp => {
 			if(resp.state === 'success') {
-				writeMessBox(UI.messBox.getAttribute('data-mess-success'));
+				writeMessBox(ui.messBox.getAttribute('data-mess-success'));
 			}
 			else if(resp.state === 'empty') {
-				writeMessBox(UI.messBox.getAttribute('data-mess-empty'));
+				writeMessBox(ui.messBox.getAttribute('data-mess-empty'));
 			}
 		}
 	)
