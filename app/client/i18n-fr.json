@@ -22,7 +22,6 @@
 	},
 	"mess": {
 		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
-		"duplicateItem": "Impossible : ce nom est déjà pris.",
 		"itemRenamed": " a été renommé car un autre fichier de même nom existe déjà.",
 		"error": "Une <a href='./datas/logs/errors.html' target='_blank'>erreur</a> est survenue pendant le traitement de cette action."
 	}

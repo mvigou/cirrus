@@ -1,32 +1,18 @@
-<?php
-
-require_once('./config.php');
+<?php require_once('./config.php');
 
 if(isAuthenticated() && hasWritingRights()) {
-
 	if(isset($_POST['oldName']) && isset($_POST['newName']) && isset($_POST['parentDir'])) {
-
-		$oldPath = $_POST['parentDir'] . '/' . $_POST['oldName'];
-		$newPath = $_POST['parentDir'] . '/' . buildValidName($_POST['newName']);
-
-		if(!is_file($newPath) && !is_dir($newPath)) {
-			if(rename($oldPath, $newPath)) {
-				$state = 'success';
-			}
+		$fromPath = $_POST['parentDir'] . '/' . $_POST['oldName'];
+		$toPath = $_POST['parentDir'] . '/' . buildValidName($_POST['newName']);
+		while(is_file($toPath) || is_dir($toPath)) {
+			$toPath .= '-copy';
 		}
-
-		else {
-			$state = 'duplicate';
-		}
-
-		if(isset($state)) {
+		if(rename($fromPath, $toPath)) {
 			echo json_encode(
 				array(
-					'state' => $state
+					'success' => true
 				)
 			);
 		}
-
 	}
-
 }

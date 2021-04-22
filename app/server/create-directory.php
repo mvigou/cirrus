@@ -1,11 +1,7 @@
-<?php 
-
-require_once('./config.php');
+<?php require_once('./config.php');
 
 if(isAuthenticated() && hasWritingRights()) {
-
 	if(isset($_POST['parent']) && isset($_POST['dirs'])) {		
-
 		if(inScopeDirectory($_POST['parent'])) {
 	
 			/*
@@ -21,67 +17,35 @@ if(isAuthenticated() && hasWritingRights()) {
 			*/
 			
 			$parents = explode('||', $_POST['dirs']);
-			
 			foreach($parents as $parent) {
-
 				$basePath = $_POST['parent'];
 				$levels = explode('>>', $parent);
-
 				foreach($levels as $level) {
-
 					$children = explode('&&', $level);
-
 					if(count($children) > 1) {
-
 						foreach($children as $child) {
-							
 							$child = trim($child);
-							
 							if(strlen($child) >= 1) {
-
 								$dirName = $basePath . '/' . buildValidName($child);
-
 								if(!is_dir($dirName)) {
 									mkdir($dirName);
 								}
-
 							}
-
-
 						}
-
 					} 
-
 					else {
-
 						$level = trim($level);
-					
 						if(strlen($level) >= 1) {
-
 							$dirName = $basePath . '/' . buildValidName($level);
-							
 							if(!is_dir($dirName)) {
 								mkdir($dirName);
 							}
-
 						}
-
 						$basePath .= '/' . $level;
-
 					}
-
 				}
-
 			}
-
-			echo json_encode(
-				array(
-					'state' => 'success'
-				)
-			);
-
+			echo json_encode(array('success' => true));
 		}
-	
 	}
-
 }

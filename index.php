@@ -150,7 +150,6 @@ if(isAuthenticated()) { ?>
 				},
 				mess: {
 					confirmPress: "<?php echo $lab->mess->confirmPress; ?>",
-					duplicateItem: "<?php echo $lab->mess->duplicateItem; ?>",
 					error: "<?php echo $lab->mess->error; ?>",
 					itemRenamed: "<?php echo $lab->mess->itemRenamed; ?>"
 				}

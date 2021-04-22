@@ -1,6 +1,4 @@
-<?php 
-
-require_once('./config.php');
+<?php require_once('./config.php');
 
 if(isAuthenticated() && hasWritingRights()) {
 	$itemRenamed = false; 

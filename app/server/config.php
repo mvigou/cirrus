@@ -52,12 +52,14 @@ function hasWritingRights() {
 function inScopeDirectory($elm) {
 	return inDatasDirectory($elm) || inRecycleDirectory($elm) ? true : false;
 }
+
 function inDatasDirectory($elm) {
 	$regex = '/^\.\.\/\.\.\/datas\/';
 	$regex .= array_slice(explode('/', CONTENT_DIR), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
+
 function inRecycleDirectory($elm) {
 	$regex = '/^\.\.\/\.\.\/datas\/';
 	$regex .= array_slice(explode('/', RECYCLE_DIR), -1)[0];
@@ -71,6 +73,7 @@ function buildTempDir() {
 	}
 	return TEMP_DIR . '/' . hash('sha512', random_bytes(18));
 }
+
 function clearTempDir() {
 	require_once('./remove-item.php');
 	removeDir(TEMP_DIR);

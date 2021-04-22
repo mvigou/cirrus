@@ -1,9 +1,6 @@
-<?php 
-
-require_once('./config.php');
+<?php require_once('./config.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
-
 	$userProfiles = array(
 		array(
 			'role' => 'owner',
@@ -18,10 +15,7 @@ if(isAuthenticated() && hasOwnerRights()) {
 			'dir' => VIEWERS_DIR
 		)
 	);
-
 	$content = '';
-	$state = '';
-
 	foreach($userProfiles as $userProfile) {
 		$usersIn = array_diff(scandir($userProfile['dir']), array('.', '..'));
 		if(count($usersIn) > 0) {
@@ -29,14 +23,11 @@ if(isAuthenticated() && hasOwnerRights()) {
 				$content .= '(' . $userProfile['role'] . ') ' . $userIn . '<br/>'; 
 			}
 		}
-		$state = 'success';
 	}
-	
 	echo json_encode (
 		array(
-			'state' => $state,
+			'success' => true,
 			'content' => $content
 		)
 	);
-
 }

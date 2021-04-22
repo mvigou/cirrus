@@ -6,7 +6,6 @@ $i18n = './i18n-' . LANG . '.json';
 $lab = json_decode(file_get_contents($i18n));
 
 if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
-
 	<!DOCTYPE html>
 		<html lang="<?php echo LANG; ?>">
 		<head>
@@ -93,6 +92,15 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 				</section>
 			</main>
 			<script src="./script.js"></script>
+			<script>
+				const lab = {
+					mess: {
+						empty: "<?php echo $lab->mess->empty; ?>",
+						success: "<?php echo $lab->mess->success; ?>",
+						notAJSON: "<?php echo $lab->mess->notAJSON; ?>"
+					}
+				};
+			</script>
 		</body>
 	</html>
 	
