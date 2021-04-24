@@ -4,7 +4,6 @@
 
 	const toRecycleDirTheme = () => {
 		document.body.classList.add('--in-recycle');
-		toggleAddDirForm(false);
 		localStorage.setItem('mainDir', 'RECYCLE');
 	};
 
@@ -20,17 +19,6 @@
 	};
 
 /* ### manage the visibility of editing tools ### */
-
-	const toggleAddDirForm = (open) => {
-		const addFormElm = document.querySelector('.add-dir-form');
-		if(addFormElm.classList.contains('--visible') || open === false) {
-			addFormElm.classList.remove('--visible');
-		}
-		else {
-			addFormElm.classList.add('--visible');
-			addFormElm.querySelector('input').focus();
-		}
-	};
 
 	const toggleEdition = () => {
 		document.body.classList.contains('--edit-mode') ?
@@ -58,22 +46,25 @@
 
 /* ### manage the preview box ### */
 
+	const previewBoxElm = document.querySelector('.preview');
+	const previewItemElm = document.querySelector('.preview__item');
+
 	const setPreview =  (sourcePath, tempPath) => {
-		ui.preview.setAttribute('data-item-tempPath', tempPath);
-		ui.preview.setAttribute('data-item-sourcePath', sourcePath);
-		ui.preview.classList.add('--visible');
+		previewBoxElm.setAttribute('data-item-tempPath', tempPath);
+		previewBoxElm.setAttribute('data-item-sourcePath', sourcePath);
+		previewBoxElm.classList.add('--visible');
 	};
 
 	const unsetPreview = () => {
-		ui.previewItem.innerHTML = '';
-		ui.preview.classList.remove('--visible');
+		previewItemElm.innerHTML = '';
+		previewBoxElm.classList.remove('--visible');
 	};
 
 	const setPreviewImg = (sourcePath, tempPath) => {
 		let imgElm = document.createElement('img');
 		imgElm.classList.add('preview__item__img');
 		imgElm.src = tempPath;
-		ui.previewItem.appendChild(imgElm);
+		previewItemElm.appendChild(imgElm);
 		setPreview(sourcePath, tempPath);
 	};
 
@@ -81,20 +72,16 @@
 		let iframeElm = document.createElement('iframe');
 		iframeElm.classList.add('preview__item__iframe');
 		iframeElm.src = tempPath;
-		ui.previewItem.appendChild(iframeElm);
+		previewItemElm.appendChild(iframeElm);
 		setPreview(sourcePath, tempPath);
 	};
-
-/* ### hide / unhide the upload progression bar ### */
-
-	const toogleProgressBar = () => ui.progressBar.classList.toggle('--visible');
 
 /* ### manage the popup  ### */
 
 	const setPopup = (type, content) => {
 		
-		ui.popup.querySelector('.popup__content').innerHTML = content;
-		ui.popup.classList.add('popup--' + type);
+		document.querySelector('.popup__content').innerHTML = content;
+		document.querySelector('.popup').classList.add('popup--' + type);
 
 		if(type === 'warning') {
 			setTimeout(
@@ -105,7 +92,7 @@
 
 	};
 
-	const unsetPopup = () => ui.popup.setAttribute('class', 'popup');
+	const unsetPopup = () => document.querySelector('.popup').setAttribute('class', 'popup');
 
 /* ### manage user confirmation ### */
 
@@ -187,7 +174,9 @@
 
 	const buildTree = dir => {
 
-		ui.tree.innerHTML = '';
+		const navTreeElm = document.querySelector('.nav__tree');
+
+		navTreeElm.innerHTML = '';
 		let tree = '';
 		
 		for(let subDirs of dir.slice(3).split('/').slice(2)) {
@@ -197,7 +186,7 @@
 
 			let preElm = document.createElement('pre');
 			preElm.textContent = ' / ';
-			ui.tree.appendChild(preElm);
+			navTreeElm.appendChild(preElm);
 
 			let anchorElm = document.createElement('a');
 			anchorElm.href = tree;
@@ -206,7 +195,7 @@
 				browseDirectory('../../datas' + e.target.getAttribute('href'));
 				e.preventDefault();
 			};
-			ui.tree.appendChild(anchorElm);
+			navTreeElm.appendChild(anchorElm);
 			
 		}
 		
@@ -214,7 +203,8 @@
 
 	const buildItems = (items, dir) => {
 
-		ui.list.innerHTML = '';
+		const itemListElm = document.querySelector('.list');
+		itemListElm.innerHTML = '';
 		
 		for(let item of items) {
 
@@ -235,6 +225,7 @@
 				let itemElm;
 				itemElm = document.createElement('li');
 				itemElm.classList.add('list__item');
+				itemElm.setAttribute('data-name', item.label);
 
 			// Allow to open the file or the directory (replace the next sibling in normal mode).
 		
@@ -265,9 +256,7 @@
 							e.target.blur();
 						}
 					};
-					editItemInputElm.onblur = e => {
-						renameItem(item.label, e.target.value, e.target);
-					};
+					editItemInputElm.onblur = e => renameItem(item.label, e.target.value, e.target);
 					itemElm.appendChild(editItemInputElm);
 
 				}
@@ -307,8 +296,72 @@
 	
 			}
 
-			ui.list.appendChild(itemElm);
+			itemListElm.appendChild(itemElm);
 
 		}
 
+	};
+
+/* ### performing search and other actions ### */
+
+	const bar = {
+		addButtonElm: document.getElementById('bar__addButton'),
+		cmdButtonElm: document.getElementById('bar__cmdButton'),
+		canButtonElm: document.getElementById('bar__cancelButton')
+	};
+
+	const isPerformingSearch = (value) => value.indexOf('?') === 0 ? true : false;
+	const isPerformingCreate = (value) => value.indexOf('+') === 0 ? true : false;
+	const isPerformingCommand = (value) => value.indexOf('*') === 0 ? true : false;
+
+	const setBarButton = (button) => {
+		bar.addButtonElm.classList.add('--hidden');
+		bar.cmdButtonElm.classList.add('--hidden');
+		bar.canButtonElm.classList.add('--hidden');
+		if(button) {
+			bar[button].classList.remove('--hidden');
+		}
+	};
+
+	const barLive = (value) => {
+		if(isPerformingSearch(value)) {
+			setBarButton('canButtonElm');
+			const items = document.getElementsByClassName('list__item');
+			for(const item of items) {
+				const itemName = item.getAttribute('data-name');
+				item.classList.add('--hidden');
+				if(itemName.toLowerCase().indexOf(value.substr(1).toLowerCase()) >= 0) {
+					item.classList.remove('--hidden');
+				}
+			}
+		}
+		else {
+			const items = document.getElementsByClassName('list__item');
+			for(const item of items) {
+				item.classList.remove('--hidden');
+			}
+			if(isPerformingCreate(value)) {
+				setBarButton('addButtonElm');
+			}
+			else if(isPerformingCommand(value)) {
+				setBarButton('cmdButtonElm');
+			}
+			else {
+				setBarButton();
+			}
+		}
+	};
+
+	const barSubmit = (e) => {
+		const value = e.target.elements[0].value;
+		if(isPerformingCreate(value)) {
+			createDirectory(value.substr(1));
+			bar.addButtonElm.classList.add('--hidden');
+		}
+		else if(isPerformingCommand(value)) {
+			// Do something...
+			bar.cmdButtonElm.classList.add('--hidden');
+		}
+		e.target.reset();
+		e.preventDefault();
 	};

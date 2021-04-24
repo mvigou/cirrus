@@ -113,7 +113,6 @@ const createDirectory = dirs => {
 			resp => {
 				if(resp.success) {
 					browseDirectory(localStorage.getItem('currentDir'));
-					document.querySelector('.add-dir-form').reset();
 				}
 			}
 		)
@@ -128,18 +127,18 @@ const uploadItems = () => {
 	inputElm.click();
 	inputElm.onchange = (e) => {
 		let i = 0;
-		toogleProgressBar();
+		document.querySelector('.upload-bar').classList.remove('--hidden');
 		send(inputElm.files[i]);
 		function send(file) {
-			ui.progressBar.querySelector('div').style.width = '0';
-			ui.progressBar.querySelector('p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
+			document.querySelector('.upload-bar div').style.width = '0';
+			document.querySelector('.upload-bar p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
 			let formData = new FormData();
 			formData.append('parentDir', localStorage.getItem('currentDir'));
 			formData.append('file', file);
 			let req = new XMLHttpRequest();
 			req.open('POST', './app/server/upload-item.php', true);
 			req.upload.onprogress = (e) => {
-				ui.progressBar.querySelector('div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
+				document.querySelector('.upload-bar div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
 			};			
 			req.onload = () => {
 				const resp = JSON.parse(req.responseText);
@@ -154,14 +153,14 @@ const uploadItems = () => {
 					else {
 						browseDirectory(localStorage.getItem('currentDir'));
 						setTimeout(
-							() => toogleProgressBar(),
+							() => document.querySelector('.upload-bar').classList.add('--hidden'),
 							1000
 						);	
 					}
 				}
 				else {
 					ajaxLog('uploadItems', resp.responseText);
-					toogleProgressBar();
+					document.querySelector('.upload-bar').classList.add('--hidden');
 				}
 			};
 			req.send(formData);
@@ -200,7 +199,7 @@ const openFile = filePath => {
 	.catch(error => ajaxLog('openFile', error));
 };
 
-const openPreviewedItem = () => window.open(ui.preview.getAttribute('data-item-tempPath'));
+const openPreviewedItem = () => window.open(document.querySelector('.preview').getAttribute('data-item-tempPath'));
 
 const renameItem = (oldName, newName, item) => {
 	if(newName.length >= 1) {
@@ -261,7 +260,7 @@ const downloadUnpreviewedItem = item => {
 	.catch(error => ajaxLog('downloadUnpreviewedItem', error));
 };
 
-const downloadPreviewedItem = () => downloadItem(ui.preview.getAttribute('data-item-tempPath'));
+const downloadPreviewedItem = () => downloadItem(document.querySelector('.preview').getAttribute('data-item-tempPath'));
 
 const downloadItem = src => {
 	let aElm = document.createElement('a');
@@ -300,6 +299,6 @@ const removeItem = item => {
 };
 
 const removePreviewedItem = () => {
-	removeItem(ui.preview.getAttribute('data-item-sourcePath'));
+	removeItem(document.querySelector('.preview').getAttribute('data-item-sourcePath'));
 	unsetPreview();
 };

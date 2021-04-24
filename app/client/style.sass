@@ -63,6 +63,11 @@ body
 	.datas-ft
 		display: none
 
+// ...
+
+.--hidden
+	display: none !important
+
 // Interactive elements.
 
 a
@@ -99,12 +104,16 @@ input
 	color: var(--base-color)
 	display: block
 	font-size: 1rem
-	margin-top: 12px
+	margin-top: 24px
 	padding-bottom: 3px
 	width: 100%
 	&:focus
 		border-bottom-color: var(--cirrus-color)
 		outline: none
+
+label
+	position: absolute
+	top: -9999px
 
 svg
 	vertical-align: middle
@@ -138,14 +147,6 @@ svg
 			font-family: Josefin, sans-serif	
 	button:last-of-type
 		margin-left: auto
-
-.add-dir-form
-	display: none
-	&.--visible
-		display: flex
-	label
-		position: absolute
-		top: -9999px
 
 .list
 	margin: 0
@@ -218,20 +219,17 @@ svg
 .upload-bar
 	background-color: var(--bg-color)
 	bottom: 0
-	display: none
 	left: 0
-	padding: 10px 0 0 0
+	padding: 12px 0 0 0
 	position: fixed
 	right: 0
 	text-align: center
-	&.--visible
-		display: block
-	&__progress // div	
+	> div	
 		background-color: var(--hovered-color)
 		box-sizing: border-box
 		height: 10px
 		width: 0
-	&__message // p
+	> p
 		margin: 0
 
 .popup	
@@ -293,3 +291,7 @@ svg
 		border-radius: 6px
 		color: var(--bg-color)
 		padding: 24px
+
+.bar__form
+	align-items: center
+	display: flex

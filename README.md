@@ -53,6 +53,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Accès rapide aux dossiers parents grâce à un arbre d'arborescence.
 * Navigation dans l'arborescence des dossiers.
 * Purge la corbeille.
+* Recherche en temps réel dans le dossier courant.
 * Sélection du dossier racine (content, recycle).
 
 ### Opérations sur les dossiers
