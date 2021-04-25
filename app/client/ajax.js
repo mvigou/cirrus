@@ -290,7 +290,3 @@ function removeItem(item) {
 		.catch(error => ajaxLog('removeItem', error));
 	}
 }
-function removePreviewedItem() {
-	removeItem(document.querySelector('.preview').getAttribute('data-item-sourcePath'));
-	unsetPreview();
-}
