@@ -29,6 +29,7 @@ $lab = json_decode(file_get_contents($i18n));
 					maxlength="24"
 					name="user-name" 
 					pattern="[a-zA-Z0-9]{8,16}" 
+					required
 				/>
 			</label>
 			<label>
@@ -39,6 +40,7 @@ $lab = json_decode(file_get_contents($i18n));
 					maxlength="24"
 					name="user-pass" 
 					pattern="[a-zA-Z0-9.?!\-_*+=/|\\()[\]#$@%]{8,24}" 
+					required
 				/>
 			</label>
 			<button title="<?php echo $lab->bt->confirm; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>

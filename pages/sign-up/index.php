@@ -34,6 +34,7 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 								maxlength="24"
 								name="user-name" 
 								pattern="[a-zA-Z0-9]{8,16}" 
+								required
 							/>
 						</label>
 						<label>
@@ -45,6 +46,7 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 								maxlength="24"
 								name="user-pass" 
 								pattern="[a-zA-Z0-9.?!\-_*+=/|\\()[\]#$@%]{8,24}" 
+								required
 							/>
 						</label>
 						<label>
@@ -53,7 +55,8 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 								id="user-pass-conf" 
 								minlength="8"
 								maxlength="24"
-								name="user-pass-conf"
+								name="user-pass-conf" 
+								required
 							/>
 						</label>
 						<input

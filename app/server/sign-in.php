@@ -26,8 +26,8 @@
 				$_SESSION['role'] = $userRole;
 			}	
 		}
+		clearTempDir();
 	}
 }
-clearTempDir();
 header('Location: ../../');
 exit();
