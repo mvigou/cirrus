@@ -44,7 +44,7 @@ if(isAuthenticated()) {
 			foreach($arrDir as $item) {
 				array_push($items,
 					array(
-						'type' => 'subfolder',
+						'type' => 'subdir',
 						'label' => $item
 					)
 				);

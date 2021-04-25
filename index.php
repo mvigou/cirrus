@@ -18,11 +18,6 @@ if(isAuthenticated()) { ?>
 	<body>
 		<main>	
 			<nav class="nav">
-				<img 
-					alt="cirrus logo"
-					class="nav__logo"
-					src="./app/client/cirrus-logo.svg"
-					title ="cirrus" />
 				<!-- Display the data directory. -->
 				<button 
 					class="recycle-ft"
@@ -55,14 +50,14 @@ if(isAuthenticated()) { ?>
 				<button 
 					class="recycle-ft"
 					id="empty-recycle"
-					onmousedown="watchConfirmClick('start', 'recycle')"
-					onmouseup="watchConfirmClick('end', 'recycle'), removeItem('RECYCLE')"
-					onmouseleave="cancelConfirm()"
+					onmousedown="watchConfClick('start', 'recycle')"
+					onmouseup="watchConfClick('end', 'recycle'), removeItem('RECYCLE')"
+					onmouseleave="unsetPopup()"
 					title="<?php echo $lab->bt->emptyRecycle; ?>">
 					<svg viewBox="0 0 24 24"><path d="M18.5 15c-2.486 0-4.5 2.015-4.5 4.5s2.014 4.5 4.5 4.5c2.484 0 4.5-2.015 4.5-4.5s-2.016-4.5-4.5-4.5zm-.469 6.484l-1.688-1.637.695-.697.992.94 2.115-2.169.697.696-2.811 2.867zm-2.031-12.484v4.501c-.748.313-1.424.765-2 1.319v-5.82c0-.552.447-1 1-1s1 .448 1 1zm-4 0v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1s1 .448 1 1zm1.82 15h-11.82v-18h2v16h8.502c.312.749.765 1.424 1.318 2zm-6.82-16c.553 0 1 .448 1 1v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1zm14-4h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711v2zm-1 2v7.182c-.482-.115-.983-.182-1.5-.182l-.5.025v-7.025h2z"/></svg>
 				</button>
-				<!-- Bar allowing to perform a search or create directories. -->
-				<div class="bar non-editable">
+				<!-- Allow to perform some actions (search, create directories...) -->
+				<div class="bar datas-ft non-editable">
 					<form class="bar__form" >
 						<label for="bar__input"><?php echo $lab->label->bar; ?></label>
 						<input 
@@ -96,9 +91,18 @@ if(isAuthenticated()) { ?>
 					title="<?php echo $lab->bt->switchTheme; ?>">
 					<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>
 				</button>
-				<!-- Navigable tree of the folder structure -->
-				<div class="nav__tree"></div>
 			</nav>
+			<aside class="infos">
+				<div class="tree"></div>
+				<div class="counters">
+					<!-- Display the number of visible directories. -->
+					<svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg>
+					x <span class="dir-counter"></span>
+					<!-- Display the number of visible files. -->
+					<svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg>
+					x <span class="fil-counter"></span>
+				</div>
+			</aside>
 			<!-- User cloud content -->
 			<ul class="list"></ul>
 			<!-- Box for previewing content -->
@@ -122,9 +126,9 @@ if(isAuthenticated()) { ?>
 						</button>
 						<!-- Allow to remove the previewed item. -->
 						<button
-							onmousedown="watchConfirmClick('start', 'previewed-file')"
-							onmouseup="watchConfirmClick('end', 'previewed-file'), removePreviewedItem()"
-							onmouseleave="cancelConfirm()"
+							onmousedown="watchConfClick('start', 'previewed-file')"
+							onmouseup="watchConfClick('end', 'previewed-file'), removePreviewedItem()"
+							onmouseleave="unsetPopup()"
 							title="<?php echo $lab->bt->removeItem; ?>">
 							<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
 						</button>
@@ -173,10 +177,10 @@ if(isAuthenticated()) { ?>
 			<?php } ?>
 			// Events requiring the event object.
 			const emptyRecycleBt = document.getElementById('empty-recycle');
-			emptyRecycleBt.ontouchstart = e => watchConfirmTouch('start', e);
-			emptyRecycleBt.ontouchmove = () => cancelConfirm();
+			emptyRecycleBt.ontouchstart = e => watchConfTouch('start', e);
+			emptyRecycleBt.ontouchmove = () => unsetPopup();
 			emptyRecycleBt.ontouchend = e => {
-				watchConfirmTouch('end', e); 
+				watchConfTouch('end', e); 
 				removeItem('RECYCLE');
 			};
 			document.querySelector('.bar__form').onsubmit = e => barSubmit(e);
@@ -187,7 +191,7 @@ if(isAuthenticated()) { ?>
 			if(localStorage.getItem('currentDir')) {
 				browseDirectory(localStorage.getItem('currentDir'));
 				if(localStorage.getItem('mainDir') === 'RECYCLE') {
-					toRecycleDirTheme();
+					toRecycleTheme();
 				}
 			}
 			else {

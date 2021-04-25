@@ -54,6 +54,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Navigation dans l'arborescence des dossiers.
 * Purge la corbeille.
 * Recherche en temps réel dans le dossier courant.
+* Compteurs d'éléments du dossier courant.
 * Sélection du dossier racine (content, recycle).
 
 ### Opérations sur les dossiers

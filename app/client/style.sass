@@ -97,6 +97,10 @@ button
 		svg
 			fill: var(--hovered-color)
 
+.bar__form
+	align-items: center
+	display: flex
+
 input
 	background-color: transparent
 	border: none
@@ -128,48 +132,54 @@ svg
 	box-sizing: border-box
 	display: flex
 	flex-wrap: wrap
-	padding: 12px 12px 0 12px
+	padding: 12px
 	position: sticky
 	top: 0
-	&__logo
-		width: 36px
-		margin-top: 20px
-	&__tree
-		align-items: center
-		border-top: solid 1px var(--border-color)
-		border-bottom: solid 1px var(--border-color)
-		display: flex
-		flex-wrap: wrap
-		margin-top: 12px
-		padding: 0 12px
-		width: 100%
-		pre
-			font-family: Josefin, sans-serif	
+	z-index: 2
 	button:last-of-type
 		margin-left: auto
+
+.infos
+	border-bottom: solid 1px var(--border-color)
+	border-top: solid 1px var(--border-color)
+	display: grid
+	grid-template-columns: auto auto
+	justify-content: space-between	
+	margin: 12px
+	padding: 24px 12px
+	span
+		position: relative
+		top: 2px
+	svg
+		width: 12px
 
 .list
 	margin: 0
 	padding: 0
 	&__item
+		align-items: center
 		border-left: solid 6px transparent
-		display: grid
-		grid-template-columns: 1fr auto auto
-		padding: 6px 12px 6px 18px
-		&:hover
-			border-color: var(--cirrus-color)
-		&__a
-			align-items: center
-			display: flex
-			&:hover
-				text-decoration: underline
-		&__title
-			display: flex
-			align-items: center
+		display: none
+		grid-template-columns: auto 1fr auto auto
+		padding: 0px 12px 0px 24px
+		&.--visible
+			display: grid
+		&::before
+			border-radius: 50%
+			content: ""
+			display: inline-block
+			height: 9px
+			margin-right: 12px
+			width: 9px	
+		&:hover::before
+			background-color: var(--cirrus-color)
+		&__a:hover
+			text-decoration: underline
 			svg
-				width: 18px
-				margin-right: 12px
-				fill: var(--cirrus-color)
+				fill: var(--hovered-color)
+		&__svg		
+			margin-right: 12px
+			width: 18px
 	
 .preview
 	background-color: #000a
@@ -291,7 +301,3 @@ svg
 		border-radius: 6px
 		color: var(--bg-color)
 		padding: 24px
-
-.bar__form
-	align-items: center
-	display: flex

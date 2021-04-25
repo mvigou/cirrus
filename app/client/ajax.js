@@ -1,6 +1,6 @@
 "use strict";
 
-const ajaxPost = req => {
+function ajaxPost(req) {
 	return new Promise(
 		(resolve, reject) => {
 			let formData = new FormData();
@@ -41,9 +41,8 @@ const ajaxPost = req => {
 			);
 		}
 	);
-};
-
-const ajaxLog = (origin, log) => {
+}
+function ajaxLog(origin, log) {
 	ajaxPost(
 		{
 			script: 'log.php',
@@ -66,9 +65,8 @@ const ajaxLog = (origin, log) => {
 			}
 		} 
 	);
-};
-
-const browseDirectory = dir => {
+}
+function browseDirectory(dir) {
 	ajaxPost(
 		{
 			script: 'browse-directory.php',
@@ -84,15 +82,14 @@ const browseDirectory = dir => {
 		resp => {
 			if(resp.success) {
 				localStorage.setItem('currentDir', resp.content.dir);
-				buildItems(resp.content.items, resp.content.dir);
-				buildTree(resp.content.dir);
+				setItems(resp.content.items, resp.content.dir);
+				setTree(resp.content.dir);
 			}
 		}
 	)
 	.catch(error => ajaxLog('browseDirectory', error));
-};
-
-const createDirectory = dirs => {
+}
+function createDirectory(dirs) {
 	if(dirs !== '' ) {
 		ajaxPost(
 			{
@@ -118,9 +115,8 @@ const createDirectory = dirs => {
 		)
 		.catch(error => ajaxLog('createDirectory', error));	
 	}
-};
-
-const uploadItems = () => {
+}
+function uploadItems() {
 	let inputElm = document.createElement('input');
 	inputElm.setAttribute('type', 'file');
 	inputElm.setAttribute('multiple', 'true');
@@ -166,9 +162,8 @@ const uploadItems = () => {
 			req.send(formData);
 		}
 	};
-};
-
-const openFile = filePath => {
+}
+function openFile(filePath) {
 	ajaxPost(
 		{
 			script: 'open-file.php',
@@ -197,11 +192,11 @@ const openFile = filePath => {
 		}
 	)
 	.catch(error => ajaxLog('openFile', error));
-};
-
-const openPreviewedItem = () => window.open(document.querySelector('.preview').getAttribute('data-item-tempPath'));
-
-const renameItem = (oldName, newName, item) => {
+}
+function openPreviewedItem() {
+	window.open(document.querySelector('.preview').getAttribute('data-item-tempPath'));
+}
+function renameItem(oldName, newName, item) {
 	if(newName.length >= 1) {
 		if(oldName !== newName) {
 			ajaxPost(
@@ -236,9 +231,8 @@ const renameItem = (oldName, newName, item) => {
 	else {
 		item.value = oldName;
 	}
-};
-
-const downloadUnpreviewedItem = item => {
+}
+function downloadUnpreviewedItem(item) {
 	ajaxPost(
 		{
 			script: 'download-item.php',
@@ -258,20 +252,19 @@ const downloadUnpreviewedItem = item => {
 		}
 	)
 	.catch(error => ajaxLog('downloadUnpreviewedItem', error));
-};
-
-const downloadPreviewedItem = () => downloadItem(document.querySelector('.preview').getAttribute('data-item-tempPath'));
-
-const downloadItem = src => {
+}
+function downloadPreviewedItem() {
+	downloadItem(document.querySelector('.preview').getAttribute('data-item-tempPath'));
+}
+function downloadItem(src) {
 	let aElm = document.createElement('a');
 	aElm.setAttribute('download', '');
 	aElm.href = src;
 	aElm.click();
 	aElm.remove();
-};
-
-const removeItem = item => {
-	if(validConfirmClick() || validConfirmTouch()) {
+}
+function removeItem(item) {
+	if(validConfClick() || validConfTouch()) {
 		ajaxPost(
 			{
 				script: 'remove-item.php',
@@ -296,9 +289,8 @@ const removeItem = item => {
 		)
 		.catch(error => ajaxLog('removeItem', error));
 	}
-};
-
-const removePreviewedItem = () => {
+}
+function removePreviewedItem() {
 	removeItem(document.querySelector('.preview').getAttribute('data-item-sourcePath'));
 	unsetPreview();
-};
+}
