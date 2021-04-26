@@ -73,8 +73,10 @@ body
 a
 	color: inherit
 	cursor: pointer
+	text-decoration: none
 	&:hover
 		color: var(--hovered-color)
+		text-decoration: underline
 
 button
 	background-color: transparent
@@ -173,8 +175,7 @@ svg
 			width: 9px	
 		&:hover::before
 			background-color: var(--cirrus-color)
-		&__a:hover
-			text-decoration: underline
+		&__a
 			svg
 				fill: var(--hovered-color)
 		&__svg		
