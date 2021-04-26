@@ -49,8 +49,7 @@
 	const previewBoxElm = document.querySelector('.preview');
 	const previewItemElm = document.querySelector('.preview__item');
 	function setPreview(sourcePath, tempPath) {
-		previewBoxElm.setAttribute('data-item-tempPath', tempPath);
-		previewBoxElm.setAttribute('data-item-sourcePath', sourcePath);
+		previewBoxElm.setAttribute('data-item-path', tempPath);
 		previewBoxElm.classList.add('--visible');
 		document.querySelector('.start-trap').focus();
 	}
@@ -175,21 +174,18 @@
 		}
 	}
 	function barLive(value) {
+		const items = document.getElementsByClassName('list__item');
 		if(isPerformingSearch(value)) {
 			setBarButton('canButtonElm');
-			const items = document.getElementsByClassName('list__item');
 			for(const item of items) {
-				const itemName = item.getAttribute('data-name');
-				const itemType = item.getAttribute('data-type');
 				item.classList.remove('--visible');	
-				if(itemName.toLowerCase().indexOf(value.substr(1).toLowerCase()) >= 0) {
+				if(item.textContent.toLowerCase().indexOf(value.substr(1).toLowerCase()) >= 0) {
 					item.classList.add('--visible');
 				}
 			}
 			setCounters();
 		}
 		else {
-			const items = document.getElementsByClassName('list__item');
 			for(const item of items) {
 				item.classList.add('--visible');
 			}
@@ -207,7 +203,14 @@
 	}
 	function barSubmit(e) {
 		const value = e.target.elements[0].value;
-		if(isPerformingCreate(value)) {
+		if(isPerformingSearch(value)) {
+			const items = document.getElementsByClassName('list__item');
+			for(const item of items) {
+				item.classList.add('--visible');
+			}
+			bar.canButtonElm.classList.add('--hidden');
+		}
+		else if(isPerformingCreate(value)) {
 			createDirectory(value.substr(1));
 			bar.addButtonElm.classList.add('--hidden');
 		}
@@ -265,8 +268,6 @@
 			let itemElm;
 			itemElm = document.createElement('li');				
 			itemElm.setAttribute('class', 'list__item ' + item.type + ' --visible');
-			itemElm.setAttribute('data-name', item.label);
-			itemElm.setAttribute('data-type', item.type);		
 			// Allow to open the file or the directory (replace the next sibling in normal mode).
 			let aItemElm = document.createElement('a');
 			aItemElm.classList.add('list__item__a', 'non-editable');

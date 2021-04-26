@@ -108,8 +108,7 @@ if(isAuthenticated()) { ?>
 			<!-- Box for previewing content -->
 			<div 
 				class="preview" 
-				data-item-sourcePath=""
-				data-item-tempPath="">
+				data-item-path="">
 				<div>
 					<nav class="preview__nav">
 						<!-- Allow to open the previewed item in another tab. -->

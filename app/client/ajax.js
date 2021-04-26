@@ -194,7 +194,7 @@ function openFile(filePath) {
 	.catch(error => ajaxLog('openFile', error));
 }
 function openPreviewedItem() {
-	window.open(document.querySelector('.preview').getAttribute('data-item-tempPath'));
+	window.open(document.querySelector('.preview').getAttribute('data-item-path'));
 }
 function renameItem(oldName, newName, item) {
 	if(newName.length >= 1) {
@@ -254,7 +254,7 @@ function downloadUnpreviewedItem(item) {
 	.catch(error => ajaxLog('downloadUnpreviewedItem', error));
 }
 function downloadPreviewedItem() {
-	downloadItem(document.querySelector('.preview').getAttribute('data-item-tempPath'));
+	downloadItem(document.querySelector('.preview').getAttribute('data-item-path'));
 }
 function downloadItem(src) {
 	let aElm = document.createElement('a');
