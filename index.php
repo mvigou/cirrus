@@ -114,6 +114,7 @@ if(isAuthenticated()) { ?>
 					<nav class="preview__nav">
 						<!-- Allow to open the previewed item in another tab. -->
 						<button 
+							class="start-trap" 
 							onclick="openPreviewedItem()"
 							title="<?php echo $lab->bt->openItemElsewhere; ?>">
 							<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>
@@ -125,7 +126,10 @@ if(isAuthenticated()) { ?>
 							<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>
 						</button>
 						<!-- Close the preview. -->
-						<button onclick="unsetPreview()" title="<?php echo $lab->bt->close; ?>">
+						<button 
+							class="end-trap" 
+							onclick="unsetPreview()" 
+							title="<?php echo $lab->bt->close; ?>">
 							<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
 						</button>
 					</nav>
@@ -167,15 +171,6 @@ if(isAuthenticated()) { ?>
 			<?php if(hasWritingRights()) { ?>
 				document.body.classList.add('--publisher');
 			<?php } ?>
-			// Events requiring the event object.
-			const emptyRecycleBt = document.getElementById('empty-recycle');
-			emptyRecycleBt.ontouchstart = e => watchConfTouch('start', e);
-			emptyRecycleBt.ontouchmove = () => unsetPopup();
-			emptyRecycleBt.ontouchend = e => {
-				watchConfTouch('end', e); 
-				removeItem('RECYCLE');
-			};
-			document.querySelector('.bar__form').onsubmit = e => barSubmit(e);
 			// Reload user preferences.
 			if(localStorage.getItem('mode') === 'dark') {
 				toDarkTheme();

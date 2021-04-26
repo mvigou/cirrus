@@ -28,6 +28,13 @@
 			toLightTheme():
 			toDarkTheme();
 	}
+	const emptyRecycleBt = document.getElementById('empty-recycle');
+	emptyRecycleBt.ontouchstart = e => watchConfTouch('start', e);
+	emptyRecycleBt.ontouchmove = () => unsetPopup();
+	emptyRecycleBt.ontouchend = e => {
+		watchConfTouch('end', e); 
+		removeItem('RECYCLE');
+	};
 
 /* ### Manage modes ### */
 
@@ -37,7 +44,7 @@
 			document.body.classList.add('--edit-mode');
 	}
 
-/* ### Manage preview */
+	/* ### Manage preview */
 
 	const previewBoxElm = document.querySelector('.preview');
 	const previewItemElm = document.querySelector('.preview__item');
@@ -45,6 +52,7 @@
 		previewBoxElm.setAttribute('data-item-tempPath', tempPath);
 		previewBoxElm.setAttribute('data-item-sourcePath', sourcePath);
 		previewBoxElm.classList.add('--visible');
+		document.querySelector('.start-trap').focus();
 	}
 	function unsetPreview() {
 		previewItemElm.innerHTML = '';
@@ -64,6 +72,25 @@
 		previewItemElm.appendChild(iframeElm);
 		setPreview(sourcePath, tempPath);
 	}
+	document.onkeydown = e => {
+		if(e.code === 'Escape') {
+			unsetPreview();
+		}
+		if(e.code === 'Tab') {
+			if(e.shiftKey) {		
+				if(e.target.classList.contains('start-trap')) {
+					document.querySelector('.end-trap').focus();
+					e.preventDefault();
+				}
+			}
+			else {
+				if(e.target.classList.contains('end-trap')) {
+					document.querySelector('.start-trap').focus();
+					e.preventDefault();
+				}
+			}
+		}
+	};
 
 /* ### Manage popup ### */
 
@@ -191,6 +218,7 @@
 		e.target.reset();
 		e.preventDefault();
 	}
+	document.querySelector('.bar__form').onsubmit = e => barSubmit(e);
 
 /* ### Manage structure ### */
 
