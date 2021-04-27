@@ -253,20 +253,49 @@
 		const itemListElm = document.querySelector('.list');
 		itemListElm.innerHTML = '';
 		for(const item of items) {
+			// Item main container.
+			let itemElm;
+			itemElm = document.createElement('li');	
 			switch(item.type) {
 				case 'file':
 					item.path = dir + '/' + item.label;
+					itemElm.ondragstart = e => {			
+						e.dataTransfer.dropEffect = 'move';
+						e.dataTransfer.setData('label', item.label);
+						e.dataTransfer.setData('path', item.path);
+					};
 					break;
 				case 'subdir':
 					item.path = dir + '/' + item.label;
+					itemElm.ondragstart = e => {
+						e.dataTransfer.dropEffect = 'move';
+						e.dataTransfer.setData('label', item.label);
+						e.dataTransfer.setData('path', item.path);
+					};
+					itemElm.ondragover = e => {
+						e.preventDefault();
+					};
+					itemElm.ondrop = e => {
+						const fromPath = e.dataTransfer.getData('path');
+						const toPath = item.path + '/' + e.dataTransfer.getData('label');
+						moveItem(fromPath, toPath);
+						e.preventDefault();
+					};
 					break;
 				case 'parent':
 					item.path = dir.substr(0, dir.lastIndexOf('/'));
+					itemElm.setAttribute('draggable', false);
+					itemElm.ondragover = e => {
+						e.preventDefault();
+					};
+					itemElm.ondrop = e => {
+						const fromPath = e.dataTransfer.getData('path');
+						const toPath = item.path + '/' + e.dataTransfer.getData('label');
+						moveItem(fromPath, toPath);
+						e.preventDefault();
+					};
 					break;
-			}
-			// Item main container.
-			let itemElm;
-			itemElm = document.createElement('li');				
+			}		
 			itemElm.setAttribute('class', 'list__item ' + item.type + ' --visible');
 			// Allow to open the file or the directory (replace the next sibling in normal mode).
 			let aItemElm = document.createElement('a');

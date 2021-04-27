@@ -232,6 +232,31 @@ function renameItem(oldName, newName, item) {
 		item.value = oldName;
 	}
 }
+function moveItem(fromPath, toPath) {
+	ajaxPost(
+		{
+			script: 'move-item.php',
+			args: [
+				{ 
+					name: 'fromPath', 
+					value: fromPath
+				},
+				{ 
+					name: 'toPath', 
+					value: toPath 
+				},
+			]
+		}
+	)
+	.then(
+		resp => {
+			if(resp.success) {
+				browseDirectory(localStorage.getItem('currentDir'));
+			}
+		}
+	)
+	.catch(error => ajaxLog('moveItem', error));
+}
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
 		{

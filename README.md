@@ -60,11 +60,11 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 ### Opérations sur les dossiers
 
 * (TODO) Copie.
-* (TODO) Déplacement.
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
 * Accès au contenu.
 * Création groupée.
 * Création simple.
+* Déplacement via drag n drop.
 * Renommage.
 * Suppression définitive (depuis corbeille).
 * Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de dossiers de même nom).
@@ -74,12 +74,12 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 * (TODO) Améliorer le support des documents en prévisualisation.
 * (TODO) Copie.
-* (TODO) Déplacement.
+* Déplacement via drag n drop.
 * Mise en ligne groupée.
 * Mise en ligne simple.
-* Renommage automatique à la mise en ligne en cas de doublon pour prévenir les écrasements.
 * Prévisualisation des fichiers de type image et pdf dans l'onglet courant.
 * Prévisualisation.
+* Renommage automatique à la mise en ligne en cas de doublon pour prévenir les écrasements.
 * Renommage.
 * Suppression définitive (depuis corbeille).
 * Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de fichiers de même nom).
