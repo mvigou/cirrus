@@ -110,9 +110,8 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Alerte de nouveau contenu pour rafraichissement chez les différents utilisateurs connectés en même temps ?
 * (TODO) Intégrer une gestion de license ? (limitation des fonctionnalité ? Message toutes les X actions ?)
 * (TODO) Journaliser les erreurs de connexion.
-* (TODO) Mettre en place une purge automatique du journal d'erreur.
 * (TODO) Mise en cache à voir / Service worker ?
 * Actions dites "dangereuses" gérées de façon novatrice (maintien du clic / de la pression).
-* Journalisation des erreurs dans un fichier dédié (à améliorer).
+* Journalisation des erreurs dans un fichier JSON automatiquement purgé lorsqu'il dépasse 50Ko.
 * Suivi de la progression de mise en ligne de fichier(s).
 * Thème clair / Thème sombre.

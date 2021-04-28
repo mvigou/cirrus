@@ -29,7 +29,7 @@ function ajaxPost(req) {
 									resolve(parsedResp);
 								}
 								catch(e) {
-									reject("The application was expecting JSON, but the server returned this: " + resp);
+									reject(resp);
 								}	
 							}
 						);
