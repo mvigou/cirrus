@@ -59,9 +59,9 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Opérations sur les dossiers
 
+* (TODO) Copie.
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
 * Accès au contenu.
-* Copie via drag n drop.
 * Création groupée.
 * Création simple.
 * Déplacement via drag n drop.

@@ -271,7 +271,11 @@
 						e.dataTransfer.setData('path', item.path);
 					};
 					itemElm.ondragover = e => {
+						itemElm.classList.add('--hovered');
 						e.preventDefault();
+					};
+					itemElm.ondragleave = e => {
+						itemElm.classList.remove('--hovered');
 					};
 					itemElm.ondrop = e => {
 						const fromPath = e.dataTransfer.getData('path');
@@ -286,7 +290,11 @@
 					item.path = dir.substr(0, dir.lastIndexOf('/'));
 					itemElm.setAttribute('draggable', false);
 					itemElm.ondragover = e => {
+						itemElm.classList.add('--hovered');
 						e.preventDefault();
+					};
+					itemElm.ondragleave = e => {
+						itemElm.classList.remove('--hovered');
 					};
 					itemElm.ondrop = e => {
 						const fromPath = e.dataTransfer.getData('path');
