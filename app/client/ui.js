@@ -259,8 +259,7 @@
 			switch(item.type) {
 				case 'file':
 					item.path = dir + '/' + item.label;
-					itemElm.ondragstart = e => {			
-						e.dataTransfer.dropEffect = 'move';
+					itemElm.ondragstart = e => {		
 						e.dataTransfer.setData('label', item.label);
 						e.dataTransfer.setData('path', item.path);
 					};
@@ -268,7 +267,6 @@
 				case 'subdir':
 					item.path = dir + '/' + item.label;
 					itemElm.ondragstart = e => {
-						e.dataTransfer.dropEffect = 'move';
 						e.dataTransfer.setData('label', item.label);
 						e.dataTransfer.setData('path', item.path);
 					};
@@ -278,7 +276,9 @@
 					itemElm.ondrop = e => {
 						const fromPath = e.dataTransfer.getData('path');
 						const toPath = item.path + '/' + e.dataTransfer.getData('label');
-						moveItem(fromPath, toPath);
+						e.ctrlKey ?
+							copyItem(fromPath, toPath):
+							moveItem(fromPath, toPath);
 						e.preventDefault();
 					};
 					break;
@@ -291,7 +291,9 @@
 					itemElm.ondrop = e => {
 						const fromPath = e.dataTransfer.getData('path');
 						const toPath = item.path + '/' + e.dataTransfer.getData('label');
-						moveItem(fromPath, toPath);
+						e.ctrlKey ?
+							copyItem(fromPath, toPath):
+							moveItem(fromPath, toPath);
 						e.preventDefault();
 					};
 					break;

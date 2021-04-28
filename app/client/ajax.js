@@ -257,6 +257,31 @@ function moveItem(fromPath, toPath) {
 	)
 	.catch(error => ajaxLog('moveItem', error));
 }
+function copyItem(fromPath, toPath) {
+	ajaxPost(
+		{
+			script: 'copy-item.php',
+			args: [
+				{ 
+					name: 'fromPath', 
+					value: fromPath
+				},
+				{ 
+					name: 'toPath', 
+					value: toPath 
+				},
+			]
+		}
+	)
+	.then(
+		resp => {
+			if(resp.success) {
+				browseDirectory(localStorage.getItem('currentDir'));
+			}
+		}
+	)
+	.catch(error => ajaxLog('copyItem', error));
+}
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
 		{
