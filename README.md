@@ -94,16 +94,18 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Création et suppression de liens d'inscription utilisateur the type "visualiseur".
 * Création et suppression de liens d'inscription utilisateur the type "éditeur".
 * Lister les comptes existants.
+* Lecture sécurisée du contenu de la journalisation des erreurs.
+* Purge du contenu des journaux d'erreurs.
 
 ### Sécurité
 
-* (TODO) Bloquer l'exécution de certains types de fichiers mis en ligne (PHP, par exemple). 
-* Accès direct au contenu via URL impossible (protégé via .htaccess / hors dossier "datas/temp").
+* Exécution des fichiers limitées à certains types de fichiers dits "sûrs".
+* Accès direct au contenu du dossier "datas" par URL impossible (protégé via .htaccess / hors dossier "datas/temp").
 * Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
 * Accès utilisateur soumis à authentification préalable.
 * Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
-* Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés.
-* Purge automatique du dossier temporaire à chaque authentification réussie.
+* Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés ET/OU à chaque authentification réussie.
+* Purge automatique du fichier de journalisation des erreurs dès qu'il atteint la taille de 50Ko.
 
 ### Divers
 

@@ -45,7 +45,7 @@ function ajaxPost(req) {
 function ajaxLog(origin, log) {
 	ajaxPost(
 		{
-			script: 'log.php',
+			script: 'create-log.php',
 			args: [
 				{ 
 					name: 'origin', 

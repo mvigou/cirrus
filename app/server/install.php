@@ -10,6 +10,9 @@ if(!is_dir(DATAS)) {
 	mkdir(RECYCLE_DIR);
 	mkdir(TEMP_DIR);
 	mkdir(LOGS_DIR);
+
+	touch(LOGS_DIR . '/app.json');
+	file_put_contents(LOGS_DIR . '/app.json', '[]');
 	
 	mkdir(OWNERS_DIR, 0777, true);
 	mkdir(PUBLISHERS_DIR);

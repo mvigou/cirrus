@@ -136,3 +136,44 @@ function browseUsers() {
 	)
 	.catch(error => ajaxLog('browseUsers', error));
 }
+function browseLogs() {
+	ajaxPost(
+		{ 
+			script: 'browse-logs.php'
+		}
+	)
+	.then( 
+		resp => {
+			if(resp.success) {
+				const logs = JSON.parse(resp.content);
+				if(logs.length > 0) {
+					for(const log of logs) {
+						writeMessBox(
+							`<b>IN</b> -> ${log.in} | <b>ON</b> -> ${log.on} | <b>BY</b> -> ${log.by}<br/>
+							<i>${log.log}</i>`
+						);
+					}
+				}
+				else {
+					writeMessBox(lab.mess.empty);
+				}
+			}
+		}
+	)
+	.catch(error => ajaxLog('browseLogs', error));
+}
+function removeLogs() {
+	ajaxPost(
+		{ 
+			script: 'remove-logs.php'
+		}
+	)
+	.then( 
+		resp => {
+			if(resp.success) {
+				writeMessBox(lab.mess.success);
+			}
+		}
+	)
+	.catch(error => ajaxLog('removeLogs', error));
+}

@@ -3,5 +3,6 @@ Options -Indexes
 RewriteEngine On
 RewriteRule datas/auth "-" [F]
 RewriteRule datas/content "-" [F]
+RewriteRule datas/logs "-" [F]
 RewriteRule datas/recycle "-" [F]
 RewriteRule datas/users "-" [F]
