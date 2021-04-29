@@ -62,6 +62,7 @@ if(isAuthenticated()) { ?>
 						<label for="bar__input"><?php echo $lab->label->bar; ?></label>
 						<input 
 							id="bar__input"
+							class="publisher-ft"
 							oninput="barLive(this.value)"
 							title="<?php echo $lab->label->bar; ?>"
 						/>
