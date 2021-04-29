@@ -63,9 +63,9 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Mettre en ligne un ou plusieurs dossiers à la fois.
 * Accès au contenu.
 * Création groupée.
-* Création simple.
+* Création unitaire.
 * Déplacement via drag n drop.
-* Renommage.
+* Renommage manuel.
 * Suppression définitive (depuis corbeille).
 * Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de dossiers de même nom).
 * Téléchargement (format compressé Zip).
@@ -76,26 +76,26 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * Copie via drag n drop.
 * Déplacement via drag n drop.
 * Mise en ligne groupée.
-* Mise en ligne simple.
-* Prévisualisation des fichiers de type image et pdf dans l'onglet courant.
-* Prévisualisation.
+* Mise en ligne unitaire.
+* Prévisualisation des fichiers de type image et pdf dans l'onglet courant ou dans un nouvel onglet.
 * Renommage automatique à la mise en ligne en cas de doublon pour prévenir les écrasements.
-* Renommage.
+* Renommage manuel.
 * Suppression définitive (depuis corbeille).
 * Suppression vers corbeille (renommage automatique du contenu si nécessaire pour éviter l'écrasement de fichiers de même nom).
 * Téléchargement.
 
 ### Opérations d'administration
 
-* (TODO) Suppression de comptes (action propriétaire)
 * Création autonome de comptes utilisateur de type "visualiseur" sur invitation.
 * Création autonome de comptes utilisateur de type "éditeur" sur invitation.
 * Création d'un compte "propriétaire" automatique à l'installation. 
 * Création et suppression de liens d'inscription utilisateur the type "visualiseur".
 * Création et suppression de liens d'inscription utilisateur the type "éditeur".
-* Lister les comptes existants.
 * Lecture sécurisée du contenu de la journalisation des erreurs.
+* Lister les comptes existants.
 * Purge du contenu des journaux d'erreurs.
+* Suppression des comptes utilisateurs par le propriétaire.
+* Transformation des comptes utilisateurs (visualiseur vers éditeur et inversement) par le propriétaire.
 
 ### Sécurité
 

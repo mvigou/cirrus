@@ -1,7 +1,7 @@
 <?php require_once('./config.php');
 
-if(isset($_POST['role'])) {
-	if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && hasOwnerRights()) {
+	if(isset($_POST['role'])) {
 		$role = $_POST['role'];
 		if($role === 'publisher') {
 			$authsDir = SIGN_UP_PUBLISHER_AUTH_DIR;

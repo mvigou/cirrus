@@ -1,7 +1,7 @@
 <?php require_once('./config.php');
 
-if(isset($_POST['role'])) {
-	if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && hasOwnerRights()) {
+	if(isset($_POST['role'])) {
 		$role = $_POST['role'];
 		if($role === 'publisher') {
 			$authsDir = SIGN_UP_PUBLISHER_AUTH_DIR;
@@ -11,17 +11,10 @@ if(isset($_POST['role'])) {
 		}
 		if(isset($authsDir)) {
 			$auths = array_diff(scandir($authsDir), array('.', '..'));
-			$state = '';
-			if(count($auths) > 0) {
-				foreach($auths as $auth) {
-					unlink($authsDir . '/' . $auth);
-				}
-				$state = "success";
+			foreach($auths as $auth) {
+				unlink($authsDir . '/' . $auth);
 			}
-			else {
-				$state = "empty";
-			}
-			echo json_encode(array('state' => $state));
+			echo json_encode(array('success' => true));
 		}
 	}
 }

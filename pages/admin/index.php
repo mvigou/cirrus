@@ -20,90 +20,59 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 				<h1>cirrus | <span><?php echo $lab->title->page; ?></span></h1>
 			</header>
 			<main class="admin">
-				<!-- box messages -->
-				<aside>
-					<button onclick="emptyMessBox()">
+				<!-- list, create and remove publisher invitations -->
+				<details ontoggle="browseInvits('publisher')">
+					<summary><?php echo $lab->title->manPubInvit; ?></summary>
+					<ul class="publisher__list"></ul>
+					<button onclick="createInvit('publisher')">
+						<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+						<?php echo $lab->bt->addInvit; ?>
+					</button>
+					<button onclick="removeInvits('publisher')">
 						<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-						<?php echo $lab->bt->emptyMessBox; ?>
+						<?php echo $lab->bt->rmInvits; ?>
 					</button>
-					<div 
-						class="admin__mess__box"
-						data-mess-empty="<?php echo $lab->mess->empty; ?>"
-						data-mess-notAJSON="<?php echo $lab->mess->notAJSON; ?>"
-						data-mess-success="<?php echo $lab->mess->success; ?>">
-					</div>
-				</aside>
-				<!-- list, create, and delete publisher invitations -->
-				<section>
-					<h2><?php echo $lab->title->invitations; ?></h2>
-					<details>
-						<summary><?php echo $lab->title->publishers; ?></summary>
-						<button 
-							onclick="createInvit('publisher')">
-							<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-							<?php echo $lab->bt->createInvits; ?>
-						</button>
-						<button 
-							onclick="browseInvits('publisher')">
-							<svg viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/></svg>
-							<?php echo $lab->bt->browseInvits; ?>
-						</button>
-						<button 
-							onclick="removeInvits('publisher')">
-							<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-							<?php echo $lab->bt->removeInvits; ?>
-						</button>
-					</details>
-					<!-- list, create, and delete viewer invitations -->
-					<details>
-						<summary><?php echo $lab->title->viewers; ?></summary>
-						<button 
-							onclick="createInvit('viewer')">
-							<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-							<?php echo $lab->bt->createInvits; ?>
-						</button>
-						<button 
-							onclick="browseInvits('viewer')">
-							<svg viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/></svg>
-							<?php echo $lab->bt->browseInvits; ?>
-						</button>
-						<button 
-							onclick="removeInvits('viewer')">
-							<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-							<?php echo $lab->bt->removeInvits; ?>
-						</button>
-					</details>
-				</section>
-				<!-- list accounts -->
-				<section>
-					<h2><?php echo $lab->title->users; ?></h2>
-					<button 
-						onclick="browseUsers()">
-						<svg viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/></svg>
-						<?php echo $lab->bt->browseUsers; ?>
+				</details>
+				<!-- list, create and remove viewer invitations -->
+				<details ontoggle="browseInvits('viewer')">
+					<summary><?php echo $lab->title->manViewInvit; ?></summary>
+					<ul class="viewer__list"></ul>
+					<button onclick="createInvit('viewer')">
+						<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+						<?php echo $lab->bt->addInvit; ?>
 					</button>
-				</section>
+					<button onclick="removeInvits('viewer')">
+						<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+						<?php echo $lab->bt->rmInvits; ?>
+					</button>
+				</details>
+				<!-- list, change and remove accounts -->
+				<details ontoggle="browseUsers()">
+					<summary><?php echo $lab->title->manUsers; ?></summary>
+					<ul class="users__list"></ul>
+				</details>
 				<!-- list and clear logs -->
-				<section>
-					<h2><?php echo $lab->title->logs; ?></h2>
-					<button 
-						onclick="browseLogs()">
-						<svg viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/></svg>
-						<?php echo $lab->bt->browseLogs; ?>
-					</button>
+				<details ontoggle="browseLogs()">
+					<summary><?php echo $lab->title->manLogs; ?></summary>
+					<ul class="logs__list"></ul>
 					<button 
 						onclick="removeLogs()">
 						<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-						<?php echo $lab->bt->removeLogs; ?>
+						<?php echo $lab->bt->rmLogs; ?>
 					</button>
-				</section>
+				</details>
 			</main>
-			<script src="./script.js"></script>
+			<script src="./ajax.js"></script>
+			<script src="./ui.js"></script>
 			<script>
 				const lab = {
+					bt: {
+						removeUser: "<?php echo $lab->bt->rmUser; ?>",
+						setPublisher: "<?php echo $lab->bt->setPublisher; ?>",
+						setViewer: "<?php echo $lab->bt->setViewer; ?>"
+					},
 					mess: {
-						empty: "<?php echo $lab->mess->empty; ?>",
-						success: "<?php echo $lab->mess->success; ?>"
+						confirm: "<?php echo $lab->mess->confRemoveUser; ?>",
 					}
 				};
 			</script>

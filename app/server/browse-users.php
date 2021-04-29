@@ -3,10 +3,6 @@
 if(isAuthenticated() && hasOwnerRights()) {
 	$userProfiles = array(
 		array(
-			'role' => 'owner',
-			'dir' => OWNERS_DIR
-		), 
-		array(
 			'role' => 'publisher',
 			'dir' => PUBLISHERS_DIR
 		), 
@@ -15,19 +11,24 @@ if(isAuthenticated() && hasOwnerRights()) {
 			'dir' => VIEWERS_DIR
 		)
 	);
-	$content = '';
+	$users = array();
 	foreach($userProfiles as $userProfile) {
 		$usersIn = array_diff(scandir($userProfile['dir']), array('.', '..'));
 		if(count($usersIn) > 0) {
 			foreach($usersIn as $userIn) {
-				$content .= '(' . $userProfile['role'] . ') ' . $userIn . '<br/>'; 
+				array_push(
+					$users, array(
+						"role" => $userProfile['role'],
+						"name" => $userIn
+					)
+				);
 			}
 		}
 	}
 	echo json_encode (
 		array(
 			'success' => true,
-			'content' => $content
+			'content' => $users
 		)
 	);
 }

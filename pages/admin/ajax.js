@@ -1,16 +1,7 @@
 "use strict";
 
-const ui = { messBox: document.querySelector('.admin__mess__box') };
-
-function writeMessBox(html) {
-	ui.messBox.innerHTML += `<p>${html}</p>`;
-	ui.messBox.scrollTop = ui.messBox.scrollHeight;
-}
-function emptyMessBox() {
-	ui.messBox.innerHTML = '';
-} 
 function ajaxLog(origin, log){
-	writeMessBox('### ' + origin + ' ### ' + log);
+	console.log('here');
 }
 function ajaxPost(req) {
 	return new Promise(
@@ -65,12 +56,7 @@ function browseInvits(role) {
 	.then( 
 		resp => {
 			if(resp.success) {
-				if(resp.content.length > 0) {
-					writeMessBox(resp.content);
-				}
-				else {
-					writeMessBox(lab.mess.empty);
-				}
+				setInvits(role, resp.content);
 			}
 		}
 	)
@@ -91,7 +77,7 @@ function createInvit(role) {
 	.then(
 		resp => {
 			if(resp.success) {
-				writeMessBox(resp.content);
+				browseInvits(role);
 			}
 		}
 	)
@@ -111,11 +97,8 @@ function removeInvits(role) {
 	)
 	.then( 
 		resp => {
-			if(resp.state === 'success') {
-				writeMessBox(lab.mess.success);
-			}
-			else if(resp.state === 'empty') {
-				writeMessBox(lab.mess.empty);
+			if(resp.success) {
+				browseInvits(role);
 			}
 		}
 	)
@@ -130,11 +113,67 @@ function browseUsers() {
 	.then( 
 		resp => {
 			if(resp.success) {
-				writeMessBox(resp.content);
+				setUsers(resp.content);
 			}
 		}
 	)
 	.catch(error => ajaxLog('browseUsers', error));
+}
+function moveUser(userName, fromRole, toRole) {
+	ajaxPost(
+		{ 
+			script: 'move-user.php',
+			args: [
+				{
+					name: 'user-name',
+					value: userName
+				},
+				{
+					name: 'from-role',
+					value: fromRole
+				},
+				{
+					name: 'to-role',
+					value: toRole
+				}
+			]
+		}
+	)
+	.then( 
+		resp => {
+			if(resp.success) {
+				browseUsers();
+			}
+		}
+	)
+	.catch(error => ajaxLog('moveUser', error));
+}
+function removeUser(userName, userRole) {
+	if(confirm(lab.mess.confirm + userName)) {
+		ajaxPost(
+			{ 
+				script: 'remove-user.php',
+				args: [
+					{
+						name: 'user-name',
+						value: userName
+					},
+					{
+						name: 'user-role',
+						value: userRole
+					}
+				]
+			}
+		)
+		.then( 
+			resp => {
+				if(resp.success) {
+					browseUsers();
+				}
+			}
+		)
+		.catch(error => ajaxLog('removeUser', error));
+	}
 }
 function browseLogs() {
 	ajaxPost(
@@ -145,18 +184,7 @@ function browseLogs() {
 	.then( 
 		resp => {
 			if(resp.success) {
-				const logs = JSON.parse(resp.content);
-				if(logs.length > 0) {
-					for(const log of logs) {
-						writeMessBox(
-							`<b>IN</b> -> ${log.in} | <b>ON</b> -> ${log.on} | <b>BY</b> -> ${log.by}<br/>
-							<i>${log.log}</i>`
-						);
-					}
-				}
-				else {
-					writeMessBox(lab.mess.empty);
-				}
+				setLogs(JSON.parse(resp.content));
 			}
 		}
 	)
@@ -171,7 +199,7 @@ function removeLogs() {
 	.then( 
 		resp => {
 			if(resp.success) {
-				writeMessBox(lab.mess.success);
+				browseLogs();
 			}
 		}
 	)

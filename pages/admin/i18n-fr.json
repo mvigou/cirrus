@@ -1,23 +1,20 @@
 {
 	"bt": {
-		"browseLogs": "Afficher le journal d'erreurs de l'application.",
-		"browseInvits": "Afficher les liens actifs",
-		"browseUsers": "Afficher les utilisateurs enregistrés",
-		"createInvits": "Générer un lien d'inscription à usage unique",
-		"emptyMessBox": "Vider la boîte de messages",
-		"removeInvits": "Tout supprimer",
-		"removeLogs": "Purger tous les journaux"
+		"addInvit": "Générer un lien d'inscription à usage unique",
+		"rmInvits": "Supprimer les invitations",
+		"rmLogs": "Purger les journaux",
+		"rmUser": "Supprimer",
+		"setPublisher": "Changer en éditeur",
+		"setViewer": "Changer en visualiseur"
 	},
 	"mess": {
-		"empty": "Aucun contenu de ce type.",
-		"success": "Action effectuée avec succès."
+		"confRemoveUser": "Supprimer le compte : "
 	},
 	"title": {
-		"invitations": "Invitations",
-		"logs": "Journaux",
-		"page": "administration",
-		"publishers": "Editeurs (accès, ajout et suppression de contenu)",
-		"users": "Utilisateurs",
-		"viewers": "Visualiseurs (accès au contenu)"
+		"manLogs": "Journaux",
+		"manPubInvit": "Invitations \"éditeur\" (accès, ajout et suppression de contenu)",
+		"manUsers": "Gérer les utilisateurs",
+		"manViewInvit": "Invitations \"visualiseur\" (accès au contenu)",
+		"page": "administration"
 	}
 }
