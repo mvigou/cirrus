@@ -2,16 +2,17 @@
 
 const ui = { messBox: document.querySelector('.admin__mess__box') };
 
-const writeMessBox = html => {
+function writeMessBox(html) {
 	ui.messBox.innerHTML += `<p>${html}</p>`;
 	ui.messBox.scrollTop = ui.messBox.scrollHeight;
-};
-
-const emptyMessBox = () => ui.messBox.innerHTML = '';
-
-const ajaxLog = (origin, log) => writeMessBox('### ' + origin + ' ### ' + log);
-
-const ajaxPost = (req) => {
+}
+function emptyMessBox() {
+	ui.messBox.innerHTML = '';
+} 
+function ajaxLog(origin, log){
+	writeMessBox('### ' + origin + ' ### ' + log);
+}
+function ajaxPost(req) {
 	return new Promise(
 		(resolve, reject) => {
 			let formData = new FormData();
@@ -36,7 +37,7 @@ const ajaxPost = (req) => {
 									resolve(parsedResp);
 								}
 								catch(e) {
-									reject(lab.mess.notAJSON + resp);
+									reject(resp);
 								}	
 							}
 						)
@@ -48,9 +49,8 @@ const ajaxPost = (req) => {
 			);
 		}
 	);
-};
-
-const browseInvits = role => {
+}
+function browseInvits(role) {
 	ajaxPost(
 		{
 			script: 'browse-invits.php',
@@ -75,9 +75,8 @@ const browseInvits = role => {
 		}
 	)
 	.catch(error => ajaxLog('browseInvits', error));
-}
-
-const createInvit = role => {
+};
+function createInvit(role) {
 	ajaxPost(
 		{
 			script: 'create-invit.php',
@@ -97,9 +96,8 @@ const createInvit = role => {
 		}
 	)
 	.catch(error => ajaxLog('createInvit', error));
-};
-
-const removeInvits = role => {
+}
+function removeInvits(role) {
 	ajaxPost(
 		{
 			script: 'remove-invits.php',
@@ -122,9 +120,8 @@ const removeInvits = role => {
 		}
 	)
 	.catch(error => ajaxLog('removeInvits', error));
-};
-
-const browseUsers = () => {
+}
+function browseUsers() {
 	ajaxPost(
 		{ 
 			script: 'browse-users.php' 
@@ -138,4 +135,4 @@ const browseUsers = () => {
 		}
 	)
 	.catch(error => ajaxLog('browseUsers', error));
-};
+}

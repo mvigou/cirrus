@@ -96,8 +96,7 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 				const lab = {
 					mess: {
 						empty: "<?php echo $lab->mess->empty; ?>",
-						success: "<?php echo $lab->mess->success; ?>",
-						notAJSON: "<?php echo $lab->mess->notAJSON; ?>"
+						success: "<?php echo $lab->mess->success; ?>"
 					}
 				};
 			</script>

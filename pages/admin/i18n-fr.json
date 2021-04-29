@@ -8,8 +8,7 @@
 	},
 	"mess": {
 		"empty": "Aucun contenu de ce type.",
-		"success": "Action effectuée avec succès.",
-		"notAJSON": "L'application attendait du JSON, mais le serveur a renvoyé ceci : "
+		"success": "Action effectuée avec succès."
 	},
 	"title": {
 		"invitations": "Invitations",
