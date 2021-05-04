@@ -233,29 +233,31 @@ function renameItem(oldName, newName, item) {
 	}
 }
 function moveItem(fromPath, toPath) {
-	ajaxPost(
-		{
-			script: 'move-item.php',
-			args: [
-				{ 
-					name: 'fromPath', 
-					value: fromPath
-				},
-				{ 
-					name: 'toPath', 
-					value: toPath 
-				},
-			]
-		}
-	)
-	.then(
-		resp => {
-			if(resp.success) {
-				browseDirectory(localStorage.getItem('currentDir'));
+	if(toPath.indexOf(fromPath) === -1) {
+		ajaxPost(
+			{
+				script: 'move-item.php',
+				args: [
+					{ 
+						name: 'fromPath', 
+						value: fromPath
+					},
+					{ 
+						name: 'toPath', 
+						value: toPath 
+					},
+				]
 			}
-		}
-	)
-	.catch(error => ajaxLog('moveItem', error));
+		)
+		.then(
+			resp => {
+				if(resp.success) {
+					browseDirectory(localStorage.getItem('currentDir'));
+				}
+			}
+		)
+		.catch(error => ajaxLog('moveItem', error));
+	}
 }
 function copyItem(fromPath, toPath) {
 	ajaxPost(
