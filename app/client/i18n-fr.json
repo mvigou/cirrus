@@ -23,7 +23,6 @@
 	},
 	"mess": {
 		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
-		"itemRenamed": " a été renommé car un autre fichier de même nom existe déjà.",
 		"error": "Une erreur est survenue pendant le traitement de cette action."
 	}
 }

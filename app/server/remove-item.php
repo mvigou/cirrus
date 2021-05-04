@@ -24,8 +24,14 @@ function moveToRecycle($elm) {
 	$fileName = array_slice(explode('/', $elm), -1)[0];
 	$fromPath = $elm;
 	$toPath = RECYCLE_DIR . '/' . $fileName;
-	while(is_file($toPath) || is_dir($toPath)) {
-		$toPath .= '-copy';
+	if(is_file($toPath) || is_dir($toPath)) {
+		$basePath = $toPath; 
+		$i = 1;
+		while(is_file($toPath) || is_dir($toPath)) {
+			$toPath = $basePath;
+			$toPath .= '(' . $i . ')';
+			$i++;
+		}
 	}
 	rename($fromPath, $toPath);
 }

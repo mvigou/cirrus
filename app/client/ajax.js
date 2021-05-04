@@ -139,9 +139,6 @@ function uploadItems() {
 			req.onload = () => {
 				const resp = JSON.parse(req.responseText);
 				if(resp.success) {
-					if(resp.content.itemRenamed == true) {
-						setPopup('warning', file.name + lab.mess.itemRenamed);
-					}
 					i++;
 					if(inputElm.files.length > i) {
 						send(inputElm.files[i]);

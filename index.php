@@ -164,7 +164,6 @@ if(isAuthenticated()) { ?>
 				mess: {
 					confirmPress: "<?php echo $lab->mess->confirmPress; ?>",
 					error: "<?php echo $lab->mess->error; ?>",
-					itemRenamed: "<?php echo $lab->mess->itemRenamed; ?>"
 				}
 			};
 			// Unhide publisher features.
