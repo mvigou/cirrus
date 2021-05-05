@@ -2,11 +2,15 @@
 	"bt": {
 		"confirm": "Valider"
 	},
-	"page": {
-		"title": "se connecter"
+	"error": {
+		"userNotFound": "Il n'y a aucun utilisateur de ce nom.",
+		"wrongPassword": "Le mot de passe saisi ne correspond pas à cet utilisateur."
 	},
 	"label": {
 		"userName": "Nom d'utilisateur",
 		"userPass": "Mot de passe"
+	},
+	"page": {
+		"title": "se connecter"
 	}
 }

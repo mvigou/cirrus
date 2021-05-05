@@ -2,8 +2,8 @@
 	"bt": {
 		"confirm": "Valider"
 	},
-	"page": {
-		"title": "créer un compte"
+	"error": {
+		"userExists": "Impossible : ce nom d'utilisateur est déjà pris."
 	},
 	"label": {
 		"userName": "Nom d'utilisateur",
@@ -11,5 +11,8 @@
 		"userPass": "Mot de passe",
 		"userPassFormat": "8 à 24 lettres, chiffres et/ou . ? ! - _ * + = / | \\ ( ) [ ] # $ @ %",
 		"userPassConf": "Confirmation mot de passe "
+	},
+	"page": {
+		"title": "créer un compte"
 	}
 }

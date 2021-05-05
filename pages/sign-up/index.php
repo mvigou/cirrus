@@ -28,6 +28,9 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 						<label>
 							<?php echo $lab->label->userName; ?>
 							<span><?php echo $lab->label->userNameFormat; ?></span>
+							<?php if(isset($_GET['error']) && $_GET['error'] === 'user-exists') {
+								echo '<p style="color:red">' . $lab->error->userExists . '</p>';
+							} ?>
 							<input 
 								id="user-name" 
 								minlength="8"

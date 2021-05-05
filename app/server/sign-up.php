@@ -27,13 +27,24 @@
 		}
 		if($authFilePath !== null){
 			if(is_file($authFilePath)) {
-				// TODO Check if there is not user with the same name yet !
 				$userName = $_POST['user-name'];
-				$hashPassword = password_hash($_POST['user-pass'], PASSWORD_BCRYPT);
-				$userFileName = $userDirPath . '/' . $userName;
-				touch($userFileName);
-				file_put_contents($userFileName, $hashPassword);
-				unlink($authFilePath);
+				if(
+					!is_file(OWNERS_DIR . '/' . $userName) &&
+					!is_file(PUBLISHERS_DIR . '/' . $userName) &&
+					!is_file(VIEWERS_DIR . '/' . $userName)
+				) {
+					$hashPassword = password_hash($_POST['user-pass'], PASSWORD_BCRYPT);
+					$userFileName = $userDirPath . '/' . $userName;
+					touch($userFileName);
+					file_put_contents($userFileName, $hashPassword);
+					unlink($authFilePath);
+					header('Location: ../../');
+					exit();
+				}
+				else {
+					header('Location: ../../pages/sign-up/?role=' . $_POST['role'] . '&auth=' . $_POST['auth'] . '&error=user-exists');
+					exit();
+				}
 			}
 		}
 	}

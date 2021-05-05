@@ -23,6 +23,9 @@ $lab = json_decode(file_get_contents($i18n));
 		<form action="../../app/server/sign-in.php" method="POST">
 			<label>
 				<?php echo $lab->label->userName; ?>
+				<?php if(isset($_GET['error']) && $_GET['error'] === 'user-not-found') {
+					echo '<p style="color:red">' . $lab->error->userNotFound  . '</p>';
+				} ?>
 				<input 
 					id="user-name" 
 					minlength="8"
@@ -34,6 +37,9 @@ $lab = json_decode(file_get_contents($i18n));
 			</label>
 			<label>
 				<?php echo $lab->label->userPass; ?>
+				<?php if(isset($_GET['error']) && $_GET['error'] === 'wrong-password') {
+					echo '<p style="color:red">' . $lab->error->wrongPassword  . '</p>';
+				} ?>
 				<input type="password" 
 					id="user-pass" 
 					minlength="8"

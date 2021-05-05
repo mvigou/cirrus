@@ -25,7 +25,15 @@
 				$_SESSION['token'] = session_id();
 				$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 				$_SESSION['role'] = $userRole;
+			}
+			else {
+				header('Location: ../../pages/sign-in/?&error=wrong-password');
+				exit();
 			}	
+		}
+		else {
+			header('Location: ../../pages/sign-in/?&error=user-not-found');
+			exit();
 		}
 		clearTempDir();
 	}

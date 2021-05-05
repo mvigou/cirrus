@@ -16,7 +16,7 @@
 		"uploadItem": "Envoyer des fichiers"
 	},
 	"label": {
-		"bar": "Rechercher : ? suivi votre recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi la commande à effectuer."
+		"bar": "Rechercher : ? suivi de la recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi de la commande à effectuer."
 	},
 	"page": {
 		"title": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces"
