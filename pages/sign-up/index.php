@@ -21,59 +21,63 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 					<title>cirrus | <?php echo $lab->page->title; ?></title>
 				</head>
 				<body>
-					<header>
+					<main>
 						<h1>cirrus | <span><?php echo $lab->page->title; ?></span></h1>
-					</header>
-					<form action="../../app/server/sign-up.php" method="POST">
-						<label>
-							<?php echo $lab->label->userName; ?>
-							<span><?php echo $lab->label->userNameFormat; ?></span>
-							<?php if(isset($_GET['error']) && $_GET['error'] === 'user-exists') {
-								echo '<p style="color:red">' . $lab->error->userExists . '</p>';
-							} ?>
-							<input 
-								id="user-name" 
-								minlength="8"
-								maxlength="24"
-								name="user-name" 
-								pattern="[a-zA-Z0-9]{8,16}" 
-								required
+						<form action="../../app/server/sign-up.php" method="POST">
+							<label>
+								<?php echo $lab->label->userName; ?>
+								<span><?php echo $lab->label->userNameFormat; ?></span>
+								<?php if(isset($_GET['error']) && $_GET['error'] === 'user-exists') {
+									echo '<p style="color:#f44;">' . $lab->error->userExists . '</p>';
+								} ?>
+								<input 
+									id="user-name" 
+									minlength="8"
+									maxlength="24"
+									name="user-name" 
+									pattern="[a-zA-Z0-9]{8,16}" 
+									required
+								/>
+							</label>
+							<label>
+								<?php echo $lab->label->userPass; ?>
+								<span><?php echo $lab->label->userPassFormat; ?></span>
+								<input type="password" 
+									id="user-pass" 
+									minlength="8"
+									maxlength="24"
+									name="user-pass" 
+									pattern="[a-zA-Z0-9.?!\-_*+=/|\\()[\]#$@%]{8,24}" 
+									required
+								/>
+							</label>
+							<label>
+								<?php echo $lab->label->userPassConf; ?>
+								<input type="password" 
+									id="user-pass-conf" 
+									minlength="8"
+									maxlength="24"
+									name="user-pass-conf" 
+									required
+								/>
+							</label>
+							<input
+								type="hidden"
+								name="role"
+								value="<?php echo $_GET['role'] ?>"
 							/>
-						</label>
-						<label>
-							<?php echo $lab->label->userPass; ?>
-							<span><?php echo $lab->label->userPassFormat; ?></span>
-							<input type="password" 
-								id="user-pass" 
-								minlength="8"
-								maxlength="24"
-								name="user-pass" 
-								pattern="[a-zA-Z0-9.?!\-_*+=/|\\()[\]#$@%]{8,24}" 
-								required
+							<input
+								type="hidden"
+								name="auth"
+								value="<?php echo $_GET['auth'] ?>"
 							/>
-						</label>
-						<label>
-							<?php echo $lab->label->userPassConf; ?>
-							<input type="password" 
-								id="user-pass-conf" 
-								minlength="8"
-								maxlength="24"
-								name="user-pass-conf" 
-								required
-							/>
-						</label>
-						<input
-							type="hidden"
-							name="role"
-							value="<?php echo $_GET['role'] ?>"
+							<button title="<?php echo $lab->bt->confirm; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
+						</form>
+						<img 
+							alt="Logo cirrus"
+							src="../../app/client/cirrus-logo-alt.svg"
 						/>
-						<input
-							type="hidden"
-							name="auth"
-							value="<?php echo $_GET['auth'] ?>"
-						/>
-						<button title="<?php echo $lab->bt->confirm; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
-					</form>
+					</main>
 					<script src="./script.js"></script>
 				</body>
 			</html>

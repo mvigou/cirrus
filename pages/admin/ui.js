@@ -1,5 +1,18 @@
 "use strict";
 
+function toDarkTheme() {	
+	document.body.classList.add('--dark-mode');
+	localStorage.setItem('mode', 'dark');
+}
+function toLightTheme() {
+	document.body.classList.remove('--dark-mode');
+	localStorage.setItem('mode', 'light');
+};
+function switchTheme() {
+	document.body.classList.contains('--dark-mode') ?
+		toLightTheme():
+		toDarkTheme();
+}
 function setInvits(role, invits) {
 	const listElm = document.querySelector('.' + role + '__list');
 	if(invits.length > 0) {

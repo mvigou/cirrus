@@ -3,7 +3,7 @@
 		"confirm": "Valider"
 	},
 	"error": {
-		"userExists": "Impossible : ce nom d'utilisateur est déjà pris."
+		"userExists": "Nom d'utilisateur déjà pris."
 	},
 	"label": {
 		"userName": "Nom d'utilisateur",

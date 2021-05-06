@@ -16,10 +16,20 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 			<title>cirrus | <?php echo $lab->title->page; ?></title>
 		</head>
 		<body>
-			<header>
-				<h1>cirrus | <span><?php echo $lab->title->page; ?></span></h1>
-			</header>
 			<main class="admin">
+				<header>
+					<img 
+						alt="Logo cirrus"
+						src="../../app/client/cirrus-logo-alt.svg"
+					/>
+					<h1>cirrus | <span><?php echo $lab->title->page; ?></span></h1>
+				</header>
+				<!-- Toggle between light and dark theme. -->
+				<button 
+					onclick="switchTheme()"
+					title="<?php echo $lab->bt->switchTheme; ?>">
+					<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>
+				</button>
 				<!-- list, create and remove publisher invitations -->
 				<details ontoggle="browseInvits('publisher')">
 					<summary><?php echo $lab->title->manPubInvit; ?></summary>
@@ -75,6 +85,9 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 						confirm: "<?php echo $lab->mess->confRemoveUser; ?>",
 					}
 				};
+				if(localStorage.getItem('mode') === 'dark') {
+					toDarkTheme();
+				}
 			</script>
 		</body>
 	</html>

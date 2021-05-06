@@ -3,6 +3,8 @@
 	font-family: 'Josefin'
 	src: url("../../app/client/josefin.woff2") format("woff2")
 
+// containers
+
 html
 	font-size: 16px
 
@@ -12,82 +14,25 @@ body
 	--border-color: #ccc
 	--cirrus-color: #2db4e1
 	--hovered-color: #000
-	box-sizing: border-box
-	color: var(--base-color)	
+	color: var(--base-color)
+	background-color: var(--bg-color)	
 	font-family: Josefin, sans-serif
 	margin: 0
-	flex-direction: column-reverse
+.--dark-mode
+	--base-color: #bbb
+	--bg-color: #222
+	--border-color: #444	
+	--hovered-color: #fff
 	
-	min-height: 100vh
-	@media screen and ( min-width: 768px)
-		display: grid
-		grid-template-columns: 400px auto
+main
+	padding: 24px
+	@media screen and ( min-width: 1024px)	
+		padding: 0 96px
 
 header
-	align-items: center
-	background-color: #222
-	background-image: url("../../app/client/cirrus-logo.svg")
-	background-position: center 24px 
-	background-repeat: no-repeat
-	background-size: 72px
-	box-sizing: border-box
-	padding: 12px
-	text-align: center
-	@media screen and ( min-width: 768px)
-		background-position: center 
-		background-size: 160px
-		display: flex
-		flex-direction: column
-		justify-content: end
+	text-align: center		
 
-h1
-	color: var(--bg-color)
-	font-size: 1.125rem
-	margin-top: 96px
-	span
-		color: var(--cirrus-color)
-
-summary
-	cursor: pointer
-	margin: 24px 0
-
-a
-	color: inherit
-	&:hover
-			color: var(--hovered-color)
-
-.admin
-	box-sizing: border-box
-	height: 100vh
-	overflow-y: auto
-	padding: 36px
-			
-svg
-	fill: var(--base-color)
-	margin-bottom: 3px
-	margin-right: 6px
-	vertical-align: middle
-	width: 18px
-
-button
-	background-color: transparent
-	border: none
-	cursor: pointer
-	display: block
-	margin: 12px 0
-	&::before
-		border-radius: 50%
-		content: ""
-		display: inline-block
-		height: 9px
-		margin: 0 6px 1px auto
-		width: 9px	
-	&:hover
-		color: var(--hovered-color)
-		&::before
-			background-color: var(--cirrus-color)
-		svg
-			fill: var(--hovered-color)
+// lists
 
 ul
 	display: flex
@@ -97,5 +42,76 @@ ul
 	overflow-y: auto
 	padding: 0
 	li
-		margin: 0 24px
 		display: block
+		margin: 0 24px
+
+// texts
+
+h1
+	font-size: 1.125rem
+	margin-bottom: 48px
+	margin-top: -9%
+	span
+		color: var(--cirrus-color)
+
+// interactive elements
+
+a
+	color: inherit
+	&:hover
+		color: var(--hovered-color)
+
+summary
+	color: var(--hovered-color)
+	cursor: pointer
+	margin: 24px 0
+
+button
+	background-color: transparent
+	border: none
+	color: var(--base-color)
+	cursor: pointer
+	display: block
+	&::before
+		border-radius: 50%
+		content: ""
+		display: inline-block
+		height: 9px
+		margin: 0 auto 6px auto
+		width: 9px	
+	&:hover
+		color: var(--hovered-color)
+		outline: none
+		&::before
+			background-color: var(--cirrus-color)
+		svg
+			fill: var(--hovered-color)
+
+main > button
+	height: 48px
+	position: fixed
+	right: 24px
+	top: 24px
+	width: 48px
+	@media screen and ( min-width: 1024px)	
+		right: 48px
+		top: 48px
+	svg
+		fill: var(--base-color)
+		width: 24px
+
+details > button
+	margin: 12px 0
+	&::before
+		margin: 0 6px 1px auto
+	svg
+		fill: var(--base-color)
+		margin-right: 6px
+		vertical-align: bottom
+		width: 18px
+
+// medias
+
+img
+	max-width: 720px
+	width: 100%

@@ -1,20 +1,21 @@
 {
 	"bt": {
-		"addInvit": "Générer un lien d'inscription à usage unique",
+		"addInvit": "Générer un lien d'inscription",
 		"rmInvits": "Supprimer les invitations",
 		"rmLogs": "Purger les journaux",
 		"rmUser": "Supprimer",
 		"setPublisher": "Changer en éditeur",
-		"setViewer": "Changer en visualiseur"
+		"setViewer": "Changer en visualiseur",
+		"switchTheme": "Basculer entre thème clair / thème sombre"
 	},
 	"mess": {
 		"confRemoveUser": "Supprimer le compte : "
 	},
 	"title": {
 		"manLogs": "Journaux",
-		"manPubInvit": "Invitations \"éditeur\" (accès, ajout et suppression de contenu)",
+		"manPubInvit": "Invitations \"éditeur\"",
 		"manUsers": "Gérer les utilisateurs",
-		"manViewInvit": "Invitations \"visualiseur\" (accès au contenu)",
+		"manViewInvit": "Invitations \"visualiseur\"",
 		"page": "administration"
 	}
 }

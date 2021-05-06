@@ -3,8 +3,8 @@
 		"confirm": "Valider"
 	},
 	"error": {
-		"userNotFound": "Il n'y a aucun utilisateur de ce nom.",
-		"wrongPassword": "Le mot de passe saisi ne correspond pas à cet utilisateur."
+		"userNotFound": "Aucun utilisateur de ce nom.",
+		"wrongPassword": "Mot de passe saisi invalide."
 	},
 	"label": {
 		"userName": "Nom d'utilisateur",
