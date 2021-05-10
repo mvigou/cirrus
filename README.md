@@ -83,10 +83,11 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Sécurité
 
-* Exécution des fichiers limitées à certains types de fichiers dits "sûrs".
 * Accès direct au contenu du dossier "datas" par URL impossible (protégé via .htaccess / hors dossier "datas/temp").
 * Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
 * Accès utilisateur soumis à authentification préalable.
+* Bouton de déconnexion.
+* Exécution des fichiers limitées à certains types de fichiers dits "sûrs".
 * Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
 * Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés ET/OU à chaque authentification réussie.
 * Purge automatique du fichier de journalisation des erreurs dès qu'il atteint la taille de 50Ko.

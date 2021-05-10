@@ -92,6 +92,11 @@ if(isAuthenticated()) { ?>
 					title="<?php echo $lab->bt->switchTheme; ?>">
 					<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>
 				</button>
+				<button 
+					onclick="signOut()"
+					title="<?php echo $lab->bt->signOut; ?>">
+					<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>
+				</button>
 			</nav>
 			<aside class="infos">
 				<div class="tree"></div>

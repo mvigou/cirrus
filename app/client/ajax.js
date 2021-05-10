@@ -339,3 +339,14 @@ function removeItem(item) {
 		.catch(error => ajaxLog('removeItem', error));
 	}
 }
+function signOut() {
+	ajaxPost({ script: 'sign-out.php' })
+	.then(
+		resp => {
+			if(resp.success) {	
+				window.location.reload();
+			}
+		}
+	)
+	.catch(error => ajaxLog('signOut', error));
+}
