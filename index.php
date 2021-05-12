@@ -168,6 +168,7 @@ if(isAuthenticated()) { ?>
 				},
 				mess: {
 					confirmPress: "<?php echo $lab->mess->confirmPress; ?>",
+					confirmRemove: "<?php echo $lab->mess->confirmRemove; ?>",
 					error: "<?php echo $lab->mess->error; ?>",
 				}
 			};

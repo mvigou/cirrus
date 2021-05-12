@@ -312,8 +312,8 @@ function downloadItem(src) {
 	aElm.click();
 	aElm.remove();
 }
-function removeItem(item) {
-	if(validConfClick() || validConfTouch()) {
+function removeItem(item, force) {
+	if(validConfClick() || validConfTouch() || force === true) {
 		ajaxPost(
 			{
 				script: 'remove-item.php',

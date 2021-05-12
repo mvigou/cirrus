@@ -44,7 +44,7 @@
 			document.body.classList.add('--edit-mode');
 	}
 
-	/* ### Manage preview */
+/* ### Manage preview */
 
 	const previewBoxElm = document.querySelector('.preview');
 	const previewItemElm = document.querySelector('.preview__item');
@@ -354,6 +354,11 @@
 				removeItemBtElm.classList.add('publisher-ft', 'non-editable');
 				removeItemBtElm.title = lab.bt.removeItem;
 				removeItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+				removeItemBtElm.onkeypress = () => {
+					if(confirm(lab.mess.confirmRemove)) {
+						removeItem(item.path, true);
+					}
+				};
 				removeItemBtElm.onmousedown = () => watchConfClick('start', item.path);
 				removeItemBtElm.onmouseleave = () => unsetPopup();
 				removeItemBtElm.ontouchstart = e => watchConfTouch('start', e);
