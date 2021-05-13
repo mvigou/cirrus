@@ -28,13 +28,6 @@
 			toLightTheme():
 			toDarkTheme();
 	}
-	const emptyRecycleBt = document.getElementById('empty-recycle');
-	emptyRecycleBt.ontouchstart = e => watchConfTouch('start', e);
-	emptyRecycleBt.ontouchmove = () => unsetPopup();
-	emptyRecycleBt.ontouchend = e => {
-		watchConfTouch('end', e); 
-		removeItem('RECYCLE');
-	};
 
 /* ### Manage modes ### */
 
@@ -98,10 +91,6 @@
 			start: { name: '', time: 0 }, 
 			end: { name: '', time: 0 } 
 		},
-		touch: { 
-			start: { x: 0, y: 0, time: 0 }, 
-			end: { x: 0, y: 0, time: 0 }
-		}
 	};
 	function setPopup(type, content) {	
 		document.querySelector('.popup__content').innerHTML = content;
@@ -116,37 +105,23 @@
 	function unsetPopup() {
 		document.querySelector('.popup').setAttribute('class', 'popup');
 	}
-	function watchConfClick(step, item) {
+	function watchConfirm(step, item, event) {
 		action.click[step].name = item;
 		action.click[step].time = performance.now();
 		setPopup('confirm', lab.mess.confirmPress);
+		if(event){
+			event.preventDefault();
+		}	
 	}
-	function validConfClick() {
+	function validConfirm() {
 		unsetPopup();
 		return action.click.start.name === action.click.end.name && (action.click.end.time - action.click.start.time) >= 600 ?
 			true : false;
 	}
-	function watchConfTouch(step, event) {
-		if(step === 'start') {
-			action.touch.start.x = event.touches[0].clientX;
-			action.touch.start.y = event.touches[0].clientY;
-			action.touch.start.time = performance.now();
-			setPopup('confirm', lab.mess.confirmPress);
-			event.preventDefault();	
-		}
-		else {
-			action.touch.end.x = event.changedTouches[0].clientX;
-			action.touch.end.y = event.changedTouches[0].clientY;
-			action.touch.end.time = performance.now();
-			unsetPopup();
-		}
-	}
-	function validConfTouch() {
-		unsetPopup();	
-		if(action.touch.start.x === action.touch.end.x && action.touch.start.y === action.touch.end.y && (action.touch.end.time - action.touch.start.time) >= 600) {
-			return true;
-		}
-		return false;	
+	function cancelConfirm() {
+		action.click['start'].name = null;
+		action.click['end'].name = null;
+		unsetPopup();
 	}
 
 /* ### Manage bar ### */
@@ -253,9 +228,7 @@
 		const itemListElm = document.querySelector('.list');
 		itemListElm.innerHTML = '';
 		for(const item of items) {
-			// Item main container.
-			let itemElm;
-			itemElm = document.createElement('li');	
+			let itemElm = document.createElement('li');	
 			switch(item.type) {
 				case 'file':
 					item.path = dir + '/' + item.label;
@@ -307,7 +280,7 @@
 					break;
 			}		
 			itemElm.setAttribute('class', 'list__item ' + item.type + ' --visible');
-			// Allow to open the file or the directory (replace the next sibling in normal mode).
+			// Open item (replace the next sibling in normal mode).
 			let aItemElm = document.createElement('a');
 			aItemElm.classList.add('list__item__a', 'non-editable');
 			aItemElm.setAttribute('href', '#');
@@ -325,53 +298,47 @@
 			}
 			aItemElm.appendChild(titleItemElm);
 			itemElm.appendChild(aItemElm);
-			// Allow to rename the file or the directory (replace the precedent sibling in edit mode).
+			// Rename item (replace the precedent sibling in edit mode).
 			if(item.type !== 'parent') {
-				let editItemInputElm = document.createElement('input');
-				editItemInputElm.classList.add('editable');
-				editItemInputElm.value = item.label;
-				editItemInputElm.textContent = item.label;
-				editItemInputElm.onkeydown = e => {
+				let edItemInputElm = document.createElement('input');
+				edItemInputElm.classList.add('editable');
+				edItemInputElm.value = item.label;
+				edItemInputElm.textContent = item.label;
+				edItemInputElm.onkeydown = e => {
 					if(e.code === 'Enter') {
 						e.target.blur();
 					}
 				};
-				editItemInputElm.onblur = e => renameItem(item.label, e.target.value, e.target);
-				itemElm.appendChild(editItemInputElm);
+				edItemInputElm.onblur = e => renameItem(item.label, e.target.value, e.target);
+				itemElm.appendChild(edItemInputElm);
 			}
 			if(item.type === 'file' || item.type === 'subdir') {
-				// Allow to download the file or the directory as a zip.
-				let downloadItemBtElm = document.createElement('button');
-				downloadItemBtElm.classList.add('non-editable');
-				downloadItemBtElm.title = lab.bt.downloadItem;
-				downloadItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
-				downloadItemBtElm.onclick = () => {
-					downloadUnpreviewedItem(item.path)
-				};
-				itemElm.appendChild(downloadItemBtElm);
-				// Allow to remove the file or the directory.
-				let removeItemBtElm = document.createElement('button');
-				removeItemBtElm.classList.add('publisher-ft', 'non-editable');
-				removeItemBtElm.title = lab.bt.removeItem;
-				removeItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-				removeItemBtElm.onkeypress = () => {
-					if(confirm(lab.mess.confirmRemove)) {
-						removeItem(item.path, true);
-					}
-				};
-				removeItemBtElm.onmousedown = () => watchConfClick('start', item.path);
-				removeItemBtElm.onmouseleave = () => unsetPopup();
-				removeItemBtElm.ontouchstart = e => watchConfTouch('start', e);
-				removeItemBtElm.ontouchmove = () => unsetPopup();
-				removeItemBtElm.onmouseup = () => {
-					watchConfClick('end', item.path);
+				// Download item.
+				let dlItemBtElm = document.createElement('button');
+				dlItemBtElm.classList.add('non-editable');
+				dlItemBtElm.title = lab.bt.downloadItem;
+				dlItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
+				dlItemBtElm.onclick = () => downloadUnpreviewedItem(item.path);
+				itemElm.appendChild(dlItemBtElm);
+				// Remove item.
+				let rmItemBtElm = document.createElement('button');
+				rmItemBtElm.classList.add('publisher-ft', 'non-editable');
+				rmItemBtElm.title = lab.bt.removeItem;
+				rmItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+				rmItemBtElm.onkeypress = () => { if(confirm(lab.mess.confRemove)) { removeItem(item.path, true); }};
+				rmItemBtElm.onmousedown = () => watchConfirm('start', item.path);
+				rmItemBtElm.onmouseup = () => {
+					watchConfirm('end', item.path);
 					removeItem(item.path);
 				};
-				removeItemBtElm.ontouchend = e => {
-					watchConfTouch('end', e);
+				rmItemBtElm.onmouseleave = () => cancelConfirm();
+				rmItemBtElm.ontouchstart = e => watchConfirm('start', item.path, e);
+				rmItemBtElm.ontouchend = () => {
+					watchConfirm('end', item.path);
 					removeItem(item.path);
 				};
-				itemElm.appendChild(removeItemBtElm);
+				rmItemBtElm.ontouchmove = () => cancelConfirm();
+				itemElm.appendChild(rmItemBtElm);
 			}
 			itemListElm.appendChild(itemElm);
 		}

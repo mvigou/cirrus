@@ -23,7 +23,8 @@
 		"title": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces"
 	},
 	"mess": {
-		"confirmRemove": "Confirmer la suppression de cet élément ?",
+		"confRemove": "Supprimer cet élément ?",
+		"confEmptyRecycle": "Vider la corbeille ?",
 		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
 		"error": "Une erreur est survenue pendant le traitement de cette action."
 	}

@@ -49,10 +49,13 @@ if(isAuthenticated()) { ?>
 				<!-- Empty the recycle bin. -->
 				<button 
 					class="recycle-ft"
-					id="empty-recycle"
-					onmousedown="watchConfClick('start', 'recycle')"
-					onmouseup="watchConfClick('end', 'recycle'), removeItem('RECYCLE')"
-					onmouseleave="unsetPopup()"
+					id="emptyRecycleBt"
+					onkeypress="if(confirm(lab.mess.confEmptyRecycle)){removeItem('RECYCLE', true);}"
+					onmousedown="watchConfirm('start', 'recycle')"
+					onmouseup="watchConfirm('end', 'recycle'), removeItem('RECYCLE')"
+					onmouseleave="cancelConfirm()" 
+					ontouchend="watchConfirm('end', 'recycle'), removeItem('RECYCLE')"
+					ontouchmove="cancelConfirm()" 
 					title="<?php echo $lab->bt->emptyRecycle; ?>">
 					<svg viewBox="0 0 24 24"><path d="M18.5 15c-2.486 0-4.5 2.015-4.5 4.5s2.014 4.5 4.5 4.5c2.484 0 4.5-2.015 4.5-4.5s-2.016-4.5-4.5-4.5zm-.469 6.484l-1.688-1.637.695-.697.992.94 2.115-2.169.697.696-2.811 2.867zm-2.031-12.484v4.501c-.748.313-1.424.765-2 1.319v-5.82c0-.552.447-1 1-1s1 .448 1 1zm-4 0v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1s1 .448 1 1zm1.82 15h-11.82v-18h2v16h8.502c.312.749.765 1.424 1.318 2zm-6.82-16c.553 0 1 .448 1 1v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1zm14-4h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711v2zm-1 2v7.182c-.482-.115-.983-.182-1.5-.182l-.5.025v-7.025h2z"/></svg>
 				</button>
@@ -64,8 +67,7 @@ if(isAuthenticated()) { ?>
 							id="bar__input"
 							class="publisher-ft"
 							oninput="barLive(this.value)"
-							title="<?php echo $lab->label->bar; ?>"
-						/>
+							title="<?php echo $lab->label->bar; ?>" />
 						<button 
 							id="bar__cancelButton"
 							class="publisher-ft bar__bt --hidden"
@@ -159,7 +161,8 @@ if(isAuthenticated()) { ?>
 		<script src="./app/client/ajax.js"></script>
 		<script src="./app/client/ui.js"></script>
 		<script>
-			// Required label for JavaScript.
+			document.getElementById('emptyRecycleBt').ontouchstart = e => watchConfirm('start', 'recycle', e);
+			// Required labels for JavaScript.
 			const lab = {
 				bt: {
 					downloadItem: "<?php echo $lab->bt->downloadItem; ?>",
@@ -168,7 +171,8 @@ if(isAuthenticated()) { ?>
 				},
 				mess: {
 					confirmPress: "<?php echo $lab->mess->confirmPress; ?>",
-					confirmRemove: "<?php echo $lab->mess->confirmRemove; ?>",
+					confEmptyRecycle: "<?php echo $lab->mess->confEmptyRecycle; ?>",
+					confRemove: "<?php echo $lab->mess->confRemove; ?>",
 					error: "<?php echo $lab->mess->error; ?>",
 				}
 			};
