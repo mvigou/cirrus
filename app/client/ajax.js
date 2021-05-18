@@ -87,7 +87,12 @@ function browseDirectory(dir) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('browseDirectory', error));
+	.catch(
+		error => {
+			ajaxLog('browseDirectory', error);
+			browseDirectory('DATAS');
+		}
+	);
 }
 function createDirectory(dirs) {
 	if(dirs !== '' ) {
