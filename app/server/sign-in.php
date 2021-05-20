@@ -35,7 +35,8 @@
 			header('Location: ../../pages/sign-in/?&error=user-not-found');
 			exit();
 		}
-		clearTempDir();
+		require_once('./remove-item.php');
+		removeDir(TEMP_DIR);
 	}
 }
 header('Location: ../../');

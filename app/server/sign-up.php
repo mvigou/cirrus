@@ -14,15 +14,15 @@
 		$authFilePath = null;
 		$userDirPath;
 		if($_POST['role'] === 'owner') {
-			$authFilePath = SIGN_UP_OWNER_AUTH_DIR . '/' . $_POST['auth'];
+			$authFilePath = '../../datas/auth/sign-up-as-owner/' . $_POST['auth'];
 			$userDirPath = OWNERS_DIR;
 		}
 		else if($_POST['role'] === 'publisher') {
-			$authFilePath = SIGN_UP_PUBLISHER_AUTH_DIR . '/' . $_POST['auth'];
+			$authFilePath = '../../datas/auth/sign-up-as-publisher/' . $_POST['auth'];
 			$userDirPath = PUBLISHERS_DIR;
 		}
 		else if($_POST['role'] === 'viewer') {
-			$authFilePath = SIGN_UP_VIEWER_AUTH_DIR . '/' . $_POST['auth'];
+			$authFilePath = '../../datas/auth/sign-up-as-viewer/' . $_POST['auth'];
 			$userDirPath = VIEWERS_DIR;
 		}
 		if($authFilePath !== null){

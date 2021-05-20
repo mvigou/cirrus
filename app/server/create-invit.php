@@ -4,10 +4,10 @@ if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['role'])) {
 		$role = $_POST['role'];
 		if($role === 'publisher') {
-			$authsDir = SIGN_UP_PUBLISHER_AUTH_DIR;
+			$authsDir = '../../datas/auth/sign-up-as-publisher';
 		}
 		else if($role === 'viewer') {
-			$authsDir = SIGN_UP_VIEWER_AUTH_DIR;
+			$authsDir = '../../datas/auth/sign-up-as-viewer';
 		}
 		if(isset($authsDir)) {
 			$newAuth = hash('sha512', random_bytes(24));

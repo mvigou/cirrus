@@ -18,12 +18,12 @@ if(!is_dir(DATAS)) {
 	mkdir(PUBLISHERS_DIR);
 	mkdir(VIEWERS_DIR);
 			
-	mkdir(SIGN_UP_OWNER_AUTH_DIR, 0777, true);
-	mkdir(SIGN_UP_PUBLISHER_AUTH_DIR);
-	mkdir(SIGN_UP_VIEWER_AUTH_DIR);
+	mkdir('../../datas/auth/sign-up-as-owner', 0777, true);
+	mkdir('../../datas/auth/sign-up-as-publisher');
+	mkdir('../../datas/auth/sign-up-as-viewer');
 
 	$auth = hash('sha512', 'install-start-auth');
-	touch(SIGN_UP_OWNER_AUTH_DIR . '/' . $auth);
+	touch('../../datas/auth/sign-up-as-owner/' . $auth);
 	header('Location: ../../pages/sign-up/?role=owner&auth=' . $auth);
 	exit();
 	

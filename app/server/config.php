@@ -15,10 +15,6 @@ define('OWNERS_DIR', DATAS . '/users/owners');
 define('PUBLISHERS_DIR', DATAS . '/users/publishers');
 define('VIEWERS_DIR', DATAS . '/users/viewers');
 
-define('SIGN_UP_OWNER_AUTH_DIR', DATAS . '/auth/sign-up-as-owner');
-define('SIGN_UP_PUBLISHER_AUTH_DIR', DATAS . '/auth/sign-up-as-publisher');
-define('SIGN_UP_VIEWER_AUTH_DIR', DATAS . '/auth/sign-up-as-viewer');
-
 define('TEMP_DIR', DATAS . '/temp');
 define('LOGS_DIR', DATAS . '/logs');
 
@@ -30,7 +26,6 @@ function isAuthenticated() {
 	}
 	return false;
 }
-
 function hasOwnerRights() {
 	if(isset($_SESSION['role'])) {
 		if($_SESSION['role'] === 'owner') {
@@ -39,7 +34,6 @@ function hasOwnerRights() {
 	}
 	return false;
 }
-
 function hasWritingRights() {
 	if(isset($_SESSION['role'])) {
 		if($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'publisher') {
@@ -48,37 +42,28 @@ function hasWritingRights() {
 	}
 	return false;
 }
-
 function inScopeDirectory($elm) {
 	return inDatasDirectory($elm) || inRecycleDirectory($elm) ? true : false;
 }
-
 function inDatasDirectory($elm) {
 	$regex = '/^\.\.\/\.\.\/datas\/';
 	$regex .= array_slice(explode('/', CONTENT_DIR), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
-
 function inRecycleDirectory($elm) {
 	$regex = '/^\.\.\/\.\.\/datas\/';
 	$regex .= array_slice(explode('/', RECYCLE_DIR), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
-
 function buildTempDir() {
 	if(count(scandir(TEMP_DIR)) - 2 === 10) {
-		clearTempDir();
+		require_once('./remove-item.php');
+		removeDir(TEMP_DIR);
 	}
 	return TEMP_DIR . '/' . hash('sha512', random_bytes(18));
 }
-
-function clearTempDir() {
-	require_once('./remove-item.php');
-	removeDir(TEMP_DIR);
-}
-
 function buildValidName($name) {
 	return str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $name);
 }
