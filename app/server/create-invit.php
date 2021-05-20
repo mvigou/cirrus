@@ -11,16 +11,16 @@ if(isAuthenticated() && hasOwnerRights()) {
 		}
 		if(isset($authsDir)) {
 			$newAuth = hash('sha512', random_bytes(24));
-			$state = 'failure';
 			if(touch($authsDir . '/' . $newAuth)) {
-				$state = 'success';
 				$url = '../../pages/sign-up/?role=' . $_POST['role'] . '&auth=' . $newAuth;
-				echo json_encode (
-					array(
-						'success' => true,
-						'content' => '<a href="' . $url . '">' . $url . '</a>'
-					)
-				);
+				if(error_get_last() === null) {
+					echo json_encode (
+						array(
+							'success' => true,
+							'content' => '<a href="' . $url . '">' . $url . '</a>'
+						)
+					);
+				}
 			}
 		}
 	}

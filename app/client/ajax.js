@@ -20,10 +20,6 @@ function ajaxPost(req) {
 					if(resp.ok) {
 						resp.text().then(
 							resp => {
-								/*
-								JSON expected in all cases.
-								PHP will be produce some string if an error has occurred.
-								*/
 								try {
 									const parsedResp = JSON.parse(resp);
 									resolve(parsedResp);
@@ -35,35 +31,11 @@ function ajaxPost(req) {
 						);
 					}
 					else {
-						reject(new Error(resp.status + ': ' + resp.statusText));
+						reject(resp);
 					}
 				}
 			);
 		}
-	);
-}
-function ajaxLog(origin, log) {
-	ajaxPost(
-		{
-			script: 'create-log.php',
-			args: [
-				{ 
-					name: 'origin', 
-					value: origin
-				},
-				{ 
-					name: 'log',
-					value: log
-				}
-			]
-		}
-	)
-	.then(
-		resp => {
-			if(resp.success) {
-				setPopup('warning', lab.mess.error);
-			}
-		} 
 	);
 }
 function browseDirectory(dir) {
@@ -88,8 +60,8 @@ function browseDirectory(dir) {
 		}
 	)
 	.catch(
-		error => {
-			ajaxLog('browseDirectory', error);
+		() => {
+			setPopup('warning', lab.mess.error);
 			browseDirectory('DATAS');
 		}
 	);
@@ -118,7 +90,7 @@ function createDirectory(dirs) {
 				}
 			}
 		)
-		.catch(error => ajaxLog('createDirectory', error));	
+		.catch(() => setPopup('warning', lab.mess.error));	
 	}
 }
 function uploadItems() {
@@ -157,7 +129,7 @@ function uploadItems() {
 					}
 				}
 				else {
-					ajaxLog('uploadItems', resp.responseText);
+					setPopup('warning', lab.mess.error);
 					document.querySelector('.upload-bar').classList.add('--hidden');
 				}
 			};
@@ -193,7 +165,7 @@ function openFile(filePath) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('openFile', error));
+	.catch(() => setPopup('warning', lab.mess.error));
 }
 function openPreviewedItem() {
 	window.open(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -227,7 +199,7 @@ function renameItem(oldName, newName, item) {
 					}
 				}
 			)
-			.catch(error => ajaxLog('renameItem', error));
+			.catch(() => setPopup('warning', lab.mess.error));
 		}
 	}
 	else {
@@ -258,7 +230,7 @@ function moveItem(fromPath, toPath) {
 				}
 			}
 		)
-		.catch(error => ajaxLog('moveItem', error));
+		.catch(() => setPopup('warning', lab.mess.error));
 	}
 }
 function copyItem(fromPath, toPath) {
@@ -284,7 +256,7 @@ function copyItem(fromPath, toPath) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('copyItem', error));
+	.catch(() => setPopup('warning', lab.mess.error));
 }
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
@@ -305,7 +277,7 @@ function downloadUnpreviewedItem(item) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('downloadUnpreviewedItem', error));
+	.catch(() => setPopup('warning', lab.mess.error));
 }
 function downloadPreviewedItem() {
 	downloadItem(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -341,7 +313,7 @@ function removeItem(item, force) {
 				}
 			}
 		)
-		.catch(error => ajaxLog('removeItem', error));
+		.catch(() => setPopup('warning', lab.mess.error));
 	}
 }
 function signOut() {
@@ -353,5 +325,5 @@ function signOut() {
 			}
 		}
 	)
-	.catch(error => ajaxLog('signOut', error));
+	.catch(() => setPopup('warning', lab.mess.error));
 }

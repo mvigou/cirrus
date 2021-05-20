@@ -20,8 +20,7 @@
 			$userRole = 'viewer';
 		}
 		if($userFilePath !== null) {				
-			if(password_verify($_POST['user-pass'], file_get_contents($userFilePath))) {	
-				$_SESSION['username'] = $_POST['user-name'];
+			if(password_verify($_POST['user-pass'], file_get_contents($userFilePath))) {
 				$_SESSION['token'] = session_id();
 				$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 				$_SESSION['role'] = $userRole;

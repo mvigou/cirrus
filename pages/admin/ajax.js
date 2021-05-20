@@ -1,8 +1,5 @@
 "use strict";
 
-function ajaxLog(origin, log){
-	console.log('here');
-}
 function ajaxPost(req) {
 	return new Promise(
 		(resolve, reject) => {
@@ -60,7 +57,6 @@ function browseInvits(role) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('browseInvits', error));
 };
 function createInvit(role) {
 	ajaxPost(
@@ -81,7 +77,6 @@ function createInvit(role) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('createInvit', error));
 }
 function removeInvits(role) {
 	ajaxPost(
@@ -102,7 +97,6 @@ function removeInvits(role) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('removeInvits', error));
 }
 function browseUsers() {
 	ajaxPost(
@@ -117,7 +111,6 @@ function browseUsers() {
 			}
 		}
 	)
-	.catch(error => ajaxLog('browseUsers', error));
 }
 function moveUser(userName, fromRole, toRole) {
 	ajaxPost(
@@ -146,7 +139,6 @@ function moveUser(userName, fromRole, toRole) {
 			}
 		}
 	)
-	.catch(error => ajaxLog('moveUser', error));
 }
 function removeUser(userName, userRole) {
 	if(confirm(lab.mess.confirm + userName)) {
@@ -172,7 +164,6 @@ function removeUser(userName, userRole) {
 				}
 			}
 		)
-		.catch(error => ajaxLog('removeUser', error));
 	}
 }
 function browseLogs() {
@@ -184,11 +175,10 @@ function browseLogs() {
 	.then( 
 		resp => {
 			if(resp.success) {
-				setLogs(JSON.parse(resp.content));
+				setLogs(resp.content);
 			}
 		}
 	)
-	.catch(error => ajaxLog('browseLogs', error));
 }
 function removeLogs() {
 	ajaxPost(
@@ -199,9 +189,8 @@ function removeLogs() {
 	.then( 
 		resp => {
 			if(resp.success) {
-				browseLogs();
+				setLogs();
 			}
 		}
 	)
-	.catch(error => ajaxLog('removeLogs', error));
 }

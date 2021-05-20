@@ -24,12 +24,14 @@ if(isAuthenticated()) {
 				}
 				$zip->close();
 			}
-			echo json_encode(
-				array (
-					'success' => true,
-					'content' => str_replace('../../', './', $toPath)
-				)
-			);
+			if(error_get_last() === null) {
+				echo json_encode(
+					array (
+						'success' => true,
+						'content' => str_replace('../../', './', $toPath)
+					)
+				);
+			}
 		}
 	}
 }

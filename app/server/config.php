@@ -1,9 +1,6 @@
 <?php
 
 session_start();
-ini_set('display_errors', true);
-ini_set('html_errors', false);
-error_reporting(E_ALL);
 
 define('LANG', 'fr');
 define('DATAS', '../../datas');
@@ -17,6 +14,12 @@ define('VIEWERS_DIR', DATAS . '/users/viewers');
 
 define('TEMP_DIR', DATAS . '/temp');
 define('LOGS_DIR', DATAS . '/logs');
+
+
+ini_set('display_errors', false);
+ini_set('log_errors', true);
+ini_set('error_log', LOGS_DIR . '/app.txt');
+
 
 function isAuthenticated() {
 	if(isset($_SESSION['token']) && isset($_SESSION['browser'])) {

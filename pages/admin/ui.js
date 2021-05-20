@@ -59,21 +59,18 @@ function setUsers(users) {
 		listElm.innerHTML = '...';
 	}
 }
-function setLogs(logs) {
+function setLogs(logs = '') {
 	const listElm = document.querySelector('.logs__list');
-	if(logs.length > 0) {
-		listElm.innerHTML = '';
-		for(const log of logs) {
+	logs = logs.split('[');
+	listElm.innerHTML = '';
+	for(const log of logs) {
+		if(log !== '') {
 			let itemElm = document.createElement('li');
-			let logElm = document.createElement('p');
-			logElm.innerHTML =
-				`<b>IN</b> -> ${log.in} | <b>ON</b> -> ${log.on} | <b>BY</b> -> ${log.by}<br/>
-				<i>${log.log}</i>`;
-			itemElm.appendChild(logElm);
+			itemElm.textContent = '[' + log;
 			listElm.appendChild(itemElm);
 		}
 	}
-	else {
+	if(listElm.innerHTML === '') {
 		listElm.innerHTML = '...';
 	}
 }

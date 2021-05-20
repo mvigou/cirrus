@@ -21,12 +21,14 @@ if(isAuthenticated() && hasOwnerRights()) {
 					);
 				}
 			}
-			echo json_encode (
-				array(
-					'success' => true,
-					'content' => $content
-				)
-			);
+			if(error_get_last() === null) {
+				echo json_encode (
+					array(
+						'success' => true,
+						'content' => $content
+					)
+				);
+			}
 		}
 	}
 }

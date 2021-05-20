@@ -14,7 +14,9 @@ if(isAuthenticated() && hasOwnerRights()) {
 			foreach($auths as $auth) {
 				unlink($authsDir . '/' . $auth);
 			}
-			echo json_encode(array('success' => true));
+			if(error_get_last() === null) {
+				echo json_encode(array('success' => true));
+			}
 		}
 	}
 }

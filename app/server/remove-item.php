@@ -16,7 +16,9 @@ if(isAuthenticated() && hasWritingRights()) {
 				removeDir($_POST['item']);
 			}
 		}
-		echo json_encode(array('success' => true));
+		if(error_get_last() === null) {
+			echo json_encode(array('success' => true));
+		}
 	}
 }
 

@@ -2,7 +2,7 @@
 
 if(isAuthenticated()) {
     $_SESSION = array();
-    if(empty($_SESSION)) {
+    if(empty($_SESSION)) {    
         echo json_encode(array("success" => true));
     }
 }

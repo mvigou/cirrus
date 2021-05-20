@@ -57,15 +57,17 @@ if(isAuthenticated()) {
 					)
 				);
 			}
-			echo json_encode (
-				array(
-					'success' => true,
-					'content' => array(
-						'dir' => $dir,
-						'items' => $items
+			if(error_get_last() === null) {
+				echo json_encode (
+					array(
+						'success' => true,
+						'content' => array(
+							'dir' => $dir,
+							'items' => $items
+						)
 					)
-				)
-			);
+				);
+			}
 		}
 	}
 }
