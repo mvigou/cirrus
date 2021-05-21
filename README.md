@@ -85,12 +85,13 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 * Accès direct au contenu du dossier "datas" par URL impossible (protégé via .htaccess / hors dossier "datas/temp").
 * Accès utilisateur authentifié restreint aux dossiers "datas/content" et "datas/recycle". 
+* Accès utilisateur authentifié verrouillé à l'instance cirrus concernée. 
 * Accès utilisateur soumis à authentification préalable.
 * Bouton de déconnexion.
 * Exécution des fichiers limitées à certains types de fichiers dits "sûrs".
 * Options d'édition disponibles relatives au rôle utilisateur (limitations côté client et vérifiées côté serveur). 
 * Purge automatique du dossier temporaire dès que 10 dossiers temporaires ont été générés ET/OU à chaque authentification réussie.
-* Purge automatique du fichier de journalisation des erreurs dès qu'il atteint la taille de 50Ko.
+* Journalisation des erreurs de l'application.
 
 ### Divers
 
@@ -99,6 +100,5 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 * (TODO) Journaliser les erreurs de connexion.
 * (TODO) Mise en cache à voir / Service worker ?
 * Actions dites "dangereuses" gérées de façon novatrice (maintien du clic / de la pression).
-* Journalisation des erreurs dans un fichier JSON automatiquement purgé lorsqu'il dépasse 50Ko.
 * Suivi de la progression de mise en ligne de fichier(s).
 * Thème clair / Thème sombre.

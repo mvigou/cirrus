@@ -1,11 +1,7 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteRule datas/auth "-" [F]
-RewriteRule datas/content "-" [F]
-RewriteRule datas/logs "-" [F]
-RewriteRule datas/recycle "-" [F]
-RewriteRule datas/users "-" [F]
+RewriteRule ^datas/(auth|content|logs|recycle|users|env.json) "-" [F]
 
 php_value display_errors false
 php_value log_errors 1
