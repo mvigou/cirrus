@@ -1,13 +1,11 @@
 <?php 
-
-require('../../app/server/config.php');
-
-$i18n = './i18n-' . LANG . '.json';
-$lab = json_decode(file_get_contents($i18n));
-
-if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
+session_start();
+$env = json_decode(file_get_contents('../../datas/env.json'));
+$lab = json_decode(file_get_contents('./i18n-' . $env->lang . '.json'));
+require('../../app/server/tools.php');
+if(isAuthenticated() && hasOwnerRights()) { ?>
 	<!DOCTYPE html>
-		<html lang="<?php echo LANG; ?>">
+		<html lang="<?php echo $env->lang; ?>">
 		<head>
 			<link rel="icon" href="../../app/client/cirrus-favicon.png" />
 			<link rel="stylesheet" href="./style.css" />
@@ -91,9 +89,7 @@ if(isAuthenticated() && $_SESSION['role'] === 'owner') { ?>
 			</script>
 		</body>
 	</html>
-	
 <?php }
-
 else {
 	header('Location: ../..');
 }

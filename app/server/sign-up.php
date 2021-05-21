@@ -10,28 +10,28 @@
 		preg_match('/^[a-zA-Z0-9.?!\-_*+=\/|\\()[\]#$@%]{8,24}$/', $_POST['user-pass']) &&
 		$_POST['user-pass'] === $_POST['user-pass-conf']			
 	){
-		require('./config.php');
+		$env = json_decode(file_get_contents('../../datas/env.json'));
 		$authFilePath = null;
 		$userDirPath;
 		if($_POST['role'] === 'owner') {
 			$authFilePath = '../../datas/auth/sign-up-as-owner/' . $_POST['auth'];
-			$userDirPath = OWNERS_DIR;
+			$userDirPath = $env->ownersDir;
 		}
 		else if($_POST['role'] === 'publisher') {
 			$authFilePath = '../../datas/auth/sign-up-as-publisher/' . $_POST['auth'];
-			$userDirPath = PUBLISHERS_DIR;
+			$userDirPath = $env->publishersDir;
 		}
 		else if($_POST['role'] === 'viewer') {
 			$authFilePath = '../../datas/auth/sign-up-as-viewer/' . $_POST['auth'];
-			$userDirPath = VIEWERS_DIR;
+			$userDirPath = $env->viewersDir;
 		}
 		if($authFilePath !== null){
 			if(is_file($authFilePath)) {
 				$userName = $_POST['user-name'];
 				if(
-					!is_file(OWNERS_DIR . '/' . $userName) &&
-					!is_file(PUBLISHERS_DIR . '/' . $userName) &&
-					!is_file(VIEWERS_DIR . '/' . $userName)
+					!is_file($env->ownersDir . '/' . $userName) &&
+					!is_file($env->publishersDir . '/' . $userName) &&
+					!is_file($env->viewersDir . '/' . $userName)
 				) {
 					$hashPassword = password_hash($_POST['user-pass'], PASSWORD_BCRYPT);
 					$userFileName = $userDirPath . '/' . $userName;

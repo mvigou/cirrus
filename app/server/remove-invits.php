@@ -1,4 +1,6 @@
-<?php require_once('./config.php');
+<?php
+session_start(); 
+require_once('./tools.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['role'])) {

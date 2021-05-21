@@ -1,9 +1,12 @@
-<?php require_once('./config.php');
+<?php 
+session_start();
+require_once('./tools.php');
 
 if(isAuthenticated() && hasWritingRights()) {
+	global $env;
 	if(isset($_POST['item'])) {
 		if($_POST['item'] === 'RECYCLE') {
-			$_POST['item'] = RECYCLE_DIR;	
+			$_POST['item'] = $env->recycleDir;	
 		}
 		if(inDatasDirectory($_POST['item'])) {
 			moveToRecycle($_POST['item']);
@@ -23,9 +26,10 @@ if(isAuthenticated() && hasWritingRights()) {
 }
 
 function moveToRecycle($elm) {
+	global $env;
 	$fileName = array_slice(explode('/', $elm), -1)[0];
 	$fromPath = $elm;
-	$toPath = RECYCLE_DIR . '/' . $fileName;
+	$toPath = $env->recycleDir . '/' . $fileName;
 	if(is_file($toPath) || is_dir($toPath)) {
 		$basePath = $toPath; 
 		$i = 1;
@@ -39,6 +43,7 @@ function moveToRecycle($elm) {
 }
 
 function removeDir($dir) {
+	global $env;
 	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
 		$itemPath = $dir . '/' . $item;
 		if(is_file($itemPath)) {
@@ -48,7 +53,7 @@ function removeDir($dir) {
 			removeDir($itemPath);	
 		}
 	}
-	if($dir !== RECYCLE_DIR && $dir !== TEMP_DIR) {
+	if($dir !== $env->recycleDir && $dir !== $env->tempDir) {
 		rmdir($dir);
 	}
 }

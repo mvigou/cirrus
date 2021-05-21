@@ -1,9 +1,11 @@
-<?php require_once('./config.php');
+<?php 
+session_start();
+require_once('./tools.php');
 
 if(isAuthenticated() && hasWritingRights()) {
 	if(isset($_POST['parentDir']) && inDatasDirectory($_POST['parentDir'])) {
 		if(isset($_FILES) && $_FILES['file']['error'] === 0) {
-			$fileName = $_POST['parentDir'] . '/' . buildValidName($_FILES['file']['name']);
+			$fileName = $_POST['parentDir'] . '/' . str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $_FILES['file']['name']);
 			if(is_file($fileName)) {
 				$baseName = $fileName; 
 				$i = 1;

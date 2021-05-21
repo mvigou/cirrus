@@ -6,3 +6,7 @@ RewriteRule datas/content "-" [F]
 RewriteRule datas/logs "-" [F]
 RewriteRule datas/recycle "-" [F]
 RewriteRule datas/users "-" [F]
+
+php_value display_errors false
+php_value log_errors 1
+php_value error_log "../../datas/logs/app-errors.txt"

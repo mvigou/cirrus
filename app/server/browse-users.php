@@ -1,14 +1,16 @@
-<?php require_once('./config.php');
+<?php 
+session_start();
+require_once('./tools.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
 	$userProfiles = array(
 		array(
 			'role' => 'publisher',
-			'dir' => PUBLISHERS_DIR
+			'dir' => $env->publishersDir
 		), 
 		array(
 			'role' => 'viewer',
-			'dir' => VIEWERS_DIR
+			'dir' => $env->viewersDir
 		)
 	);
 	$users = array();

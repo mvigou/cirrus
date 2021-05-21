@@ -1,13 +1,15 @@
-<?php require_once('./config.php');
+<?php 
+session_start();
+require_once('./tools.php');
 
 if(isAuthenticated()) {	
 	if(isset($_POST['dir'])) {
 		switch($_POST['dir']) {
 			case 'DATAS':
-				$dir = CONTENT_DIR;
+				$dir = $env->contentDir;
 				break;
 			case 'RECYCLE':
-				$dir = RECYCLE_DIR;
+				$dir = $env->recycleDir;
 				break;
 			default:
 				if(inRecycleDirectory($_POST['dir']) || inDatasDirectory($_POST['dir'])) {
@@ -21,7 +23,7 @@ if(isAuthenticated()) {
 			foreach(array_diff(scandir($dir), array('.')) as $item) {
 				// Parent directory.
 				if($item === '..') {
-					if($dir !== CONTENT_DIR && $dir !== RECYCLE_DIR) {
+					if($dir !== $env->contentDir && $dir !== $env->recycleDir) {
 						array_push($items,
 							array(
 								'type' => 'parent',

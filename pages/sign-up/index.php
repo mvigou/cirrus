@@ -1,18 +1,12 @@
 <?php 
-
-require('../../app/server/config.php');
-		
-$i18n = './i18n-' . LANG . '.json';
-$lab = json_decode(file_get_contents($i18n));
-
+$env = json_decode(file_get_contents('../../datas/env.json'));
+$lab = json_decode(file_get_contents('./i18n-' . $env->lang . '.json'));
+require('../../app/server/tools.php');
 if(isset($_GET['role']) && isset($_GET['auth'])) { 
-
 	if($_GET['role'] === 'owner' || $_GET['role'] === 'publisher' || $_GET['role'] === 'viewer') {
-		
 		if(is_file('../../datas/auth/sign-up-as-' . $_GET['role'] . '/' . $_GET['auth'])) { ?>
-
 			<!DOCTYPE html>
-				<html lang="<?php echo LANG; ?>">
+				<html lang="<?php echo $env->lang; ?>">
 				<head>
 					<link rel="icon" href="../../app/client/cirrus-favicon.png" />
 					<link rel="stylesheet" href="./style.css" />
@@ -81,11 +75,7 @@ if(isset($_GET['role']) && isset($_GET['auth'])) {
 					<script src="./script.js"></script>
 				</body>
 			</html>
-			
 		<?php 
-
 		}
-
 	}
-
 }
