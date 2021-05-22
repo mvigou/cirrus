@@ -61,7 +61,7 @@ function browseDirectory(dir) {
 	)
 	.catch(
 		() => {
-			setPopup('warning', lab.mess.error);
+			alert(lab.mess.error);
 			browseDirectory('DATAS');
 		}
 	);
@@ -90,7 +90,7 @@ function createDirectory(dirs) {
 				}
 			}
 		)
-		.catch(() => setPopup('warning', lab.mess.error));	
+		.catch(() => alert(lab.mess.error));	
 	}
 }
 function uploadItems() {
@@ -129,7 +129,7 @@ function uploadItems() {
 					}
 				}
 				else {
-					setPopup('warning', lab.mess.error);
+					alert(lab.mess.error);
 					document.querySelector('.upload-bar').classList.add('--hidden');
 				}
 			};
@@ -165,7 +165,7 @@ function openFile(filePath) {
 			}
 		}
 	)
-	.catch(() => setPopup('warning', lab.mess.error));
+	.catch(() => alert(lab.mess.error));
 }
 function openPreviewedItem() {
 	window.open(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -199,7 +199,7 @@ function renameItem(oldName, newName, item) {
 					}
 				}
 			)
-			.catch(() => setPopup('warning', lab.mess.error));
+			.catch(() => alert(lab.mess.error));
 		}
 	}
 	else {
@@ -230,7 +230,7 @@ function moveItem(fromPath, toPath) {
 				}
 			}
 		)
-		.catch(() => setPopup('warning', lab.mess.error));
+		.catch(() => alert(lab.mess.error));
 	}
 }
 function copyItem(fromPath, toPath) {
@@ -256,7 +256,7 @@ function copyItem(fromPath, toPath) {
 			}
 		}
 	)
-	.catch(() => setPopup('warning', lab.mess.error));
+	.catch(() => alert(lab.mess.error));
 }
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
@@ -277,7 +277,7 @@ function downloadUnpreviewedItem(item) {
 			}
 		}
 	)
-	.catch(() => setPopup('warning', lab.mess.error));
+	.catch(() => alert(lab.mess.error));
 }
 function downloadPreviewedItem() {
 	downloadItem(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -313,7 +313,7 @@ function removeItem(item, force) {
 				}
 			}
 		)
-		.catch(() => setPopup('warning', lab.mess.error));
+		.catch(() => alert(lab.mess.error));
 	}
 }
 function signOut() {
@@ -325,5 +325,5 @@ function signOut() {
 			}
 		}
 	)
-	.catch(() => setPopup('warning', lab.mess.error));
+	.catch(() => alert(lab.mess.error));
 }

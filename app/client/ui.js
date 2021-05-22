@@ -92,23 +92,14 @@
 			end: { name: '', time: 0 } 
 		},
 	};
-	function setPopup(type, content) {	
-		document.querySelector('.popup__content').innerHTML = content;
-		document.querySelector('.popup').classList.add('popup--' + type);
-		if(type === 'warning') {
-			setTimeout(
-				() => unsetPopup(),
-				3000
-			);
-		}
-	}
 	function unsetPopup() {
 		document.querySelector('.popup').setAttribute('class', 'popup');
 	}
 	function watchConfirm(step, item, event) {
 		action.click[step].name = item;
 		action.click[step].time = performance.now();
-		setPopup('confirm', lab.mess.confirmPress);
+		document.querySelector('.popup__content').innerHTML = lab.mess.confirmPress;
+		document.querySelector('.popup').classList.add('popup--confirm');
 		if(event){
 			event.preventDefault();
 		}	
