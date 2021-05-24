@@ -6,6 +6,8 @@ require('../../app/server/tools.php'); ?>
 	<html lang="<?php echo $env->lang; ?>">
 	<head>
 		<link rel="icon" href="../../app/client/cirrus-favicon.png" />
+		<link rel="manifest" href="../../manifest.json">
+		<link rel="apple-touch-icon" href="../../app/client/cirrus-logo-192.png">
 		<link rel="stylesheet" href="./style.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,5 +52,10 @@ require('../../app/server/tools.php'); ?>
 				src="../../app/client/cirrus-logo-alt.svg"
 			/>
 		</main>
+		<script>
+			if('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('../../service-worker.js');
+			};
+	</script>
     </body>
 </html>

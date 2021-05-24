@@ -1,0 +1,23 @@
+{
+	"background_color": "#222222",
+	"description": "Un cirrus est un type de nuage ayant hérité son nom latin de la forme qu'il rappelle, celle d'une boucle de cheveux. Au-delà de l'aspect poétique, cirrus est l'acronyme idéal du projet de Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces porté par Awebsome.",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "./app/client/cirrus-logo-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "./app/client/cirrus-logo-512.png",
+			"type": "image/png",
+			"sizes": "512x512",
+			"purpose": "maskable"
+		}
+	],
+	"name": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces",
+	"prefer_related_applications": false,
+	"short_name": "cirrus",
+	"start_url": "./",
+	"theme_color": "#222222"
+}
