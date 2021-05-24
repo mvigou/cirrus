@@ -269,8 +269,63 @@
 						e.preventDefault();
 					};
 					break;
-			}		
+			}				
 			itemElm.setAttribute('class', 'list__item ' + item.type + ' --visible');
+			itemElm.setAttribute('data-path', item.path);
+			itemElm.setAttribute('data-label', item.label);
+			itemElm.setAttribute('data-type', item.type);
+			let draggedItem = {
+				elm: null,
+				label: '',
+				moved: false,
+				path: '',
+			};
+			let targetedItem = {
+				coordX: 0,
+				coordY: 0,
+				elm: null,
+				path: '',
+				type: ''
+			}
+			itemElm.ontouchstart = e => {
+				draggedItem.elm = document.elementFromPoint(
+					e.touches[0].clientX,
+					e.touches[0].clientY
+				);
+				if(draggedItem.elm.closest('li') !== null) {
+					draggedItem.elm = draggedItem.elm.closest('li');
+				}
+				draggedItem.label = draggedItem.elm.getAttribute('data-label');
+				draggedItem.path = draggedItem.elm.getAttribute('data-path');
+			}
+			itemElm.ontouchmove = e => {
+				draggedItem.moved = true;			
+				targetedItem.coordX = e.touches[0].clientX;
+				targetedItem.coordY = e.touches[0].clientY;
+			}
+			itemElm.ontouchend = e => {
+				if(draggedItem.moved) {
+					targetedItem.elm = document.elementFromPoint(
+						targetedItem.coordX,
+						targetedItem.coordY
+					);
+					if(targetedItem.elm.closest('li') !== null) {
+						targetedItem.elm = targetedItem.elm.closest('li');
+					}
+					targetedItem.path = targetedItem.elm.getAttribute('data-path');
+					targetedItem.type = targetedItem.elm.getAttribute('data-type');
+					if(draggedItem.path !== targetedItem.path) {
+						if(targetedItem.type !== 'file') {
+							moveItem(
+								draggedItem.path, 
+								targetedItem.path + '/' + draggedItem.label 
+							);
+						}
+					}
+					draggedItem.moved = false;
+				}
+			
+			}
 			// Open item (replace the next sibling in normal mode).
 			let aItemElm = document.createElement('a');
 			aItemElm.classList.add('list__item__a', 'non-editable');

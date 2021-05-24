@@ -61,7 +61,7 @@ function browseDirectory(dir) {
 	)
 	.catch(
 		() => {
-			alert(lab.mess.error);
+			console.log(lab.mess.error);
 			browseDirectory('DATAS');
 		}
 	);
@@ -90,7 +90,7 @@ function createDirectory(dirs) {
 				}
 			}
 		)
-		.catch(() => alert(lab.mess.error));	
+		.catch(() => console.log(lab.mess.error));	
 	}
 }
 function uploadItems() {
@@ -129,7 +129,7 @@ function uploadItems() {
 					}
 				}
 				else {
-					alert(lab.mess.error);
+					console.log(lab.mess.error);
 					document.querySelector('.upload-bar').classList.add('--hidden');
 				}
 			};
@@ -165,7 +165,7 @@ function openFile(filePath) {
 			}
 		}
 	)
-	.catch(() => alert(lab.mess.error));
+	.catch(() => console.log(lab.mess.error));
 }
 function openPreviewedItem() {
 	window.open(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -199,7 +199,7 @@ function renameItem(oldName, newName, item) {
 					}
 				}
 			)
-			.catch(() => alert(lab.mess.error));
+			.catch(() => console.log(lab.mess.error));
 		}
 	}
 	else {
@@ -230,7 +230,7 @@ function moveItem(fromPath, toPath) {
 				}
 			}
 		)
-		.catch(() => alert(lab.mess.error));
+		.catch(() => console.log(lab.mess.error));
 	}
 }
 function copyItem(fromPath, toPath) {
@@ -256,7 +256,7 @@ function copyItem(fromPath, toPath) {
 			}
 		}
 	)
-	.catch(() => alert(lab.mess.error));
+	.catch(() => console.log(lab.mess.error));
 }
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
@@ -277,7 +277,7 @@ function downloadUnpreviewedItem(item) {
 			}
 		}
 	)
-	.catch(() => alert(lab.mess.error));
+	.catch(() => console.log(lab.mess.error));
 }
 function downloadPreviewedItem() {
 	downloadItem(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -313,7 +313,7 @@ function removeItem(item, force) {
 				}
 			}
 		)
-		.catch(() => alert(lab.mess.error));
+		.catch(() => console.log(lab.mess.error));
 	}
 }
 function signOut() {
@@ -325,5 +325,5 @@ function signOut() {
 			}
 		}
 	)
-	.catch(() => alert(lab.mess.error));
+	.catch(() => console.log(lab.mess.error));
 }
