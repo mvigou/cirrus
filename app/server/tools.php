@@ -1,4 +1,6 @@
 <?php
+ini_set('log_errors', 1);
+ini_set('error_log', '../../datas/logs/app-errors.txt');
 if(!isset($env)) {
 	$env = json_decode(file_get_contents('../../datas/env.json'));
 }
