@@ -220,60 +220,54 @@
 		itemListElm.innerHTML = '';
 		for(const item of items) {
 			let itemElm = document.createElement('li');	
+			// Set item path.
 			switch(item.type) {
 				case 'file':
-					item.path = dir + '/' + item.label;
-					itemElm.ondragstart = e => {		
-						e.dataTransfer.setData('label', item.label);
-						e.dataTransfer.setData('path', item.path);
-					};
+					item.path = dir + '/' + item.label;	
 					break;
 				case 'subdir':
 					item.path = dir + '/' + item.label;
-					itemElm.ondragstart = e => {
-						e.dataTransfer.setData('label', item.label);
-						e.dataTransfer.setData('path', item.path);
-					};
-					itemElm.ondragover = e => {
-						itemElm.classList.add('--hovered');
-						e.preventDefault();
-					};
-					itemElm.ondragleave = e => {
-						itemElm.classList.remove('--hovered');
-					};
-					itemElm.ondrop = e => {
-						const fromPath = e.dataTransfer.getData('path');
-						const toPath = item.path + '/' + e.dataTransfer.getData('label');
-						e.ctrlKey ?
-							copyItem(fromPath, toPath):
-							moveItem(fromPath, toPath);
-						e.preventDefault();
-					};
 					break;
 				case 'parent':
 					item.path = dir.substr(0, dir.lastIndexOf('/'));
-					itemElm.setAttribute('draggable', false);
-					itemElm.ondragover = e => {
-						itemElm.classList.add('--hovered');
-						e.preventDefault();
-					};
-					itemElm.ondragleave = e => {
-						itemElm.classList.remove('--hovered');
-					};
-					itemElm.ondrop = e => {
-						const fromPath = e.dataTransfer.getData('path');
-						const toPath = item.path + '/' + e.dataTransfer.getData('label');
-						e.ctrlKey ?
-							copyItem(fromPath, toPath):
-							moveItem(fromPath, toPath);
-						e.preventDefault();
-					};
 					break;
-			}				
+			}
 			itemElm.setAttribute('class', 'list__item ' + item.type + ' --visible');
 			itemElm.setAttribute('data-path', item.path);
 			itemElm.setAttribute('data-label', item.label);
 			itemElm.setAttribute('data-type', item.type);
+			// Move and copy item with drag & drop (mouse).
+			if(item.type === 'file') {
+				itemElm.ondragstart = e => {		
+					e.dataTransfer.setData('label', item.label);
+					e.dataTransfer.setData('path', item.path);
+				};
+			}
+			else {
+				if(item.type === 'parent') {
+					itemElm.setAttribute('draggable', false);
+				}
+				if(item.type === 'subdir') {
+					itemElm.ondragstart = e => {
+						e.dataTransfer.setData('label', item.label);
+						e.dataTransfer.setData('path', item.path);
+					};
+				}
+				itemElm.ondragover = e => {
+					itemElm.classList.add('--hovered');
+					e.preventDefault();
+				};
+				itemElm.ondragleave = e => itemElm.classList.remove('--hovered');
+				itemElm.ondrop = e => {
+					const fromPath = e.dataTransfer.getData('path');
+					const toPath = item.path + '/' + e.dataTransfer.getData('label');
+					e.ctrlKey ?
+						copyItem(fromPath, toPath):
+						moveItem(fromPath, toPath);
+					e.preventDefault();
+				};
+			}
+			// Move item with drag & drop (touch).
 			let draggedItem = {
 				elm: null,
 				label: '',
@@ -324,7 +318,6 @@
 					}
 					draggedItem.moved = false;
 				}
-			
 			}
 			// Open item (replace the next sibling in normal mode).
 			let aItemElm = document.createElement('a');
