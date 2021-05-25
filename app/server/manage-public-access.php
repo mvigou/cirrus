@@ -15,11 +15,17 @@ if(isAuthenticated() && hasOwnerRights()) {
 					$auths = scandir($env->signUpVisitorAuthDir);
 				}
 				// Return the existing link OR the new link OR an empty string.
+				$content;
+				if(strlen($auths[2]) === 128) {
+					$content = array(
+						'../../pages/sign-in/?&auth=' . $auths[2]
+					);
+				}
 				if(error_get_last() === null) {
 					echo json_encode (
 						array(
 							'success' => true,
-							'content' => strlen($auths[2]) === 128 ? '../../pages/sign-in/?&auth=' . $auths[2] : ''
+							'content' => $content
 						)
 					);
 					return;

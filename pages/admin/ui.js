@@ -13,18 +13,29 @@ function switchTheme() {
 		toLightTheme():
 		toDarkTheme();
 }
-function setInvits(role, invits) {
-	const listElm = document.querySelector('.' + role + '__list');
-	if(invits.length > 0) {
+function setList(listId, content = null) {
+	const listElm = document.getElementById(listId);
+	if(content !== null) {
 		listElm.innerHTML = '';
-		for(let invit of invits) {
-			let itemElm = document.createElement('li');
-			let aElm = document.createElement('a');
-			aElm.setAttribute('href', invit.url);
-			aElm.setAttribute('target', '_blank');
-			aElm.textContent = invit.url.substring(0, 48) + '...';
-			itemElm.appendChild(aElm);
-			listElm.appendChild(itemElm);
+		if(listId === 'logs__list') {
+			for(const log of content) {
+				if(log !== '') {
+					let itemElm = document.createElement('li');
+					itemElm.textContent = '[' + log;
+					listElm.appendChild(itemElm);
+				}
+			}
+		}
+		else {
+			for(let a of content) {
+				let itemElm = document.createElement('li');
+				let aElm = document.createElement('a');
+				aElm.setAttribute('href', a);
+				aElm.setAttribute('target', '_blank');
+				aElm.textContent = a.substring(0, 48) + '...';
+				itemElm.appendChild(aElm);
+				listElm.appendChild(itemElm);
+			}
 		}
 	}
 	else {
@@ -32,7 +43,7 @@ function setInvits(role, invits) {
 	}
 }
 function setUsers(users) {
-	const listElm = document.querySelector('.users__list');
+	const listElm = document.getElementById('users__list');
 	if(users.length > 0) {
 		listElm.innerHTML = '';
 		for(let user of users) {
@@ -56,38 +67,6 @@ function setUsers(users) {
 		}
 	}
 	else {
-		listElm.innerHTML = '...';
-	}
-}
-function setLogs(logs = '') {
-	const listElm = document.querySelector('.logs__list');
-	logs = logs.split('[');
-	listElm.innerHTML = '';
-	for(const log of logs) {
-		if(log !== '') {
-			let itemElm = document.createElement('li');
-			itemElm.textContent = '[' + log;
-			listElm.appendChild(itemElm);
-		}
-	}
-	if(listElm.innerHTML === '') {
-		listElm.innerHTML = '...';
-	}
-}
-function setPublicAccess(link = '') {
-	
-	const listElm = document.querySelector('.public-access__list');
-	listElm.innerHTML = '';	
-	if(link !== '') {
-		let itemElm = document.createElement('li');
-		let aElm = document.createElement('a');
-		aElm.setAttribute('href', link);
-		aElm.setAttribute('target', '_blank');
-		aElm.textContent = link.substring(0, 48) + '...';
-		itemElm.appendChild(aElm);
-		listElm.appendChild(itemElm);
-	}
-	if(listElm.innerHTML === '') {
 		listElm.innerHTML = '...';
 	}
 }

@@ -38,66 +38,6 @@ function ajaxPost(req) {
 		}
 	);
 }
-function browseInvits(role) {
-	ajaxPost(
-		{
-			script: 'browse-invits.php',
-			args: [
-				{
-					name: 'role',
-					value: role
-				}
-			]
-		}
-	)
-	.then( 
-		resp => {
-			if(resp.success) {
-				setInvits(role, resp.content);
-			}
-		}
-	)
-};
-function createInvit(role) {
-	ajaxPost(
-		{
-			script: 'create-invit.php',
-			args: [
-				{
-					name: 'role',
-					value: role
-				}
-			]
-		}
-	)
-	.then(
-		resp => {
-			if(resp.success) {
-				browseInvits(role);
-			}
-		}
-	)
-}
-function removeInvits(role) {
-	ajaxPost(
-		{
-			script: 'remove-invits.php',
-			args: [
-				{
-					name: 'role',
-					value: role
-				}
-			]
-		}
-	)
-	.then( 
-		resp => {
-			if(resp.success) {
-				browseInvits(role);
-			}
-		}
-	)
-}
 function browseUsers() {
 	ajaxPost(
 		{ 
@@ -166,35 +106,6 @@ function removeUser(userName, userRole) {
 		)
 	}
 }
-function browseLogs() {
-	ajaxPost(
-		{ 
-			script: 'browse-logs.php'
-		}
-	)
-	.then( 
-		resp => {
-			if(resp.success) {
-				setLogs(resp.content);
-			}
-		}
-	)
-}
-function removeLogs() {
-	ajaxPost(
-		{ 
-			script: 'remove-logs.php'
-		}
-	)
-	.then( 
-		resp => {
-			if(resp.success) {
-				setLogs();
-			}
-		}
-	)
-}
-
 function managePublicAccess(action) {
 	ajaxPost(
 		{
@@ -210,7 +121,51 @@ function managePublicAccess(action) {
 	.then(
 		resp => {
 			if(resp.success) {
-				setPublicAccess(resp.content);
+				setList('public-access__list', resp.content);
+			}
+		}
+	)
+}
+function manageInvitations(action, role) {
+	ajaxPost(
+		{
+			script: 'manage-invitations.php',
+			args: [
+				{
+					name: 'role',
+					value: role
+				},
+				{
+					name: 'action',
+					value: action
+				}
+			]	
+		}
+	)
+	.then(
+		resp => {
+			if(resp.success) {
+				setList(role + '__list', resp.content);
+			}
+		}
+	)
+}
+function manageLogs(action) {
+	ajaxPost(
+		{ 
+			script: 'manage-logs.php',
+			args: [
+				{
+					name: 'action',
+					value: action
+				}
+			]		
+		}
+	)
+	.then( 
+		resp => {
+			if(resp.success) {
+				setList('logs__list', resp.content);
 			}
 		}
 	)

@@ -1,8 +1,8 @@
 {
 	"bt": {
-		"addInvit": "Générer un lien d'inscription",
+		"addInvitations": "Générer un lien d'inscription",
 		"addPublicAccess": "Activer l'accès",
-		"rmInvits": "Supprimer les invitations",
+		"rmInvitations": "Supprimer les invitations",
 		"rmLogs": "Purger les journaux",
 		"rmUser": "Supprimer",
 		"rmPublicAccess": "Désactiver l'accès",
@@ -15,9 +15,9 @@
 	},
 	"title": {
 		"manLogs": "Journaux",
-		"manPubInvit": "Invitations \"éditeur\"",
+		"manPubInvitations": "Invitations \"éditeur\"",
 		"manUsers": "Gérer les utilisateurs",
-		"manViewInvit": "Invitations \"visualiseur\"",
+		"manViewInvitations": "Invitations \"visualiseur\"",
 		"manPublicAccess": "Accès public",
 		"page": "administration"
 	}
