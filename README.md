@@ -70,6 +70,7 @@ Note: cette liste tient également lieu de feuille de route partielle ; la fonct
 
 ### Opérations d'administration
 
+* Activation/Désactivation autonome d'un lien d'accès public au contenu.
 * Création autonome de comptes utilisateur de type "visualiseur" sur invitation.
 * Création autonome de comptes utilisateur de type "éditeur" sur invitation.
 * Création d'un compte "propriétaire" automatique à l'installation. 
