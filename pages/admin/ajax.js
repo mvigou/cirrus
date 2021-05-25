@@ -194,3 +194,24 @@ function removeLogs() {
 		}
 	)
 }
+
+function managePublicAccess(action) {
+	ajaxPost(
+		{
+			script: 'manage-public-access.php',
+			args: [
+				{
+					name: 'action',
+					value: action
+				}
+			]			
+		}
+	)
+	.then(
+		resp => {
+			if(resp.success) {
+				setPublicAccess(resp.content);
+			}
+		}
+	)
+}

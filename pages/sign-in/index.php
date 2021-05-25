@@ -1,4 +1,9 @@
 <?php 
+
+if(isset($_GET['auth'])) {
+	header('Location: ../../app/server/sign-in.php?auth=' . $_GET['auth']);
+	exit();
+}
 $env = json_decode(file_get_contents('../../datas/env.json'));
 $lab = json_decode(file_get_contents('./i18n-' . $env->lang . '.json'));
 require('../../app/server/tools.php'); ?>
@@ -17,11 +22,25 @@ require('../../app/server/tools.php'); ?>
 		<main>		
 			<h1>cirrus | <span><?php echo $lab->page->title; ?></span></h1>
 			<form action="../../app/server/sign-in.php" method="POST">
+				<?php if(isset($_GET['error'])) {
+					$mess = '';
+					switch($_GET['error']) {
+						case 'wrong-link':
+							$mess = $lab->error->wrongLink;
+							break;
+						
+						case 'wrong-user':
+							$mess = $lab->error->wrongUser;
+							break;
+						
+						case 'wrong-password':
+							$mess = $lab->error->wrongPassword;
+							break;
+					}
+					echo '<p style="color:#f44;">' . $mess . '</p>';
+				} ?>
 				<label>
 					<?php echo $lab->label->userName; ?>
-					<?php if(isset($_GET['error']) && $_GET['error'] === 'user-not-found') {
-						echo '<p style="color:#f44;">' . $lab->error->userNotFound  . '</p>';
-					} ?>
 					<input 
 						id="user-name" 
 						minlength="8"
@@ -33,9 +52,6 @@ require('../../app/server/tools.php'); ?>
 				</label>
 				<label>
 					<?php echo $lab->label->userPass; ?>
-					<?php if(isset($_GET['error']) && $_GET['error'] === 'wrong-password') {
-						echo '<p style="color:#f44;">' . $lab->error->wrongPassword  . '</p>';
-					} ?>
 					<input type="password" 
 						id="user-pass" 
 						minlength="8"

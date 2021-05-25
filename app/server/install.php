@@ -15,6 +15,7 @@ file_put_contents(
 			'signUpOwnerAuthDir' => '../../datas/auth/sign-up-as-owner',
 			'signUpPublisherAuthDir' => '../../datas/auth/sign-up-as-publisher',
 			'signUpViewerAuthDir' => '../../datas/auth/sign-up-as-viewer',
+			"signUpVisitorAuthDir" => "../../datas/auth/sign-up-as-visitor",
 			'tempDir' => '../../datas/temp',
 			'logsDir' => '../../datas/logs'
 		), 
@@ -34,6 +35,7 @@ if(!is_dir($env->ownersDir)) {
 	mkdir($env->datas . '/auth/sign-up-as-owner', 0777, true);
 	mkdir($env->datas . '/auth/sign-up-as-publisher');
 	mkdir($env->datas . '/auth/sign-up-as-viewer');
+	mkdir($env->datas . '/auth/sign-up-as-visitor');
 	$auth = hash('sha512', 'install-start-auth');
 	touch($env->datas . '/auth/sign-up-as-owner/' . $auth);
 	header('Location: ../../pages/sign-up/?role=owner&auth=' . $auth);

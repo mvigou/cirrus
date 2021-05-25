@@ -1,9 +1,11 @@
 {
 	"bt": {
 		"addInvit": "Générer un lien d'inscription",
+		"addPublicAccess": "Activer l'accès",
 		"rmInvits": "Supprimer les invitations",
 		"rmLogs": "Purger les journaux",
 		"rmUser": "Supprimer",
+		"rmPublicAccess": "Désactiver l'accès",
 		"setPublisher": "Changer en éditeur",
 		"setViewer": "Changer en visualiseur",
 		"switchTheme": "Basculer entre thème clair / thème sombre"
@@ -16,6 +18,7 @@
 		"manPubInvit": "Invitations \"éditeur\"",
 		"manUsers": "Gérer les utilisateurs",
 		"manViewInvit": "Invitations \"visualiseur\"",
+		"manPublicAccess": "Accès public",
 		"page": "administration"
 	}
 }

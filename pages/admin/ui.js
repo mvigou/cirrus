@@ -74,3 +74,20 @@ function setLogs(logs = '') {
 		listElm.innerHTML = '...';
 	}
 }
+function setPublicAccess(link = '') {
+	
+	const listElm = document.querySelector('.public-access__list');
+	listElm.innerHTML = '';	
+	if(link !== '') {
+		let itemElm = document.createElement('li');
+		let aElm = document.createElement('a');
+		aElm.setAttribute('href', link);
+		aElm.setAttribute('target', '_blank');
+		aElm.textContent = link.substring(0, 48) + '...';
+		itemElm.appendChild(aElm);
+		listElm.appendChild(itemElm);
+	}
+	if(listElm.innerHTML === '') {
+		listElm.innerHTML = '...';
+	}
+}
