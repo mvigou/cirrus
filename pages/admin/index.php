@@ -28,6 +28,7 @@ if(isAuthenticated() && hasOwnerRights()) { ?>
 					title="<?php echo $lab->bt->switchTheme; ?>">
 					<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>
 				</button>
+				<a href="../../">Retour</a>
 				<!-- Create, remove a public access. -->
 				<details ontoggle="managePublicAccess('browse')">
 					<summary><?php echo $lab->title->manPublicAccess; ?></summary>
