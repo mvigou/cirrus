@@ -10,6 +10,8 @@ if(isAuthenticated() && hasOwnerRights()) {
 			$areAccredited = preg_split('/\r\n|[\r\n]/', $_POST['areAccredited']);
 			
 		
+
+			// If the access to the directory is restricted, add a .lock file ; else remove it.
 			$isRestricted = $_POST['isRestricted'] === 'true' ? true : false;
 			$lockFilePath = $_POST['dirPath'] . '/.lock';
 			if($isRestricted) {
@@ -28,7 +30,6 @@ if(isAuthenticated() && hasOwnerRights()) {
 				$permsPath,
 				json_encode(
 					array (
-						'isRestricted' => $_POST['isRestricted'],
 						'areAccredited' => $areAccredited
 					)
 				)

@@ -19,7 +19,7 @@ if(isAuthenticated() && hasWritingRights()) {
 				if(touch($dirName . '/.perms')) {
 					if(file_put_contents(
 						$dirName . '/.perms', 
-						'{"isRestricted": false, "areAccredited": []}'
+						'{"areAccredited": []}'
 					)) {
 						echo json_encode(array('success' => true));
 					} 
