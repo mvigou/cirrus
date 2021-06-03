@@ -30,6 +30,7 @@ body
 	height: 100vh
 	margin: 0
 
+.owner-ft,
 .publisher-ft, 
 .recycle-ft,
 .editable
@@ -51,8 +52,12 @@ body
 
 // Features visible by owner and publishers, hidden for viewers.
 
-.--publisher
-	.publisher-ft
+.--publisher .publisher-ft
+		display: block
+
+// Features visible by owner, hidden for publishers & viewers.
+
+.--owner .owner-ft
 		display: block
 
 // Features for the recycle directory.

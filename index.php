@@ -226,8 +226,11 @@ if(is_dir('./datas')) {
 						error: "<?php echo $lab->mess->error; ?>",
 					}
 				};
-				// Unhide publisher features.
-				<?php if(hasWritingRights()) { ?>
+				// Unhide writing features.
+				<?php if(hasOwnerRights()) { ?>
+					document.body.classList.add('--owner', '--publisher');
+				<?php }
+				else if(hasWritingRights()) { ?>
 					document.body.classList.add('--publisher');
 				<?php } ?>
 				// Reload user preferences.
