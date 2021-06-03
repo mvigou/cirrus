@@ -20,7 +20,7 @@ if(isAuthenticated()) {
 			$items = [];
 			$arrFiles = [];
 			$arrDir = [];
-			foreach(array_diff(scandir($dir), array('.', $env->PermsFileName)) as $item) {
+			foreach(array_diff(scandir($dir), array('.')) as $item) {
 				// Parent directory.
 				if($item === '..') {
 					if($dir !== $env->contentDir && $dir !== $env->recycleDir) {
@@ -35,7 +35,9 @@ if(isAuthenticated()) {
 				else {
 					// Sub directory.
 					if(is_dir($dir . '/' . $item)) {
-						array_push($arrDir, $item);
+						if(!is_file($dir . '/' . $item . '/.lock') || hasOwnerRights()) {
+							array_push($arrDir, $item);
+						}				
 					}
 					// File.
 					else {

@@ -351,7 +351,7 @@ function browsePerms(dirPath) {
 function updatePerms(dirPath) {
 	ajaxPost(
 		{ 
-			script: 'update-permissions.php',
+			script: 'manage-permissions.php',
 			args: [
 				{
 					name: 'dirPath',

@@ -16,9 +16,9 @@ if(isAuthenticated() && hasWritingRights()) {
 				}
 			}
 			if(mkdir($dirName, 0777, true)) {
-				if(touch($dirName . '/' . $env->PermsFileName)) {
+				if(touch($dirName . '/.perms')) {
 					if(file_put_contents(
-						$dirName . '/' . $env->PermsFileName, 
+						$dirName . '/.perms', 
 						'{"isRestricted": false, "areAccredited": []}'
 					)) {
 						echo json_encode(array('success' => true));

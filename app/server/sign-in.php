@@ -53,6 +53,7 @@ else {
 		$_SESSION['token'] = session_id();
 		$_SESSION['instanceId'] = $env->instanceId;
 		$_SESSION['role'] = 'viewer';
+		$_SESSION['username'] = $userName;
 		$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 	}
 	else {

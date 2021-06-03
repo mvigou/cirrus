@@ -4,7 +4,7 @@ require_once('./tools.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['dirPath'])) {
-		$perms = json_decode(file_get_contents($_POST['dirPath'] . '/' . $env->PermsFileName)); 
+		$perms = json_decode(file_get_contents($_POST['dirPath'] . '/.perms')); 
 		if(error_get_last() === null) {
 			echo json_encode (
 				array(
