@@ -12,7 +12,7 @@ if(is_dir('./datas')) {
 			<link rel="stylesheet" href="./app/client/style.css" />
 			<meta charset="UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<title>cirrus | <?php echo $lab->page->title; ?></title>
+			<title>cirrus | <?php echo $lab->title->main; ?></title>
 		</head>
 		<body>
 			<main>	
@@ -61,12 +61,12 @@ if(is_dir('./datas')) {
 					<!-- Allow to perform some actions (search, create directories...) -->
 					<div class="bar datas-ft non-editable">
 						<form class="bar__form" >
-							<label for="bar__input"><?php echo $lab->label->bar; ?></label>
+							<label for="bar__input"><?php echo $lab->input->bar; ?></label>
 							<input 
 								id="bar__input"
 								class="publisher-ft"
 								oninput="barLive(this.value)"
-								title="<?php echo $lab->label->bar; ?>" />
+								title="<?php echo $lab->input->bar; ?>" />
 							<button 
 								id="bar__cancelButton"
 								class="publisher-ft bar__bt --hidden"
@@ -122,7 +122,7 @@ if(is_dir('./datas')) {
 				<!-- Box for previewing content -->
 				<div 
 					class="preview" 
-					data-item-path="">
+					data-item-path="" >
 					<div>
 						<nav class="preview__nav">
 							<!-- Allow to open the previewed item in another tab. -->
@@ -163,6 +163,49 @@ if(is_dir('./datas')) {
 					<p></p>
 					<div></div>
 				</div>
+				<!-- Permissions manager -->
+				<?php if(hasOwnerRights()) { ?>
+					<div 
+						class="perms-panel"
+						data-item-path="" >
+						<div>
+							<nav class="perms-panel__nav">
+								<!-- Close the panel. -->
+								<button 
+									class="start-trap" 
+									onclick="unsetPermsPanel()" 
+									title="<?php echo $lab->bt->close; ?>">
+									<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+								</button>
+							</nav>
+							<div>
+								<form>
+									<fieldset>
+										<legend><?php echo $lab->title->perms ; ?></legend>
+										<label>
+											<input class="perms-radio" type="radio" name="isRestricted" value="false" />
+											<?php echo $lab->input->unrestricted; ?>
+										</label>
+										<label>
+											<input class="perms-radio" type="radio" name="isRestricted" value="true" />
+											<?php echo $lab->input->restricted; ?>
+										</label>
+									</fieldset>
+									<label>
+										<?php echo $lab->input->areAccredited; ?>
+										<textarea name="areAccredited"></textarea>
+									</label>
+									<button 
+										class="start-trap"
+										title="<?php echo $lab->bt->confirm; ?>" 
+										type="submit">
+										<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
 			</main>
 			<script src="./app/client/ajax.js"></script>
 			<script src="./app/client/ui.js"></script>
@@ -173,7 +216,8 @@ if(is_dir('./datas')) {
 					bt: {
 						downloadItem: "<?php echo $lab->bt->downloadItem; ?>",
 						openItem: "<?php echo $lab->bt->openItem; ?>",
-						removeItem: "<?php echo $lab->bt->removeItem; ?>"
+						removeItem: "<?php echo $lab->bt->removeItem; ?>",
+						restrictItem: "<?php echo $lab->bt->restrictItem; ?>",
 					},
 					mess: {
 						confirmPress: "<?php echo $lab->mess->confirmPress; ?>",

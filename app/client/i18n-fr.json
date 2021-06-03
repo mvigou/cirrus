@@ -10,6 +10,7 @@
 		"openItem": "Ouvrir",
 		"openItemElsewhere": "Ouvrir dans un nouvel onglet",
 		"removeItem": "Supprimer (maintenir pour enclencher)",
+		"restrictItem": "Verrouiller",
 		"signOut": "Se déconnecter",
 		"switchEdition": "Activer / désactiver le mode d'édition des fichiers et des dossiers",
 		"switchTheme": "Basculer entre thème clair / thème sombre",
@@ -17,11 +18,15 @@
 		"switchToRecycle": "Afficher la corbeille",
 		"uploadItem": "Envoyer des fichiers"
 	},
-	"label": {
-		"bar": "Rechercher : ? suivi de la recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi de la commande à effectuer."
+	"input": {
+		"bar": "Rechercher : ? suivi de la recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi de la commande à effectuer.",
+		"unrestricted": "Ouvert à tout membre ayant accès à cette instance de cirrus.",
+		"restricted": "Ouvert aux seuls membres enregistrés figurant dans la liste ci-dessous.",
+		"areAccredited": "Membres accrédités (un par ligne)"
 	},
-	"page": {
-		"title": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces"
+	"title": {
+		"main": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces",
+		"perms": "Règle d'accès au dossier"
 	},
 	"mess": {
 		"confRemove": "Supprimer cet élément ?",

@@ -123,7 +123,7 @@ input
 nav input
 	margin: 24px 0 -6px 6px
 
-label
+nav label
 	position: absolute
 	top: -9999px
 
@@ -166,7 +166,7 @@ svg
 	&__item
 		align-items: center
 		display: none
-		grid-template-columns: auto 1fr auto auto
+		grid-template-columns: auto 1fr repeat(3, auto)
 		padding: 0px 12px 0px 24px
 		&.--visible
 			display: grid
@@ -185,7 +185,7 @@ svg
 			margin-right: 12px
 			width: 18px
 	
-.preview
+.preview, .perms-panel
 	background-color: #000a
 	bottom: 0
 	display: none
@@ -218,6 +218,8 @@ svg
 		top: 0
 	button:last-of-type
 		margin-left: auto
+
+.preview
 	&__item
 		display: grid
 		height: 100%
@@ -231,7 +233,26 @@ svg
 			display: block
 			height: 100%
 			width: 100%
-			
+
+.perms-panel
+	form
+		margin: auto
+		max-width: 360px
+	label
+		display: block
+		margin: 24px 0
+	fieldset label
+		align-items: center
+		display: grid
+		grid-template-columns: 48px auto
+	textarea
+		box-sizing: border-box
+		font-family: inherit
+		height: 90px
+		min-height: 60px
+		resize: vertical
+		width: 100%
+
 .upload-bar
 	background-color: var(--bg-color)
 	bottom: 0
@@ -299,4 +320,4 @@ svg
 		background-color: var(--hovered-color)
 		border-radius: 6px
 		color: var(--bg-color)
-		padding: 24px
+		padding: 24px	

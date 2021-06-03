@@ -327,3 +327,53 @@ function signOut() {
 	)
 	.catch(() => console.log(lab.mess.error));
 }
+function browsePerms(dirPath) {
+	ajaxPost(
+		{ 
+			script: 'browse-permissions.php',
+			args: [
+				{
+					name: 'dirPath',
+					value: dirPath
+				}
+			]
+		}
+	)
+	.then(
+		resp => {
+			if(resp.success) {	
+				setPermsPanel(dirPath, resp.content);
+			}
+		}
+	)
+	.catch(() => console.log(lab.mess.error));
+}
+function updatePerms(dirPath) {
+	ajaxPost(
+		{ 
+			script: 'update-permissions.php',
+			args: [
+				{
+					name: 'dirPath',
+					value: dirPath
+				},
+				{
+					name: 'isRestricted',
+					value: document.getElementsByName('isRestricted')[0].checked ? false : true
+				},
+				{
+					name: 'areAccredited',
+					value: document.getElementsByName('areAccredited')[0].value.trim()
+				}
+			]
+		}
+	)
+	.then(
+		resp => {
+			if(resp.success) {	
+				unsetPermsPanel();
+			}
+		}
+	)
+	.catch(() => console.log(lab.mess.error));
+}

@@ -20,7 +20,7 @@ if(isAuthenticated()) {
 			$items = [];
 			$arrFiles = [];
 			$arrDir = [];
-			foreach(array_diff(scandir($dir), array('.')) as $item) {
+			foreach(array_diff(scandir($dir), array('.', $env->PermsFileName)) as $item) {
 				// Parent directory.
 				if($item === '..') {
 					if($dir !== $env->contentDir && $dir !== $env->recycleDir) {

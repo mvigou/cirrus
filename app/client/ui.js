@@ -189,6 +189,28 @@
 	}
 	document.querySelector('.bar__form').onsubmit = e => barSubmit(e);
 
+/* ### Manage permissions panel ### */
+
+	const permsPanelElm = document.querySelector('.perms-panel');
+	function setPermsPanel(dirPath, content) {
+		document.querySelector('.perms-radio[value=' + content.isRestricted + '').setAttribute('checked', true);
+		const textAreaElm = document.querySelector('.perms-panel textarea');
+		textAreaElm.value = '';
+		for(let member of content.areAccredited) {
+			textAreaElm.value += member + '\n';
+		}
+		permsPanelElm.setAttribute('data-item-path', dirPath);
+		permsPanelElm.classList.add('--visible');
+	}
+	function unsetPermsPanel() {
+		permsPanelElm.setAttribute('data-item-path', '');
+		permsPanelElm.classList.remove('--visible');
+	}
+	document.querySelector('.perms-panel').onsubmit = e => {
+		updatePerms(permsPanelElm.getAttribute('data-item-path'));
+		e.preventDefault();
+	};
+
 /* ### Manage structure ### */
 
 	function setCounters() {
@@ -350,6 +372,15 @@
 				};
 				edItemInputElm.onblur = e => renameItem(item.label, e.target.value, e.target);
 				itemElm.appendChild(edItemInputElm);
+			}
+			if(item.type === 'subdir') {	
+				// Restrict item.
+				let restItemBtElm = document.createElement('button');
+				restItemBtElm.classList.add('non-editable');
+				restItemBtElm.title = lab.bt.restrictItem;
+				restItemBtElm.innerHTML = '<svg fill-rule="evenodd" clip-rule="evenodd"><path d="M24 22h-24v-20h7c1.695 1.942 2.371 3 4 3h13v17zm-17.917-18h-4.083v16h20v-13h-11c-2.339 0-3.537-1.388-4.917-3zm9.917 14h-8v-5h1v-1c0-1.656 1.344-3 3-3s3 1.344 3 3v1h1v5zm-5-6v1h2v-1c0-.552-.448-1-1-1s-1 .448-1 1z"/></svg>';
+				restItemBtElm.onclick = () => browsePerms(item.path);
+				itemElm.appendChild(restItemBtElm);
 			}
 			if(item.type === 'file' || item.type === 'subdir') {
 				// Download item.
