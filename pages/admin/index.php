@@ -97,7 +97,7 @@ if(isAuthenticated() && hasOwnerRights()) { ?>
 						confirm: "<?php echo $lab->mess->confRemoveUser; ?>",
 					}
 				};
-				if(localStorage.getItem('mode') === 'dark') {
+				if(localStorage.getItem('theme') === 'dark') {
 					toDarkTheme();
 				}
 			</script>

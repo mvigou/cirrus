@@ -2,11 +2,11 @@
 
 function toDarkTheme() {	
 	document.body.classList.add('--dark-mode');
-	localStorage.setItem('mode', 'dark');
+	localStorage.setItem('theme', 'dark');
 }
 function toLightTheme() {
 	document.body.classList.remove('--dark-mode');
-	localStorage.setItem('mode', 'light');
+	localStorage.setItem('theme', 'light');
 };
 function switchTheme() {
 	document.body.classList.contains('--dark-mode') ?

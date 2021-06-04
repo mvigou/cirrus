@@ -316,17 +316,6 @@ function removeItem(item, force) {
 		.catch(() => console.log(lab.mess.error));
 	}
 }
-function signOut() {
-	ajaxPost({ script: 'sign-out.php' })
-	.then(
-		resp => {
-			if(resp.success) {	
-				window.location.reload();
-			}
-		}
-	)
-	.catch(() => console.log(lab.mess.error));
-}
 function browsePerms(dirPath) {
 	ajaxPost(
 		{ 
@@ -372,6 +361,17 @@ function updatePerms(dirPath) {
 		resp => {
 			if(resp.success) {	
 				unsetPermsPanel();
+			}
+		}
+	)
+	.catch(() => console.log(lab.mess.error));
+}
+function signOut() {
+	ajaxPost({ script: 'sign-out.php' })
+	.then(
+		resp => {
+			if(resp.success) {	
+				window.location.reload();
 			}
 		}
 	)

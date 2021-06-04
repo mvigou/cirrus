@@ -1,13 +1,26 @@
 "use strict";
 
+const ui = {
+	addButton: document.getElementById('bar__addButton'),
+	body: document.body,
+	canButton: document.getElementById('bar__cancelButton'),
+	cmdButton: document.getElementById('bar__cmdButton'),
+	dirCounter: document.getElementById('dir-counter'),
+	fileCounter: document.getElementById('fil-counter'),
+	permsPanel: document.querySelector('.perms-panel'),
+	popup: document.querySelector('.popup'),
+	prevBox: document.querySelector('.preview'),
+	prevItem: document.querySelector('.preview__item')
+};
+
 /* ### Manage themes ### */
 
 	function toRecycleTheme() {
-		document.body.classList.add('--in-recycle');
+		ui.body.classList.add('--in-recycle');
 		localStorage.setItem('mainDir', 'RECYCLE');
 	}
 	function toDataTheme() {
-		document.body.classList.remove('--in-recycle');
+		ui.body.classList.remove('--in-recycle');
 		localStorage.setItem('mainDir', 'DATAS');
 	}
 	function switchMainDir(dir) {
@@ -16,15 +29,15 @@
 			toDataTheme();
 	}
 	function toDarkTheme() {	
-		document.body.classList.add('--dark-mode');
-		localStorage.setItem('mode', 'dark');
+		ui.body.classList.add('--dark-mode');
+		localStorage.setItem('theme', 'dark');
 	}
 	function toLightTheme() {
-		document.body.classList.remove('--dark-mode');
-		localStorage.setItem('mode', 'light');
+		ui.body.classList.remove('--dark-mode');
+		localStorage.setItem('theme', 'light');
 	};
 	function switchTheme() {
-		document.body.classList.contains('--dark-mode') ?
+		ui.body.classList.contains('--dark-mode') ?
 			toLightTheme():
 			toDarkTheme();
 	}
@@ -32,36 +45,32 @@
 /* ### Manage modes ### */
 
 	function toggleEdition() {
-		document.body.classList.contains('--edit-mode') ?
-			document.body.classList.remove('--edit-mode'):
-			document.body.classList.add('--edit-mode');
+		ui.body.classList.contains('--edit-mode') ?
+			ui.body.classList.remove('--edit-mode'):
+			ui.body.classList.add('--edit-mode');
 	}
 
 /* ### Manage preview */
 
-	const previewBoxElm = document.querySelector('.preview');
-	const previewItemElm = document.querySelector('.preview__item');
 	function setPreview(sourcePath, tempPath) {
-		previewBoxElm.setAttribute('data-item-path', tempPath);
-		previewBoxElm.classList.add('--visible');
+		ui.prevBox.setAttribute('data-item-path', tempPath);
+		ui.prevBox.classList.add('--visible');
 		document.querySelector('.start-trap').focus();
 	}
 	function unsetPreview() {
-		previewItemElm.innerHTML = '';
-		previewBoxElm.classList.remove('--visible');
+		ui.prevItem.innerHTML = '';
+		ui.prevBox.classList.remove('--visible');
 	}
 	function setPreviewImg(sourcePath, tempPath) {
-		let imgElm = document.createElement('img');
-		imgElm.classList.add('preview__item__img');
+		const imgElm = document.createElement('img');
 		imgElm.src = tempPath;
-		previewItemElm.appendChild(imgElm);
+		ui.prevItem.appendChild(imgElm);
 		setPreview(sourcePath, tempPath);
 	}
 	function setPreviewPdf(sourcePath, tempPath) {
-		let iframeElm = document.createElement('iframe');
-		iframeElm.classList.add('preview__item__iframe');
+		const iframeElm = document.createElement('iframe');
 		iframeElm.src = tempPath;
-		previewItemElm.appendChild(iframeElm);
+		ui.prevItem.appendChild(iframeElm);
 		setPreview(sourcePath, tempPath);
 	}
 	document.onkeydown = e => {
@@ -93,13 +102,13 @@
 		},
 	};
 	function unsetPopup() {
-		document.querySelector('.popup').setAttribute('class', 'popup');
+		ui.popup.setAttribute('class', 'popup');
 	}
 	function watchConfirm(step, item, event) {
 		action.click[step].name = item;
 		action.click[step].time = performance.now();
 		document.querySelector('.popup__content').innerHTML = lab.mess.confirmPress;
-		document.querySelector('.popup').classList.add('popup--confirm');
+		ui.popup.classList.add('popup--confirm');
 		if(event){
 			event.preventDefault();
 		}	
@@ -117,11 +126,6 @@
 
 /* ### Manage bar ### */
 
-	const bar = {
-		addButtonElm: document.getElementById('bar__addButton'),
-		cmdButtonElm: document.getElementById('bar__cmdButton'),
-		canButtonElm: document.getElementById('bar__cancelButton')
-	};
 	function isPerformingSearch(value) {
 		return value.indexOf('?') === 0 ? true : false;
 	}
@@ -132,17 +136,17 @@
 		return value.indexOf('*') === 0 ? true : false;
 	}
 	function setBarButton(button) {
-		bar.addButtonElm.classList.add('--hidden');
-		bar.cmdButtonElm.classList.add('--hidden');
-		bar.canButtonElm.classList.add('--hidden');
+		ui.addButton.classList.add('--hidden');
+		ui.cmdButton.classList.add('--hidden');
+		ui.canButton.classList.add('--hidden');
 		if(button) {
-			bar[button].classList.remove('--hidden');
+			ui[button].classList.remove('--hidden');
 		}
 	}
 	function barLive(value) {
 		const items = document.getElementsByClassName('list__item');
 		if(isPerformingSearch(value)) {
-			setBarButton('canButtonElm');
+			setBarButton('canButton');
 			for(const item of items) {
 				item.classList.remove('--visible');	
 				if(item.textContent.toLowerCase().indexOf(value.substr(1).toLowerCase()) >= 0) {
@@ -157,10 +161,10 @@
 			}
 			setCounters();
 			if(isPerformingCreate(value)) {
-				setBarButton('addButtonElm');
+				setBarButton('addButton');
 			}
 			else if(isPerformingCommand(value)) {
-				setBarButton('cmdButtonElm');
+				setBarButton('cmdButton');
 			}
 			else {
 				setBarButton();
@@ -174,15 +178,15 @@
 			for(const item of items) {
 				item.classList.add('--visible');
 			}
-			bar.canButtonElm.classList.add('--hidden');
+			ui.canButton.classList.add('--hidden');
 		}
 		else if(isPerformingCreate(value)) {
 			createDirectory(value.substr(1));
-			bar.addButtonElm.classList.add('--hidden');
+			ui.addButton.classList.add('--hidden');
 		}
 		else if(isPerformingCommand(value)) {
 			// Do something...
-			bar.cmdButtonElm.classList.add('--hidden');
+			ui.cmdButton.classList.add('--hidden');
 		}
 		e.target.reset();
 		e.preventDefault();
@@ -191,7 +195,6 @@
 
 /* ### Manage permissions panel ### */
 
-	const permsPanelElm = document.querySelector('.perms-panel');
 	function setPermsPanel(dirPath, content) {
 		document.querySelector('.perms-radio[value=' + content.isRestricted + '').setAttribute('checked', true);
 		if(content.accreditedMembers !== null) {
@@ -201,23 +204,23 @@
 				textAreaElm.value += member + '\n';
 			}
 		}
-		permsPanelElm.setAttribute('data-item-path', dirPath);
-		permsPanelElm.classList.add('--visible');
+		ui.permsPanel.setAttribute('data-item-path', dirPath);
+		ui.permsPanel.classList.add('--visible');
 	}
 	function unsetPermsPanel() {
-		permsPanelElm.setAttribute('data-item-path', '');
-		permsPanelElm.classList.remove('--visible');
+		ui.permsPanel.setAttribute('data-item-path', '');
+		ui.permsPanel.classList.remove('--visible');
 	}
-	document.querySelector('.perms-panel').onsubmit = e => {
-		updatePerms(permsPanelElm.getAttribute('data-item-path'));
+	ui.permsPanel.onsubmit = e => {
+		updatePerms(ui.permsPanel.getAttribute('data-item-path'));
 		e.preventDefault();
 	};
 
 /* ### Manage structure ### */
 
 	function setCounters() {
-		document.querySelector('.dir-counter').textContent = document.getElementsByClassName('subdir --visible').length;
-		document.querySelector('.fil-counter').textContent = document.getElementsByClassName('file --visible').length;
+		ui.dirCounter.textContent = document.getElementsByClassName('subdir --visible').length;
+		ui.fileCounter.textContent = document.getElementsByClassName('file --visible').length;
 	}
 	function setTree(dir) {
 		const navTreeElm = document.querySelector('.tree');

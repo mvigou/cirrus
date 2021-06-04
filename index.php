@@ -17,35 +17,35 @@ if(is_dir('./datas')) {
 		<body>
 			<main>	
 				<nav class="nav">
-					<!-- Display the data directory. -->
+					<!-- Display the data directory -->
 					<button 
 						class="recycle-ft"
 						onclick="browseDirectory('DATAS'), switchMainDir('DATAS')"
 						title="<?php echo $lab->bt->switchToData; ?>">
 						<svg viewBox="0 0 24 24"><path d="M12 5c3.453 0 5.891 2.797 5.567 6.78 1.745-.046 4.433.751 4.433 3.72 0 1.93-1.57 3.5-3.5 3.5h-13c-1.93 0-3.5-1.57-3.5-3.5 0-2.797 2.479-3.833 4.433-3.72-.167-4.218 2.208-6.78 5.567-6.78zm0-2c-4.006 0-7.267 3.141-7.479 7.092-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h13c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408-.212-3.951-3.473-7.092-7.479-7.092z"/></svg>
 					</button>
-					<!-- Display the recycle directory. -->
+					<!-- Display the recycle directory -->
 					<button 
 						class="datas-ft publisher-ft non-editable"
 						onclick="browseDirectory('RECYCLE'), switchMainDir('RECYCLE')"
 						title="<?php echo $lab->bt->switchToRecycle; ?>">
 						<svg viewBox="0 0 24 24"><path d="M9 19c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5-17v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712zm-3 4v16h-14v-16h-2v18h18v-18h-2z"/></svg>
 					</button>
-					<!-- Open a window to upload files. -->
+					<!-- Open a window to upload files -->
 					<button 
 						class="datas-ft publisher-ft non-editable"
 						onclick="uploadItems()"
 						title="<?php echo $lab->bt->uploadItem; ?>">
 						<svg viewBox="3 3 18 18"><path d="M10.4971 12.9823L10 12.4853L12.4853 10L14.9706 12.4853L14.4735 12.9823L12.8368 11.3456V16H12.1338V11.3456L10.4971 12.9823Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1571 3H6.63636C5.73262 3 5 3.73262 5 4.63636V19.3636C5 20.2674 5.73262 21 6.63636 21H18.0909C18.9946 21 19.7273 20.2674 19.7273 19.3636V7.57019L15.1571 3ZM6.63636 4.63636H13.1818V7.90909C13.1818 8.81283 13.9144 9.54545 14.8182 9.54545H18.0909V19.3636H6.63636V4.63636ZM14.8182 7.90909V4.97527L17.752 7.90909H14.8182Z"/></svg>
 					</button>
-					<!-- Toggle between normal and edition mode. -->
+					<!-- Toggle between normal and edition mode -->
 					<button 
 						class="datas-ft publisher-ft"
 						onclick="toggleEdition()"
 						title="<?php echo $lab->bt->switchEdition; ?>">
 						<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>
 					</button>
-					<!-- Empty the recycle bin. -->
+					<!-- Empty the recycle bin -->
 					<button 
 						class="recycle-ft"
 						id="emptyRecycleBt"
@@ -87,19 +87,21 @@ if(is_dir('./datas')) {
 							</button>
 						</form>
 					</div>
-					<!-- Toggle between light and dark theme. -->
+					<!-- Toggle between light and dark theme -->
 					<button 
 						onclick="switchTheme()"
 						title="<?php echo $lab->bt->switchTheme; ?>">
 						<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>
 					</button>
 					<?php if(hasOwnerRights()) { ?>
+						<!-- Allow to access to admin panel -->
 						<button 
 							onclick="window.location.href = './pages/admin'"
 							title="<?php echo $lab->bt->openAdmin; ?>">
 							<svg viewBox="0 0 24 24"><path d="M24 14.187v-4.374c-2.148-.766-2.726-.802-3.027-1.529-.303-.729.083-1.169 1.059-3.223l-3.093-3.093c-2.026.963-2.488 1.364-3.224 1.059-.727-.302-.768-.889-1.527-3.027h-4.375c-.764 2.144-.8 2.725-1.529 3.027-.752.313-1.203-.1-3.223-1.059l-3.093 3.093c.977 2.055 1.362 2.493 1.059 3.224-.302.727-.881.764-3.027 1.528v4.375c2.139.76 2.725.8 3.027 1.528.304.734-.081 1.167-1.059 3.223l3.093 3.093c1.999-.95 2.47-1.373 3.223-1.059.728.302.764.88 1.529 3.027h4.374c.758-2.131.799-2.723 1.537-3.031.745-.308 1.186.099 3.215 1.062l3.093-3.093c-.975-2.05-1.362-2.492-1.059-3.223.3-.726.88-.763 3.027-1.528zm-4.875.764c-.577 1.394-.068 2.458.488 3.578l-1.084 1.084c-1.093-.543-2.161-1.076-3.573-.49-1.396.581-1.79 1.693-2.188 2.877h-1.534c-.398-1.185-.791-2.297-2.183-2.875-1.419-.588-2.507-.045-3.579.488l-1.083-1.084c.557-1.118 1.066-2.18.487-3.58-.579-1.391-1.691-1.784-2.876-2.182v-1.533c1.185-.398 2.297-.791 2.875-2.184.578-1.394.068-2.459-.488-3.579l1.084-1.084c1.082.538 2.162 1.077 3.58.488 1.392-.577 1.785-1.69 2.183-2.875h1.534c.398 1.185.792 2.297 2.184 2.875 1.419.588 2.506.045 3.579-.488l1.084 1.084c-.556 1.121-1.065 2.187-.488 3.58.577 1.391 1.689 1.784 2.875 2.183v1.534c-1.188.398-2.302.791-2.877 2.183zm-7.125-5.951c1.654 0 3 1.346 3 3s-1.346 3-3 3-3-1.346-3-3 1.346-3 3-3zm0-2c-2.762 0-5 2.238-5 5s2.238 5 5 5 5-2.238 5-5-2.238-5-5-5z"/></svg>
 						</button>
 					<?php } ?>
+					<!-- Allow to log out -->
 					<button 
 						onclick="signOut()"
 						title="<?php echo $lab->bt->signOut; ?>">
@@ -109,15 +111,15 @@ if(is_dir('./datas')) {
 				<aside class="infos">
 					<div class="tree"></div>
 					<div class="counters">
-						<!-- Display the number of visible directories. -->
+						<!-- Display the number of visible directories -->
 						<svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg>
-						x <span class="dir-counter"></span>
-						<!-- Display the number of visible files. -->
+						x <span id="dir-counter"></span>
+						<!-- Display the number of visible files -->
 						<svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg>
-						x <span class="fil-counter"></span>
+						x <span id="fil-counter"></span>
 					</div>
 				</aside>
-				<!-- User cloud content -->
+				<!-- User content -->
 				<ul class="list"></ul>
 				<!-- Box for previewing content -->
 				<div 
@@ -125,20 +127,20 @@ if(is_dir('./datas')) {
 					data-item-path="" >
 					<div>
 						<nav class="preview__nav">
-							<!-- Allow to open the previewed item in another tab. -->
+							<!-- Allow to open the previewed item in another tab -->
 							<button 
 								class="start-trap" 
 								onclick="openPreviewedItem()"
 								title="<?php echo $lab->bt->openItemElsewhere; ?>">
 								<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>
 							</button>
-							<!-- Allow to download the previewed item. -->
+							<!-- Allow to download the previewed item -->
 							<button 
 								onclick="downloadPreviewedItem()"
 								title="<?php echo $lab->bt->downloadItem; ?>">
 								<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>
 							</button>
-							<!-- Close the preview. -->
+							<!-- Close the preview -->
 							<button 
 								class="end-trap" 
 								onclick="unsetPreview()" 
@@ -163,7 +165,7 @@ if(is_dir('./datas')) {
 					<p></p>
 					<div></div>
 				</div>
-				<!-- Permissions manager -->
+				<!-- Permissions panel -->
 				<?php if(hasOwnerRights()) { ?>
 					<div 
 						class="perms-panel"
@@ -226,7 +228,7 @@ if(is_dir('./datas')) {
 						error: "<?php echo $lab->mess->error; ?>",
 					}
 				};
-				// Unhide writing features.
+				// Unhide some features.
 				<?php if(hasOwnerRights()) { ?>
 					document.body.classList.add('--owner', '--publisher');
 				<?php }
@@ -234,7 +236,7 @@ if(is_dir('./datas')) {
 					document.body.classList.add('--publisher');
 				<?php } ?>
 				// Reload user preferences.
-				if(localStorage.getItem('mode') === 'dark') {
+				if(localStorage.getItem('theme') === 'dark') {
 					toDarkTheme();
 				}
 				if(localStorage.getItem('currentDir')) {
