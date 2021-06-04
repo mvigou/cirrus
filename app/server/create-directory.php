@@ -3,7 +3,7 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated() && hasWritingRights()) {
-	if(isset($_POST['parent']) && isset($_POST['dirs'])) {		
+	if(isset($_POST['parent'], $_POST['dirs'])) {		
 		if(inScopeDirectory($_POST['parent'])) {
 			$dirName = $_POST['parent'] . '/' . str_replace(["<", ">", ":", "\\", "|", "?", "*", "\""], '-', $_POST['dirs']);
 			if(is_dir($dirName)) {

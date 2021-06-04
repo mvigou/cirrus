@@ -2,7 +2,7 @@
 $env = json_decode(file_get_contents('../../datas/env.json'));
 $lab = json_decode(file_get_contents('./i18n-' . $env->lang . '.json'));
 require('../../app/server/tools.php');
-if(isset($_GET['role']) && isset($_GET['auth'])) { 
+if(isset($_GET['role'], $_GET['auth'])) { 
 	if($_GET['role'] === 'owner' || $_GET['role'] === 'publisher' || $_GET['role'] === 'viewer') {
 		if(is_file('../../datas/auth/sign-up-as-' . $_GET['role'] . '/' . $_GET['auth'])) { ?>
 			<!DOCTYPE html>

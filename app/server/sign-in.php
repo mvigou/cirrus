@@ -3,7 +3,7 @@ session_start();
 
 $env = json_decode(file_get_contents('../../datas/env.json'));
 // Sign in as owner, publisher or viewer with account.
-if(isset($_POST['user-name']) && isset($_POST['user-pass']) ){
+if(isset($_POST['user-name'], $_POST['user-pass']) ){
 	if(
 		preg_match('/^[a-zA-Z0-9]{8,16}$/', $_POST['user-name']) &&
 		preg_match('/^[a-zA-Z0-9.?!\-_*+=\/|\\()[\]#$@%]{8,24}$/', $_POST['user-pass'])		

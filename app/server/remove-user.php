@@ -3,7 +3,7 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
-	if(isset($_POST['user-name']) && isset($_POST['user-role'])) {
+	if(isset($_POST['user-name'], $_POST['user-role'])) {
 		if($_POST['user-role'] === 'viewer') {
 			$path = $env->viewersDir . '/' . $_POST['user-name'];
 		}

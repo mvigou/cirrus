@@ -3,7 +3,7 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated() && hasWritingRights()) {
-	if(isset($_POST['fromPath']) && isset($_POST['toPath'])) {
+	if(isset($_POST['fromPath'], $_POST['toPath'])) {
 		if(inScopeDirectory($_POST['fromPath']) && inScopeDirectory($_POST['toPath'])) {
 			if(is_file($_POST['toPath'])) {
 				$basePath = $_POST['toPath']; 
