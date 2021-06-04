@@ -25,10 +25,11 @@ if(isset($_POST['user-name']) && isset($_POST['user-pass']) ){
 		}
 		if($userFilePath !== null) {				
 			if(password_verify($_POST['user-pass'], file_get_contents($userFilePath))) {
-				$_SESSION['token'] = session_id();
+				$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 				$_SESSION['instanceId'] = $env->instanceId;
 				$_SESSION['role'] = $userRole;
-				$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
+				$_SESSION['token'] = session_id();
+				$_SESSION['username'] = $userName;
 			}
 			else {
 				header('Location: ../../pages/sign-in/?&error=wrong-password');
@@ -50,11 +51,10 @@ else {
 		strlen($_GET['auth']) === 128 &&
 		file_exists($env->signUpVisitorAuthDir . '/' . $_GET['auth'])
 	) {		
-		$_SESSION['token'] = session_id();
+		$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['instanceId'] = $env->instanceId;
 		$_SESSION['role'] = 'viewer';
-		$_SESSION['username'] = $userName;
-		$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
+		$_SESSION['token'] = session_id();
 	}
 	else {
 		header('Location: ../../pages/sign-in/?&error=wrong-link');

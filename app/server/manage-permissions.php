@@ -3,15 +3,9 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
-	if(isset($_POST['dirPath'], $_POST['isRestricted'], $_POST['areAccredited'])) {
+	if(isset($_POST['dirPath'], $_POST['isRestricted'], $_POST['accreditedMembers'])) {
 		if(inScopeDirectory($_POST['dirPath']) && ($_POST['isRestricted'] === 'true' || $_POST['isRestricted'] === 'false')) {
-			$permsPath = $_POST['dirPath'] . '/.perms';	
-			$perms = json_decode(file_get_contents($permsPath)); 
-			$areAccredited = preg_split('/\r\n|[\r\n]/', $_POST['areAccredited']);
-			
-		
-
-			// If the access to the directory is restricted, add a .lock file ; else remove it.
+			// Create or remove a .lock file to restrict access directory.
 			$isRestricted = $_POST['isRestricted'] === 'true' ? true : false;
 			$lockFilePath = $_POST['dirPath'] . '/.lock';
 			if($isRestricted) {
@@ -24,16 +18,24 @@ if(isAuthenticated() && hasOwnerRights()) {
 					unlink($lockFilePath);
 				}	
 			}
-			
-			
-			file_put_contents(
-				$permsPath,
-				json_encode(
-					array (
-						'areAccredited' => $areAccredited
-					)
-				)
-			);
+			// Create, modify or remove a .perms file to allow some users to access directory.
+			$permsPath = $_POST['dirPath'] . '/.perms';
+			if($isRestricted) {
+				if($_POST['accreditedMembers'] !== '') {
+					$accreditedMembers = preg_split('/\r\n|[\r\n]/', $_POST['accreditedMembers']);
+					file_put_contents($permsPath, json_encode($accreditedMembers));
+				}
+				else {
+					if(file_exists($permsPath)) {
+						unlink($permsPath);
+					}
+				}
+			}
+			else {
+				if(file_exists($permsPath)) {
+					unlink($permsPath);
+				}
+			}
 			if(error_get_last() === null) {
 				echo json_encode (array('success' => true));
 			}

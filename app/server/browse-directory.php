@@ -20,7 +20,7 @@ if(isAuthenticated()) {
 			$items = [];
 			$arrFiles = [];
 			$arrDir = [];
-			foreach(array_diff(scandir($dir), array('.')) as $item) {
+			foreach(array_diff(scandir($dir), array('.', '.lock', '.perms')) as $item) {
 				// Parent directory.
 				if($item === '..') {
 					if($dir !== $env->contentDir && $dir !== $env->recycleDir) {
@@ -35,9 +35,19 @@ if(isAuthenticated()) {
 				else {
 					// Sub directory.
 					if(is_dir($dir . '/' . $item)) {
-						if(!is_file($dir . '/' . $item . '/.lock') || hasOwnerRights()) {
+						if(is_file($dir . '/' . $item . '/.lock')) {
+							if(hasOwnerRights()) {
+								array_push($arrDir, $item);
+							}
+							else if(is_file($dir . '/' . $item . '/.perms')) {
+								if(in_array($_SESSION['username'], json_decode(file_get_contents($dir . '/' . $item . '/.perms')))) {
+									array_push($arrDir, $item);
+								}
+							}
+						}
+						else {
 							array_push($arrDir, $item);
-						}				
+						}
 					}
 					// File.
 					else {

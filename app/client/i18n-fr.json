@@ -22,7 +22,7 @@
 		"bar": "Rechercher : ? suivi de la recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi de la commande à effectuer.",
 		"unrestricted": "Ouvert à tout membre ayant accès à cette instance de cirrus.",
 		"restricted": "Ouvert aux seuls membres enregistrés figurant dans la liste ci-dessous.",
-		"areAccredited": "Membres accrédités (un par ligne)"
+		"accreditedMembers": "Membres accrédités (un par ligne)"
 	},
 	"title": {
 		"main": "Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces",

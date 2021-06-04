@@ -192,8 +192,8 @@ if(is_dir('./datas')) {
 										</label>
 									</fieldset>
 									<label>
-										<?php echo $lab->input->areAccredited; ?>
-										<textarea name="areAccredited"></textarea>
+										<?php echo $lab->input->accreditedMembers; ?>
+										<textarea name="accreditedMembers"></textarea>
 									</label>
 									<button 
 										class="start-trap"

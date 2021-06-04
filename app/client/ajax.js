@@ -362,8 +362,8 @@ function updatePerms(dirPath) {
 					value: document.getElementsByName('isRestricted')[0].checked ? false : true
 				},
 				{
-					name: 'areAccredited',
-					value: document.getElementsByName('areAccredited')[0].value.trim()
+					name: 'accreditedMembers',
+					value: document.getElementsByName('accreditedMembers')[0].value.trim()
 				}
 			]
 		}

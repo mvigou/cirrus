@@ -194,10 +194,12 @@
 	const permsPanelElm = document.querySelector('.perms-panel');
 	function setPermsPanel(dirPath, content) {
 		document.querySelector('.perms-radio[value=' + content.isRestricted + '').setAttribute('checked', true);
-		const textAreaElm = document.querySelector('.perms-panel textarea');
-		textAreaElm.value = '';
-		for(let member of content.areAccredited) {
-			textAreaElm.value += member + '\n';
+		if(content.accreditedMembers !== null) {
+			const textAreaElm = document.querySelector('.perms-panel textarea');
+			textAreaElm.value = '';
+			for(let member of content.accreditedMembers) {
+				textAreaElm.value += member + '\n';
+			}
 		}
 		permsPanelElm.setAttribute('data-item-path', dirPath);
 		permsPanelElm.classList.add('--visible');
