@@ -20,8 +20,8 @@
 	},
 	"input": {
 		"bar": "Rechercher : ? suivi de la recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi de la commande à effectuer.",
-		"unrestricted": "Ouvert à tout membre ayant accès à cette instance de cirrus.",
-		"restricted": "Ouvert aux seuls membres enregistrés figurant dans la liste ci-dessous.",
+		"unrestricted": "Ouvert à tout membre ayant accès à cette instance de cirrus",
+		"restricted": "Ouvert aux seuls membres enregistrés figurant dans la liste ci-dessous",
 		"accreditedMembers": "Membres accrédités (un par ligne)"
 	},
 	"title": {
@@ -32,6 +32,7 @@
 		"confRemove": "Supprimer cet élément ?",
 		"confEmptyRecycle": "Vider la corbeille ?",
 		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
-		"error": "Une erreur est survenue pendant le traitement de cette action."
+		"error": "Une erreur est survenue pendant le traitement de cette action.",
+		"downloading": "Téléchargement en cours, veuillez patienter"
 	}
 }

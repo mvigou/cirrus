@@ -160,10 +160,12 @@ if(is_dir('./datas')) {
 					</div>
 					<div class="popup__content"></div>
 				</div>
-				<!-- Upload progression bar -->
-				<div class="upload-bar --hidden">
-					<p></p>
-					<div></div>
+				<!-- Upload icon -->
+				<div id="upload-icon">
+					<div>
+						<img src="/app/client/cirrus-logo.svg" alt="Logo cirrus" />
+						<p><?php echo $lab->mess->downloading; ?></p>
+					</div>
 				</div>
 				<!-- Permissions panel -->
 				<?php if(hasOwnerRights()) { ?>

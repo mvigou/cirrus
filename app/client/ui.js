@@ -10,7 +10,8 @@ const ui = {
 	permsPanel: document.querySelector('.perms-panel'),
 	popup: document.querySelector('.popup'),
 	prevBox: document.querySelector('.preview'),
-	prevItem: document.querySelector('.preview__item')
+	prevItem: document.querySelector('.preview__item'),
+	uploadIcon: document.getElementById('upload-icon')
 };
 
 /* ### Manage themes ### */
@@ -49,6 +50,14 @@ const ui = {
 			ui.body.classList.remove('--edit-mode'):
 			ui.body.classList.add('--edit-mode');
 	}
+
+
+	function toogleUpload() {
+		ui.uploadIcon.classList.contains('--active') ?
+			ui.uploadIcon.classList.remove('--active'):
+			ui.uploadIcon.classList.add('--active');
+	}
+
 
 /* ### Manage preview */
 

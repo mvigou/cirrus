@@ -100,19 +100,14 @@ function uploadItems() {
 	inputElm.click();
 	inputElm.onchange = (e) => {
 		let i = 0;
-		document.querySelector('.upload-bar').classList.remove('--hidden');
+		toogleUpload();
 		send(inputElm.files[i]);
 		function send(file) {
-			document.querySelector('.upload-bar div').style.width = '0';
-			document.querySelector('.upload-bar p').textContent = (i + 1) + '/' + inputElm.files.length + ' - ' + file.name;
 			let formData = new FormData();
 			formData.append('parentDir', localStorage.getItem('currentDir'));
 			formData.append('file', file);
 			let req = new XMLHttpRequest();
-			req.open('POST', './app/server/upload-item.php', true);
-			req.upload.onprogress = (e) => {
-				document.querySelector('.upload-bar div').style.width = (Math.round((e.loaded / e.total) * 100)) + '%';
-			};			
+			req.open('POST', './app/server/upload-item.php', true);		
 			req.onload = () => {
 				const resp = JSON.parse(req.responseText);
 				if(resp.success) {
@@ -123,14 +118,14 @@ function uploadItems() {
 					else {
 						browseDirectory(localStorage.getItem('currentDir'));
 						setTimeout(
-							() => document.querySelector('.upload-bar').classList.add('--hidden'),
+							toogleUpload(),
 							1000
 						);	
 					}
 				}
 				else {
 					console.log(lab.mess.error);
-					document.querySelector('.upload-bar').classList.add('--hidden');
+					toogleUpload();
 				}
 			};
 			req.send(formData);

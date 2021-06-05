@@ -258,21 +258,36 @@ svg
 		resize: vertical
 		width: 100%
 
-.upload-bar
-	background-color: var(--bg-color)
-	bottom: 0
-	left: 0
-	padding: 12px 0 0 0
-	position: fixed
-	right: 0
-	text-align: center
-	> div	
-		background-color: var(--hovered-color)
-		box-sizing: border-box
-		height: 10px
-		width: 0
-	> p
-		margin: 0
+@keyframes rotation
+	0%, 15%
+		transform: scale(1)
+		opacity: .6
+	50%
+		transform: scale(1.125)
+		opacity: 1
+	100%
+		opacity: .6
+		transform: scale(1)
+
+#upload-icon
+	display: none
+	&.--active
+		background-color: #000a
+		bottom: 0
+		display: flex
+		left: 0
+		position: fixed
+		right: 0
+		text-align: center
+		top: 0
+		z-index: 1
+	div
+		margin: auto
+		max-width: 192px
+	img
+		animation: rotation 1s ease 0s infinite both
+		margin-bottom: -24px
+		width: 96px
 
 .popup	
 	box-sizing: border-box
