@@ -31,7 +31,7 @@
 	"mess": {
 		"confRemove": "Supprimer cet élément ?",
 		"confEmptyRecycle": "Vider la corbeille ?",
-		"confirmPress": "Relâchez sur l'option pour confirmer, ou ailleurs pour annuler.",
+		"confirmPress": "Relâchez sur l'option pour valider, relâchez ailleurs pour annuler",
 		"error": "Une erreur est survenue pendant le traitement de cette action.",
 		"downloading": "Téléchargement en cours, veuillez patienter"
 	}
