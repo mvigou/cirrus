@@ -251,38 +251,7 @@ svg
 		min-height: 60px
 		resize: vertical
 		width: 100%
-
-@keyframes rotation
-	0%, 15%
-		transform: scale(1)
-		opacity: .6
-	50%
-		transform: scale(1.125)
-		opacity: 1
-	100%
-		opacity: .6
-		transform: scale(1)
-
-#upload-icon
-	display: none
-	&.--active
-		background-color: #000a
-		bottom: 0
-		display: flex
-		left: 0
-		position: fixed
-		right: 0
-		text-align: center
-		top: 0
-		z-index: 1
-	div
-		margin: auto
-		max-width: 192px
-	img
-		animation: rotation 1s ease 0s infinite both
-		margin-bottom: -24px
-		width: 96px
-
+		
 .popup
 	box-sizing: border-box
 	display: none
@@ -295,30 +264,20 @@ svg
 	text-align: center
 	top: 50%
 	width: 220px
-	&--confirm
-		--mess-anim: fade 0.10s 0.50s 1 both
-		--tile-a-anim: fade .2s ease-out 0s 1 both
-		--tile-b-anim: fade .2s ease-out .2s 1 both
-		--tile-c-anim: fade .2s ease-out .4s 1 both
-		display: block
-	svg
-		display: block
-		height: 96px
-		margin: auto
+	&__object
+		margin-bottom: -24px
 		width: 96px
-	.cirrus-a,
-	.cirrus-b,
-	.cirrus-c
-		opacity: 0
-	.cirrus-b
-		animation: var(--tile-a-anim)
-	.cirrus-a
-		animation: var(--tile-b-anim)
-	.cirrus-c
-		animation: var(--tile-c-anim)
-	div
-		animation: var(--mess-anim)
+	.popup-confirm, .popup-download
+		animation: fade .1s .5s 1 both
 		background-color: var(--bg-color)
 		border-radius: 6px
-		color: var(--hovered-color)
+		display: none
 		padding: 12px
+	&.--confirm
+		display: block
+		.popup-confirm
+			display: block
+	&.--download
+		display: block
+		.popup-download
+			display: block

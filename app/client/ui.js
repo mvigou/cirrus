@@ -52,6 +52,14 @@ const ui = {
 			ui.body.classList.remove('--edit-mode'):
 			ui.body.classList.add('--edit-mode');
 	}
+	function togglePopup(visible, className) {
+		if(visible) {
+			ui.popup.classList.add(className);
+		}
+		else {
+			ui.popup.classList.remove(className);
+		}
+	}
 
 /* ### Manage preview */
 
@@ -104,26 +112,23 @@ const ui = {
 			end: { name: '', time: 0 } 
 		},
 	};
-	function unsetPopup() {
-		ui.popup.setAttribute('class', 'popup');
-	}
 	function watchConfirm(step, item, event) {
 		action.click[step].name = item;
 		action.click[step].time = performance.now();
-		ui.popup.classList.add('popup--confirm');
+		togglePopup(true, '--confirm');
 		if(event){
 			event.preventDefault();
 		}	
 	}
 	function validConfirm() {
-		unsetPopup();
+		togglePopup(false, '--confirm');
 		return action.click.start.name === action.click.end.name && (action.click.end.time - action.click.start.time) >= 600 ?
 			true : false;
 	}
 	function cancelConfirm() {
 		action.click['start'].name = null;
 		action.click['end'].name = null;
-		unsetPopup();
+		togglePopup(false, '--confirm');
 	}
 
 /* ### Manage bar ### */

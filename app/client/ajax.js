@@ -100,7 +100,7 @@ function uploadItems() {
 	inputElm.click();
 	inputElm.onchange = (e) => {
 		let i = 0;
-		toogleUpload();
+		togglePopup(true, '--download');
 		send(inputElm.files[i]);
 		function send(file) {
 			let formData = new FormData();
@@ -118,14 +118,14 @@ function uploadItems() {
 					else {
 						browseDirectory(localStorage.getItem('currentDir'));
 						setTimeout(
-							toogleUpload(),
+							togglePopup(false, '--download'),
 							1000
 						);	
 					}
 				}
 				else {
 					console.log(lab.mess.error);
-					toogleUpload();
+					togglePopup(false, '--download');
 				}
 			};
 			req.send(formData);
