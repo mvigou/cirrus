@@ -158,7 +158,7 @@ if(is_dir('./datas')) {
 						<div class="popup__tile"></div>
 						<div class="popup__tile"></div>
 					</div>
-					<div class="popup__content"></div>
+					<div class="popup__content"><?php echo $lab->mess->confirmPress; ?></div>
 				</div>
 				<!-- Upload icon -->
 				<div id="upload-icon">
@@ -224,7 +224,6 @@ if(is_dir('./datas')) {
 						restrictItem: "<?php echo $lab->bt->restrictItem; ?>",
 					},
 					mess: {
-						confirmPress: "<?php echo $lab->mess->confirmPress; ?>",
 						confEmptyRecycle: "<?php echo $lab->mess->confEmptyRecycle; ?>",
 						confRemove: "<?php echo $lab->mess->confRemove; ?>",
 						error: "<?php echo $lab->mess->error; ?>",

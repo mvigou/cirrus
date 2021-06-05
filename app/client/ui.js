@@ -14,7 +14,7 @@ const ui = {
 	uploadIcon: document.getElementById('upload-icon')
 };
 
-/* ### Manage themes ### */
+/* ### Manage theme ### */
 
 	function toRecycleTheme() {
 		ui.body.classList.add('--in-recycle');
@@ -42,22 +42,16 @@ const ui = {
 			toLightTheme():
 			toDarkTheme();
 	}
-
-/* ### Manage modes ### */
-
-	function toggleEdition() {
-		ui.body.classList.contains('--edit-mode') ?
-			ui.body.classList.remove('--edit-mode'):
-			ui.body.classList.add('--edit-mode');
-	}
-
-
 	function toogleUpload() {
 		ui.uploadIcon.classList.contains('--active') ?
 			ui.uploadIcon.classList.remove('--active'):
 			ui.uploadIcon.classList.add('--active');
 	}
-
+	function toggleEdition() {
+		ui.body.classList.contains('--edit-mode') ?
+			ui.body.classList.remove('--edit-mode'):
+			ui.body.classList.add('--edit-mode');
+	}
 
 /* ### Manage preview */
 
@@ -116,7 +110,6 @@ const ui = {
 	function watchConfirm(step, item, event) {
 		action.click[step].name = item;
 		action.click[step].time = performance.now();
-		document.querySelector('.popup__content').innerHTML = lab.mess.confirmPress;
 		ui.popup.classList.add('popup--confirm');
 		if(event){
 			event.preventDefault();
