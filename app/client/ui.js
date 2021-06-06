@@ -203,10 +203,10 @@ const ui = {
 /* ### Manage permissions panel ### */
 
 	function setPermsPanel(dirPath, content) {
-		document.querySelector('.perms-radio[value=' + content.isRestricted + '').setAttribute('checked', true);
+		document.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
+		const textAreaElm = document.querySelector('.perms-panel textarea');
+		textAreaElm.value = '';
 		if(content.accreditedMembers !== null) {
-			const textAreaElm = document.querySelector('.perms-panel textarea');
-			textAreaElm.value = '';
 			for(let member of content.accreditedMembers) {
 				textAreaElm.value += member + '\n';
 			}
@@ -215,7 +215,6 @@ const ui = {
 		ui.permsPanel.classList.add('--visible');
 	}
 	function unsetPermsPanel() {
-		ui.permsPanel.setAttribute('data-item-path', '');
 		ui.permsPanel.classList.remove('--visible');
 	}
 	ui.permsPanel.onsubmit = e => {
