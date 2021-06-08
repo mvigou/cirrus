@@ -10,7 +10,7 @@ function ajaxPost(req) {
 				}
 			}
 			fetch(
-				'./app/server/' + req.script, {
+				req.script, {
 					method: 'POST',
 					body: formData
 				}
@@ -21,6 +21,7 @@ function ajaxPost(req) {
 						resp.text().then(
 							resp => {
 								try {
+									updateAjaxCounter();
 									const parsedResp = JSON.parse(resp);
 									resolve(parsedResp);
 								}
@@ -38,10 +39,19 @@ function ajaxPost(req) {
 		}
 	);
 }
+function updateAjaxCounter() {
+	if(ajaxCounter < 50) {
+		ajaxCounter++;
+	}
+	else {
+		ajaxCounter = 0;
+		checkLicence();
+	}
+}
 function browseDirectory(dir) {
 	ajaxPost(
 		{
-			script: 'browse-directory.php',
+			script: './app/server/browse-directory.php',
 			args: [
 				{ 
 					name: 'dir', 
@@ -70,7 +80,7 @@ function createDirectory(dirs) {
 	if(dirs !== '' ) {
 		ajaxPost(
 			{
-				script: 'create-directory.php',
+				script: './app/server/create-directory.php',
 				args: [
 					{
 						name: 'parent',
@@ -135,7 +145,7 @@ function uploadItems() {
 function openFile(filePath) {
 	ajaxPost(
 		{
-			script: 'open-file.php',
+			script: './app/server/open-file.php',
 			args: [
 				{ 
 					name: 'filePath', 
@@ -170,7 +180,7 @@ function renameItem(oldName, newName, item) {
 		if(oldName !== newName) {
 			ajaxPost(
 				{
-					script: 'rename-item.php',
+					script: './app/server/rename-item.php',
 					args: [
 						{ 
 							name: 'oldName', 
@@ -205,7 +215,7 @@ function moveItem(fromPath, toPath) {
 	if(toPath.indexOf(fromPath) === -1) {
 		ajaxPost(
 			{
-				script: 'move-item.php',
+				script: './app/server/move-item.php',
 				args: [
 					{ 
 						name: 'fromPath', 
@@ -231,7 +241,7 @@ function moveItem(fromPath, toPath) {
 function copyItem(fromPath, toPath) {
 	ajaxPost(
 		{
-			script: 'copy-item.php',
+			script: './app/server/copy-item.php',
 			args: [
 				{ 
 					name: 'fromPath', 
@@ -256,7 +266,7 @@ function copyItem(fromPath, toPath) {
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
 		{
-			script: 'download-item.php',
+			script: './app/server/download-item.php',
 			args: [
 				{ 
 					name: 'item', 
@@ -288,7 +298,7 @@ function removeItem(item, force) {
 	if(validConfirm() || force === true) {
 		ajaxPost(
 			{
-				script: 'remove-item.php',
+				script: './app/server/remove-item.php',
 				args: [
 					{ 
 						name: 'item', 
@@ -314,7 +324,7 @@ function removeItem(item, force) {
 function browsePerms(dirPath) {
 	ajaxPost(
 		{ 
-			script: 'browse-permissions.php',
+			script: './app/server/browse-permissions.php',
 			args: [
 				{
 					name: 'dirPath',
@@ -335,7 +345,7 @@ function browsePerms(dirPath) {
 function updatePerms(dirPath) {
 	ajaxPost(
 		{ 
-			script: 'manage-permissions.php',
+			script: './app/server/manage-permissions.php',
 			args: [
 				{
 					name: 'dirPath',
@@ -362,7 +372,7 @@ function updatePerms(dirPath) {
 	.catch(() => console.log(lab.mess.error));
 }
 function signOut() {
-	ajaxPost({ script: 'sign-out.php' })
+	ajaxPost({ script: './app/server/sign-out.php' })
 	.then(
 		resp => {
 			if(resp.success) {	
@@ -371,4 +381,35 @@ function signOut() {
 		}
 	)
 	.catch(() => console.log(lab.mess.error));
+}
+function checkLicence() {
+	ajaxPost (
+		{
+			script: 'http://dev.getcirrus/licences/check/',
+			args: [
+				{
+					name: 'cirrusId',
+					value: cirrusId
+				}
+			]
+		}
+	).then(
+		resp => {
+			if(resp.success) {
+				if(!resp.isRegistered) {
+					document.querySelector('.license-panel').classList.add('--visible');
+					togglePopup(true, '--purchase');
+				}
+			}
+		}
+	)
+	.catch(() => console.log(lab.mess.error));
+}
+function purchaseLicence() {
+
+
+
+
+
+
 }

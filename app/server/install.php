@@ -4,7 +4,7 @@ file_put_contents(
 	'../../datas/env.json',
 	json_encode(
 		array(
-			'instanceId' => hash('sha512', random_bytes(24)),
+			'cirrusId' => date('Y-m-d') . '-' . hash('sha512', random_bytes(24)),
 			'lang' => 'fr',
 			'datas' => '../../datas',
 			'contentDir' => '../../datas/content',

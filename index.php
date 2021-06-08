@@ -16,6 +16,15 @@ if(is_dir('./datas')) {
 		</head>
 		<body>
 			<main>
+				<div class="license-panel">
+					<?php echo $lab->mess->unactivated; ?>
+					<a 
+						class="cta" 
+						href="http://dev.getcirrus/pages/acheter?cirrusId=<?php echo $env->cirrusId; ?>"
+						title="<?php echo $lab->mess->buy; ?>">
+						<svg viewBox="0 0 24 24"><path d="M6 23.73l-3-2.122v-14.2l3 1.359v14.963zm2-14.855v15.125l13-1.954v-15.046l-13 1.875zm5.963-7.875c-2.097 0-3.958 2.005-3.962 4.266l-.001 1.683c0 .305.273.54.575.494.244-.037.425-.247.425-.494v-1.681c.003-1.71 1.416-3.268 2.963-3.268.537 0 1.016.195 1.384.564.422.423.654 1.035.653 1.727v1.747c0 .305.273.54.575.494.243-.037.423-.246.423-.492l.002-1.749c.002-1.904-1.32-3.291-3.037-3.291zm-6.39 5.995c.245-.037.427-.247.427-.495v-2.232c.002-1.71 1.416-3.268 2.963-3.268l.162.015c.366-.283.765-.513 1.188-.683-.405-.207-.858-.332-1.35-.332-2.096 0-3.958 2.005-3.962 4.266v2.235c0 .306.272.538.572.494z"/></svg>
+					</a>
+				</div>
 				<nav class="nav">
 					<!-- Display the data directory -->
 					<button 
@@ -161,6 +170,25 @@ if(is_dir('./datas')) {
 					</object>
 					<p class="popup-confirm"><?php echo $lab->mess->confirmPress; ?></p>
 					<p class="popup-download"><?php echo $lab->mess->downloading; ?></p>
+					<div class="popup-purchase">
+						<p><?php echo $lab->mess->purchase; ?></p>
+						<a 
+							class="popup__a purchase-bt" 
+							href="http://dev.getcirrus/pages/acheter?cirrusId=<?php echo $env->cirrusId; ?>">
+							<?php echo $lab->mess->buyAnd; ?>
+						</a>
+						<a 
+							class="popup__a" 
+							href="http://dev.getcirrus/doc/la-licence-cirrus">
+							<?php echo $lab->mess->license; ?>
+						</a>
+						<a 
+							class="popup__a" 
+							href="#"
+							onclick="togglePopup(false, '--purchase')">
+							<?php echo $lab->mess->later; ?>
+						</a>
+					</div>
 				</div>
 				<!-- Permissions panel -->
 				<?php if(hasOwnerRights()) { ?>
@@ -227,6 +255,9 @@ if(is_dir('./datas')) {
 				// Unhide some features.
 				<?php if(hasOwnerRights()) { ?>
 					document.body.classList.add('--owner', '--publisher');
+					let ajaxCounter = 0;
+					const cirrusId = "<?php echo $env->cirrusId; ?>";
+					checkLicence();
 				<?php }
 				else if(hasWritingRights()) { ?>
 					document.body.classList.add('--publisher');

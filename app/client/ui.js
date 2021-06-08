@@ -54,10 +54,10 @@ const ui = {
 	}
 	function togglePopup(visible, className) {
 		if(visible) {
-			ui.popup.classList.add(className);
+			ui.popup.setAttribute('class', 'popup ' + className);
 		}
 		else {
-			ui.popup.classList.remove(className);
+			ui.popup.setAttribute('class', 'popup');		
 		}
 	}
 

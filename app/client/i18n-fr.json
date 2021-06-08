@@ -20,7 +20,7 @@
 	},
 	"input": {
 		"bar": "Rechercher : ? suivi de la recherche.\nCréer un dossier : + suivi du nom de dossier à créer.\nCommande cirus : * suivi de la commande à effectuer.",
-		"unrestricted": "Ouvert à tout membre ayant accès à cette instance de cirrus",
+		"unrestricted": "Ouvert à tout membre ayant accès à ce cirrus",
 		"restricted": "Ouvert aux seuls membres enregistrés figurant dans la liste ci-dessous",
 		"accreditedMembers": "Membres accrédités (un par ligne)"
 	},
@@ -29,10 +29,16 @@
 		"perms": "Règle d'accès au dossier"
 	},
 	"mess": {
-		"confRemove": "Supprimer cet élément ?",
+		"buyAnd": "Acheter <span style=color:#f55>&#9829;</span> Soutenir",
+		"buy": "Acheter la licence associée à ce cirrus",
 		"confEmptyRecycle": "Vider la corbeille ?",
+		"confRemove": "Supprimer cet élément ?",
 		"confirmPress": "Relâchez sur l'option pour valider, relâchez ailleurs pour annuler",
+		"downloading": "Téléchargement en cours, veuillez patienter",
 		"error": "Une erreur est survenue pendant le traitement de cette action.",
-		"downloading": "Téléchargement en cours, veuillez patienter"
+		"later": "Plus tard",
+		"license": "Une licence ?",
+		"purchase": "Vous appréciez cirrus ?<br/>Activez votre licence.",
+		"unactivated": "cirrus non activé"
 	}
 }

@@ -8,7 +8,7 @@ function isAuthenticated() {
 	global $env;
 	if(
 		$_SESSION['token'] === session_id() && 
-		$_SESSION['instanceId'] === $env->instanceId && 
+		$_SESSION['cirrusId'] === $env->cirrusId && 
 		$_SESSION['browser'] === $_SERVER['HTTP_USER_AGENT']
 	) {
 		return true;

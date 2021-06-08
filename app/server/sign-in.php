@@ -26,7 +26,7 @@ if(isset($_POST['user-name'], $_POST['user-pass']) ){
 		if($userFilePath !== null) {				
 			if(password_verify($_POST['user-pass'], file_get_contents($userFilePath))) {
 				$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
-				$_SESSION['instanceId'] = $env->instanceId;
+				$_SESSION['cirrusId'] = $env->cirrusId;
 				$_SESSION['role'] = $userRole;
 				$_SESSION['token'] = session_id();
 				$_SESSION['username'] = $userName;
@@ -52,7 +52,7 @@ else {
 		file_exists($env->signUpVisitorAuthDir . '/' . $_GET['auth'])
 	) {		
 		$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
-		$_SESSION['instanceId'] = $env->instanceId;
+		$_SESSION['cirrusId'] = $env->cirrusId;
 		$_SESSION['role'] = 'viewer';
 		$_SESSION['token'] = session_id();
 	}
