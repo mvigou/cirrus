@@ -61,7 +61,7 @@ require('../../app/server/tools.php'); ?>
 						required
 					/>
 				</label>
-				<button title="<?php echo $lab->bt->confirm; ?>" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
+				<button title="Valider" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
 			</form>
 			<img 
 				alt="Logo cirrus"

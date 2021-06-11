@@ -7,11 +7,10 @@ const ui = {
 	cmdButton: document.getElementById('bar__cmdButton'),
 	dirCounter: document.getElementById('dir-counter'),
 	fileCounter: document.getElementById('fil-counter'),
-	permsPanel: document.querySelector('.perms-panel'),
 	popup: document.querySelector('.popup'),
 	prevBox: document.querySelector('.preview'),
 	prevItem: document.querySelector('.preview__item'),
-	uploadIcon: document.getElementById('upload-icon')
+	uploadIcon: document.getElementById('upload-icon'),
 };
 
 /* ### Manage theme ### */
@@ -200,28 +199,6 @@ const ui = {
 	}
 	document.querySelector('.bar__form').onsubmit = e => barSubmit(e);
 
-/* ### Manage permissions panel ### */
-
-	function setPermsPanel(dirPath, content) {
-		document.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
-		const textAreaElm = document.querySelector('.perms-panel textarea');
-		textAreaElm.value = '';
-		if(content.accreditedMembers !== null) {
-			for(let member of content.accreditedMembers) {
-				textAreaElm.value += member + '\n';
-			}
-		}
-		ui.permsPanel.setAttribute('data-item-path', dirPath);
-		ui.permsPanel.classList.add('--visible');
-	}
-	function unsetPermsPanel() {
-		ui.permsPanel.classList.remove('--visible');
-	}
-	ui.permsPanel.onsubmit = e => {
-		updatePerms(ui.permsPanel.getAttribute('data-item-path'));
-		e.preventDefault();
-	};
-
 /* ### Manage structure ### */
 
 	function setCounters() {
@@ -356,7 +333,7 @@ const ui = {
 			let aItemElm = document.createElement('a');
 			aItemElm.classList.add('list__item__a', 'non-editable');
 			aItemElm.setAttribute('href', '#');
-			aItemElm.title = lab.bt.openItem;
+			aItemElm.title = 'Ouvrir';
 			aItemElm.onclick = () => item.type === 'file' ? openFile(item.path) : browseDirectory(item.path);
 			let titleItemElm = document.createElement('p');
 			if(item.type === 'file') {
@@ -388,7 +365,7 @@ const ui = {
 				// Restrict item.
 				let restItemBtElm = document.createElement('button');
 				restItemBtElm.classList.add('owner-ft', 'non-editable');
-				restItemBtElm.title = lab.bt.restrictItem;
+				restItemBtElm.title = 'Permissions';
 				restItemBtElm.innerHTML = '<svg fill-rule="evenodd" clip-rule="evenodd"><path d="M24 22h-24v-20h7c1.695 1.942 2.371 3 4 3h13v17zm-17.917-18h-4.083v16h20v-13h-11c-2.339 0-3.537-1.388-4.917-3zm9.917 14h-8v-5h1v-1c0-1.656 1.344-3 3-3s3 1.344 3 3v1h1v5zm-5-6v1h2v-1c0-.552-.448-1-1-1s-1 .448-1 1z"/></svg>';
 				restItemBtElm.onclick = () => browsePerms(item.path);
 				itemElm.appendChild(restItemBtElm);
@@ -397,16 +374,16 @@ const ui = {
 				// Download item.
 				let dlItemBtElm = document.createElement('button');
 				dlItemBtElm.classList.add('non-editable');
-				dlItemBtElm.title = lab.bt.downloadItem;
+				dlItemBtElm.title = 'Télécharger';
 				dlItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
 				dlItemBtElm.onclick = () => downloadUnpreviewedItem(item.path);
 				itemElm.appendChild(dlItemBtElm);
 				// Remove item.
 				let rmItemBtElm = document.createElement('button');
 				rmItemBtElm.classList.add('publisher-ft', 'non-editable');
-				rmItemBtElm.title = lab.bt.removeItem;
+				rmItemBtElm.title = 'Supprimer (maintenir pour enclencher)';
 				rmItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-				rmItemBtElm.onkeypress = () => { if(confirm(lab.mess.confRemove)) { removeItem(item.path, true); }};
+				rmItemBtElm.onkeypress = () => { if(confirm('Supprimer cet élément ?')) { removeItem(item.path, true); }};
 				rmItemBtElm.onmousedown = () => watchConfirm('start', item.path);
 				rmItemBtElm.onmouseup = () => {
 					watchConfirm('end', item.path);

@@ -55,6 +55,7 @@ else {
 		$_SESSION['cirrusId'] = $env->cirrusId;
 		$_SESSION['role'] = 'viewer';
 		$_SESSION['token'] = session_id();
+		$_SESSION['username'] = session_id();
 	}
 	else {
 		header('Location: ../../pages/sign-in/?&error=wrong-link');

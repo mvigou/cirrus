@@ -21,7 +21,6 @@ function ajaxPost(req) {
 						resp.text().then(
 							resp => {
 								try {
-									updateAjaxCounter();
 									const parsedResp = JSON.parse(resp);
 									resolve(parsedResp);
 								}
@@ -38,15 +37,6 @@ function ajaxPost(req) {
 			);
 		}
 	);
-}
-function updateAjaxCounter() {
-	if(ajaxCounter < 50) {
-		ajaxCounter++;
-	}
-	else {
-		ajaxCounter = 0;
-		checkLicence();
-	}
 }
 function browseDirectory(dir) {
 	ajaxPost(
@@ -71,8 +61,8 @@ function browseDirectory(dir) {
 	)
 	.catch(
 		() => {
-			console.log(lab.mess.error);
-			browseDirectory('DATAS');
+			console.log('Une erreur est survenue pendant le traitement de cette action.');
+			// browseDirectory('DATAS');
 		}
 	);
 }
@@ -100,7 +90,7 @@ function createDirectory(dirs) {
 				}
 			}
 		)
-		.catch(() => console.log(lab.mess.error));	
+		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));	
 	}
 }
 function uploadItems() {
@@ -134,7 +124,7 @@ function uploadItems() {
 					}
 				}
 				else {
-					console.log(lab.mess.error);
+					console.log('Une erreur est survenue pendant le traitement de cette action.');
 					togglePopup(false, '--download');
 				}
 			};
@@ -170,7 +160,7 @@ function openFile(filePath) {
 			}
 		}
 	)
-	.catch(() => console.log(lab.mess.error));
+	.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 }
 function openPreviewedItem() {
 	window.open(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -204,7 +194,7 @@ function renameItem(oldName, newName, item) {
 					}
 				}
 			)
-			.catch(() => console.log(lab.mess.error));
+			.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 		}
 	}
 	else {
@@ -235,7 +225,7 @@ function moveItem(fromPath, toPath) {
 				}
 			}
 		)
-		.catch(() => console.log(lab.mess.error));
+		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 	}
 }
 function copyItem(fromPath, toPath) {
@@ -261,7 +251,7 @@ function copyItem(fromPath, toPath) {
 			}
 		}
 	)
-	.catch(() => console.log(lab.mess.error));
+	.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 }
 function downloadUnpreviewedItem(item) {
 	ajaxPost(
@@ -282,7 +272,7 @@ function downloadUnpreviewedItem(item) {
 			}
 		}
 	)
-	.catch(() => console.log(lab.mess.error));
+	.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 }
 function downloadPreviewedItem() {
 	downloadItem(document.querySelector('.preview').getAttribute('data-item-path'));
@@ -318,58 +308,8 @@ function removeItem(item, force) {
 				}
 			}
 		)
-		.catch(() => console.log(lab.mess.error));
+		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 	}
-}
-function browsePerms(dirPath) {
-	ajaxPost(
-		{ 
-			script: './app/server/browse-permissions.php',
-			args: [
-				{
-					name: 'dirPath',
-					value: dirPath
-				}
-			]
-		}
-	)
-	.then(
-		resp => {
-			if(resp.success) {	
-				setPermsPanel(dirPath, resp.content);
-			}
-		}
-	)
-	.catch(() => console.log(lab.mess.error));
-}
-function updatePerms(dirPath) {
-	ajaxPost(
-		{ 
-			script: './app/server/manage-permissions.php',
-			args: [
-				{
-					name: 'dirPath',
-					value: dirPath
-				},
-				{
-					name: 'isRestricted',
-					value: document.getElementsByName('isRestricted')[0].checked ? false : true
-				},
-				{
-					name: 'accreditedMembers',
-					value: document.getElementsByName('accreditedMembers')[0].value.trim()
-				}
-			]
-		}
-	)
-	.then(
-		resp => {
-			if(resp.success) {	
-				unsetPermsPanel();
-			}
-		}
-	)
-	.catch(() => console.log(lab.mess.error));
 }
 function signOut() {
 	ajaxPost({ script: './app/server/sign-out.php' })
@@ -380,36 +320,5 @@ function signOut() {
 			}
 		}
 	)
-	.catch(() => console.log(lab.mess.error));
-}
-function checkLicence() {
-	ajaxPost (
-		{
-			script: 'http://dev.getcirrus/licences/check/',
-			args: [
-				{
-					name: 'cirrusId',
-					value: cirrusId
-				}
-			]
-		}
-	).then(
-		resp => {
-			if(resp.success) {
-				if(!resp.isRegistered) {
-					document.querySelector('.license-panel').classList.add('--visible');
-					togglePopup(true, '--purchase');
-				}
-			}
-		}
-	)
-	.catch(() => console.log(lab.mess.error));
-}
-function purchaseLicence() {
-
-
-
-
-
-
+	.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 }
