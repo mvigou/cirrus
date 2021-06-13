@@ -2,9 +2,12 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasWritingRights()) {
+if(isAuthenticated()) {
 	if(isset($_POST['fromPath'], $_POST['toPath'])) {
-		if(inScopeDirectory($_POST['fromPath']) && inScopeDirectory($_POST['toPath'])) {
+		if(
+			(hasPublisherRights() && inDatasDirectory($_POST['fromPath']) && inDatasDirectory($_POST['toPath'])) ||
+			(hasOwnerRights() && inScopeDirectory($_POST['fromPath']) && inScopeDirectory($_POST['toPath']))
+		) {
 			if(is_file($_POST['toPath'])) {
 				$basePath = $_POST['toPath']; 
 				$i = 1;

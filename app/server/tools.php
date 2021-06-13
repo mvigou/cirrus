@@ -18,7 +18,7 @@ function isAuthenticated() {
 function hasOwnerRights() {
 	return $_SESSION['role'] === 'owner' ? true : false;
 }
-function hasWritingRights() {
+function hasPublisherRights() {
 	return $_SESSION['role'] === 'owner' || $_SESSION['role'] === 'publisher' ? true : false;
 }
 function inScopeDirectory($elm) {

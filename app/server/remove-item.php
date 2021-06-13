@@ -2,16 +2,16 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasWritingRights()) {
+if(isAuthenticated()) {
 	global $env;
 	if(isset($_POST['item'])) {
 		if($_POST['item'] === 'RECYCLE') {
 			$_POST['item'] = $env->recycleDir;	
 		}
-		if(inDatasDirectory($_POST['item'])) {
+		if(hasPublisherRights() && inDatasDirectory($_POST['item'])) {
 			moveToRecycle($_POST['item']);
 		}
-		else if(inRecycleDirectory($_POST['item'])) {	
+		else if(hasOwnerRights() && inRecycleDirectory($_POST['item'])) {	
 			if(is_file($_POST['item'])) {
 				unlink($_POST['item']);
 			}

@@ -88,7 +88,7 @@ if(is_dir('./datas')) {
 				</div>
 			</main>
 			<script src="./app/client/viewers.js"></script>
-			<?php if(hasWritingRights()) { ?>
+			<?php if(hasPublisherRights()) { ?>
 				<script src="./app/client/publishers.js"></script>
 			<?php } if(hasOwnerRights()) { ?>
 				<script>const cirrusId = "<?php echo $env->cirrusId; ?>";</script>

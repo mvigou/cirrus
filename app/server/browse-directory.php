@@ -4,17 +4,16 @@ require_once('./tools.php');
 
 if(isAuthenticated()) {	
 	if(isset($_POST['dir'])) {
-		switch($_POST['dir']) {
-			case 'DATAS':
-				$dir = $env->contentDir;
-				break;
-			case 'RECYCLE':
-				$dir = $env->recycleDir;
-				break;
-			default:
-				if(inRecycleDirectory($_POST['dir']) || inDatasDirectory($_POST['dir'])) {
-					$dir = $_POST['dir'];
-				}
+		if($_POST['dir'] === 'DATAS') {
+			$dir = $env->contentDir;
+		}
+		else if($_POST['dir'] === 'RECYCLE' && hasOwnerRights()) {
+			$dir = $env->recycleDir;
+		}
+		else {
+			if(inDatasDirectory($_POST['dir']) || (inRecycleDirectory($_POST['dir']) && hasOwnerRights())) {
+				$dir = $_POST['dir'];	
+			}
 		}
 		if(isset($dir)) {
 			$items = [];
