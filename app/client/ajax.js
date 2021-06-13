@@ -56,6 +56,7 @@ function browseDirectory(dir) {
 				localStorage.setItem('currentDir', resp.content.dir);
 				setItems(resp.content.items, resp.content.dir);
 				setTree(resp.content.dir);
+				ui.barInput.value = '';
 			}
 		}
 	)
@@ -202,7 +203,7 @@ function renameItem(oldName, newName, item) {
 	}
 }
 function moveItem(fromPath, toPath) {
-	if(toPath.indexOf(fromPath) === -1) {
+	if(fromPath !== toPath.substring(0, toPath.lastIndexOf('/'))) {
 		ajaxPost(
 			{
 				script: './app/server/move-item.php',

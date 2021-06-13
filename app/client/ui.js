@@ -1,16 +1,15 @@
 "use strict";
 
 const ui = {
-	addButton: document.getElementById('bar__addButton'),
+	barButton: document.querySelector('.bar button'),
+	barInput: document.querySelector('.bar input'),
 	body: document.body,
-	canButton: document.getElementById('bar__cancelButton'),
-	cmdButton: document.getElementById('bar__cmdButton'),
 	dirCounter: document.getElementById('dir-counter'),
 	fileCounter: document.getElementById('fil-counter'),
 	popup: document.querySelector('.popup'),
 	prevBox: document.querySelector('.preview'),
 	prevItem: document.querySelector('.preview__item'),
-	uploadIcon: document.getElementById('upload-icon'),
+	uploadIcon: document.getElementById('upload-icon')
 };
 
 /* ### Manage theme ### */
@@ -132,27 +131,13 @@ const ui = {
 
 /* ### Manage bar ### */
 
-	function isPerformingSearch(value) {
-		return value.indexOf('?') === 0 ? true : false;
-	}
-	function isPerformingCreate(value) {
-		return value.indexOf('+') === 0 ? true : false;
-	}
-	function isPerformingCommand(value) {
-		return value.indexOf('*') === 0 ? true : false;
-	}
-	function setBarButton(button) {
-		ui.addButton.classList.add('--hidden');
-		ui.cmdButton.classList.add('--hidden');
-		ui.canButton.classList.add('--hidden');
-		if(button) {
-			ui[button].classList.remove('--hidden');
+	function barInput(value) {
+		if(value.indexOf('+') === 0) {
+			ui.barButton.classList.remove('--hidden');
 		}
-	}
-	function barLive(value) {
-		const items = document.getElementsByClassName('list__item');
-		if(isPerformingSearch(value)) {
-			setBarButton('canButton');
+		else {
+			ui.barButton.classList.add('--hidden');
+			const items = document.getElementsByClassName('list__item');
 			for(const item of items) {
 				item.classList.remove('--visible');	
 				if(item.textContent.toLowerCase().indexOf(value.substr(1).toLowerCase()) >= 0) {
@@ -161,41 +146,16 @@ const ui = {
 			}
 			setCounters();
 		}
-		else {
-			for(const item of items) {
-				item.classList.add('--visible');
-			}
-			setCounters();
-			if(isPerformingCreate(value)) {
-				setBarButton('addButton');
-			}
-			else if(isPerformingCommand(value)) {
-				setBarButton('cmdButton');
-			}
-			else {
-				setBarButton();
-			}
-		}
 	}
 	function barSubmit(e) {
-		const value = e.target.elements[0].value;
-		if(isPerformingSearch(value)) {
-			const items = document.getElementsByClassName('list__item');
-			for(const item of items) {
-				item.classList.add('--visible');
-			}
-			ui.canButton.classList.add('--hidden');
+		if(ui.barInput.value.indexOf('+') === 0) {
+			createDirectory(ui.barInput.value.substr(1));
+			ui.barButton.classList.add('--hidden');
+			ui.barInput.value = '';
 		}
-		else if(isPerformingCreate(value)) {
-			createDirectory(value.substr(1));
-			ui.addButton.classList.add('--hidden');
+		else {
+			e.preventDefault();
 		}
-		else if(isPerformingCommand(value)) {
-			// Do something...
-			ui.cmdButton.classList.add('--hidden');
-		}
-		e.target.reset();
-		e.preventDefault();
 	}
 	document.querySelector('.bar__form').onsubmit = e => barSubmit(e);
 
