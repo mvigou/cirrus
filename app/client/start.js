@@ -1,5 +1,3 @@
-document.getElementById('emptyRecycleBt').ontouchstart = e => watchConfirm('start', 'recycle', e);
-
 if(localStorage.getItem('theme') === 'dark') {
     toDarkTheme();
 }

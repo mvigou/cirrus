@@ -4,7 +4,7 @@ require_once('./tools.php');
 
 if(isAuthenticated() && hasWritingRights()) {
 	if(isset($_POST['parent'], $_POST['dirs'])) {		
-		if(inScopeDirectory($_POST['parent'])) {
+		if(inDatasDirectory($_POST['parent'])) {
 			$dirName = $_POST['parent'] . '/' . str_replace(["<", ">", ":", "\\", "|", "?", "*", "\""], '-', $_POST['dirs']);
 			if(is_dir($dirName)) {
 				$baseName = $dirName; 
