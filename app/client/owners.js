@@ -10,7 +10,7 @@
 				{
 					type: 'button',
 					attr: {
-						class: 'datas-ft publisher-ft non-editable',
+						class: 'datas-ft non-editable',
 						title: 'Afficher la corbeille'
 					},
 					events: [
@@ -344,7 +344,7 @@
 		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 	}
 
-/* ### Procedural ### */
+/* ### Ending procedural ### */
 
 	ui.body.classList.add('--owner');
 	checkLicence();

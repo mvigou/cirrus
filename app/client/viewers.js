@@ -1,14 +1,16 @@
 "use strict";
 
-const ui = {
-	nav: document.querySelector('.nav'),
-	body: document.body,
-	dirCounter: document.getElementById('dir-counter'),
-	fileCounter: document.getElementById('fil-counter'),
-	popup: document.querySelector('.popup'),
-	prevBox: document.querySelector('.preview'),
-	prevItem: document.querySelector('.preview__item')
-};
+/* ### Starting procedural ### */
+
+	const ui = {
+		nav: document.querySelector('.nav'),
+		body: document.body,
+		dirCounter: document.getElementById('dir-counter'),
+		fileCounter: document.getElementById('fil-counter'),
+		popup: document.querySelector('.popup'),
+		prevBox: document.querySelector('.preview'),
+		prevItem: document.querySelector('.preview__item')
+	};
 
 /* ### Client side functions ### */
 
