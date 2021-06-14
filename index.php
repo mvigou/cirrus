@@ -80,7 +80,7 @@ if(is_dir('./datas')) {
 					<object
 						alt="logo cirrus"
 						class="popup__object"
-						data="/app/client/cirrus-logo.svg"
+						data="./app/client/cirrus-logo.svg"
 						type="image/svg+xml" >
 					</object>
 					<p class="popup-confirm">Relâchez sur l'option pour valider, relâchez ailleurs pour annuler</p>
