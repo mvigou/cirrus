@@ -1,6 +1,5 @@
 <?php 
 $env = json_decode(file_get_contents('../../datas/env.json'));
-$lab = json_decode(file_get_contents('./i18n-' . $env->lang . '.json'));
 require('../../app/server/tools.php');
 if(isset($_GET['role'], $_GET['auth'])) { 
 	if($_GET['role'] === 'owner' || $_GET['role'] === 'publisher' || $_GET['role'] === 'viewer') {
@@ -12,17 +11,17 @@ if(isset($_GET['role'], $_GET['auth'])) {
 					<link rel="stylesheet" href="./style.css" />
 					<meta charset="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-					<title>cirrus | <?php echo $lab->page->title; ?></title>
+					<title>cirrus | créer un compte</title>
 				</head>
 				<body>
 					<main>
-						<h1>cirrus | <span><?php echo $lab->page->title; ?></span></h1>
+						<h1>cirrus | <span>créer un compte</span></h1>
 						<form action="../../app/server/sign-up.php" method="POST">
 							<label>
-								<?php echo $lab->label->userName; ?>
-								<span><?php echo $lab->label->userNameFormat; ?></span>
+								Nom d'utilisateur
+								<span>8 à 16 lettres et/ou chiffres</span>
 								<?php if(isset($_GET['error']) && $_GET['error'] === 'user-exists') {
-									echo '<p style="color:#f44;">' . $lab->error->userExists . '</p>';
+									echo '<p style="color:#f44;">Nom d\'utilisateur déjà pris</p>';
 								} ?>
 								<input 
 									id="user-name" 
@@ -34,8 +33,8 @@ if(isset($_GET['role'], $_GET['auth'])) {
 								/>
 							</label>
 							<label>
-								<?php echo $lab->label->userPass; ?>
-								<span><?php echo $lab->label->userPassFormat; ?></span>
+								Mot de passe
+								<span>8 à 24 lettres, chiffres et/ou . ? ! - _ * + = / | \ ( ) [ ] # $ @ %</span>
 								<input type="password" 
 									id="user-pass" 
 									minlength="8"
@@ -46,7 +45,7 @@ if(isset($_GET['role'], $_GET['auth'])) {
 								/>
 							</label>
 							<label>
-								<?php echo $lab->label->userPassConf; ?>
+								Confirmation mot de passe
 								<input type="password" 
 									id="user-pass-conf" 
 									minlength="8"
@@ -77,5 +76,14 @@ if(isset($_GET['role'], $_GET['auth'])) {
 			</html>
 		<?php 
 		}
+		else {
+			header('Location: ../..');
+		}
 	}
+	else {
+		header('Location: ../..');
+	}
+}
+else {
+	header('Location: ../..');
 }

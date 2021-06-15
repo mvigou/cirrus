@@ -5,7 +5,6 @@ if(isset($_GET['auth'])) {
 	exit();
 }
 $env = json_decode(file_get_contents('../../datas/env.json'));
-$lab = json_decode(file_get_contents('./i18n-' . $env->lang . '.json'));
 require('../../app/server/tools.php'); ?>
 <!DOCTYPE html>
 	<html lang="<?php echo $env->lang; ?>">
@@ -16,31 +15,31 @@ require('../../app/server/tools.php'); ?>
 		<link rel="stylesheet" href="./style.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>cirrus | <?php echo $lab->page->title; ?></title>
+		<title>cirrus | se connecter</title>
 	</head>
 	<body>
 		<main>		
-			<h1>cirrus | <span><?php echo $lab->page->title; ?></span></h1>
+			<h1>cirrus | se connecter</span></h1>
 			<form action="../../app/server/sign-in.php" method="POST">
 				<?php if(isset($_GET['error'])) {
 					$mess = '';
 					switch($_GET['error']) {
 						case 'wrong-link':
-							$mess = $lab->error->wrongLink;
+							$mess = 'Lien d\'accès public invalide.';
 							break;
 						
 						case 'wrong-user':
-							$mess = $lab->error->wrongUser;
+							$mess = 'Aucun utilisateur de ce nom.';
 							break;
 						
 						case 'wrong-password':
-							$mess = $lab->error->wrongPassword;
+							$mess = 'Mot de passe invalide.';
 							break;
 					}
 					echo '<p style="color:#f44;">' . $mess . '</p>';
 				} ?>
 				<label>
-					<?php echo $lab->label->userName; ?>
+					Nom d'utilisateur
 					<input 
 						id="user-name" 
 						minlength="8"
@@ -51,7 +50,7 @@ require('../../app/server/tools.php'); ?>
 					/>
 				</label>
 				<label>
-					<?php echo $lab->label->userPass; ?>
+					Mot de passe
 					<input type="password" 
 						id="user-pass" 
 						minlength="8"

@@ -182,7 +182,7 @@
 							type: 'a',
 							attr: {
 								class: 'cta',
-								href: 'http://dev.getcirrus/enregistrer?cirrusId=' + cirrusId,
+								href: 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId,
 								target: '_blank',
 								title: 'Enregistrer ce cirrus'
 							},
@@ -208,7 +208,7 @@
 							type: 'a',
 							attr: {
 								class: 'popup__a purchase-bt', 
-								href: 'http://dev.getcirrus/enregistrer?cirrusId=' + cirrusId,
+								href: 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId,
 								target: '_blank'
 							},
 							txt: 'Enregistrer ce cirrus'
