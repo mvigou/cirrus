@@ -136,24 +136,22 @@
 				</nav>
 				<div>
 					<form data-item-path="">
-						<fieldset>
-							<legend>Règle d'accès au dossier</legend>
-							<label>
-								<input class="perms-radio" type="radio" name="isRestricted" value="false" />
-								Ouvert à tout membre ayant accès à ce cirrus
-							</label>
-							<label>
-								<input class="perms-radio" type="radio" name="isRestricted" value="true" />
-								Ouvert aux seuls membres enregistrés figurant dans la liste ci-dessous
-							</label>
-						</fieldset>
+						<h2>Règles d\'accès au dossier</h2>
 						<label>
-							Membres accrédités (un par ligne)
+							<input class="perms-radio" type="radio" name="isRestricted" value="false" />
+							Dossier public : toute personne ayant accès à ce cirrus (via un lien d'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.
+						</label>
+						<label>
+							<input class="perms-radio" type="radio" name="isRestricted" value="true" />
+							Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d'inscrire leur nom d'utilisateur dans la liste ci-dessous. 
+						</label>
+						<label>
+							Si dossier privé, membres autorisés à y accéder (un nom d'utilisateur par ligne) :
 							<textarea name="accreditedMembers"></textarea>
 						</label>
 						<button 
 							class="start-trap"
-							title="Valider" 
+							title="Enregistrer les changements" 
 							type="submit">
 							<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>
 						</button>
