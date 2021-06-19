@@ -1,15 +1,10 @@
 "use strict";
 
-/* ### Starting procedural ### */
-
-	function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.txt:t.html&&(e.innerHTML=t.html),t.attr)for(const n in t.attr)e.setAttribute(n,t.attr[n]);if(t.events)for(const n of t.events)e.addEventListener(n.type,n.fn);if(t.child)for(const n of t.child)e.appendChild(chess(n));return e}
-
-	ui.navLeftCont = document.querySelector('.nav__left-ct');
-
 /* ### Enhance UI ### */
 
 	/* Nav */
 
+		ui.navLeftCont = document.querySelector('.nav__left-ct');
 		ui.navLeftCont.appendChild(
 			chess(
 				{
@@ -53,7 +48,7 @@
 					attr: {
 						class: 'bar datas-ft non-editable'
 					},
-					child: [
+					children: [
 						{
 							type: 'form',
 							attr: {
@@ -65,7 +60,7 @@
 									fn: e => barSubmit(e)
 								}
 							],
-							child: [
+							children: [
 								{
 									type: 'label',
 									attr: {

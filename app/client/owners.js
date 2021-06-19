@@ -127,10 +127,10 @@
 				attr: {
 					class: 'perms-panel'
 				},
-				child: [
+				children: [
 					{
 						type: 'div',
-						child: [
+						children: [
 							{
 								type: 'nav',
 								attr: {
@@ -155,17 +155,17 @@
 							},
 							{
 								type: 'div',
-								child: [
+								children: [
 									{
 										type: 'form',
-										child: [
+										children: [
 											{
 												type: 'h2',
 												txt: 'Règles d\'accès au dossier'
 											},
 											{
 												type: 'label',
-												child: [
+												children: [
 													{
 														type: 'input',
 														attr: {
@@ -184,7 +184,7 @@
 											},
 											{
 												type: 'label',
-												child: [
+												children: [
 													{
 														type: 'input',
 														attr: {
@@ -204,7 +204,7 @@
 											{
 												type: 'label',
 												txt: 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :',
-												child: [
+												children: [
 													{
 														type: 'textarea',
 														attr: {
@@ -254,7 +254,7 @@
 						class: 'registration-banner'
 					},
 					txt: 'cirrus non enregistré',
-					child: [
+					children: [
 						{
 							type: 'a',
 							attr: {
@@ -276,7 +276,7 @@
 					attr: {
 						class: 'popup-purchase'
 					},
-					child: [
+					children: [
 						{
 							type: 'p',
 							html: 'Vous appréciez cirrus ?<br/>Enregistrez-le.'

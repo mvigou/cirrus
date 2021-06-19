@@ -1,16 +1,132 @@
 "use strict";
 
-/* ### Starting procedural ### */
+function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.txt:t.html&&(e.innerHTML=t.html),t.attr)for(const n in t.attr)e.setAttribute(n,t.attr[n]);if(t.events)for(const n of t.events)e.addEventListener(n.type,n.fn);if(t.children)for(const n of t.children)e.appendChild(chess(n));return e}
+
+/* ### Enhance UI ### */
 
 	const ui = {
-		nav: document.querySelector('.nav'),
 		body: document.body,
-		dirCounter: document.getElementById('dir-counter'),
-		fileCounter: document.getElementById('fil-counter'),
-		popup: document.querySelector('.popup'),
+		main: document.querySelector('main'),		
 		prevBox: document.querySelector('.preview'),
 		prevItem: document.querySelector('.preview__item')
 	};
+
+	/* Nav */
+
+		ui.nav = chess(
+			{
+				type: 'nav',
+				attr: {
+					class: 'nav'
+				},
+				children: [
+					{
+						type: 'div',
+						attr: {
+							class: 'nav__left-ct'
+						}
+					},
+					{
+						type: 'div',
+						attr: {
+							class: 'nav__right-ct'
+						},
+						children: [
+							{
+								type: 'button',
+								attr: {
+									id: 'switchThemeBt',
+									title: 'Basculer entre thème clair / thème sombre'
+								},
+								html: '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>',
+								events: [
+									{
+										type: 'click',
+										fn: () => switchTheme()
+									}
+								]
+							},
+							{
+								type: 'button',
+								attr: {
+									title: 'Se déconnecter'
+								},
+								html: '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>',
+								events: [
+									{
+										type: 'click',
+										fn: () => signOut()
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		);
+		ui.main.appendChild(ui.nav);
+
+	/* Tree and counters */
+
+		ui.aside = chess({type:'aside'});
+		ui.tree = chess({type:'div', attr:{class:'tree'}});
+		ui.counters = chess({type: 'div',attr:{class:'counters'}});			
+		ui.dirCounter = chess({type:'span'});
+		ui.filCounter = chess({type:'span'});
+		ui.aside.appendChild(ui.tree);
+		ui.counters.appendChild(ui.dirCounter);
+		ui.counters.appendChild(ui.filCounter);
+		ui.aside.appendChild(ui.counters);
+		ui.main.appendChild(ui.aside);
+
+	/* User content */
+
+		ui.list = chess(
+			{
+				type: 'ul',
+				attr: {
+					class: 'list'
+				}
+			}
+		);
+		ui.main.appendChild(ui.list);
+
+	/* Popup */
+
+		ui.popup = chess(
+			{
+				type: 'div',
+				attr: {
+					class: 'popup'
+				},
+				children: [
+					{
+						type: 'object',
+						attr: {
+							alt: 'Logo cirrus',
+							class: 'popup__object',
+							data: './app/client/cirrus-logo.svg',
+							type: 'image/svg+xml'
+						}
+					},
+					{
+						type: 'p',
+						attr: {
+							class: 'popup-confirm'
+						},
+						txt: 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler'
+					},
+					{
+						type: 'p',
+						attr: {
+							class: 'popup-download'
+						},
+						txt: 'Téléchargement en cours, veuillez patienter'
+					}
+				]
+			}
+		);
+		ui.main.appendChild(ui.popup);
 
 /* ### Client side functions ### */
 
@@ -111,8 +227,8 @@
 	/* ### Manage structure ### */
 
 		function setCounters() {
-			ui.dirCounter.textContent = document.getElementsByClassName('subdir --visible').length;
-			ui.fileCounter.textContent = document.getElementsByClassName('file --visible').length;
+			ui.dirCounter.innerHTML = '<svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length;
+			ui.filCounter.innerHTML = '<svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file --visible').length;
 		}
 		function setTree(dir) {
 			const navTreeElm = document.querySelector('.tree');
@@ -135,8 +251,7 @@
 			}
 		}
 		function setItems(items, dir) {
-			const itemListElm = document.querySelector('.list');
-			itemListElm.innerHTML = '';
+			ui.list.innerHTML = '';
 			for(const item of items) {
 				let itemElm = document.createElement('li');	
 				// Set item path.
@@ -307,7 +422,7 @@
 					rmItemBtElm.ontouchmove = () => cancelConfirm();
 					itemElm.appendChild(rmItemBtElm);
 				}
-				itemListElm.appendChild(itemElm);
+				ui.list.appendChild(itemElm);
 			}
 			setCounters();
 		}
@@ -455,4 +570,19 @@
 			}
 		)
 		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+	}
+
+/* ### Ending procedural ### */
+
+	if(localStorage.getItem('theme') === 'dark') {
+		toDarkTheme();
+	}
+	if(localStorage.getItem('currentDir')) {
+		browseDirectory(localStorage.getItem('currentDir'));
+		if(localStorage.getItem('mainDir') === 'RECYCLE') {
+			toRecycleTheme();
+		}
+	}
+	else {
+		browseDirectory('DATAS');
 	}
