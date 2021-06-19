@@ -121,48 +121,127 @@
 
 	/* Permissions */
 
-		const permsPanElm = document.createElement('div');
-		permsPanElm.classList.add('perms-panel');
-		permsPanElm.innerHTML =
-			`<div>
-				<nav class="perms-panel__nav">
-					<!-- Close the panel. -->
-					<button 
-						class="start-trap" 
-						onclick="unsetPermsPanel()" 
-						title="Fermer">
-						<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-					</button>
-				</nav>
-				<div>
-					<form data-item-path="">
-						<h2>Règles d\'accès au dossier</h2>
-						<label>
-							<input class="perms-radio" type="radio" name="isRestricted" value="false" />
-							Dossier public : toute personne ayant accès à ce cirrus (via un lien d'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.
-						</label>
-						<label>
-							<input class="perms-radio" type="radio" name="isRestricted" value="true" />
-							Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d'inscrire leur nom d'utilisateur dans la liste ci-dessous. 
-						</label>
-						<label>
-							Si dossier privé, membres autorisés à y accéder (un nom d'utilisateur par ligne) :
-							<textarea name="accreditedMembers"></textarea>
-						</label>
-						<button 
-							class="start-trap"
-							title="Enregistrer les changements" 
-							type="submit">
-							<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>
-						</button>
-					</form>
-				</div>
-			</div>`;
-		document.querySelector('main').insertAdjacentElement('beforeend', permsPanElm);		
-		permsPanElm.querySelector('form').onsubmit = e => {
-			updatePerms(e.target.getAttribute('data-item-path'));
-			e.preventDefault();
-		};
+		const permsPanElm = chess(
+			{
+				type: 'div',
+				attr: {
+					class: 'perms-panel'
+				},
+				child: [
+					{
+						type: 'div',
+						child: [
+							{
+								type: 'nav',
+								attr: {
+									class: 'perms-panel__nav'
+								},
+								child : [
+									{
+										type: 'button',
+										attr: {
+											class: 'start-trap',
+											title: 'Fermer'
+										},
+										html: '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+										events: [
+											{
+												type: 'click',
+												fn: () => unsetPermsPanel()
+											}
+										]
+									}
+								]
+							},
+							{
+								type: 'div',
+								child: [
+									{
+										type: 'form',
+										child: [
+											{
+												type: 'h2',
+												txt: 'Règles d\'accès au dossier'
+											},
+											{
+												type: 'label',
+												child: [
+													{
+														type: 'input',
+														attr: {
+															class: 'perms-radio',
+															name: 'isRestricted',
+															type: 'radio',
+															value: 'false'
+														}
+
+													},
+													{
+														type: 'span',
+														txt: 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.'
+													}
+												]
+											},
+											{
+												type: 'label',
+												child: [
+													{
+														type: 'input',
+														attr: {
+															class: 'perms-radio',
+															name: 'isRestricted',
+															type: 'radio',
+															value: 'true'
+														}
+
+													},
+													{
+														type: 'span',
+														txt: 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.'
+													}
+												]
+											},
+											{
+												type: 'label',
+												txt: 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :',
+												child: [
+													{
+														type: 'textarea',
+														attr: {
+															name: 'accreditedMembers'
+														}
+
+													}
+												]
+											},
+											{
+												type: 'button',
+												attr: {
+													class: 'end-trap',
+													title: 'Enregistrer les changements',
+													type: 'submit'
+												},
+												html: '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>',
+											}
+										],
+										events: [
+											{
+												type: 'submit',
+												fn: e => {
+													updatePerms(e.target.getAttribute('data-item-path'));
+													e.preventDefault();
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		);		
+		document.querySelector('main').insertAdjacentElement('beforeend', permsPanElm);
 
 	/* Registration */
 
@@ -260,6 +339,7 @@
 					}
 				}
 				permsPanElm.querySelector('form').setAttribute('data-item-path', dirPath);
+				document.querySelector('.start-trap').focus();
 				permsPanElm.classList.add('--visible');
 			}
 			function unsetPermsPanel() {
