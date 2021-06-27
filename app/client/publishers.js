@@ -66,15 +66,15 @@
 									attr: {
 										for: 'bar__input'
 									},
-									txt: 'Saisir pour rechercher ici ou commencer par + pour créer un dossier.'
+									txt: 'Saisir pour rechercher, commencer par + pour créer un dossier.'
 								},
 								{
 									type: 'input',
 									attr: {
 										id: 'bar__input',
-										title: 'Saisir pour rechercher ici ou commencer par + pour créer un dossier.'
+										placeholder: 'chercher / créer dossier avec +',
+										title: 'Rechercher ou créer un dossier en commençant par +'
 									},
-									txt: 'Saisir pour rechercher ici ou commencer par + pour créer un dossier.',
 									events: [
 										{
 											type: 'input',
