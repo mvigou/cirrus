@@ -284,11 +284,20 @@
 						{
 							type: 'a',
 							attr: {
-								class: 'popup__a purchase-bt', 
+								class: 'popup__a', 
 								href: 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId,
 								target: '_blank'
 							},
 							txt: 'Enregistrer ce cirrus'
+						},
+						{
+							type: 'a',
+							attr: {
+								class: 'popup__a', 
+								href: 'https://getcirrus.awebsome.fr/documentation/pourquoi-faut-il-enregistrer-son-cirrus/',
+								target: '_blank'
+							},
+							txt: 'En savoir plus'
 						},
 						{
 							type: 'a',
