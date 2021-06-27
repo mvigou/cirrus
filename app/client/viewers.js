@@ -571,9 +571,3 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		)
 		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
 	}
-
-/* ### Ending procedural ### */
-
-	if(localStorage.getItem('theme') === 'dark') {
-		toDarkTheme();
-	}

@@ -30,6 +30,9 @@ body
 	height: 100vh
 	margin: 0
 
+main
+	padding-bottom: 90px
+
 /* states */
 
 .owner-ft,
@@ -69,11 +72,23 @@ body
 
 a
 	color: inherit
-	cursor: pointer
 	text-decoration: none
 	&:hover
 		color: var(--hovered-color)
 		text-decoration: underline
+
+.help-a
+	background-color: var(--bg-color)
+	border-top: solid 1px var(--border-color) 
+	bottom: 0px
+	left: 0px
+	margin: 0 12px
+	padding-top: 6px
+	position: fixed
+	right: 0px
+	text-align: center
+	img
+		width: 48px
 
 button
 	background-color: transparent
@@ -157,10 +172,12 @@ svg
 .nav
 	align-items: center
 	background-color: var(--bg-color)
+	border-bottom: solid 1px var(--border-color)
 	box-sizing: border-box
 	display: flex
 	justify-content: space-between
-	padding: 12px
+	margin: 0 12px
+	padding: 12px 0 24px 0
 	position: sticky
 	top: 0
 	z-index: 1
@@ -169,12 +186,11 @@ svg
 
 aside
 	border-bottom: solid 1px var(--border-color)
-	border-top: solid 1px var(--border-color)
 	display: grid
 	grid-template-columns: auto auto
 	justify-content: space-between	
-	margin: 12px
-	padding: 24px 12px
+	margin: 0 12px
+	padding: 12px
 	span + span
 		margin-left: 18px
 	svg

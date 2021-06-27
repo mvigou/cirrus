@@ -15,6 +15,15 @@ if(is_dir('./datas')) {
 		</head>
 		<body>
 			<main>
+				<a 
+					class="help-a" 
+					href="https://getcirrus.awebsome.fr/" 
+					target="_blank"
+					title="Afficher la documentation">
+						<img 
+							alt="Logo cirrus"	
+							src="/app/client/cirrus-logo.svg" /> 
+				</a>
 				<div 
 					class="preview" 
 					data-item-path="" >
@@ -49,6 +58,20 @@ if(is_dir('./datas')) {
 				<script>const cirrusId = "<?php echo $env->cirrusId; ?>";</script>
 				<script src="./app/client/owners.js"></script>
 			<?php } ?>
+			<script>
+				if(localStorage.getItem('theme') === 'dark') {
+					toDarkTheme();
+				}
+				if(localStorage.getItem('currentDir')) {
+					browseDirectory(localStorage.getItem('currentDir'));
+					if(localStorage.getItem('mainDir') === 'RECYCLE') {
+						toRecycleTheme();
+					}
+				}
+				else {
+					browseDirectory('DATAS');
+				}
+			</script>
 		</body>
 	</html>
 	<?php }
