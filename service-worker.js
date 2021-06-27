@@ -8,7 +8,7 @@ self.oninstall = e => {
 						'./app/client/cirrus-logo-192.png',
 						'./app/client/cirrus-logo-512.png',
 						'./app/client/cirrus-logo-alt.svg',
-						'./app/client/josefin.woff2',
+						'./app/client/cabin-regular.woff2',
 					]
 				);
 			}

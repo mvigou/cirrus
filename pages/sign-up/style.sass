@@ -1,17 +1,25 @@
+/* fonts */
+
 @font-face
 	font-display: swap
-	font-family: 'Josefin'
-	src: url("../../app/client/josefin.woff2") format("woff2")
+	font-family: 'Cabin'
+	src: url("../../app/client/cabin-regular.woff2") format("woff2")
 
-html
-	font-size: 18px
+/* colors */
 
-body
+:root
 	--base-color: #bbb
 	--bg-color: #222
 	--border-color: #444	
 	--cirrus-color: #2db4e1
 	--hovered-color: #fff
+
+/* main containers */
+
+html
+	font-size: 16px
+
+body
 	margin: 0
 
 main
@@ -20,7 +28,7 @@ main
 	color: var(--base-color)
 	display: flex
 	flex-direction: column-reverse
-	font-family: Josefin, sans-serif
+	font-family: Cabin, sans-serif
 	height: 100vh
 	justify-content: space-between
 	overflow-y: auto
@@ -33,6 +41,7 @@ main
 
 h1
 	font-size: 1rem
+	font-weight: normal
 	text-align: center
 	@media screen and ( min-width: 1024px)
 		grid-column: 1 / 3
@@ -48,10 +57,7 @@ img
 	@media screen and ( min-width: 1024px)
 		max-width: initial
 
-svg
-	fill: var(--base-color)
-	vertical-align: middle
-	width: 24px
+/* form */
 
 form
 	margin: 0 auto
@@ -63,7 +69,7 @@ label
 	span
 		color: var(--base-color)
 		display: block
-		font-size: 0.7rem
+		font-size: .9rem
 
 input
 	background-color: transparent
@@ -101,3 +107,8 @@ button
 			background-color: var(--cirrus-color)
 		svg
 			fill: var(--hovered-color)
+
+svg
+	fill: var(--base-color)
+	vertical-align: middle
+	width: 24px

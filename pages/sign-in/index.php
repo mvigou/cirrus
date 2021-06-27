@@ -19,7 +19,7 @@ require('../../app/server/tools.php'); ?>
 	</head>
 	<body>
 		<main>		
-			<h1>cirrus | se connecter</span></h1>
+			<h1>cirrus | <span>se connecter</span></h1>
 			<form action="../../app/server/sign-in.php" method="POST">
 				<?php if(isset($_GET['error'])) {
 					$mess = '';

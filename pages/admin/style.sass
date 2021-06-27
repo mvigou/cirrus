@@ -1,9 +1,11 @@
+/* fonts */
+	
 @font-face
 	font-display: swap
-	font-family: 'Josefin'
-	src: url("../../app/client/josefin.woff2") format("woff2")
+	font-family: 'Cabin'
+	src: url("../../app/client/cabin-regular.woff2") format("woff2")
 
-// containers
+/* main containers */
 
 html
 	font-size: 16px
@@ -14,9 +16,9 @@ body
 	--border-color: #ccc
 	--cirrus-color: #2db4e1
 	--hovered-color: #000
-	color: var(--base-color)
 	background-color: var(--bg-color)	
-	font-family: Josefin, sans-serif
+	color: var(--base-color)
+	font-family: Cabin, sans-serif
 	margin: 0
 .--dark-mode
 	--base-color: #bbb
@@ -29,10 +31,29 @@ main
 	@media screen and ( min-width: 1024px)	
 		padding: 0 96px
 
-header
-	text-align: center		
+/* header */
 
-// lists
+header
+	text-align: center
+
+h1
+	font-size: 1.125rem
+	font-weight: normal
+	margin-bottom: 48px
+	margin-top: -9%
+	span
+		color: var(--cirrus-color)
+
+img
+	max-width: 720px
+	width: 100%		
+
+// content
+
+a
+	color: inherit
+	&:hover
+		color: var(--hovered-color)
 
 ul
 	display: flex
@@ -44,22 +65,6 @@ ul
 	li
 		display: block
 		margin: 0 24px
-
-// texts
-
-h1
-	font-size: 1.125rem
-	margin-bottom: 48px
-	margin-top: -9%
-	span
-		color: var(--cirrus-color)
-
-// interactive elements
-
-a
-	color: inherit
-	&:hover
-		color: var(--hovered-color)
 
 summary
 	color: var(--hovered-color)
@@ -110,9 +115,3 @@ details button
 		margin-right: 6px
 		vertical-align: bottom
 		width: 18px
-
-// medias
-
-img
-	max-width: 720px
-	width: 100%
