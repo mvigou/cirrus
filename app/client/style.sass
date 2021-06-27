@@ -68,8 +68,6 @@ main
 	.datas-ft
 		display: none
 
-/* interactive elements */
-
 a
 	color: inherit
 	text-decoration: none
@@ -146,8 +144,6 @@ svg
 	fill: var(--base-color)
 	width: 24px
 
-/* user interface */
-
 .registration-banner
 	background-color: var(--cirrus-color)
 	color: #000
@@ -161,10 +157,8 @@ svg
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
 		box-sizing: border-box
 		display: inline-block
-		height: 44
 		margin-left: 12px
 		padding: 12px
-		width: 44
 		svg
 			fill: var(--bg-color)
 			width: 24px
@@ -221,7 +215,7 @@ aside
 			margin-right: 12px
 			width: 18px
 	
-.preview, .perms-panel
+.pan
 	background-color: #000a
 	bottom: 0
 	display: none
@@ -237,40 +231,27 @@ aside
 		border: solid 1px var(--border-color)
 		display: flex
 		flex-direction: column
-		height: 80vh
+		height: 90vh
 		left: 50%
-		margin-left: -40vw
-		margin-top: -40vh
+		margin-left: -45vw
+		margin-top: -45vh
 		overflow: auto
 		position: fixed
 		top: 50%
-		width: 80vw
-	&__nav
-		display: flex
-		background-color: var(--bg-color)
-		padding: 12px
-		padding-bottom: 24px
-		position: sticky
-		top: 0
-	button:last-of-type
-		margin-left: auto
-
-.preview
-	&__item
-		display: grid
-		height: 100%
-		width: 100%
-		img
-			display: block
-			margin: auto
-			max-width: 100%
-		iframe
-			border: none
-			display: block
+		width: 90vw
+		> div
+			display: grid
 			height: 100%
 			width: 100%
-
-.perms-panel
+	img
+		display: block
+		margin: auto
+		max-width: 100%
+	iframe
+		border: none
+		display: block
+		height: 100%
+		width: 100%
 	form
 		margin: auto
 		max-width: 720px
@@ -291,6 +272,15 @@ aside
 		min-height: 60px
 		resize: vertical
 		width: 100%
+	nav
+		display: flex
+		background-color: var(--bg-color)
+		padding: 12px
+		padding-bottom: 24px
+		position: sticky
+		top: 0
+	button:last-of-type
+		margin-left: auto
 		
 .popup
 	background-color: var(--bg-color)

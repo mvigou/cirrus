@@ -1,8 +1,8 @@
 "use strict";
 
-/* ### Enhance UI ### */
+/* ### enhance UI ### */
 
-	/* Nav */
+	/* nav */
 
 		ui.navLeftCont = document.querySelector('.nav__left-ct');
 		ui.navLeftCont.appendChild(
@@ -99,7 +99,7 @@
 
 /* ### Client side functions ### */
 
-	/* ### Manage theme ### */
+	/* manage theme */
 
 		function toggleEdition() {
 			ui.body.classList.contains('--edit-mode') ?
@@ -107,7 +107,7 @@
 				ui.body.classList.add('--edit-mode');
 		}
 
-	/* ### Manage bar ### */
+	/* manage bar */
 
 		function barInput() {
 			if(ui.barInput.value.indexOf('+') === 0) {
@@ -206,7 +206,7 @@
 						}
 					}
 				)
-				.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+				.catch((e) => console.log(e));
 			}
 		}
 		else {
@@ -237,7 +237,7 @@
 					}
 				}
 			)
-			.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+			.catch((e) => console.log(e));
 		}
 	}
 	function copyItem(fromPath, toPath) {
@@ -263,7 +263,7 @@
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}
 	function removeItem(item, force) {
 		if(validConfirm() || force === true) {
@@ -289,7 +289,7 @@
 					}
 				}
 			)
-			.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+			.catch((e) => console.log(e));
 		}
 	}
 	function createDirectory(dirs) {
@@ -316,7 +316,7 @@
 					}
 				}
 			)
-			.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));	
+			.catch((e) => console.log(e));	
 		}
 	}
 

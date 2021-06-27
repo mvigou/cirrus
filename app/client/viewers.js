@@ -2,17 +2,59 @@
 
 function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.txt:t.html&&(e.innerHTML=t.html),t.attr)for(const n in t.attr)e.setAttribute(n,t.attr[n]);if(t.events)for(const n of t.events)e.addEventListener(n.type,n.fn);if(t.children)for(const n of t.children)e.appendChild(chess(n));return e}
 
-/* ### Enhance UI ### */
+/* ### enhance UI ### */
 
 	const ui = {
 		body: document.body,
-		main: document.querySelector('main'),		
-		prevBox: document.querySelector('.preview'),
-		prevItem: document.querySelector('.preview__item')
+		main: document.querySelector('main')
 	};
+	
+	/* documentation link */
+	
+		ui.main.appendChild(
+			chess(
+				{
+					type: 'a',
+					attr: {
+						class: 'help-a',
+						href: 'https://getcirrus.awebsome.fr/',
+						target: '_blank',
+						title: 'Afficher la documentation' 
+					},
+					children: [
+						{
+							type: 'img',
+							attr: {
+								alt: 'Logo cirrus',
+								src: '/app/client/cirrus-logo.svg'
+							}
+						}
+					]
+				}
+			)
+		);
 
-	/* Nav */
-
+	/* pan (preview & perms) */
+	
+		ui.pan = chess(
+			{
+				type: 'div',
+				attr: {
+					class: 'pan',
+					'data-item-path': ''
+				},
+			}
+		);
+		ui.panContainer = chess({type: 'div'});
+		ui.panNav = chess({type:'nav'});
+		ui.panItem = chess({type:'div'});
+		ui.panContainer.appendChild(ui.panNav);
+		ui.panContainer.appendChild(ui.panItem);
+		ui.pan.appendChild(ui.panContainer)
+		ui.main.appendChild(ui.pan);
+	
+	/* nav */
+	
 		ui.nav = chess(
 			{
 				type: 'nav',
@@ -66,7 +108,7 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		);
 		ui.main.appendChild(ui.nav);
 
-	/* Tree and counters */
+	/* tree and counters */
 
 		ui.aside = chess({type:'aside'});
 		ui.tree = chess({type:'div', attr:{class:'tree'}});
@@ -79,7 +121,7 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		ui.aside.appendChild(ui.counters);
 		ui.main.appendChild(ui.aside);
 
-	/* User content */
+	/* user content */
 
 		ui.list = chess(
 			{
@@ -91,7 +133,7 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		);
 		ui.main.appendChild(ui.list);
 
-	/* Popup */
+	/* popup */
 
 		ui.popup = chess(
 			{
@@ -128,9 +170,9 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		);
 		ui.main.appendChild(ui.popup);
 
-/* ### Client side functions ### */
+/* ### client side functions ### */
 
-	/* ### Manage theme ### */
+	/* manage theme */
 
 		function toDarkTheme() {	
 			ui.body.classList.add('--dark-mode');
@@ -154,50 +196,87 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 			}
 		}
 
-	/* ### Manage preview */
+	/* manage preview */
 
-		function setPreview(sourcePath, tempPath) {
-			ui.prevBox.setAttribute('data-item-path', tempPath);
-			ui.prevBox.classList.add('--visible');
-			document.querySelector('.start-trap').focus();
+		function setPanPrev(tempPath) {
+			ui.panNav.appendChild(
+				chess(
+					{
+						type: 'button',
+						attr: {
+							title: 'Ouvrir dans un nouvel onglet'
+						},
+						html: '<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>',
+						events: [
+							{
+								type: 'click',
+								fn: () => openPreviewedItem()
+							}
+						]
+					}
+				)
+			);
+			ui.panNav.appendChild(
+				chess(
+					{
+						type: 'button',
+						attr: {
+							title: 'Télécharger'
+						},
+						html: '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>',
+						events: [
+							{
+								type: 'click',
+								fn: () => downloadPreviewedItem()
+							}
+						]
+					}
+				)
+			);
+			ui.panNav.appendChild(
+				chess(
+					{
+						type: 'button',
+						attr: {
+							title: 'Fermer'
+						},
+						html: '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+						events: [
+							{
+								type: 'click',
+								fn: () => unsetPan()
+							}
+						]
+					}
+				)
+			);
+			ui.pan.setAttribute('data-item-path', tempPath);
+			ui.pan.classList.add('--visible');
 		}
-		function unsetPreview() {
-			ui.prevItem.innerHTML = '';
-			ui.prevBox.classList.remove('--visible');
+		function unsetPan() {
+			ui.panNav.innerHTML = '';
+			ui.panItem.innerHTML = '';
+			ui.pan.classList.remove('--visible');
 		}
 		function setPreviewImg(sourcePath, tempPath) {
 			const imgElm = document.createElement('img');
 			imgElm.src = tempPath;
-			ui.prevItem.appendChild(imgElm);
-			setPreview(sourcePath, tempPath);
+			ui.panItem.appendChild(imgElm);
+			setPanPrev(tempPath);
 		}
 		function setPreviewPdf(sourcePath, tempPath) {
 			const iframeElm = document.createElement('iframe');
 			iframeElm.src = tempPath;
-			ui.prevItem.appendChild(iframeElm);
-			setPreview(sourcePath, tempPath);
+			ui.panItem.appendChild(iframeElm);
+			setPanPrev(tempPath);
 		}
 		document.onkeydown = e => {
 			if(e.code === 'Escape') {
-				unsetPreview();
-			}
-			if(e.code === 'Tab') {
-				if(e.shiftKey) {		
-					if(e.target.classList.contains('start-trap')) {
-						document.querySelector('.end-trap').focus();
-						e.preventDefault();
-					}
-				}
-				else {
-					if(e.target.classList.contains('end-trap')) {
-						document.querySelector('.start-trap').focus();
-						e.preventDefault();
-					}
-				}
+				unsetPan();
 			}
 		};
 
-	/* ### Manage popup ### */
+	/* manage popup */
 
 		const action = {
 			click: { 
@@ -224,7 +303,7 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 			togglePopup(false, '--confirm');
 		}
 
-	/* ### Manage structure ### */
+	/* manage structure */
 
 		function setCounters() {
 			ui.dirCounter.innerHTML = '<svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length;
@@ -427,7 +506,7 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 			setCounters();
 		}
 
-/* ### Server side functions ### */
+/* ### server side functions ### */
 
 	function ajaxPost(req) {
 		return new Promise(
@@ -524,10 +603,10 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}
 	function openPreviewedItem() {
-		window.open(document.querySelector('.preview').getAttribute('data-item-path'));
+		window.open(document.querySelector('.pan').getAttribute('data-item-path'));
 	}
 	function downloadUnpreviewedItem(item) {
 		ajaxPost(
@@ -548,10 +627,10 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}
 	function downloadPreviewedItem() {
-		downloadItem(document.querySelector('.preview').getAttribute('data-item-path'));
+		downloadItem(document.querySelector('.pan').getAttribute('data-item-path'));
 	}
 	function downloadItem(src) {
 		let aElm = document.createElement('a');
@@ -569,5 +648,5 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}

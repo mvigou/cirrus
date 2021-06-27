@@ -2,7 +2,7 @@
 
 /* ### Enhance UI ### */
 
-	/* Nav */
+	/* nav */
 
 		ui.navLeftCont.insertAdjacentElement(
 			'afterbegin',
@@ -119,131 +119,7 @@
 			)
 		);
 
-	/* Permissions */
-
-		const permsPanElm = chess(
-			{
-				type: 'div',
-				attr: {
-					class: 'perms-panel'
-				},
-				children: [
-					{
-						type: 'div',
-						children: [
-							{
-								type: 'nav',
-								attr: {
-									class: 'perms-panel__nav'
-								},
-								child : [
-									{
-										type: 'button',
-										attr: {
-											class: 'start-trap',
-											title: 'Fermer'
-										},
-										html: '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
-										events: [
-											{
-												type: 'click',
-												fn: () => unsetPermsPanel()
-											}
-										]
-									}
-								]
-							},
-							{
-								type: 'div',
-								children: [
-									{
-										type: 'form',
-										children: [
-											{
-												type: 'h2',
-												txt: 'Règles d\'accès au dossier'
-											},
-											{
-												type: 'label',
-												children: [
-													{
-														type: 'input',
-														attr: {
-															class: 'perms-radio',
-															name: 'isRestricted',
-															type: 'radio',
-															value: 'false'
-														}
-
-													},
-													{
-														type: 'span',
-														txt: 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.'
-													}
-												]
-											},
-											{
-												type: 'label',
-												children: [
-													{
-														type: 'input',
-														attr: {
-															class: 'perms-radio',
-															name: 'isRestricted',
-															type: 'radio',
-															value: 'true'
-														}
-
-													},
-													{
-														type: 'span',
-														txt: 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.'
-													}
-												]
-											},
-											{
-												type: 'label',
-												txt: 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :',
-												children: [
-													{
-														type: 'textarea',
-														attr: {
-															name: 'accreditedMembers'
-														}
-
-													}
-												]
-											},
-											{
-												type: 'button',
-												attr: {
-													class: 'end-trap',
-													title: 'Enregistrer les changements',
-													type: 'submit'
-												},
-												html: '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>',
-											}
-										],
-										events: [
-											{
-												type: 'submit',
-												fn: e => {
-													updatePerms(e.target.getAttribute('data-item-path'));
-													e.preventDefault();
-												}
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		);		
-		document.querySelector('main').insertAdjacentElement('beforeend', permsPanElm);
-
-	/* Registration */
+	/* registration */
 
 		document.querySelector('main').insertAdjacentElement(
 			'afterbegin', 
@@ -320,40 +196,134 @@
 
 /* ### Client side functions ### */
 
-		 /* ### Manage theme ### */
+	/* manage theme */
 
-			function toDataTheme() {
-				ui.body.classList.remove('--in-recycle');
-				localStorage.setItem('mainDir', 'DATAS');
-			}
-			function toRecycleTheme() {
-				ui.body.classList.add('--in-recycle');
-				localStorage.setItem('mainDir', 'RECYCLE');
-			}
-			function switchMainDir(dir) {
-				dir === 'RECYCLE' ?
-					toRecycleTheme():
-					toDataTheme();
-			}
+		function toDataTheme() {
+			ui.body.classList.remove('--in-recycle');
+			localStorage.setItem('mainDir', 'DATAS');
+		}
+		function toRecycleTheme() {
+			ui.body.classList.add('--in-recycle');
+			localStorage.setItem('mainDir', 'RECYCLE');
+		}
+		function switchMainDir(dir) {
+			dir === 'RECYCLE' ?
+				toRecycleTheme():
+				toDataTheme();
+		}
 
-		/* ### Manage permissions panel ### */
-	
-			function setPermsPanel(dirPath, content) {
-				document.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
-				const textAreaElm = permsPanElm.querySelector('textarea');
-				textAreaElm.value = '';
-				if(content.accreditedMembers !== null) {
-					for(let member of content.accreditedMembers) {
-						textAreaElm.value += member + '\n';
+	/* manage permissions panel */
+
+		function setPanPerms(dirPath, content) {
+			ui.panNav.appendChild(
+				chess(
+					{
+						type: 'button',
+						attr: {
+							title: 'Fermer'
+						},
+						html: '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>',
+						events: [
+							{
+								type: 'click',
+								fn: () => unsetPan()
+							}
+						]
 					}
+				)
+			);
+			ui.panItem.appendChild(
+				chess(
+					{
+						type: 'form',
+						children: [
+							{
+								type: 'h2',
+								txt: 'Règles d\'accès au dossier'
+							},
+							{
+								type: 'label',
+								children: [
+									{
+										type: 'input',
+										attr: {
+											class: 'perms-radio',
+											name: 'isRestricted',
+											type: 'radio',
+											value: 'false'
+										}
+		
+									},
+									{
+										type: 'span',
+										txt: 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.'
+									}
+								]
+							},
+							{
+								type: 'label',
+								children: [
+									{
+										type: 'input',
+										attr: {
+											class: 'perms-radio',
+											name: 'isRestricted',
+											type: 'radio',
+											value: 'true'
+										}
+		
+									},
+									{
+										type: 'span',
+										txt: 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.'
+									}
+								]
+							},
+							{
+								type: 'label',
+								txt: 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :',
+								children: [
+									{
+										type: 'textarea',
+										attr: {
+											name: 'accreditedMembers'
+										}
+		
+									}
+								]
+							},
+							{
+								type: 'button',
+								attr: {
+									title: 'Enregistrer les changements',
+									type: 'submit'
+								},
+								html: '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>',
+							}
+						],
+						events: [
+							{
+								type: 'submit',
+								fn: e => {
+									updatePerms(ui.pan.getAttribute('data-item-path'));
+									e.preventDefault();
+								}
+							}
+						]
+					}
+				)
+			);
+			ui.panItem.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
+			const textAreaElm = ui.panItem.querySelector('textarea');
+			textAreaElm.value = '';
+			if(content.accreditedMembers !== null) {
+				for(let member of content.accreditedMembers) {
+					textAreaElm.value += member + '\n';
 				}
-				permsPanElm.querySelector('form').setAttribute('data-item-path', dirPath);
-				document.querySelector('.start-trap').focus();
-				permsPanElm.classList.add('--visible');
 			}
-			function unsetPermsPanel() {
-				permsPanElm.classList.remove('--visible');
-			}
+			ui.pan.setAttribute('data-item-path', dirPath);
+			ui.pan.classList.add('--visible');
+		}
 
 /* ### Server side functions ### */
 
@@ -372,11 +342,11 @@
 		.then(
 			resp => {
 				if(resp.success) {	
-					setPermsPanel(dirPath, resp.content);
+					setPanPerms(dirPath, resp.content);
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}
 	function updatePerms(dirPath) {
 		ajaxPost(
@@ -400,12 +370,12 @@
 		)
 		.then(
 			resp => {
-				if(resp.success) {	
-					unsetPermsPanel();
+				if(resp.success) {
+					unsetPan();
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}
 	function checkLicence() {
 		ajaxPost (
@@ -428,7 +398,7 @@
 				}
 			}
 		)
-		.catch(() => console.log('Une erreur est survenue pendant le traitement de cette action.'));
+		.catch((e) => console.log(e));
 	}
 
 /* ### Ending procedural ### */
