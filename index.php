@@ -14,7 +14,6 @@ if(is_dir('./datas')) {
 			<title>cirrus | Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces</title>
 		</head>
 		<body>
-			<main></main>
 			<script src="./app/client/viewers.min.js"></script>
 			<?php if(hasPublisherRights()) { ?>
 				<script src="./app/client/publishers.min.js"></script>

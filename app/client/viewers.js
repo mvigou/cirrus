@@ -5,54 +5,13 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 /* ### enhance UI ### */
 
 	const ui = {
-		body: document.body,
-		main: document.querySelector('main')
+		body: document.body
 	};
-	
-	/* documentation link */
-	
-		ui.main.appendChild(
-			chess(
-				{
-					type: 'footer',
-					children: [
-						
-						{
-							type: 'a',
-							attr: {
-								href: 'https://getcirrus.awebsome.fr/',
-								target: '_blank' 
-							},
-							txt: 'documentation'
-						},
-						{
-							type: 'p',
-							html: '<img src="/app/client/cirrus-logo.svg" alt="Logo cirrus" />1.0.0'
-						}
-					]			
-				}
-			)
-		);
 
-	/* pan (preview & perms) */
-	
-		ui.pan = chess(
-			{
-				type: 'div',
-				attr: {
-					class: 'pan',
-					'data-item-path': ''
-				},
-			}
-		);
-		ui.panContainer = chess({type: 'div'});
-		ui.panNav = chess({type:'nav'});
-		ui.panItem = chess({type:'div'});
-		ui.panContainer.appendChild(ui.panNav);
-		ui.panContainer.appendChild(ui.panItem);
-		ui.pan.appendChild(ui.panContainer)
-		ui.main.appendChild(ui.pan);
-	
+	/* main */
+
+		ui.main = chess({type:'main'}); 
+		
 	/* nav */
 	
 		ui.nav = chess(
@@ -133,6 +92,24 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		);
 		ui.main.appendChild(ui.list);
 
+	/* pan (preview & perms) */
+	
+		ui.pan = chess(
+			{
+				type: 'div',
+				attr: {
+					class: 'pan'
+				},
+			}
+		);
+		ui.panContainer = chess({type: 'div'});
+		ui.panNav = chess({type:'nav'});
+		ui.panItem = chess({type:'div'});
+		ui.panContainer.appendChild(ui.panNav);
+		ui.panContainer.appendChild(ui.panItem);
+		ui.pan.appendChild(ui.panContainer)
+		ui.main.appendChild(ui.pan);
+
 	/* popup */
 
 		ui.popup = chess(
@@ -169,6 +146,35 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 			}
 		);
 		ui.main.appendChild(ui.popup);
+
+	/* footer */
+	
+		ui.main.appendChild(
+			chess(
+				{
+					type: 'footer',
+					children: [
+						
+						{
+							type: 'a',
+							attr: {
+								href: 'https://getcirrus.awebsome.fr/',
+								target: '_blank' 
+							},
+							txt: 'documentation'
+						},
+						{
+							type: 'p',
+							html: '<img src="/app/client/cirrus-logo.svg" alt="Logo cirrus" />1.0.0'
+						}
+					]			
+				}
+			)
+		);
+
+	/* main */
+
+		ui.body.insertAdjacentElement('afterbegin', ui.main);
 
 /* ### client side functions ### */
 

@@ -127,7 +127,7 @@
 				{
 					type: 'div',
 					attr: {
-						class: 'registration-banner'
+						class: 'ban'
 					},
 					txt: 'cirrus non enregistré',
 					children: [
@@ -392,7 +392,7 @@
 			resp => {
 				if(resp.success) {
 					if(!resp.isRegistered) {
-						document.querySelector('.registration-banner').classList.add('--visible');
+						document.querySelector('.ban').classList.add('--visible');
 						togglePopup(true, '--purchase');
 					}
 				}
