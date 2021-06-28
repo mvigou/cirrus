@@ -14,22 +14,22 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 		ui.main.appendChild(
 			chess(
 				{
-					type: 'a',
-					attr: {
-						class: 'help-a',
-						href: 'https://getcirrus.awebsome.fr/',
-						target: '_blank',
-						title: 'Afficher la documentation' 
-					},
+					type: 'footer',
 					children: [
+						
 						{
-							type: 'img',
+							type: 'a',
 							attr: {
-								alt: 'Logo cirrus',
-								src: '/app/client/cirrus-logo.svg'
-							}
+								href: 'https://getcirrus.awebsome.fr/',
+								target: '_blank' 
+							},
+							txt: 'documentation'
+						},
+						{
+							type: 'p',
+							html: '<img src="/app/client/cirrus-logo.svg" alt="Logo cirrus" />1.0.0'
 						}
-					]
+					]			
 				}
 			)
 		);
