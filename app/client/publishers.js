@@ -115,7 +115,7 @@
 			}
 			else {
 				ui.barButton.classList.add('--hidden');
-				const items = document.getElementsByClassName('list__item');
+				const items = document.getElementsByTagName('li');
 				for(const item of items) {
 					item.classList.remove('--visible');	
 					if(item.textContent.toLowerCase().indexOf(ui.barInput.value.substr(1).toLowerCase()) >= 0) {
