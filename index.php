@@ -8,19 +8,19 @@ if(is_dir('./datas')) {
 		<html lang="fr">
 		<head>
 			<link rel="icon" href="./app/client/cirrus-favicon.png" />
-			<link rel="stylesheet" href="./app/client/style.css" />
+			<link rel="stylesheet" href="./app/client/style.min.css" />
 			<meta charset="UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title>cirrus | Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces</title>
 		</head>
 		<body>
 			<main></main>
-			<script src="./app/client/viewers.js"></script>
+			<script src="./app/client/viewers.min.js"></script>
 			<?php if(hasPublisherRights()) { ?>
-				<script src="./app/client/publishers.js"></script>
+				<script src="./app/client/publishers.min.js"></script>
 			<?php } if(hasOwnerRights()) { ?>
 				<script>const cirrusId = "<?php echo $env->cirrusId; ?>";</script>
-				<script src="./app/client/owners.js"></script>
+				<script src="./app/client/owners.min.js"></script>
 			<?php } ?>
 			<script>
 				if(localStorage.getItem('theme') === 'dark') {

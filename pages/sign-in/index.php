@@ -12,7 +12,7 @@ require('../../app/server/tools.php'); ?>
 		<link rel="icon" href="../../app/client/cirrus-favicon.png" />
 		<link rel="manifest" href="../../manifest.json">
 		<link rel="apple-touch-icon" href="../../app/client/cirrus-logo-192.png">
-		<link rel="stylesheet" href="./style.css" />
+		<link rel="stylesheet" href="./style.min.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>cirrus | se connecter</title>

@@ -8,7 +8,7 @@ if(isset($_GET['role'], $_GET['auth'])) {
 				<html lang="<?php echo $env->lang; ?>">
 				<head>
 					<link rel="icon" href="../../app/client/cirrus-favicon.png" />
-					<link rel="stylesheet" href="./style.css" />
+					<link rel="stylesheet" href="./style.min.css" />
 					<meta charset="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 					<title>cirrus | créer un compte</title>
