@@ -158,7 +158,7 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 						},
 						{
 							type: 'p',
-							html: '<img src="/app/client/cirrus-logo.svg" alt="Logo cirrus" />1.0.0'
+							html: '<img src="./app/client/cirrus-logo.svg" alt="Logo cirrus" />1.0.0'
 						}
 					]			
 				}
