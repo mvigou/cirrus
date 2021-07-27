@@ -285,7 +285,8 @@
 							// Prevent browsing error if the recycle is emptied with user inside a removed directory.
 							localStorage.setItem('currentDir', '../../datas/recyle');
 						}
-						browseDirectory(localStorage.getItem('currentDir')); 
+						document.querySelector('li[data-path="' + item + '"]').remove();
+						// browseDirectory(localStorage.getItem('currentDir')); 
 					}
 				}
 			)
