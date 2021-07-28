@@ -233,7 +233,7 @@
 			.then(
 				resp => {
 					if(resp.success) {
-						browseDirectory(localStorage.getItem('currentDir'));
+						document.querySelector('li[data-path="' + fromPath + '"]').remove();
 					}
 				}
 			)
