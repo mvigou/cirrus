@@ -169,7 +169,7 @@
 						}
 					}
 					else {
-						console.log('Une erreur est survenue pendant le traitement de cette action.');
+						console.log(resp);
 						togglePopup(false, '--download');
 					}
 				};
