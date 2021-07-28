@@ -259,7 +259,7 @@
 		.then(
 			resp => {
 				if(resp.success) {
-					browseDirectory(localStorage.getItem('currentDir'));
+					/* Nothing to do. */
 				}
 			}
 		)
