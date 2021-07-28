@@ -302,7 +302,7 @@
 					script: './app/server/create-directory.php',
 					args: [
 						{
-							name: 'parent',
+							name: 'parentDir',
 							value: localStorage.getItem('currentDir')
 						},
 						{ 
