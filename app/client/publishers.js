@@ -284,9 +284,11 @@
 						if(item === 'RECYCLE') {
 							// Prevent browsing error if the recycle is emptied with user inside a removed directory.
 							localStorage.setItem('currentDir', '../../datas/recyle');
+							browseDirectory(localStorage.getItem('currentDir'));
 						}
-						document.querySelector('li[data-path="' + item + '"]').remove();
-						// browseDirectory(localStorage.getItem('currentDir')); 
+						else {
+							document.querySelector('li[data-path="' + item + '"]').remove();
+						}
 					}
 				}
 			)
@@ -313,7 +315,7 @@
 			.then(
 				resp => {
 					if(resp.success) {
-						browseDirectory(localStorage.getItem('currentDir'));
+						setItems(resp.content.items, resp.content.dir, true);
 					}
 				}
 			)

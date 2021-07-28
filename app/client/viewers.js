@@ -328,20 +328,22 @@ function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.
 				navTreeElm.appendChild(aElm);
 			}
 		}
-		function setItems(items, dir) {
-			ui.list.innerHTML = '';
+		function setItems(items = [], parentDir = '', append = false) {
+			if(append !== true) {
+				ui.list.innerHTML = '';
+			}		
 			for(const item of items) {
 				let itemElm = document.createElement('li');	
 				// Set item path.
 				switch(item.type) {
 					case 'file':
-						item.path = dir + '/' + item.label;	
+						item.path = parentDir + '/' + item.label;	
 						break;
 					case 'subdir':
-						item.path = dir + '/' + item.label;
+						item.path = parentDir + '/' + item.label;
 						break;
 					case 'parent':
-						item.path = dir.substr(0, dir.lastIndexOf('/'));
+						item.path = parentDir.substr(0, parentDir.lastIndexOf('/'));
 						break;
 				}
 				itemElm.setAttribute('class', item.type + ' --visible');
