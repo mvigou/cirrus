@@ -15,8 +15,22 @@ if(isAuthenticated() && hasPublisherRights()) {
 					$i++;
 				}
 			}
+			$label = str_replace($_POST['parentDir'] . '/', '', $fileName);
 			if(move_uploaded_file($_FILES['file']['tmp_name'], $fileName)) {
-				echo json_encode(array('success' => true));
+				echo json_encode(
+					array(
+						'success' => true,
+						'content' => array(
+							'dir' => $_POST['parentDir'],
+							'items' => array(
+								array(
+									'type' => 'file',
+									'label' => $label
+								)
+							)
+						)
+					)
+				);
 			}
 		}
 	}

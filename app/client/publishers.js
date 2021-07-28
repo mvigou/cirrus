@@ -156,12 +156,12 @@
 				req.onload = () => {
 					const resp = JSON.parse(req.responseText);
 					if(resp.success) {
+						setItems(resp.content.items, resp.content.dir, true);
 						i++;
 						if(inputElm.files.length > i) {
 							send(inputElm.files[i]);
 						}
 						else {
-							browseDirectory(localStorage.getItem('currentDir'));
 							setTimeout(
 								togglePopup(false, '--download'),
 								1000
