@@ -234,6 +234,7 @@
 				resp => {
 					if(resp.success) {
 						document.querySelector('li[data-path="' + fromPath + '"]').remove();
+						setCounters();
 					}
 				}
 			)
@@ -288,6 +289,7 @@
 						}
 						else {
 							document.querySelector('li[data-path="' + item + '"]').remove();
+							setCounters();
 						}
 					}
 				}
