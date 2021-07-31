@@ -240,7 +240,7 @@ class OwnersController {
 	/* manage permissions panel */
 
 		function setPanPerms(dirPath, content) {
-			ui.panNav.appendChild(
+			ui.pan.ct.nav.appendChild(
 				chess(
 					{
 						type: 'button',
@@ -257,7 +257,7 @@ class OwnersController {
 					}
 				)
 			);
-			ui.panItem.appendChild(
+			ui.pan.ct.item.appendChild(
 				chess(
 					{
 						type: 'form',
@@ -338,8 +338,8 @@ class OwnersController {
 					}
 				)
 			);
-			ui.panItem.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
-			const textAreaElm = ui.panItem.querySelector('textarea');
+			ui.pan.ct.item.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
+			const textAreaElm = ui.pan.ct.item.querySelector('textarea');
 			textAreaElm.value = '';
 			if(content.accreditedMembers !== null) {
 				for(let member of content.accreditedMembers) {
