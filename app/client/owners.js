@@ -1,5 +1,45 @@
 "use strict";
 
+
+class OwnersModel {
+
+
+}
+
+class OwnersView {
+
+	static setUnregisteredCirrus() {
+		document.querySelector('.ban').classList.add('--visible');
+		View.togglePopup(true, '--purchase');
+	}
+
+}
+
+
+class OwnersController {
+
+	static checkLicence() {
+		Model.ajaxPost (
+			{
+				script: 'https://getcirrus.awebsome.fr/enregistrer/verification/',
+				args: [{
+						name: 'cirrusId',
+						value: cirrusId
+					}
+				]
+			}
+		).then(data => {
+			if(data.success) {
+				if(!data.isRegistered) {
+					OwnersView.setUnregisteredCirrus();
+				}
+			}
+		})
+		.catch(e => Controller.handleError(e));
+	}
+
+}
+
 /* ### Enhance UI ### */
 
 	/* nav */
@@ -17,8 +57,7 @@
 						{
 							type: 'click',
 							fn: () => {
-								browseDirectory('RECYCLE');
-								switchMainDir('RECYCLE');
+								Controller.browseDirectory('RECYCLE');
 							}
 						}
 					],
@@ -38,8 +77,7 @@
 						{
 							type: 'click',
 							fn: () => {
-								browseDirectory('DATAS');
-								switchMainDir('DATAS');
+								Controller.browseDirectory('DATAS');
 							}
 						}
 					],
@@ -84,34 +122,34 @@
 						},
 						{
 							type: 'mousedown',
-							fn: () => watchConfirm('start', 'recycle')
+							fn: () => Controller.watchConfirm('start', 'recycle')
 						},
 						{
 							type: 'mouseup',
 							fn: () => {
-								watchConfirm('end', 'recycle');
+								Controller.watchConfirm('end', 'recycle');
 								removeItem('RECYCLE');
 							}
 
 						},
 						{
 							type: 'mouseleave',
-							fn: () => cancelConfirm()
+							fn: () => Controller.cancelConfirm()
 						},
 						{
 							type: 'touchstart',
-							fn: e => watchConfirm('start', 'recycle', e)
+							fn: e => Controller.watchConfirm('start', 'recycle', e)
 						},
 						{
 							type: 'touchend',
 							fn: () => {
-								watchConfirm('end', 'recycle');
+								Controller.watchConfirm('end', 'recycle');
 								removeItem('RECYCLE');
 							}
 						},
 						{
 							type: 'touchmove',
-							fn: () => cancelConfirm()
+							fn: () => Controller.cancelConfirm()
 						}
 					],
 					html: '<svg viewBox="0 0 24 24"><path d="M18.5 15c-2.486 0-4.5 2.015-4.5 4.5s2.014 4.5 4.5 4.5c2.484 0 4.5-2.015 4.5-4.5s-2.016-4.5-4.5-4.5zm-.469 6.484l-1.688-1.637.695-.697.992.94 2.115-2.169.697.696-2.811 2.867zm-2.031-12.484v4.501c-.748.313-1.424.765-2 1.319v-5.82c0-.552.447-1 1-1s1 .448 1 1zm-4 0v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1s1 .448 1 1zm1.82 15h-11.82v-18h2v16h8.502c.312.749.765 1.424 1.318 2zm-6.82-16c.553 0 1 .448 1 1v10c0 .552-.447 1-1 1s-1-.448-1-1v-10c0-.552.447-1 1-1zm14-4h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711v2zm-1 2v7.182c-.482-.115-.983-.182-1.5-.182l-.5.025v-7.025h2z"/></svg>'
@@ -184,7 +222,7 @@
 							events: [
 								{
 									type: 'click',
-									fn: () => togglePopup(false, '--purchase')
+									fn: () => View.togglePopup(false, '--purchase')
 								}
 							],
 							txt: 'Plus tard'
@@ -198,20 +236,7 @@
 
 	/* manage theme */
 
-		function toDataTheme() {
-			ui.body.classList.remove('--in-recycle');
-			localStorage.setItem('mainDir', 'DATAS');
-		}
-		function toRecycleTheme() {
-			ui.body.classList.add('--in-recycle');
-			localStorage.setItem('mainDir', 'RECYCLE');
-		}
-		function switchMainDir(dir) {
-			dir === 'RECYCLE' ?
-				toRecycleTheme():
-				toDataTheme();
-		}
-
+	
 	/* manage permissions panel */
 
 		function setPanPerms(dirPath, content) {
@@ -226,7 +251,7 @@
 						events: [
 							{
 								type: 'click',
-								fn: () => unsetPan()
+								fn: () => View.unsetPan()
 							}
 						]
 					}
@@ -328,7 +353,7 @@
 /* ### Server side functions ### */
 
 	function browsePerms(dirPath) {
-		ajaxPost(
+		Model.ajaxPost(
 			{ 
 				script: './app/server/browse-permissions.php',
 				args: [
@@ -349,7 +374,7 @@
 		.catch((e) => console.log(e));
 	}
 	function updatePerms(dirPath) {
-		ajaxPost(
+		Model.ajaxPost(
 			{ 
 				script: './app/server/manage-permissions.php',
 				args: [
@@ -371,30 +396,7 @@
 		.then(
 			resp => {
 				if(resp.success) {
-					unsetPan();
-				}
-			}
-		)
-		.catch((e) => console.log(e));
-	}
-	function checkLicence() {
-		ajaxPost (
-			{
-				script: 'https://getcirrus.awebsome.fr/enregistrer/verification/',
-				args: [
-					{
-						name: 'cirrusId',
-						value: cirrusId
-					}
-				]
-			}
-		).then(
-			resp => {
-				if(resp.success) {
-					if(!resp.isRegistered) {
-						document.querySelector('.ban').classList.add('--visible');
-						togglePopup(true, '--purchase');
-					}
+					View.unsetPan();
 				}
 			}
 		)
@@ -404,4 +406,4 @@
 /* ### Ending procedural ### */
 
 	ui.body.classList.add('--owner');
-	checkLicence();
+	// OwnersController.checkLicence();

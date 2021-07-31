@@ -1,5 +1,22 @@
 "use strict";
 
+class PublishersModel {
+
+
+}
+
+class PublishersView {
+
+
+}
+
+
+class PublishersController {
+
+
+}
+
+
 /* ### enhance UI ### */
 
 	/* nav */
@@ -122,7 +139,7 @@
 						item.classList.add('--visible');
 					}
 				}
-				setCounters();
+				View.setCounters();
 			}
 		}
 		function barSubmit(e) {
@@ -145,7 +162,7 @@
 		inputElm.click();
 		inputElm.onchange = (e) => {
 			let i = 0;
-			togglePopup(true, '--download');
+			View.togglePopup(true, '--download');
 			send(inputElm.files[i]);
 			function send(file) {
 				let formData = new FormData();
@@ -156,21 +173,21 @@
 				req.onload = () => {
 					const resp = JSON.parse(req.responseText);
 					if(resp.success) {
-						setItems(resp.content.items, resp.content.dir, true);
+						View.setItems(resp.content.items, resp.content.dir, true);
 						i++;
 						if(inputElm.files.length > i) {
 							send(inputElm.files[i]);
 						}
 						else {
 							setTimeout(
-								togglePopup(false, '--download'),
+								View.togglePopup(false, '--download'),
 								1000
 							);	
 						}
 					}
 					else {
 						console.log(resp);
-						togglePopup(false, '--download');
+						View.togglePopup(false, '--download');
 					}
 				};
 				req.send(formData);
@@ -180,7 +197,7 @@
 	function renameItem(oldName, newName, item) {
 		if(newName.length >= 1) {
 			if(oldName !== newName) {
-				ajaxPost(
+				Model.ajaxPost(
 					{
 						script: './app/server/rename-item.php',
 						args: [
@@ -202,7 +219,7 @@
 				.then(
 					resp => {
 						if(resp.success) {
-							browseDirectory(localStorage.getItem('currentDir'));
+							Controller.browseDirectory(localStorage.getItem('currentDir'));
 						}
 					}
 				)
@@ -215,7 +232,7 @@
 	}
 	function moveItem(fromPath, toPath) {
 		if(fromPath !== toPath.substring(0, toPath.lastIndexOf('/'))) {
-			ajaxPost(
+			Model.ajaxPost(
 				{
 					script: './app/server/move-item.php',
 					args: [
@@ -234,7 +251,7 @@
 				resp => {
 					if(resp.success) {
 						document.querySelector('li[data-path="' + fromPath + '"]').remove();
-						setCounters();
+						View.setCounters();
 					}
 				}
 			)
@@ -242,7 +259,7 @@
 		}
 	}
 	function copyItem(fromPath, toPath) {
-		ajaxPost(
+		Model.ajaxPost(
 			{
 				script: './app/server/copy-item.php',
 				args: [
@@ -267,8 +284,8 @@
 		.catch((e) => console.log(e));
 	}
 	function removeItem(item, force) {
-		if(validConfirm() || force === true) {
-			ajaxPost(
+		if(Controller.validConfirm() || force === true) {
+			Model.ajaxPost(
 				{
 					script: './app/server/remove-item.php',
 					args: [
@@ -285,11 +302,11 @@
 						if(item === 'RECYCLE') {
 							// Prevent browsing error if the recycle is emptied with user inside a removed directory.
 							localStorage.setItem('currentDir', '../../datas/recyle');
-							browseDirectory(localStorage.getItem('currentDir'));
+							Controller.browseDirectory(localStorage.getItem('currentDir'));
 						}
 						else {
 							document.querySelector('li[data-path="' + item + '"]').remove();
-							setCounters();
+							View.setCounters();
 						}
 					}
 				}
@@ -299,7 +316,7 @@
 	}
 	function createDirectory(dirs) {
 		if(dirs !== '' ) {
-			ajaxPost(
+			Model.ajaxPost(
 				{
 					script: './app/server/create-directory.php',
 					args: [
@@ -317,7 +334,7 @@
 			.then(
 				resp => {
 					if(resp.success) {
-						setItems(resp.content.items, resp.content.dir, true);
+						View.setItems(resp.content.items, resp.content.dir, true);
 					}
 				}
 			)

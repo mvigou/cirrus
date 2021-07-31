@@ -21,12 +21,7 @@ if(is_dir('./datas')) {
 				<script>const cirrusId = "<?php echo $env->cirrusId; ?>";</script>
 				<script src="./app/client/owners.min.js"></script>
 			<?php } ?>
-			<script>
-				if(localStorage.getItem('theme') === 'dark') {
-					toDarkTheme();
-				}
-				browseDirectory('DATAS');
-			</script>
+			<script>Controller.browseDirectory('DATAS');</script>
 		</body>
 	</html>
 	<?php }
