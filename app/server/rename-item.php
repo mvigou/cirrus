@@ -3,10 +3,10 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated() && hasPublisherRights()) {
-	if(isset($_POST['oldName'], $_POST['newName'], $_POST['parentDir'])) {
+	if(isset($_POST['oldItemName'], $_POST['newItemName'], $_POST['parentDir'])) {
 		if(inDatasDirectory($_POST['parentDir'])) {
-			$fromPath = $_POST['parentDir'] . '/' . $_POST['oldName'];
-			$toPath = $_POST['parentDir'] . '/' . str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $_POST['newName']);
+			$fromPath = $_POST['parentDir'] . '/' . $_POST['oldItemName'];
+			$toPath = $_POST['parentDir'] . '/' . str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $_POST['newItemName']);
 			if(is_file($toPath) || is_dir($toPath)) {
 				$basePath = $toPath; 
 				$i = 1;

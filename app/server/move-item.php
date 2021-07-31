@@ -3,21 +3,21 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated()) {
-	if(isset($_POST['fromPath'], $_POST['toPath'])) {
+	if(isset($_POST['oldItemPath'], $_POST['newItemPath'])) {
 		if(
-			(hasPublisherRights() && inDatasDirectory($_POST['fromPath']) && inDatasDirectory($_POST['toPath'])) ||
-			(hasOwnerRights() && inScopeDirectory($_POST['fromPath']) && inScopeDirectory($_POST['toPath']))
+			(hasPublisherRights() && inDatasDirectory($_POST['oldItemPath']) && inDatasDirectory($_POST['newItemPath'])) ||
+			(hasOwnerRights() && inScopeDirectory($_POST['oldItemPath']) && inScopeDirectory($_POST['newItemPath']))
 		) {
-			if(is_file($_POST['toPath'])) {
-				$basePath = $_POST['toPath']; 
+			if(is_file($_POST['newItemPath'])) {
+				$basePath = $_POST['newItemPath']; 
 				$i = 1;
-				while(is_file($_POST['toPath'])) {
-					$_POST['toPath'] = $basePath;
-					$_POST['toPath'] .= '(' . $i . ')';
+				while(is_file($_POST['newItemPath'])) {
+					$_POST['newItemPath'] = $basePath;
+					$_POST['newItemPath'] .= '(' . $i . ')';
 					$i++;
 				}
 			}
-			if(rename($_POST['fromPath'], $_POST['toPath'])) {
+			if(rename($_POST['oldItemPath'], $_POST['newItemPath'])) {
 				echo json_encode(array('success' => true));
 			}
 		}

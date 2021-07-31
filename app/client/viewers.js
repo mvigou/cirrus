@@ -169,8 +169,8 @@
 						const fromPath = e.dataTransfer.getData('path');
 						const toPath = item.path + '/' + e.dataTransfer.getData('label');
 						e.ctrlKey ?
-							copyItem(fromPath, toPath):
-							moveItem(fromPath, toPath);
+							PubController.copyItem(fromPath, toPath):
+							PubController.moveItem(fromPath, toPath);
 						e.preventDefault();
 					};
 				}
@@ -217,7 +217,7 @@
 						targetedItem.type = targetedItem.elm.getAttribute('data-type');
 						if(draggedItem.path !== targetedItem.path) {
 							if(targetedItem.type !== 'file') {
-								moveItem(
+								PubController.moveItem(
 									draggedItem.path, 
 									targetedItem.path + '/' + draggedItem.label 
 								);
@@ -255,7 +255,7 @@
 							e.target.blur();
 						}
 					};
-					edItemInputElm.onblur = e => renameItem(item.label, e.target.value, e.target);
+					edItemInputElm.onblur = e => PubController.renameItem(item.label, e.target.value, e.target);
 					itemElm.appendChild(edItemInputElm);
 				}
 				if(item.type === 'subdir') {	
@@ -280,17 +280,17 @@
 					rmItemBtElm.classList.add('publisher-ft', 'non-editable');
 					rmItemBtElm.title = 'Supprimer (maintenir pour enclencher)';
 					rmItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-					rmItemBtElm.onkeypress = () => { if(confirm('Supprimer cet élément ?')) { removeItem(item.path, true); }};
+					rmItemBtElm.onkeypress = () => { if(confirm('Supprimer cet élément ?')) { PubController.removeItem(item.path, true); }};
 					rmItemBtElm.onmousedown = () => Controller.watchConfirm('start', item.path);
 					rmItemBtElm.onmouseup = () => {
 						Controller.watchConfirm('end', item.path);
-						removeItem(item.path);
+						PubController.removeItem(item.path);
 					};
 					rmItemBtElm.onmouseleave = () => Controller.cancelConfirm();
 					rmItemBtElm.ontouchstart = e => Controller.watchConfirm('start', item.path, e);
 					rmItemBtElm.ontouchend = () => {
 						Controller.watchConfirm('end', item.path);
-						removeItem(item.path);
+						PubController.removeItem(item.path);
 					};
 					rmItemBtElm.ontouchmove = () => Controller.cancelConfirm();
 					itemElm.appendChild(rmItemBtElm);
@@ -383,14 +383,12 @@
 					]
 				}
 			)
-			.then(
-				resp => {
-					if(resp.success) {
-						Controller.downloadItem(resp.content);
-					}
+			.then(data => {
+				if(data.success) {
+					Controller.downloadItem(data.content);
 				}
-			)
-			.catch((e) => console.log(e));
+			})
+			.catch(err => Controller.handleError(err));
 		};
 
 		static downloadItem = itemPath => {
@@ -567,8 +565,10 @@
 
 		ui.body.insertAdjacentElement('afterbegin', ui.main);
 
-		document.onkeydown = e => {
-			if(e.code === 'Escape') {
-				View.unsetPan();
-			}
-		};
+/* ### ending procedural ### */
+
+	document.onkeydown = e => {
+		if(e.code === 'Escape') {
+			View.unsetPan();
+		}
+	};

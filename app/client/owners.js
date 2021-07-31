@@ -1,10 +1,6 @@
 "use strict";
 
-
-class OwnersModel {
-
-
-}
+function chess(t){let e=document.createElement(t.type);if(t.txt?e.textContent=t.txt:t.html&&(e.innerHTML=t.html),t.attr)for(const n in t.attr)e.setAttribute(n,t.attr[n]);if(t.events)for(const n of t.events)e.addEventListener(n.type,n.fn);if(t.children)for(const n of t.children)e.appendChild(chess(n));return e}
 
 class OwnersView {
 
@@ -44,7 +40,7 @@ class OwnersController {
 
 	/* nav */
 
-		ui.navLeftCont.insertAdjacentElement(
+		ui.nav.leftCt.insertAdjacentElement(
 			'afterbegin',
 			chess(
 				{
@@ -65,7 +61,7 @@ class OwnersController {
 				}
 			)
 		);
-		ui.navLeftCont.appendChild(
+		ui.nav.leftCt.appendChild(
 			chess(
 				{
 					type: 'button',
@@ -103,7 +99,7 @@ class OwnersController {
 				}
 			)
 		);
-		ui.navLeftCont.appendChild(
+		ui.nav.leftCt.appendChild(
 			chess(
 				{
 					type: 'button',
