@@ -1,162 +1,164 @@
 "use strict";
 
-class OwnView {
+/* ### MVC classes ### */
 
-	static setUnregisteredCirrus() {
-		document.querySelector('.ban').classList.add('--visible');
-		View.togglePopup(true, '--purchase');
-	}
+	class OwnView {
 
-	static setPanPerms = (dirPath, content) => {
-
-		ui.pan.ct.nav.closeBt = document.createElement('button');
-		ui.pan.ct.nav.closeBt.setAttribute('title', 'Fermer');
-		ui.pan.ct.nav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-		ui.pan.ct.nav.closeBt.onclick = () => View.unsetPan();
-		ui.pan.ct.nav.appendChild(ui.pan.ct.nav.closeBt);
-
-		ui.pan.ct.item.form = document.createElement('form');
-		ui.pan.ct.item.form.onsubmit = (e) => {
-			OwnController.updatePerms(ui.pan.getAttribute('data-item-path'));
-			e.preventDefault();
-		};
-
-		ui.pan.ct.item.form.h2 = document.createElement('h2');
-		ui.pan.ct.item.form.h2.textContent = 'Règles d\'accès au dossier';
-		ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.h2);
-
-		ui.pan.ct.item.form.publicLabel = document.createElement('label');
-
-			ui.pan.ct.item.form.publicRadio = document.createElement('input');
-			ui.pan.ct.item.form.publicRadio.setAttribute('class', 'perms-radio');
-			ui.pan.ct.item.form.publicRadio.setAttribute('name', 'isRestricted');
-			ui.pan.ct.item.form.publicRadio.setAttribute('type', 'radio');
-			ui.pan.ct.item.form.publicRadio.setAttribute('value', 'false');
-			ui.pan.ct.item.form.publicLabel.appendChild(ui.pan.ct.item.form.publicRadio);
-
-			ui.pan.ct.item.form.publicSpan = document.createElement('span');
-			ui.pan.ct.item.form.publicSpan.textContent = 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.';
-			ui.pan.ct.item.form.publicLabel.appendChild(ui.pan.ct.item.form.publicSpan);
-
-		ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.publicLabel);
-
-		ui.pan.ct.item.form.privateLabel = document.createElement('label');
-
-			ui.pan.ct.item.form.privateRadio = document.createElement('input');
-			ui.pan.ct.item.form.privateRadio.setAttribute('class', 'perms-radio');
-			ui.pan.ct.item.form.privateRadio.setAttribute('name', 'isRestricted');
-			ui.pan.ct.item.form.privateRadio.setAttribute('type', 'radio');
-			ui.pan.ct.item.form.privateRadio.setAttribute('value', 'true');
-			ui.pan.ct.item.form.privateLabel.appendChild(ui.pan.ct.item.form.privateRadio);
-
-			ui.pan.ct.item.form.privateSpan = document.createElement('span');
-			ui.pan.ct.item.form.privateSpan.textContent = 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.';
-			ui.pan.ct.item.form.privateLabel.appendChild(ui.pan.ct.item.form.privateSpan);
-
-		ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.privateLabel);
-
-		ui.pan.ct.item.form.textAreaLabel = document.createElement('label');
-		ui.pan.ct.item.form.textAreaLabel.textContent = 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :';
-		
-		ui.pan.ct.item.form.textArea = document.createElement('textarea');
-		ui.pan.ct.item.form.textArea.setAttribute('name', 'accreditedMembers');
-
-		ui.pan.ct.item.form.textAreaLabel.appendChild(ui.pan.ct.item.form.textArea);
-		ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.textAreaLabel);
-
-		ui.pan.ct.item.form.submitBt = document.createElement('button');
-		ui.pan.ct.item.form.submitBt.setAttribute('title', 'Enregistrer les changements');
-		ui.pan.ct.item.form.submitBt.setAttribute('type', 'submit');
-		ui.pan.ct.item.form.submitBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>';
-		ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.submitBt);
-
-		ui.pan.ct.item.appendChild(ui.pan.ct.item.form);
-
-		ui.pan.ct.item.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
-		const textAreaElm = ui.pan.ct.item.querySelector('textarea');
-		textAreaElm.value = '';
-		if(content.accreditedMembers !== null) {
-			for(let member of content.accreditedMembers) {
-				textAreaElm.value += member + '\n';
-			}
+		static setUnregisteredCirrus() {
+			document.querySelector('.ban').classList.add('--visible');
+			View.togglePopup(true, '--purchase');
 		}
-		ui.pan.setAttribute('data-item-path', dirPath);
-		ui.pan.classList.add('--visible');
-	};
 
-}
+		static setPanPerms = (dirPath, content) => {
 
-class OwnController {
+			ui.pan.ct.nav.closeBt = document.createElement('button');
+			ui.pan.ct.nav.closeBt.setAttribute('title', 'Fermer');
+			ui.pan.ct.nav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+			ui.pan.ct.nav.closeBt.onclick = () => View.unsetPan();
+			ui.pan.ct.nav.appendChild(ui.pan.ct.nav.closeBt);
 
-	static browsePerms = dirPath => {
-		Model.ajaxPost(
-			{ 
-				script: './app/server/browse-permissions.php',
-				args: [
-					{
-						name: 'dirPath',
-						value: dirPath
-					}
-				]
-			}
-		)
-		.then(data => {
-			if(data.success) {	
-				OwnView.setPanPerms(dirPath, data.content);
-			}
-		})
-		.catch(err => Controller.handleError(err));
-	};
+			ui.pan.ct.item.form = document.createElement('form');
+			ui.pan.ct.item.form.onsubmit = (e) => {
+				OwnController.updatePerms(ui.pan.getAttribute('data-item-path'));
+				e.preventDefault();
+			};
 
-	static updatePerms = dirPath => {
-		Model.ajaxPost(
-			{ 
-				script: './app/server/manage-permissions.php',
-				args: [
-					{
-						name: 'dirPath',
-						value: dirPath
-					},
-					{
-						name: 'isRestricted',
-						value: document.getElementsByName('isRestricted')[0].checked ? false : true
-					},
-					{
-						name: 'accreditedMembers',
-						value: document.getElementsByName('accreditedMembers')[0].value.trim()
-					}
-				]
-			}
-		)
-		.then(data => {
-			if(data.success) {
-				View.unsetPan();
-			}
-		})
-		.catch(err => Controller.handleError(err));
-	};
+			ui.pan.ct.item.form.h2 = document.createElement('h2');
+			ui.pan.ct.item.form.h2.textContent = 'Règles d\'accès au dossier';
+			ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.h2);
 
-	static checkLicence() {
-		Model.ajaxPost (
-			{
-				script: 'https://getcirrus.awebsome.fr/enregistrer/verification/',
-				args: [{
-						name: 'cirrusId',
-						value: cirrusId
-					}
-				]
-			}
-		).then(data => {
-			if(data.success) {
-				if(!data.isRegistered) {
-					OwnView.setUnregisteredCirrus();
+			ui.pan.ct.item.form.publicLabel = document.createElement('label');
+
+				ui.pan.ct.item.form.publicRadio = document.createElement('input');
+				ui.pan.ct.item.form.publicRadio.setAttribute('class', 'perms-radio');
+				ui.pan.ct.item.form.publicRadio.setAttribute('name', 'isRestricted');
+				ui.pan.ct.item.form.publicRadio.setAttribute('type', 'radio');
+				ui.pan.ct.item.form.publicRadio.setAttribute('value', 'false');
+				ui.pan.ct.item.form.publicLabel.appendChild(ui.pan.ct.item.form.publicRadio);
+
+				ui.pan.ct.item.form.publicSpan = document.createElement('span');
+				ui.pan.ct.item.form.publicSpan.textContent = 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.';
+				ui.pan.ct.item.form.publicLabel.appendChild(ui.pan.ct.item.form.publicSpan);
+
+			ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.publicLabel);
+
+			ui.pan.ct.item.form.privateLabel = document.createElement('label');
+
+				ui.pan.ct.item.form.privateRadio = document.createElement('input');
+				ui.pan.ct.item.form.privateRadio.setAttribute('class', 'perms-radio');
+				ui.pan.ct.item.form.privateRadio.setAttribute('name', 'isRestricted');
+				ui.pan.ct.item.form.privateRadio.setAttribute('type', 'radio');
+				ui.pan.ct.item.form.privateRadio.setAttribute('value', 'true');
+				ui.pan.ct.item.form.privateLabel.appendChild(ui.pan.ct.item.form.privateRadio);
+
+				ui.pan.ct.item.form.privateSpan = document.createElement('span');
+				ui.pan.ct.item.form.privateSpan.textContent = 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.';
+				ui.pan.ct.item.form.privateLabel.appendChild(ui.pan.ct.item.form.privateSpan);
+
+			ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.privateLabel);
+
+			ui.pan.ct.item.form.textAreaLabel = document.createElement('label');
+			ui.pan.ct.item.form.textAreaLabel.textContent = 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :';
+			
+			ui.pan.ct.item.form.textArea = document.createElement('textarea');
+			ui.pan.ct.item.form.textArea.setAttribute('name', 'accreditedMembers');
+
+			ui.pan.ct.item.form.textAreaLabel.appendChild(ui.pan.ct.item.form.textArea);
+			ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.textAreaLabel);
+
+			ui.pan.ct.item.form.submitBt = document.createElement('button');
+			ui.pan.ct.item.form.submitBt.setAttribute('title', 'Enregistrer les changements');
+			ui.pan.ct.item.form.submitBt.setAttribute('type', 'submit');
+			ui.pan.ct.item.form.submitBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>';
+			ui.pan.ct.item.form.appendChild(ui.pan.ct.item.form.submitBt);
+
+			ui.pan.ct.item.appendChild(ui.pan.ct.item.form);
+
+			ui.pan.ct.item.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
+			const textAreaElm = ui.pan.ct.item.querySelector('textarea');
+			textAreaElm.value = '';
+			if(content.accreditedMembers !== null) {
+				for(let member of content.accreditedMembers) {
+					textAreaElm.value += member + '\n';
 				}
 			}
-		})
-		.catch(err => Controller.handleError(err));
+			ui.pan.setAttribute('data-item-path', dirPath);
+			ui.pan.classList.add('--visible');
+		};
+
 	}
 
-}
+	class OwnController {
+
+		static browsePerms = dirPath => {
+			Model.ajaxPost(
+				{ 
+					script: './app/server/browse-permissions.php',
+					args: [
+						{
+							name: 'dirPath',
+							value: dirPath
+						}
+					]
+				}
+			)
+			.then(data => {
+				if(data.success) {	
+					OwnView.setPanPerms(dirPath, data.content);
+				}
+			})
+			.catch(err => Controller.handleError(err));
+		};
+
+		static updatePerms = dirPath => {
+			Model.ajaxPost(
+				{ 
+					script: './app/server/manage-permissions.php',
+					args: [
+						{
+							name: 'dirPath',
+							value: dirPath
+						},
+						{
+							name: 'isRestricted',
+							value: document.getElementsByName('isRestricted')[0].checked ? false : true
+						},
+						{
+							name: 'accreditedMembers',
+							value: document.getElementsByName('accreditedMembers')[0].value.trim()
+						}
+					]
+				}
+			)
+			.then(data => {
+				if(data.success) {
+					View.unsetPan();
+				}
+			})
+			.catch(err => Controller.handleError(err));
+		};
+
+		static checkLicence() {
+			Model.ajaxPost (
+				{
+					script: 'https://getcirrus.awebsome.fr/enregistrer/verification/',
+					args: [{
+							name: 'cirrusId',
+							value: cirrusId
+						}
+					]
+				}
+			).then(data => {
+				if(data.success) {
+					if(!data.isRegistered) {
+						OwnView.setUnregisteredCirrus();
+					}
+				}
+			})
+			.catch(err => Controller.handleError(err));
+		}
+
+	}
 
 /* ### build user interface ### */
 
@@ -213,47 +215,47 @@ class OwnController {
 		ui.ban.setAttribute('class', 'ban');
 		ui.ban.textContent = 'cirrus non enregistré';
 
-		ui.ban.purchaseAnchor = document.createElement('a');
-		ui.ban.purchaseAnchor.setAttribute('class', 'cta');
-		ui.ban.purchaseAnchor.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
-		ui.ban.purchaseAnchor.setAttribute('target', '_blank');
-		ui.ban.purchaseAnchor.setAttribute('title', 'Enregistrer ce cirrus');
-		ui.ban.purchaseAnchor.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 23.73l-3-2.122v-14.2l3 1.359v14.963zm2-14.855v15.125l13-1.954v-15.046l-13 1.875zm5.963-7.875c-2.097 0-3.958 2.005-3.962 4.266l-.001 1.683c0 .305.273.54.575.494.244-.037.425-.247.425-.494v-1.681c.003-1.71 1.416-3.268 2.963-3.268.537 0 1.016.195 1.384.564.422.423.654 1.035.653 1.727v1.747c0 .305.273.54.575.494.243-.037.423-.246.423-.492l.002-1.749c.002-1.904-1.32-3.291-3.037-3.291zm-6.39 5.995c.245-.037.427-.247.427-.495v-2.232c.002-1.71 1.416-3.268 2.963-3.268l.162.015c.366-.283.765-.513 1.188-.683-.405-.207-.858-.332-1.35-.332-2.096 0-3.958 2.005-3.962 4.266v2.235c0 .306.272.538.572.494z"/></svg>';
-		ui.ban.appendChild(ui.ban.purchaseAnchor);
+		ui.ban.buyLink = document.createElement('a');
+		ui.ban.buyLink.setAttribute('class', 'cta');
+		ui.ban.buyLink.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
+		ui.ban.buyLink.setAttribute('target', '_blank');
+		ui.ban.buyLink.setAttribute('title', 'Enregistrer ce cirrus');
+		ui.ban.buyLink.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 23.73l-3-2.122v-14.2l3 1.359v14.963zm2-14.855v15.125l13-1.954v-15.046l-13 1.875zm5.963-7.875c-2.097 0-3.958 2.005-3.962 4.266l-.001 1.683c0 .305.273.54.575.494.244-.037.425-.247.425-.494v-1.681c.003-1.71 1.416-3.268 2.963-3.268.537 0 1.016.195 1.384.564.422.423.654 1.035.653 1.727v1.747c0 .305.273.54.575.494.243-.037.423-.246.423-.492l.002-1.749c.002-1.904-1.32-3.291-3.037-3.291zm-6.39 5.995c.245-.037.427-.247.427-.495v-2.232c.002-1.71 1.416-3.268 2.963-3.268l.162.015c.366-.283.765-.513 1.188-.683-.405-.207-.858-.332-1.35-.332-2.096 0-3.958 2.005-3.962 4.266v2.235c0 .306.272.538.572.494z"/></svg>';
+		ui.ban.appendChild(ui.ban.buyLink);
 
 		ui.main.insertAdjacentElement('afterbegin', ui.ban);
 
 	/* popup */
 
-		ui.popup.container = document.createElement('div');
-		ui.popup.container.setAttribute('class', 'popup-purchase');
+		ui.popup.subCt = document.createElement('div');
+		ui.popup.subCt.setAttribute('class', 'popup-purchase');
 
-		ui.popup.container.label = document.createElement('p');
-		ui.popup.container.label.innerHTML = 'Vous appréciez cirrus ?<br/>Enregistrez-le.';
-		ui.popup.container.appendChild(ui.popup.container.label);
+		ui.popup.subCt.label = document.createElement('p');
+		ui.popup.subCt.label.innerHTML = 'Vous appréciez cirrus ?<br/>Enregistrez-le.';
+		ui.popup.subCt.appendChild(ui.popup.subCt.label);
 
-		ui.popup.container.purchaseAnchor = document.createElement('a');
-		ui.popup.container.purchaseAnchor.setAttribute('class', 'popup__a');
-		ui.popup.container.purchaseAnchor.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
-		ui.popup.container.purchaseAnchor.setAttribute('target', '_blank');
-		ui.popup.container.purchaseAnchor.textContent = 'Enregistrer ce cirrus';
-		ui.popup.container.appendChild(ui.popup.container.purchaseAnchor);
+		ui.popup.subCt.buyLink = document.createElement('a');
+		ui.popup.subCt.buyLink.setAttribute('class', 'popup__a');
+		ui.popup.subCt.buyLink.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
+		ui.popup.subCt.buyLink.setAttribute('target', '_blank');
+		ui.popup.subCt.buyLink.textContent = 'Enregistrer ce cirrus';
+		ui.popup.subCt.appendChild(ui.popup.subCt.buyLink);
 
-		ui.popup.container.knowMoreAnchor = document.createElement('a');
-		ui.popup.container.knowMoreAnchor.setAttribute('class', 'popup__a');
-		ui.popup.container.knowMoreAnchor.setAttribute('href', 'https://getcirrus.awebsome.fr/documentation/pourquoi-faut-il-enregistrer-son-cirrus/');
-		ui.popup.container.knowMoreAnchor.setAttribute('target', '_blank');
-		ui.popup.container.knowMoreAnchor.textContent = 'En savoir plus';
-		ui.popup.container.appendChild(ui.popup.container.knowMoreAnchor);
+		ui.popup.subCt.knowMoreLink = document.createElement('a');
+		ui.popup.subCt.knowMoreLink.setAttribute('class', 'popup__a');
+		ui.popup.subCt.knowMoreLink.setAttribute('href', 'https://getcirrus.awebsome.fr/documentation/pourquoi-faut-il-enregistrer-son-cirrus/');
+		ui.popup.subCt.knowMoreLink.setAttribute('target', '_blank');
+		ui.popup.subCt.knowMoreLink.textContent = 'En savoir plus';
+		ui.popup.subCt.appendChild(ui.popup.subCt.knowMoreLink);
 
-		ui.popup.container.closeAnchor = document.createElement('a');
-		ui.popup.container.closeAnchor.setAttribute('class', 'popup__a');
-		ui.popup.container.closeAnchor.setAttribute('href', '#');
-		ui.popup.container.closeAnchor.textContent = 'Plus tard';
-		ui.popup.container.closeAnchor.onclick = () => View.togglePopup(false, '--purchase');
-		ui.popup.container.appendChild(ui.popup.container.closeAnchor);
+		ui.popup.subCt.closeLink = document.createElement('a');
+		ui.popup.subCt.closeLink.setAttribute('class', 'popup__a');
+		ui.popup.subCt.closeLink.setAttribute('href', '#');
+		ui.popup.subCt.closeLink.textContent = 'Plus tard';
+		ui.popup.subCt.closeLink.onclick = () => View.togglePopup(false, '--purchase');
+		ui.popup.subCt.appendChild(ui.popup.subCt.closeLink);
 
-		ui.popup.appendChild(ui.popup.container);
+		ui.popup.appendChild(ui.popup.subCt);
 
 /* ### Ending procedural ### */
 
