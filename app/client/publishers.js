@@ -5,9 +5,9 @@
 	class PubView {
 
 		static toggleEdition = () => {
-			ui.body.classList.contains('--edit-mode') ?
-				ui.body.classList.remove('--edit-mode'):
-				ui.body.classList.add('--edit-mode');
+			document.body.classList.contains('--edit-mode') ?
+				document.body.classList.remove('--edit-mode'):
+				document.body.classList.add('--edit-mode');
 		};
 
 	}
@@ -273,4 +273,4 @@
 
 /* ### ending procedural ### */
 
-	ui.body.classList.add('--publisher');
+	document.body.classList.add('--publisher');

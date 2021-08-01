@@ -41,11 +41,11 @@
 
 	class View {
 
-		static setDataTheme = () => ui.body.classList.remove('--in-recycle');
-		static setRecycleTheme = () => ui.body.classList.add('--in-recycle');
-		static setDarkTheme = () => ui.body.classList.add('--dark-mode');
-		static setLightTheme = () => ui.body.classList.remove('--dark-mode'); 
-		static switchTheme = () => ui.body.classList.contains('--dark-mode') ? View.setLightTheme(): View.setDarkTheme();
+		static setDataTheme = () => document.body.classList.remove('--in-recycle');
+		static setRecycleTheme = () => document.body.classList.add('--in-recycle');
+		static setDarkTheme = () => document.body.classList.add('--dark-mode');
+		static setLightTheme = () => document.body.classList.remove('--dark-mode'); 
+		static switchTheme = () => document.body.classList.contains('--dark-mode') ? View.setLightTheme(): View.setDarkTheme();
 		
 		static togglePopup = (visible, className) => {
 			if(visible) {
@@ -67,7 +67,7 @@
 			ui.pan.ct.nav.downloadBt = document.createElement('button');
 			ui.pan.ct.nav.downloadBt.setAttribute('title', 'Télécharger');
 			ui.pan.ct.nav.downloadBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
-			ui.pan.ct.nav.downloadBt.onclick = () => Controller.downloadPreviewedItem();
+			ui.pan.ct.nav.downloadBt.onclick = () => Controller.downloadOpenedItem();
 			ui.pan.ct.nav.appendChild(ui.pan.ct.nav.downloadBt);
 
 			ui.pan.ct.nav.closeBt = document.createElement('button');
@@ -118,7 +118,7 @@
 		};
 
 		static setCounters = () => {
-			ui.counters.innerHTML = '<span><svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length + '</span><span><svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file --visible').length + '</span>';
+			ui.aside.counters.innerHTML = '<span><svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length + '</span><span><svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file --visible').length + '</span>';
 		};
 
 		static setItems(items = [], parentDir = '', append = false) {
@@ -273,7 +273,7 @@
 					dlItemBtElm.classList.add('non-editable');
 					dlItemBtElm.title = 'Télécharger';
 					dlItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
-					dlItemBtElm.onclick = () => Controller.downloadUnpreviewedItem(item.path);
+					dlItemBtElm.onclick = () => Controller.downloadUnopenedItem(item.path);
 					itemElm.appendChild(dlItemBtElm);
 					// Remove item.
 					let rmItemBtElm = document.createElement('button');
@@ -352,26 +352,16 @@
 						View.setPreviewPan(data);
 					}
 					else {
-						Controller.downloadUnpreviewedItem(itemPath);
+						Controller.downloadUnopenedItem(itemPath);
 					}
 				}
 			)
 			.catch(err => Controller.handleError(err));
 		}
 		
-		static downloadPreviewedItem = () => Controller.downloadItem(document.querySelector('.pan').getAttribute('data-item-path'));
+		static downloadOpenedItem = () => Controller.downloadItem(document.querySelector('.pan').getAttribute('data-item-path'));
 
-		static signOut = () => {
-			Model.ajaxPost({ script: './app/server/sign-out.php' })
-			.then(data => {
-				if(data.success) {	
-					window.location.reload();
-				}
-			})
-			.catch(err => Controller.handleError(err));
-		};
-
-		static downloadUnpreviewedItem = item => {
+		static downloadUnopenedItem = item => {
 			Model.ajaxPost(
 				{
 					script: './app/server/download-item.php',
@@ -403,6 +393,7 @@
 				start: { name: '', time: 0 }, 
 				end: { name: '', time: 0 } 
 		};
+
 		static watchConfirm = (step, item, event) => {
 			Controller.action[step].name = item;
 			Controller.action[step].time = performance.now();
@@ -411,23 +402,34 @@
 				event.preventDefault();
 			}	
 		}
+
 		static validConfirm = () => {
 			View.togglePopup(false, '--confirm');
 			return Controller.action.start.name === Controller.action.end.name && (Controller.action.end.time - Controller.action.start.time) >= 600 ?
 				true : false;
 		}
+		
 		static cancelConfirm = () => {
 			Controller.action['start'].name = null;
 			Controller.action['end'].name = null;
 			View.togglePopup(false, '--confirm');
 		}
 
+		static signOut = () => {
+			Model.ajaxPost({ script: './app/server/sign-out.php' })
+			.then(data => {
+				if(data.success) {	
+					window.location.reload();
+				}
+			})
+			.catch(err => Controller.handleError(err));
+		};
+
 	}
 
 /* ### build user interface ### */
 
 	const ui = {};
-	ui.body = document.body;
 	ui.main = document.createElement('main');
 
 	/* main nav */
@@ -455,11 +457,11 @@
 				ui.nav.rightCt.switchThemeBt.onclick = () => View.switchTheme();
 				ui.nav.rightCt.appendChild(ui.nav.rightCt.switchThemeBt);
 			
-				ui.nav.rightCt.logoutBt = document.createElement('button');
-				ui.nav.rightCt.logoutBt.setAttribute('title', 'Se déconnecter');
-				ui.nav.rightCt.logoutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
-				ui.nav.rightCt.logoutBt.onclick = () => Controller.signOut();
-				ui.nav.rightCt.appendChild(ui.nav.rightCt.logoutBt);
+				ui.nav.rightCt.logOutBt = document.createElement('button');
+				ui.nav.rightCt.logOutBt.setAttribute('title', 'Se déconnecter');
+				ui.nav.rightCt.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
+				ui.nav.rightCt.logOutBt.onclick = () => Controller.signOut();
+				ui.nav.rightCt.appendChild(ui.nav.rightCt.logOutBt);
 		
 			ui.nav.append(ui.nav.rightCt);
 
@@ -471,15 +473,15 @@
 
 		/* aside > tree */
 
-			ui.tree = document.createElement('div');
-			ui.tree.setAttribute('class', 'tree');
-			ui.aside.appendChild(ui.tree);
+			ui.aside.tree = document.createElement('div');
+			ui.aside.tree.setAttribute('class', 'tree');
+			ui.aside.appendChild(ui.aside.tree);
 	
 		/* aside > counters */
 
-			ui.counters = document.createElement('div');			
-			ui.counters.setAttribute('class', 'counters');
-			ui.aside.appendChild(ui.counters);
+			ui.aside.counters = document.createElement('div');			
+			ui.aside.counters.setAttribute('class', 'counters');
+			ui.aside.appendChild(ui.aside.counters);
 	
 		ui.main.appendChild(ui.aside);
 
@@ -515,24 +517,24 @@
 
 		/* popup > cirrus logo */
 
-			ui.popup.logo = document.createElement('object');
-			ui.popup.logo.setAttribute('alt', 'Logo cirrus');
-			ui.popup.logo.setAttribute('class', 'popup__object');
-			ui.popup.logo.setAttribute('data', './app/client/cirrus-logo.svg');
-			ui.popup.logo.setAttribute('type', 'image/svg+xml');
-			ui.popup.appendChild(ui.popup.logo);
+			ui.popup.cirrusLogo = document.createElement('object');
+			ui.popup.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+			ui.popup.cirrusLogo.setAttribute('class', 'popup__object');
+			ui.popup.cirrusLogo.setAttribute('data', './app/client/cirrus-logo.svg');
+			ui.popup.cirrusLogo.setAttribute('type', 'image/svg+xml');
+			ui.popup.appendChild(ui.popup.cirrusLogo);
 
 		/* popup > text content */
 
-			ui.popup.labelA = document.createElement('p');
-			ui.popup.labelA.setAttribute('class', 'popup-confirm');
-			ui.popup.labelA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
-			ui.popup.appendChild(ui.popup.labelA);
+			ui.popup.textA = document.createElement('p');
+			ui.popup.textA.setAttribute('class', 'popup-confirm');
+			ui.popup.textA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
+			ui.popup.appendChild(ui.popup.textA);
 
-			ui.popup.labelB = document.createElement('p');
-			ui.popup.labelB.setAttribute('class', 'popup-download');
-			ui.popup.labelB.textContent = 'Téléchargement en cours, veuillez patienter';
-			ui.popup.appendChild(ui.popup.labelB);
+			ui.popup.textB = document.createElement('p');
+			ui.popup.textB.setAttribute('class', 'popup-download');
+			ui.popup.textB.textContent = 'Téléchargement en cours, veuillez patienter';
+			ui.popup.appendChild(ui.popup.textB);
 
 		ui.main.appendChild(ui.popup);
 
@@ -542,28 +544,28 @@
 
 		/* footer > to cirrus documentation */
 
-			ui.footer.anchor = document.createElement('a');
-			ui.footer.anchor.setAttribute('href', 'https://getcirrus.awebsome.fr/');
-			ui.footer.anchor.setAttribute('target', '_blank');
-			ui.footer.anchor.textContent = 'documentation';
-			ui.footer.appendChild(ui.footer.anchor);
+			ui.footer.docLink = document.createElement('a');
+			ui.footer.docLink.setAttribute('href', 'https://getcirrus.awebsome.fr/');
+			ui.footer.docLink.setAttribute('target', '_blank');
+			ui.footer.docLink.textContent = 'documentation';
+			ui.footer.appendChild(ui.footer.docLink);
 
 		/* footer > cirrus logo */
 
-			ui.footer.img = document.createElement('img');
-			ui.footer.img.setAttribute('src', './app/client/cirrus-logo.svg');
-			ui.footer.img.setAttribute('alt', 'Logo cirrus');
-			ui.footer.appendChild(ui.footer.img);
+			ui.footer.cirrusLogo = document.createElement('img');
+			ui.footer.cirrusLogo.setAttribute('src', './app/client/cirrus-logo.svg');
+			ui.footer.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+			ui.footer.appendChild(ui.footer.cirrusLogo);
 		
 		/* footer > cirrus version */
 		
-			ui.footer.para = document.createElement('p');
-			ui.footer.para.textContent = 'version 1.1.1';
-			ui.footer.appendChild(ui.footer.para);
+			ui.footer.cirrusVersion = document.createElement('p');
+			ui.footer.cirrusVersion.textContent = 'version 1.1.1';
+			ui.footer.appendChild(ui.footer.cirrusVersion);
 
 		ui.main.appendChild(ui.footer);
 
-		ui.body.insertAdjacentElement('afterbegin', ui.main);
+		document.body.insertAdjacentElement('afterbegin', ui.main);
 
 /* ### ending procedural ### */
 

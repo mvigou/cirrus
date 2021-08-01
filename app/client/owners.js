@@ -257,5 +257,5 @@ class OwnController {
 
 /* ### Ending procedural ### */
 
-	ui.body.classList.add('--owner');
+	document.body.classList.add('--owner');
 	// OwnController.checkLicence();
