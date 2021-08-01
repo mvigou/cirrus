@@ -41,8 +41,22 @@ function inRecycleDirectory($elm) {
 function buildTempDir() {
 	global $env;
 	if(count(scandir($env->tempDir)) - 2 === 10) {
-		require_once('./remove-item.php');
 		removeDir($env->tempDir);
 	}
 	return $env->tempDir . '/' . hash('sha512', random_bytes(18));
+}
+function removeDir($dir) {
+	global $env;
+	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
+		$itemPath = $dir . '/' . $item;
+		if(is_file($itemPath)) {
+			unlink($itemPath);
+		}
+		else {
+			removeDir($itemPath);	
+		}
+	}
+	if($dir !== $env->tempDir) {
+		rmdir($dir);
+	}
 }
