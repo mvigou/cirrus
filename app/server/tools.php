@@ -41,11 +41,11 @@ function inRecycleDirectory($elm) {
 function buildTempDir() {
 	global $env;
 	if(count(scandir($env->tempDir)) - 2 === 10) {
-		removeDir($env->tempDir);
+		removeThisDir($env->tempDir);
 	}
 	return $env->tempDir . '/' . hash('sha512', random_bytes(18));
 }
-function removeDir($dir) {
+function removeThisDir($dir) {
 	global $env;
 	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
 		$itemPath = $dir . '/' . $item;
@@ -53,7 +53,7 @@ function removeDir($dir) {
 			unlink($itemPath);
 		}
 		else {
-			removeDir($itemPath);	
+			removeThisDir($itemPath);	
 		}
 	}
 	if($dir !== $env->tempDir) {
