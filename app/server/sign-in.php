@@ -11,16 +11,16 @@ if(isset($_POST['user-name'], $_POST['user-pass']) ){
 		$userName = $_POST['user-name'];
 		$userFilePath = null;
 		$userRole = null;
-		if(file_exists($env->ownersDir . '/' . $userName)) {
-			$userFilePath = $env->ownersDir . '/' . $userName;
+		if(file_exists("../../datas/users/owners/{$userName}")) {
+			$userFilePath = "../../datas/users/owners/{$userName}";
 			$userRole = 'owner';
 		}
-		else if(file_exists($env->publishersDir . '/' . $userName)) {
-			$userFilePath = $env->publishersDir . '/' . $userName;
+		else if(file_exists("../../datas/users/publishers/{$userName}")) {
+			$userFilePath = "../../datas/users/publishers/{$userName}";
 			$userRole = 'publisher';
 		}
-		else if(file_exists($env->viewersDir . '/' . $userName)) {
-			$userFilePath = $env->viewersDir . '/' . $userName;
+		else if(file_exists("../../datas/users/viewers/{$userName}")) {
+			$userFilePath = "../../datas/users/viewers/{$userName}";
 			$userRole = 'viewer';
 		}
 		if($userFilePath !== null) {				
@@ -41,7 +41,7 @@ if(isset($_POST['user-name'], $_POST['user-pass']) ){
 			exit();
 		}
 		require_once('./remove-item.php');
-		removeDir($env->tempDir);
+		removeDir('../../datas/temp');
 	}
 }
 // Sign in as viewer with public access link.

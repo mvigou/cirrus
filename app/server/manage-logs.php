@@ -5,7 +5,7 @@ require_once('./tools.php');
 if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['action'])) {
 		if($_POST['action'] === 'browse') {
-			$logs = explode('[', file_get_contents($env->logsDir . '/app-errors.txt'));
+			$logs = explode('[', file_get_contents('../../datas/logs/app-errors.txt'));
 			$content;
 			if(count($logs) > 0) {
 				$content = array();
@@ -25,7 +25,7 @@ if(isAuthenticated() && hasOwnerRights()) {
 			}
 		}
 		else if($_POST['action'] === 'remove') {
-			file_put_contents($env->logsDir . '/app-errors.txt', ''); 
+			file_put_contents('../../datas/logs/app-errors.txt', ''); 
 			if(error_get_last() === null) {
 				echo json_encode (array('success' => true ));
 			}

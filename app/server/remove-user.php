@@ -5,10 +5,10 @@ require_once('./tools.php');
 if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['user-name'], $_POST['user-role'])) {
 		if($_POST['user-role'] === 'viewer') {
-			$path = $env->viewersDir . '/' . $_POST['user-name'];
+			$path = "../../datas/users/viewers/{$_POST['user-name']}";
 		}
 		else if($_POST['user-role'] === 'publisher') {
-			$path = $env->publishersDir . '/' . $_POST['user-name'];
+			$path = "../../datas/users/publishers/{$_POST['user-name']}";
 		}
 		if(isset($path)) {
 			if(unlink($path)) {

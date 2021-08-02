@@ -23,21 +23,21 @@ file_put_contents(
 	)
 );
 $env = json_decode(file_get_contents('../../datas/env.json'));
-if(!is_dir($env->ownersDir)) {
-	mkdir($env->contentDir);
-	mkdir($env->recycleDir);
-	mkdir($env->tempDir);
-	mkdir($env->logsDir);
-	file_put_contents($env->logsDir . '/app-errors.txt', '');
-	mkdir($env->ownersDir, 0777, true);
-	mkdir($env->publishersDir);
-	mkdir($env->viewersDir);		
-	mkdir($env->datas . '/auth/sign-up-as-owner', 0777, true);
-	mkdir($env->datas . '/auth/sign-up-as-publisher');
-	mkdir($env->datas . '/auth/sign-up-as-viewer');
-	mkdir($env->datas . '/auth/sign-up-as-visitor');
+if(!is_dir('../../datas/users/owners')) {
+	mkdir('../../datas/content');
+	mkdir('../../datas/recyle');
+	mkdir('../../datas/temp');
+	mkdir('../../datas/logs');
+	file_put_contents('../../datas/logs/app-errors.txt', '');
+	mkdir('../../datas/users/owners', 0777, true);
+	mkdir('../../datas/users/publishers');
+	mkdir('../../datas/users/viewers');		
+	mkdir('../../datas/auth/sign-up-as-owner', 0777, true);
+	mkdir('../../datas/auth/sign-up-as-publisher');
+	mkdir('../../datas/auth/sign-up-as-viewer');
+	mkdir('../../datas/auth/sign-up-as-visitor');
 	$auth = hash('sha512', 'install-start-auth');
-	touch($env->datas . '/auth/sign-up-as-owner/' . $auth);
+	touch('../../datas/auth/sign-up-as-owner/' . $auth);
 	header('Location: ../../pages/sign-up/?role=owner&auth=' . $auth);
 	exit();
 }

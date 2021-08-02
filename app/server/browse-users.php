@@ -6,11 +6,11 @@ if(isAuthenticated() && hasOwnerRights()) {
 	$userProfiles = array(
 		array(
 			'role' => 'publisher',
-			'dir' => $env->publishersDir
+			'dir' => '../../datas/users/publishers'
 		), 
 		array(
 			'role' => 'viewer',
-			'dir' => $env->viewersDir
+			'dir' => '../../datas/users/viewers'
 		)
 	);
 	$users = array();

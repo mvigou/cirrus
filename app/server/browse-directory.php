@@ -5,10 +5,10 @@ require_once('./tools.php');
 if(isAuthenticated()) {	
 	if(isset($_POST['dir'])) {
 		if($_POST['dir'] === 'DATAS') {
-			$dir = $env->contentDir;
+			$dir = '../../datas/content';
 		}
 		else if($_POST['dir'] === 'RECYCLE' && hasOwnerRights()) {
-			$dir = $env->recycleDir;
+			$dir = '../../datas/recyle';
 		}
 		else {
 			if(inDatasDirectory($_POST['dir']) || (inRecycleDirectory($_POST['dir']) && hasOwnerRights())) {
@@ -22,7 +22,7 @@ if(isAuthenticated()) {
 			foreach(array_diff(scandir($dir), array('.', '.lock', '.perms')) as $item) {
 				// Parent directory.
 				if($item === '..') {
-					if($dir !== $env->contentDir && $dir !== $env->recycleDir) {
+					if($dir !== '../../datas/content' && $dir !== '../../datas/recyle') {
 						array_push($items,
 							array(
 								'type' => 'parent',

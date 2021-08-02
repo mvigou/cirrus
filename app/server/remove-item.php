@@ -6,7 +6,7 @@ if(isAuthenticated()) {
 	global $env;
 	if(isset($_POST['item'])) {
 		if($_POST['item'] === 'RECYCLE') {
-			$_POST['item'] = $env->recycleDir;	
+			$_POST['item'] = '../../datas/recyle';	
 		}
 		if(hasPublisherRights() && inDatasDirectory($_POST['item'])) {
 			moveToRecycle($_POST['item']);
@@ -29,7 +29,7 @@ function moveToRecycle($elm) {
 	global $env;
 	$fileName = array_slice(explode('/', $elm), -1)[0];
 	$fromPath = $elm;
-	$toPath = $env->recycleDir . '/' . $fileName;
+	$toPath = "../../datas/recyle/{$fileName}";
 	if(is_file($toPath) || is_dir($toPath)) {
 		$basePath = $toPath; 
 		$i = 1;
@@ -53,7 +53,7 @@ function removeDir($dir) {
 			removeDir($itemPath);	
 		}
 	}
-	if($dir !== $env->recycleDir && $dir !== $env->tempDir) {
+	if($dir !== '../../datas/recyle' && $dir !== '../../datas/temp') {
 		rmdir($dir);
 	}
 }

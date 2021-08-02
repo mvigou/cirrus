@@ -27,23 +27,23 @@ function inScopeDirectory($elm) {
 function inDatasDirectory($elm) {
 	global $env;
 	$regex = '/^\.\.\/\.\.\/datas\/';
-	$regex .= array_slice(explode('/', $env->contentDir), -1)[0];
+	$regex .= array_slice(explode('/', '../../datas/content'), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
 function inRecycleDirectory($elm) {
 	global $env;
 	$regex = '/^\.\.\/\.\.\/datas\/';
-	$regex .= array_slice(explode('/', $env->recycleDir), -1)[0];
+	$regex .= array_slice(explode('/', '../../datas/recyle'), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
 function buildTempDir() {
 	global $env;
-	if(count(scandir($env->tempDir)) - 2 === 10) {
-		removeThisDir($env->tempDir);
+	if(count(scandir('../../datas/temp')) - 2 === 10) {
+		removeThisDir('../../datas/temp');
 	}
-	return $env->tempDir . '/' . hash('sha512', random_bytes(18));
+	return '../../datas/temp' . '/' . hash('sha512', random_bytes(18));
 }
 function removeThisDir($dir) {
 	global $env;
@@ -56,7 +56,7 @@ function removeThisDir($dir) {
 			removeThisDir($itemPath);	
 		}
 	}
-	if($dir !== $env->tempDir) {
+	if($dir !== '../../datas/temp') {
 		rmdir($dir);
 	}
 }

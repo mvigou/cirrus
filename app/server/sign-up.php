@@ -18,25 +18,25 @@
 		$userDirPath;		
 		switch($_POST['role']) {
 			case 'owner';
-				$authFilePath = $env->signUpOwnerAuthDir . '/' . $_POST['auth'];
-				$userDirPath = $env->ownersDir;
+				$authFilePath = "../../datas/auth/sign-up-as-owner/{$_POST['auth']}";
+				$userDirPath = '../../datas/users/owners';
 				break;
 			case 'publisher';
-				$authFilePath = $env->signUpPublisherAuthDir . '/' . $_POST['auth'];
-				$userDirPath = $env->publishersDir;
+				$authFilePath = "../../datas/auth/sign-up-as-publisher/{$_POST['auth']}";
+				$userDirPath = '../../datas/publishers/owners';
 				break;
 			case 'viewer';
-				$authFilePath = $env->signUpViewerAuthDir . '/' . $_POST['auth'];
-				$userDirPath = $env->viewersDir;
+				$authFilePath = "../../datas/auth/sign-up-as-viewer/{$_POST['auth']}";
+				$userDirPath = '../../datas/users/viewers';
 				break;	
 		}
 		if($authFilePath !== null){
 			if(is_file($authFilePath)) {
 				$userName = $_POST['user-name'];
 				if(
-					!is_file($env->ownersDir . '/' . $userName) &&
-					!is_file($env->publishersDir . '/' . $userName) &&
-					!is_file($env->viewersDir . '/' . $userName)
+					!is_file("../../datas/users/owners/{$userName}") &&
+					!is_file("../../datas/users/publishers/{$userName}") &&
+					!is_file("../../datas/users/viewers/{$userName}")
 				) {
 					$hashPassword = password_hash($_POST['user-pass'], PASSWORD_BCRYPT);
 					$userFileName = $userDirPath . '/' . $userName;
