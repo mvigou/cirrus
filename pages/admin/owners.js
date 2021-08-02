@@ -250,23 +250,19 @@
 	/* header */
 
 		ui.header = document.createElement('header');
-
-			/* header > logo */
-
-				ui.header.cirrusLogo = document.createElement('img');
-				ui.header.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-				ui.header.cirrusLogo.setAttribute('src', '../../app/client/cirrus-logo-alt.svg');
-				ui.header.appendChild(ui.header.cirrusLogo);
-			
-			/* header > title */
 		
-				ui.header.mainTitle = document.createElement('h1');
-				ui.header.mainTitle.innerHTML = 'cirrus | <span>administration</span>';
-				ui.header.appendChild(ui.header.mainTitle);
+		ui.header.cirrusLogo = document.createElement('img');
+		ui.header.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+		ui.header.cirrusLogo.setAttribute('src', '../../app/client/cirrus-logo-alt.svg');
+
+		ui.header.mainTitle = document.createElement('h1');
+		ui.header.mainTitle.innerHTML = 'cirrus | <span>administration</span>';
 		
+		ui.header.appendChild(ui.header.cirrusLogo);
+		ui.header.appendChild(ui.header.mainTitle);		
 		ui.main.appendChild(ui.header);
 
-	/* main options */
+	/* buttons */
 
 		ui.switchThemeBt = document.createElement('button');
 		ui.switchThemeBt.setAttribute('id', 'switchThemeBt');
@@ -280,127 +276,115 @@
 		ui.backLink.textContent = 'Retour';
 		ui.main.appendChild(ui.backLink);
 
-		/* public access */
+	/* public access */
 
-			ui.publicAccessDet = document.createElement('details');
-			ui.publicAccessDet.ontoggle = () => Controller.managePublicAccess('browse');
+		ui.accessCt = document.createElement('details');
+		ui.accessCt.ontoggle = () => Controller.managePublicAccess('browse');
 
-				/* public access > content */
+		ui.accessCt.summary = document.createElement('summary');
+		ui.accessCt.summary.textContent = 'Lien d\'accès public';
+		
+		ui.accessCt.list = document.createElement('ul');
+		ui.accessCt.list.setAttribute('id', 'public-access__list');
+		
+		ui.accessCt.addBt = document.createElement('button');
+		ui.accessCt.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Activer le lien d\'accès public';
+		ui.accessCt.addBt.onclick = () => Controller.managePublicAccess('create');
+		
+		ui.accessCt.removeBt = document.createElement('button');
+		ui.accessCt.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Désactiver le lien d\'accès public';
+		ui.accessCt.removeBt.onclick = () => Controller.managePublicAccess('remove');
+		
+		ui.accessCt.appendChild(ui.accessCt.summary);
+		ui.accessCt.appendChild(ui.accessCt.list);
+		ui.accessCt.appendChild(ui.accessCt.addBt);
+		ui.accessCt.appendChild(ui.accessCt.removeBt);
+		ui.main.appendChild(ui.accessCt);
 
-					ui.publicAccessDet.summary = document.createElement('summary');
-					ui.publicAccessDet.summary.textContent = 'Lien d\'accès public';
-					ui.publicAccessDet.appendChild(ui.publicAccessDet.summary);
+	/* viewer invitations */
 
-					ui.publicAccessDet.list = document.createElement('ul');
-					ui.publicAccessDet.list.setAttribute('id', 'public-access__list');
-					ui.publicAccessDet.appendChild(ui.publicAccessDet.list);
+		ui.viewersCt = document.createElement('details');
+		ui.viewersCt.ontoggle = () => Controller.manageInvitations('browse', 'viewer');
 
-					ui.publicAccessDet.addBt = document.createElement('button');
-					ui.publicAccessDet.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Activer le lien d\'accès public';
-					ui.publicAccessDet.addBt.onclick = () => Controller.managePublicAccess('create');
-					ui.publicAccessDet.appendChild(ui.publicAccessDet.addBt);
+		ui.viewersCt.summary = document.createElement('summary');
+		ui.viewersCt.summary.textContent = 'Invitations "visualiseur"';
 
-					ui.publicAccessDet.removeBt = document.createElement('button');
-					ui.publicAccessDet.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Désactiver le lien d\'accès public';
-					ui.publicAccessDet.removeBt.onclick = () => Controller.managePublicAccess('remove');
-					ui.publicAccessDet.appendChild(ui.publicAccessDet.removeBt);
-
-			ui.main.appendChild(ui.publicAccessDet);
-
-		/* viewer invitations */
-
-			ui.viewDetails = document.createElement('details');
-			ui.viewDetails.ontoggle = () => Controller.manageInvitations('browse', 'viewer');
-
-				/* viewer invitations > content */
-
-					ui.viewDetails.summary = document.createElement('summary');
-					ui.viewDetails.summary.textContent = 'Invitations "visualiseur"';
-					ui.viewDetails.appendChild(ui.viewDetails.summary);
-
-					ui.viewDetails.list = document.createElement('ul');
-					ui.viewDetails.list.setAttribute('id', 'viewer__list');
-					ui.viewDetails.appendChild(ui.viewDetails.list);
-
-					ui.viewDetails.addBt = document.createElement('button');
-					ui.viewDetails.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Générer un lien d\'inscription';
-					ui.viewDetails.addBt.onclick = () => Controller.manageInvitations('create', 'viewer');
-					ui.viewDetails.appendChild(ui.viewDetails.addBt);
-
-					ui.viewDetails.removeBt = document.createElement('button');
-					ui.viewDetails.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Supprimer les invitations';
-					ui.viewDetails.removeBt.onclick = () => Controller.manageInvitations('remove', 'viewer');
-					ui.viewDetails.appendChild(ui.viewDetails.removeBt);
+		ui.viewersCt.list = document.createElement('ul');
+		ui.viewersCt.list.setAttribute('id', 'viewer__list');
+		
+		ui.viewersCt.addBt = document.createElement('button');
+		ui.viewersCt.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Générer un lien d\'inscription';
+		ui.viewersCt.addBt.onclick = () => Controller.manageInvitations('create', 'viewer');
+	
+		ui.viewersCt.removeBt = document.createElement('button');
+		ui.viewersCt.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Supprimer les invitations';
+		ui.viewersCt.removeBt.onclick = () => Controller.manageInvitations('remove', 'viewer');
 				
-			ui.main.appendChild(ui.viewDetails);
+		ui.viewersCt.appendChild(ui.viewersCt.summary);
+		ui.viewersCt.appendChild(ui.viewersCt.list);
+		ui.viewersCt.appendChild(ui.viewersCt.addBt);
+		ui.viewersCt.appendChild(ui.viewersCt.removeBt);
+		ui.main.appendChild(ui.viewersCt);
 
-		/* publisher invitations */
+	/* publisher invitations */
 
-			ui.pubDetails = document.createElement('details');
-			ui.pubDetails.ontoggle = () => Controller.manageInvitations('browse', 'publisher');
+		ui.publisherCt = document.createElement('details');
+		ui.publisherCt.ontoggle = () => Controller.manageInvitations('browse', 'publisher');
+		
+		ui.publisherCt.summary = document.createElement('summary');
+		ui.publisherCt.summary.textContent = 'Invitations "éditeur"';
+		
+		ui.publisherCt.list = document.createElement('ul');
+		ui.publisherCt.list.setAttribute('id', 'publisher__list');
+		
+		ui.publisherCt.addBt = document.createElement('button');
+		ui.publisherCt.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Générer un lien d\'inscription';
+		ui.publisherCt.addBt.onclick = () => Controller.manageInvitations('create', 'publisher');
+		
+		ui.publisherCt.removeBt = document.createElement('button');
+		ui.publisherCt.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Supprimer les invitations';
+		ui.publisherCt.removeBt.onclick = () => Controller.manageInvitations('remove', 'publisher');
+		
+		ui.publisherCt.appendChild(ui.publisherCt.summary);
+		ui.publisherCt.appendChild(ui.publisherCt.list);
+		ui.publisherCt.appendChild(ui.publisherCt.addBt);
+		ui.publisherCt.appendChild(ui.publisherCt.removeBt);
+		ui.main.appendChild(ui.publisherCt);
 
-				/* publisher invitations > content */
+	/* user list */
 
-					ui.pubDetails.summary = document.createElement('summary');
-					ui.pubDetails.summary.textContent = 'Invitations "éditeur"';
-					ui.pubDetails.appendChild(ui.pubDetails.summary);
+		ui.userListCt = document.createElement('details');
+		ui.userListCt.ontoggle = () => Controller.browseUsers();
 
-					ui.pubDetails.list = document.createElement('ul');
-					ui.pubDetails.list.setAttribute('id', 'publisher__list');
-					ui.pubDetails.appendChild(ui.pubDetails.list);
+		ui.userListCt.summary = document.createElement('summary');
+		ui.userListCt.summary.textContent = 'Gérer les utilisateurs';
 
-					ui.pubDetails.addBt = document.createElement('button');
-					ui.pubDetails.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Générer un lien d\'inscription';
-					ui.pubDetails.addBt.onclick = () => Controller.manageInvitations('create', 'publisher');
-					ui.pubDetails.appendChild(ui.pubDetails.addBt);
+		ui.userListCt.list = document.createElement('ul');
+		ui.userListCt.list.setAttribute('id', 'users__list');
+			
+		ui.userListCt.appendChild(ui.userListCt.summary);
+		ui.userListCt.appendChild(ui.userListCt.list);
+		ui.main.appendChild(ui.userListCt);
 
-					ui.pubDetails.removeBt = document.createElement('button');
-					ui.pubDetails.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Supprimer les invitations';
-					ui.pubDetails.removeBt.onclick = () => Controller.manageInvitations('remove', 'publisher');
-					ui.pubDetails.appendChild(ui.pubDetails.removeBt);
-				
-			ui.main.appendChild(ui.pubDetails);
+	/* logs */
 
-		/* user list */
+		ui.logCt = document.createElement('details');
+		ui.logCt.ontoggle = () => Controller.manageLogs('browse');
 
-			ui.userListDetails = document.createElement('details');
-			ui.userListDetails.ontoggle = () => Controller.browseUsers();
+		ui.logCt.summary = document.createElement('summary');
+		ui.logCt.summary.textContent = 'Journaux';
+		
+		ui.logCt.list = document.createElement('ul');
+		ui.logCt.list.setAttribute('id', 'logs__list');
+		
+		ui.logCt.removeBt = document.createElement('button');
+		ui.logCt.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Purger les journaux';
+		ui.logCt.removeBt.onclick = () => Controller.manageLogs('remove');			
 
-				/* user list > content */
-
-					ui.userListDetails.summary = document.createElement('summary');
-					ui.userListDetails.summary.textContent = 'Gérer les utilisateurs';
-					ui.userListDetails.appendChild(ui.userListDetails.summary);
-
-					ui.userListDetails.list = document.createElement('ul');
-					ui.userListDetails.list.setAttribute('id', 'users__list');
-					ui.userListDetails.appendChild(ui.userListDetails.list);
-
-			ui.main.appendChild(ui.userListDetails);
-
-		/* logs */
-
-		/* publisher invitations */
-
-			ui.logDetails = document.createElement('details');
-			ui.logDetails.ontoggle = () => Controller.manageLogs('browse');
-
-				/* publisher invitations > content */
-
-					ui.logDetails.summary = document.createElement('summary');
-					ui.logDetails.summary.textContent = 'Journaux';
-					ui.logDetails.appendChild(ui.logDetails.summary);
-
-					ui.logDetails.list = document.createElement('ul');
-					ui.logDetails.list.setAttribute('id', 'logs__list');
-					ui.logDetails.appendChild(ui.logDetails.list);
-
-					ui.logDetails.removeBt = document.createElement('button');
-					ui.logDetails.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Purger les journaux';
-					ui.logDetails.removeBt.onclick = () => Controller.manageLogs('remove');
-					ui.logDetails.appendChild(ui.logDetails.removeBt);
-				
-			ui.main.appendChild(ui.logDetails);
+		ui.logCt.appendChild(ui.logCt.summary);
+		ui.logCt.appendChild(ui.logCt.list);
+		ui.logCt.appendChild(ui.logCt.removeBt);
+		ui.main.appendChild(ui.logCt);
 
 	document.body.insertAdjacentElement('afterbegin', ui.main);
 
