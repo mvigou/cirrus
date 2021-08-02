@@ -447,53 +447,42 @@
 
 		ui.nav = document.createElement('nav');
 		ui.nav.setAttribute('class', 'main-nav');
-	
-		/* main nav > left container */
-
-			ui.nav.leftCt = document.createElement('div');
-			ui.nav.leftCt.setAttribute('class', 'nav__left-ct');
-			ui.nav.append(ui.nav.leftCt);
-
-		/* main nav > right container */
-
-			ui.nav.rightCt = document.createElement('div');
-			ui.nav.rightCt.setAttribute('class', 'nav__right-ct');
-
-			/* main nav > right container > options */
 		
-				ui.nav.rightCt.switchThemeBt = document.createElement('button');
-				ui.nav.rightCt.switchThemeBt.setAttribute('id', 'switchThemeBt');
-				ui.nav.rightCt.switchThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
-				ui.nav.rightCt.switchThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
-				ui.nav.rightCt.switchThemeBt.onclick = () => View.switchThemeColor();
-				ui.nav.rightCt.appendChild(ui.nav.rightCt.switchThemeBt);
-			
-				ui.nav.rightCt.logOutBt = document.createElement('button');
-				ui.nav.rightCt.logOutBt.setAttribute('title', 'Se déconnecter');
-				ui.nav.rightCt.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
-				ui.nav.rightCt.logOutBt.onclick = () => Controller.signOut();
-				ui.nav.rightCt.appendChild(ui.nav.rightCt.logOutBt);
-		
-			ui.nav.append(ui.nav.rightCt);
+		ui.nav.leftCt = document.createElement('div');
+		ui.nav.leftCt.setAttribute('class', 'nav__left-ct');
+		ui.nav.append(ui.nav.leftCt);
 
+		ui.nav.rightCt = document.createElement('div');
+		ui.nav.rightCt.setAttribute('class', 'nav__right-ct');
+
+		ui.nav.rightCt.switchThemeBt = document.createElement('button');
+		ui.nav.rightCt.switchThemeBt.setAttribute('id', 'switchThemeBt');
+		ui.nav.rightCt.switchThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
+		ui.nav.rightCt.switchThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
+		ui.nav.rightCt.switchThemeBt.onclick = () => View.switchThemeColor();
+		ui.nav.rightCt.appendChild(ui.nav.rightCt.switchThemeBt);
+
+		ui.nav.rightCt.logOutBt = document.createElement('button');
+		ui.nav.rightCt.logOutBt.setAttribute('title', 'Se déconnecter');
+		ui.nav.rightCt.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
+		ui.nav.rightCt.logOutBt.onclick = () => Controller.signOut();
+		ui.nav.rightCt.appendChild(ui.nav.rightCt.logOutBt);
+
+		ui.nav.append(ui.nav.rightCt);
 		ui.main.appendChild(ui.nav);
 
 	/* aside (directory infos) */
 
-		ui.aside = document.createElement('aside');
+		ui.aside = document.createElement('aside');		
 
-		/* aside > tree */
-
-			ui.aside.tree = document.createElement('div');
-			ui.aside.tree.setAttribute('class', 'tree');
-			ui.aside.appendChild(ui.aside.tree);
+		ui.aside.tree = document.createElement('div');
+		ui.aside.tree.setAttribute('class', 'tree');
+		ui.aside.appendChild(ui.aside.tree);
 	
-		/* aside > counters */
+		ui.aside.counters = document.createElement('div');			
+		ui.aside.counters.setAttribute('class', 'counters');
+		ui.aside.appendChild(ui.aside.counters);
 
-			ui.aside.counters = document.createElement('div');			
-			ui.aside.counters.setAttribute('class', 'counters');
-			ui.aside.appendChild(ui.aside.counters);
-	
 		ui.main.appendChild(ui.aside);
 
 	/* user content */
@@ -508,15 +497,11 @@
 
 		ui.pan.ct = document.createElement('div');
 
-		/* pan > menu */
+		ui.pan.ct.nav = document.createElement('nav');
+		ui.pan.ct.appendChild(ui.pan.ct.nav);
 
-			ui.pan.ct.nav = document.createElement('nav');
-			ui.pan.ct.appendChild(ui.pan.ct.nav);
-
-		/* pan > content */
-
-			ui.pan.ct.item = document.createElement('div');
-			ui.pan.ct.appendChild(ui.pan.ct.item);
+		ui.pan.ct.item = document.createElement('div');
+		ui.pan.ct.appendChild(ui.pan.ct.item);
 
 		ui.pan.appendChild(ui.pan.ct);
 		ui.main.appendChild(ui.pan);
@@ -526,26 +511,22 @@
 		ui.popup = document.createElement('popup');
 		ui.popup.setAttribute('class', 'popup');
 
-		/* popup > cirrus logo */
+		ui.popup.cirrusLogo = document.createElement('object');
+		ui.popup.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+		ui.popup.cirrusLogo.setAttribute('class', 'popup__object');
+		ui.popup.cirrusLogo.setAttribute('data', './app/client/cirrus-logo.svg');
+		ui.popup.cirrusLogo.setAttribute('type', 'image/svg+xml');
+		ui.popup.appendChild(ui.popup.cirrusLogo);
 
-			ui.popup.cirrusLogo = document.createElement('object');
-			ui.popup.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-			ui.popup.cirrusLogo.setAttribute('class', 'popup__object');
-			ui.popup.cirrusLogo.setAttribute('data', './app/client/cirrus-logo.svg');
-			ui.popup.cirrusLogo.setAttribute('type', 'image/svg+xml');
-			ui.popup.appendChild(ui.popup.cirrusLogo);
+		ui.popup.textA = document.createElement('p');
+		ui.popup.textA.setAttribute('class', 'popup-confirm');
+		ui.popup.textA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
+		ui.popup.appendChild(ui.popup.textA);
 
-		/* popup > text content */
-
-			ui.popup.textA = document.createElement('p');
-			ui.popup.textA.setAttribute('class', 'popup-confirm');
-			ui.popup.textA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
-			ui.popup.appendChild(ui.popup.textA);
-
-			ui.popup.textB = document.createElement('p');
-			ui.popup.textB.setAttribute('class', 'popup-download');
-			ui.popup.textB.textContent = 'Téléchargement en cours, veuillez patienter';
-			ui.popup.appendChild(ui.popup.textB);
+		ui.popup.textB = document.createElement('p');
+		ui.popup.textB.setAttribute('class', 'popup-download');
+		ui.popup.textB.textContent = 'Téléchargement en cours, veuillez patienter';
+		ui.popup.appendChild(ui.popup.textB);
 
 		ui.main.appendChild(ui.popup);
 
@@ -553,26 +534,20 @@
 	
 		ui.footer = document.createElement('footer');
 
-		/* footer > to cirrus documentation */
+		ui.footer.docLink = document.createElement('a');
+		ui.footer.docLink.setAttribute('href', 'https://getcirrus.awebsome.fr/');
+		ui.footer.docLink.setAttribute('target', '_blank');
+		ui.footer.docLink.textContent = 'documentation';
+		ui.footer.appendChild(ui.footer.docLink);
 
-			ui.footer.docLink = document.createElement('a');
-			ui.footer.docLink.setAttribute('href', 'https://getcirrus.awebsome.fr/');
-			ui.footer.docLink.setAttribute('target', '_blank');
-			ui.footer.docLink.textContent = 'documentation';
-			ui.footer.appendChild(ui.footer.docLink);
-
-		/* footer > cirrus logo */
-
-			ui.footer.cirrusLogo = document.createElement('img');
-			ui.footer.cirrusLogo.setAttribute('src', './app/client/cirrus-logo.svg');
-			ui.footer.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-			ui.footer.appendChild(ui.footer.cirrusLogo);
+		ui.footer.cirrusLogo = document.createElement('img');
+		ui.footer.cirrusLogo.setAttribute('src', './app/client/cirrus-logo.svg');
+		ui.footer.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+		ui.footer.appendChild(ui.footer.cirrusLogo);
 		
-		/* footer > cirrus version */
-		
-			ui.footer.cirrusVersion = document.createElement('p');
-			ui.footer.cirrusVersion.textContent = 'version 1.1.1';
-			ui.footer.appendChild(ui.footer.cirrusVersion);
+		ui.footer.cirrusVersion = document.createElement('p');
+		ui.footer.cirrusVersion.textContent = 'version 1.1.1';
+		ui.footer.appendChild(ui.footer.cirrusVersion);
 
 		ui.main.appendChild(ui.footer);
 

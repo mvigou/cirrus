@@ -162,7 +162,7 @@
 
 /* ### build user interface ### */
 
-	/* main nav > left container > buttons */
+	/* main nav */
 
 		ui.nav.leftCt.toRecycleBt = document.createElement('button');
 		ui.nav.leftCt.toRecycleBt.setAttribute('class', 'datas-ft non-editable');
@@ -200,8 +200,6 @@
 		};
 		ui.nav.leftCt.emptyRecycleBt.ontouchmove = () => Controller.cancelConfirm();
 		ui.nav.leftCt.appendChild(ui.nav.leftCt.emptyRecycleBt);
-
-	/* main nav > right container > buttons */
 
 		ui.nav.rightCt.toAdminBt = document.createElement('button');
 		ui.nav.rightCt.toAdminBt.setAttribute('title', 'Accéder aux outils d\'administration');
