@@ -3,7 +3,6 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated()) {
-	global $env;
 	if(isset($_POST['item'])) {
 		if($_POST['item'] === 'RECYCLE') {
 			$_POST['item'] = '../../datas/recyle';	
@@ -26,7 +25,6 @@ if(isAuthenticated()) {
 }
 
 function moveToRecycle($elm) {
-	global $env;
 	$fileName = array_slice(explode('/', $elm), -1)[0];
 	$fromPath = $elm;
 	$toPath = "../../datas/recyle/{$fileName}";
@@ -43,7 +41,6 @@ function moveToRecycle($elm) {
 }
 
 function removeDir($dir) {
-	global $env;
 	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
 		$itemPath = $dir . '/' . $item;
 		if(is_file($itemPath)) {

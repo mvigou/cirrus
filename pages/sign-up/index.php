@@ -1,11 +1,9 @@
-<?php 
-$env = json_decode(file_get_contents('../../datas/env.json'));
-require('../../app/server/tools.php');
+<?php require('../../app/server/tools.php');
 if(isset($_GET['role'], $_GET['auth'])) { 
 	if($_GET['role'] === 'owner' || $_GET['role'] === 'publisher' || $_GET['role'] === 'viewer') {
 		if(is_file('../../datas/auth/sign-up-as-' . $_GET['role'] . '/' . $_GET['auth'])) { ?>
 			<!DOCTYPE html>
-				<html lang="<?php echo $env->lang; ?>">
+				<html lang="fr">
 				<head>
 					<link rel="icon" href="../../app/client/cirrus-favicon.png" />
 					<link rel="stylesheet" href="./style.min.css" />

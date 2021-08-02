@@ -13,7 +13,6 @@
 		$_POST['user-pass'] === $_POST['user-pass-conf'] &&
 		strlen($_POST['auth']) === 128	
 	){
-		$env = json_decode(file_get_contents('../../datas/env.json'));
 		$authFilePath = null;
 		$userDirPath;		
 		switch($_POST['role']) {
@@ -23,7 +22,7 @@
 				break;
 			case 'publisher';
 				$authFilePath = "../../datas/auth/sign-up-as-publisher/{$_POST['auth']}";
-				$userDirPath = '../../datas/publishers/owners';
+				$userDirPath = '../../datas/users/publishers';
 				break;
 			case 'viewer';
 				$authFilePath = "../../datas/auth/sign-up-as-viewer/{$_POST['auth']}";

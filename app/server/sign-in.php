@@ -49,7 +49,7 @@ else {
 	if(
 		isset($_GET['auth']) && 
 		strlen($_GET['auth']) === 128 &&
-		file_exists($env->signUpVisitorAuthDir . '/' . $_GET['auth'])
+		file_exists("../../datas/auth/sign-up-as-visitor/{$_GET['auth']}")
 	) {		
 		$_SESSION['browser'] = $_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['cirrusId'] = $env->cirrusId;

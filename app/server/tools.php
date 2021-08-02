@@ -25,28 +25,24 @@ function inScopeDirectory($elm) {
 	return inDatasDirectory($elm) || inRecycleDirectory($elm) ? true : false;
 }
 function inDatasDirectory($elm) {
-	global $env;
 	$regex = '/^\.\.\/\.\.\/datas\/';
 	$regex .= array_slice(explode('/', '../../datas/content'), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
 function inRecycleDirectory($elm) {
-	global $env;
 	$regex = '/^\.\.\/\.\.\/datas\/';
 	$regex .= array_slice(explode('/', '../../datas/recyle'), -1)[0];
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
 function buildTempDir() {
-	global $env;
 	if(count(scandir('../../datas/temp')) - 2 === 10) {
 		removeThisDir('../../datas/temp');
 	}
 	return '../../datas/temp' . '/' . hash('sha512', random_bytes(18));
 }
 function removeThisDir($dir) {
-	global $env;
 	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
 		$itemPath = $dir . '/' . $item;
 		if(is_file($itemPath)) {

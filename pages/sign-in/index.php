@@ -4,10 +4,10 @@ if(isset($_GET['auth'])) {
 	header('Location: ../../app/server/sign-in.php?auth=' . $_GET['auth']);
 	exit();
 }
-$env = json_decode(file_get_contents('../../datas/env.json'));
+
 require('../../app/server/tools.php'); ?>
 <!DOCTYPE html>
-	<html lang="<?php echo $env->lang; ?>">
+	<html lang="fr">
 	<head>
 		<link rel="icon" href="../../app/client/cirrus-favicon.png" />
 		<link rel="manifest" href="../../manifest.json">

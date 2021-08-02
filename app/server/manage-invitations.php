@@ -5,10 +5,10 @@ require_once('./tools.php');
 if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['role'], $_POST['action'])) {
 		if($_POST['role'] === 'publisher') {
-			$authsDir = $env->signUpPublisherAuthDir;
+			$authsDir = '../../datas/auth/sign-up-as-publisher';
 		}
 		else if($_POST['role'] === 'viewer') {
-			$authsDir = $env->signUpViewerAuthDir;
+			$authsDir = '../../datas/auth/sign-up-as-viewer';
 		}
         if(isset($authsDir)) {
             switch($_POST['action']) {

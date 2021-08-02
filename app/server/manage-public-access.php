@@ -4,15 +4,15 @@ require_once('./tools.php');
 
 if(isAuthenticated() && hasOwnerRights()) {
 	if(isset($_POST['action'])) {
-		$auths = scandir($env->signUpVisitorAuthDir);
+		$auths = scandir('../../datas/auth/sign-up-as-visitor');
 		switch($_POST['action']) {
 			case 'browse':
 			case 'create':
 				// Only if there is no public access link yet (content directory : '.' and '..').
 				if($_POST['action'] === 'create' && count($auths) === 2) {
 					$newAuth = hash('sha512', random_bytes(24));
-					touch($env->signUpVisitorAuthDir . '/' . $newAuth);
-					$auths = scandir($env->signUpVisitorAuthDir);
+					touch("../../datas/auth/sign-up-as-visitor/{$newAuth}");
+					$auths = scandir('../../datas/auth/sign-up-as-visitor');
 				}
 				// Return the existing link OR the new link OR an empty string.
 				$content;
@@ -33,7 +33,7 @@ if(isAuthenticated() && hasOwnerRights()) {
 				break;
 			case 'remove':
 				if(count($auths) === 3) {
-					unlink($env->signUpVisitorAuthDir . '/' . $auths[2]);
+					unlink("../../datas/auth/sign-up-as-visitor/{$auths[2]}");
 					if(error_get_last() === null) {
 						echo json_encode(array('success' => true));
 					}

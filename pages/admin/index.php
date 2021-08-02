@@ -1,10 +1,9 @@
 <?php 
 session_start();
-$env = json_decode(file_get_contents('../../datas/env.json'));
 require('../../app/server/tools.php');
 if(isAuthenticated() && hasOwnerRights()) { ?>
 	<!DOCTYPE html>
-		<html lang="<?php echo $env->lang; ?>">
+		<html lang="fr">
 		<head>
 			<link rel="icon" href="../../app/client/cirrus-favicon.png" />
 			<link rel="stylesheet" href="./style.min.css" />
