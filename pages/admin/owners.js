@@ -1,253 +1,411 @@
 "use strict";
 
-/* ### Client side functions ### */
+/* ### MVC classes ### */
 
-	function toDarkTheme() {	
-		document.body.classList.add('--dark-mode');
-		localStorage.setItem('theme', 'dark');
-	}
-	function toLightTheme() {
-		document.body.classList.remove('--dark-mode');
-		localStorage.setItem('theme', 'light');
+	class Model {
+
+		static ajaxPost = query => {
+			return new Promise(
+				(resolve, reject) => {
+					let formData = new FormData();
+					if(query.args !== undefined) {
+						for(const arg of query.args) {
+							formData.append(arg.name, arg.value);
+						}
+					}
+					fetch(query.script, {
+						method: 'POST',
+						body: formData
+					})
+					.then(data => {					
+						if(data.ok) {
+							data.text()
+							.then(data => {
+								try {
+									resolve(JSON.parse(data));
+								}
+								catch(e) {
+									reject(data);
+								}	
+							});
+						}
+						else {
+							reject(data);
+						}
+					});
+				}
+			);
+		};
+
 	};
-	function switchTheme() {
-		document.body.classList.contains('--dark-mode') ?
-			toLightTheme():
-			toDarkTheme();
-	}
-	function setList(listId, content = null) {
-		const listElm = document.getElementById(listId);
-		if(content !== null) {
-			listElm.innerHTML = '';
-			if(listId === 'logs__list') {
-				for(const log of content) {
-					if(log !== '') {
+
+	class View {
+
+		static setDarkTheme = () => {
+			document.body.classList.add('--dark-mode');
+			localStorage.setItem('theme', 'dark');			
+		};
+
+		static setLightTheme = () => {
+			document.body.classList.remove('--dark-mode');
+			localStorage.setItem('theme', 'light');
+		};
+
+		static switchThemeColor = () => document.body.classList.contains('--dark-mode') ? View.setLightTheme(): View.setDarkTheme();
+
+		static setList = (listId, content = null) => {
+			const listElm = document.getElementById(listId);
+			if(content !== null) {
+				listElm.innerHTML = '';
+				if(listId === 'logs__list') {
+					for(const log of content) {
+						if(log !== '') {
+							let itemElm = document.createElement('li');
+							itemElm.textContent = '[' + log;
+							listElm.appendChild(itemElm);
+						}
+					}
+				}
+				else {
+					for(let a of content) {
 						let itemElm = document.createElement('li');
-						itemElm.textContent = '[' + log;
+						let aElm = document.createElement('a');
+						aElm.setAttribute('href', a);
+						aElm.setAttribute('target', '_blank');
+						aElm.textContent = a.substring(0, 48) + '...';
+						itemElm.appendChild(aElm);
 						listElm.appendChild(itemElm);
 					}
 				}
 			}
 			else {
-				for(let a of content) {
+				listElm.innerHTML = '...';
+			}
+		};
+
+		static setUserList = users => {
+			const listElm = document.getElementById('users__list');
+			if(users.length > 0) {
+				listElm.innerHTML = '';
+				for(let user of users) {
 					let itemElm = document.createElement('li');
-					let aElm = document.createElement('a');
-					aElm.setAttribute('href', a);
-					aElm.setAttribute('target', '_blank');
-					aElm.textContent = a.substring(0, 48) + '...';
-					itemElm.appendChild(aElm);
+					itemElm.textContent = user.name;
+					let setUserBtElm = document.createElement('button');
+					if(user.role === 'viewer') {
+						setUserBtElm.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>Changer en éditeur';
+						setUserBtElm.onclick = () => Controller.moveUser(user.name, 'viewer', 'publisher');
+					}
+					else if(user.role === 'publisher') {
+						setUserBtElm.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 7.449-11.985 7.449c-7.18 0-12.015-7.449-12.015-7.449s4.446-6.551 12.015-6.551c7.694 0 11.985 6.551 11.985 6.551zm-7 .449c0-2.761-2.238-5-5-5-2.761 0-5 2.239-5 5 0 2.762 2.239 5 5 5 2.762 0 5-2.238 5-5z"/></svg>Changer en visualiseur';
+						setUserBtElm.onclick = () => Controller.moveUser(user.name, 'publisher', 'viewer');
+					}
+					itemElm.appendChild(setUserBtElm);
+					let removeBtElm = document.createElement('button');
+					removeBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>Supprimer';
+					removeBtElm.onclick = () => Controller.removeUser(user.name, user.role);
+					itemElm.appendChild(removeBtElm);
 					listElm.appendChild(itemElm);
 				}
 			}
-		}
-		else {
-			listElm.innerHTML = '...';
-		}
-	}
-	function setUserList(users) {
-		const listElm = document.getElementById('users__list');
-		if(users.length > 0) {
-			listElm.innerHTML = '';
-			for(let user of users) {
-				let itemElm = document.createElement('li');
-				itemElm.textContent = user.name;
-				let setUserBtElm = document.createElement('button');
-				if(user.role === 'viewer') {
-					setUserBtElm.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>Changer en éditeur';
-					setUserBtElm.onclick = () => moveUser(user.name, 'viewer', 'publisher');
-				}
-				else if(user.role === 'publisher') {
-					setUserBtElm.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 7.449-11.985 7.449c-7.18 0-12.015-7.449-12.015-7.449s4.446-6.551 12.015-6.551c7.694 0 11.985 6.551 11.985 6.551zm-7 .449c0-2.761-2.238-5-5-5-2.761 0-5 2.239-5 5 0 2.762 2.239 5 5 5 2.762 0 5-2.238 5-5z"/></svg>Changer en visualiseur';
-					setUserBtElm.onclick = () => moveUser(user.name, 'publisher', 'viewer');
-				}
-				itemElm.appendChild(setUserBtElm);
-				let removeBtElm = document.createElement('button');
-				removeBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>Supprimer';
-				removeBtElm.onclick = () => removeUser(user.name, user.role);
-				itemElm.appendChild(removeBtElm);
-				listElm.appendChild(itemElm);
+			else {
+				listElm.innerHTML = '...';
 			}
-		}
-		else {
-			listElm.innerHTML = '...';
-		}
-	}
+		};
 
-/* ### Server side functions ### */
+	};
 
-	function ajaxPost(req) {
-		return new Promise(
-			(resolve, reject) => {
-				let formData = new FormData();
-				if(req.args !== undefined) {
-					for(const arg of req.args) {
-						formData.append(arg.name, arg.value);
-					}
+	class Controller {
+
+		static browseUsers = () => {
+			Model.ajaxPost( { script: '../../app/server/browse-users.php' } )
+			.then(data => {
+				if(data.success) {
+					View.setUserList(data.content);
 				}
-				fetch(
-					'../../app/server/' + req.script, {
-						method: 'POST',
-						body: formData
-					}
-				).
-				then(
-					resp => {					
-						if(resp.ok) {
-							resp.text().then(
-								resp => {
-									try {
-										const parsedResp = JSON.parse(resp);
-										resolve(parsedResp);
-									}
-									catch(e) {
-										reject(resp);
-									}	
-								}
-							)
-						}
-						else {
-							reject(new Error(resp.status + ': ' + resp.statusText));
-						}
-					}
-				);
-			}
-		);
-	}
-	function browseUsers() {
-		ajaxPost(
-			{ 
-				script: 'browse-users.php' 
-			}
-		)
-		.then( 
-			resp => {
-				if(resp.success) {
-					setUserList(resp.content);
-				}
-			}
-		)
-	}
-	function moveUser(userName, fromRole, toRole) {
-		ajaxPost(
-			{ 
-				script: 'move-user.php',
-				args: [
-					{
-						name: 'user-name',
-						value: userName
-					},
-					{
-						name: 'from-role',
-						value: fromRole
-					},
-					{
-						name: 'to-role',
-						value: toRole
-					}
-				]
-			}
-		)
-		.then( 
-			resp => {
-				if(resp.success) {
-					browseUsers();
-				}
-			}
-		)
-	}
-	function removeUser(userName, userRole) {
-		if(confirm('Supprimer le compte : ' + userName)) {
-			ajaxPost(
+			})
+		};
+
+		static moveUser = (userName, fromRole, toRole) => {
+			Model.ajaxPost(
 				{ 
-					script: 'remove-user.php',
+					script: '../../app/server/move-user.php',
 					args: [
 						{
 							name: 'user-name',
 							value: userName
 						},
 						{
-							name: 'user-role',
-							value: userRole
+							name: 'from-role',
+							value: fromRole
+						},
+						{
+							name: 'to-role',
+							value: toRole
 						}
 					]
 				}
 			)
-			.then( 
-				resp => {
-					if(resp.success) {
-						browseUsers();
+			.then(data => {
+				if(data.success) {
+					Controller.browseUsers();
+				}
+			})
+		};
+
+		static removeUser = (userName, userRole) => {
+			if(confirm('Supprimer le compte : ' + userName)) {
+				Model.ajaxPost(
+					{ 
+						script: '../../app/server/remove-user.php',
+						args: [
+							{
+								name: 'user-name',
+								value: userName
+							},
+							{
+								name: 'user-role',
+								value: userRole
+							}
+						]
 					}
+				)
+				.then(data => {
+					if(data.success) {
+						Controller.browseUsers();
+					}
+				})
+			}
+		};
+
+		static managePublicAccess = action => {
+			Model.ajaxPost(
+				{
+					script: '../../app/server/manage-public-access.php',
+					args: [
+						{
+							name: 'action',
+							value: action
+						}
+					]			
 				}
 			)
-		}
-	}
-	function managePublicAccess(action) {
-		ajaxPost(
-			{
-				script: 'manage-public-access.php',
-				args: [
-					{
-						name: 'action',
-						value: action
-					}
-				]			
-			}
-		)
-		.then(
-			resp => {
-				if(resp.success) {
-					setList('public-access__list', resp.content);
+			.then(data => {
+				if(data.success) {
+					View.setList('public-access__list', data.content);
 				}
-			}
-		)
-	}
-	function manageInvitations(action, role) {
-		ajaxPost(
-			{
-				script: 'manage-invitations.php',
-				args: [
-					{
-						name: 'role',
-						value: role
-					},
-					{
-						name: 'action',
-						value: action
-					}
-				]	
-			}
-		)
-		.then(
-			resp => {
-				if(resp.success) {
-					setList(role + '__list', resp.content);
+			})
+		};
+
+		static manageInvitations = (action, role) => {
+			Model.ajaxPost(
+				{
+					script: '../../app/server/manage-invitations.php',
+					args: [
+						{
+							name: 'role',
+							value: role
+						},
+						{
+							name: 'action',
+							value: action
+						}
+					]	
 				}
-			}
-		)
-	}
-	function manageLogs(action) {
-		ajaxPost(
-			{ 
-				script: 'manage-logs.php',
-				args: [
-					{
-						name: 'action',
-						value: action
-					}
-				]		
-			}
-		)
-		.then( 
-			resp => {
-				if(resp.success) {
-					setList('logs__list', resp.content);
+			)
+			.then(data => {
+				if(data.success) {
+					View.setList(role + '__list', data.content);
 				}
-			}
-		)
-	}
+			})
+		};
+
+		static manageLogs = action => {
+			Model.ajaxPost(
+				{ 
+					script: '../../app/server/manage-logs.php',
+					args: [
+						{
+							name: 'action',
+							value: action
+						}
+					]		
+				}
+			)
+			.then(data => {
+				if(data.success) {
+					View.setList('logs__list', data.content);
+				}
+			})
+		};
+
+	};
+
+/* ### build user interface ### */
+
+	const ui = {};
+	
+	ui.main = document.createElement('main');
+	ui.main.setAttribute('class', 'admin');
+
+	/* header */
+
+		ui.header = document.createElement('header');
+
+			/* header > logo */
+
+				ui.header.cirrusLogo = document.createElement('img');
+				ui.header.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+				ui.header.cirrusLogo.setAttribute('src', '../../app/client/cirrus-logo-alt.svg');
+				ui.header.appendChild(ui.header.cirrusLogo);
+			
+			/* header > title */
+		
+				ui.header.mainTitle = document.createElement('h1');
+				ui.header.mainTitle.innerHTML = 'cirrus | <span>administration</span>';
+				ui.header.appendChild(ui.header.mainTitle);
+		
+		ui.main.appendChild(ui.header);
+
+	/* main options */
+
+		ui.switchThemeBt = document.createElement('button');
+		ui.switchThemeBt.setAttribute('id', 'switchThemeBt');
+		ui.switchThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
+		ui.switchThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
+		ui.switchThemeBt.onclick = () => View.switchThemeColor();
+		ui.main.appendChild(ui.switchThemeBt);
+
+		ui.backLink = document.createElement('a');
+		ui.backLink.setAttribute('href', '../../');
+		ui.backLink.textContent = 'Retour';
+		ui.main.appendChild(ui.backLink);
+
+		/* public access */
+
+			ui.publicAccessDet = document.createElement('details');
+			ui.publicAccessDet.ontoggle = () => Controller.managePublicAccess('browse');
+
+				/* public access > content */
+
+					ui.publicAccessDet.summary = document.createElement('summary');
+					ui.publicAccessDet.summary.textContent = 'Lien d\'accès public';
+					ui.publicAccessDet.appendChild(ui.publicAccessDet.summary);
+
+					ui.publicAccessDet.list = document.createElement('ul');
+					ui.publicAccessDet.list.setAttribute('id', 'public-access__list');
+					ui.publicAccessDet.appendChild(ui.publicAccessDet.list);
+
+					ui.publicAccessDet.addBt = document.createElement('button');
+					ui.publicAccessDet.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Activer le lien d\'accès public';
+					ui.publicAccessDet.addBt.onclick = () => Controller.managePublicAccess('create');
+					ui.publicAccessDet.appendChild(ui.publicAccessDet.addBt);
+
+					ui.publicAccessDet.removeBt = document.createElement('button');
+					ui.publicAccessDet.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Désactiver le lien d\'accès public';
+					ui.publicAccessDet.removeBt.onclick = () => Controller.managePublicAccess('remove');
+					ui.publicAccessDet.appendChild(ui.publicAccessDet.removeBt);
+
+			ui.main.appendChild(ui.publicAccessDet);
+
+		/* viewer invitations */
+
+			ui.viewDetails = document.createElement('details');
+			ui.viewDetails.ontoggle = () => Controller.manageInvitations('browse', 'viewer');
+
+				/* viewer invitations > content */
+
+					ui.viewDetails.summary = document.createElement('summary');
+					ui.viewDetails.summary.textContent = 'Invitations "visualiseur"';
+					ui.viewDetails.appendChild(ui.viewDetails.summary);
+
+					ui.viewDetails.list = document.createElement('ul');
+					ui.viewDetails.list.setAttribute('id', 'viewer__list');
+					ui.viewDetails.appendChild(ui.viewDetails.list);
+
+					ui.viewDetails.addBt = document.createElement('button');
+					ui.viewDetails.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Générer un lien d\'inscription';
+					ui.viewDetails.addBt.onclick = () => Controller.manageInvitations('create', 'viewer');
+					ui.viewDetails.appendChild(ui.viewDetails.addBt);
+
+					ui.viewDetails.removeBt = document.createElement('button');
+					ui.viewDetails.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Supprimer les invitations';
+					ui.viewDetails.removeBt.onclick = () => Controller.manageInvitations('remove', 'viewer');
+					ui.viewDetails.appendChild(ui.viewDetails.removeBt);
+				
+			ui.main.appendChild(ui.viewDetails);
+
+		/* publisher invitations */
+
+			ui.pubDetails = document.createElement('details');
+			ui.pubDetails.ontoggle = () => Controller.manageInvitations('browse', 'publisher');
+
+				/* publisher invitations > content */
+
+					ui.pubDetails.summary = document.createElement('summary');
+					ui.pubDetails.summary.textContent = 'Invitations "éditeur"';
+					ui.pubDetails.appendChild(ui.pubDetails.summary);
+
+					ui.pubDetails.list = document.createElement('ul');
+					ui.pubDetails.list.setAttribute('id', 'publisher__list');
+					ui.pubDetails.appendChild(ui.pubDetails.list);
+
+					ui.pubDetails.addBt = document.createElement('button');
+					ui.pubDetails.addBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg> Générer un lien d\'inscription';
+					ui.pubDetails.addBt.onclick = () => Controller.manageInvitations('create', 'publisher');
+					ui.pubDetails.appendChild(ui.pubDetails.addBt);
+
+					ui.pubDetails.removeBt = document.createElement('button');
+					ui.pubDetails.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Supprimer les invitations';
+					ui.pubDetails.removeBt.onclick = () => Controller.manageInvitations('remove', 'publisher');
+					ui.pubDetails.appendChild(ui.pubDetails.removeBt);
+				
+			ui.main.appendChild(ui.pubDetails);
+
+		/* user list */
+
+			ui.userListDetails = document.createElement('details');
+			ui.userListDetails.ontoggle = () => Controller.browseUsers();
+
+				/* user list > content */
+
+					ui.userListDetails.summary = document.createElement('summary');
+					ui.userListDetails.summary.textContent = 'Gérer les utilisateurs';
+					ui.userListDetails.appendChild(ui.userListDetails.summary);
+
+					ui.userListDetails.list = document.createElement('ul');
+					ui.userListDetails.list.setAttribute('id', 'users__list');
+					ui.userListDetails.appendChild(ui.userListDetails.list);
+
+			ui.main.appendChild(ui.userListDetails);
+
+		/* logs */
+
+		/* publisher invitations */
+
+			ui.logDetails = document.createElement('details');
+			ui.logDetails.ontoggle = () => Controller.manageLogs('browse');
+
+				/* publisher invitations > content */
+
+					ui.logDetails.summary = document.createElement('summary');
+					ui.logDetails.summary.textContent = 'Journaux';
+					ui.logDetails.appendChild(ui.logDetails.summary);
+
+					ui.logDetails.list = document.createElement('ul');
+					ui.logDetails.list.setAttribute('id', 'logs__list');
+					ui.logDetails.appendChild(ui.logDetails.list);
+
+					ui.logDetails.removeBt = document.createElement('button');
+					ui.logDetails.removeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg> Purger les journaux';
+					ui.logDetails.removeBt.onclick = () => Controller.manageLogs('remove');
+					ui.logDetails.appendChild(ui.logDetails.removeBt);
+				
+			ui.main.appendChild(ui.logDetails);
+
+	document.body.insertAdjacentElement('afterbegin', ui.main);
 
 /* ### Ending procedural ### */
 
 	if(localStorage.getItem('theme') === 'dark') {
-		toDarkTheme();
+		View.setDarkTheme();
 	}
