@@ -274,7 +274,7 @@
 				if(item.type === 'subdir') {	
 					// Restrict item.
 					let restItemBtElm = document.createElement('button');
-					restItemBtElm.classList.add('owner-ft', 'non-editable');
+					restItemBtElm.classList.add('owner-ft', 'datas-ft', 'non-editable');
 					restItemBtElm.title = 'Définir les règles d\'accès au dossier';
 					restItemBtElm.innerHTML = '<svg viewBox="3 3 18 18"><path d="m21 19.5h-18v-15h5.25c1.2713 1.4565 1.7783 2.25 3 2.25h9.75zm-13.438-13.5h-3.0622v12h15v-9.75h-8.25c-1.7542 0-2.6528-1.041-3.6878-2.25zm7.4378 10.5h-6v-3.75h0.75v-0.75c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25v0.75h0.75zm-3.75-4.5v0.75h1.5v-0.75c0-0.414-0.336-0.75-0.75-0.75s-0.75 0.336-0.75 0.75z" stroke-width=".75"/></svg>';
 					restItemBtElm.onclick = () => OwnController.browsePerms(item.path);
