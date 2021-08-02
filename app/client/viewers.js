@@ -45,9 +45,15 @@
 
 		static setRecycleTheme = () => document.body.classList.add('--in-recycle');
 
-		static setDarkTheme = () => document.body.classList.add('--dark-mode');
+		static setDarkTheme = () => {
+			document.body.classList.add('--dark-mode');
+			localStorage.setItem('theme', 'dark');			
+		};
 
-		static setLightTheme = () => document.body.classList.remove('--dark-mode'); 
+		static setLightTheme = () => {
+			document.body.classList.remove('--dark-mode');
+			localStorage.setItem('theme', 'light');
+		};
 
 		static switchThemeColor = () => document.body.classList.contains('--dark-mode') ? View.setLightTheme(): View.setDarkTheme();
 		
