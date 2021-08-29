@@ -1,6 +1,6 @@
 # cirrus
 
-![le logo cirrus](https://awebsome.fr/blog-awebsome/static/img/l/2021-cirrus-logo-2.png)
+![le logo cirrus](https://awebsome.fr/static/images/l/2021-cirrus-logo-2.png)
 
 Un cirrus est un type de nuage ayant hérité son nom latin de la forme qu'il rappelle, celle d'une boucle de cheveux. Au-delà de l'aspect poétique, cirrus est l'acronyme idéal du projet de Cloud Intègre, Responsable et Résilient pour Utilisateurs Sagaces porté par [Awebsome](https://awebsome.fr).
 
