@@ -258,4 +258,4 @@
 /* ### Ending procedural ### */
 
 	document.body.classList.add('--owner');
-	OwnController.checkLicence();
+	// OwnController.checkLicence();

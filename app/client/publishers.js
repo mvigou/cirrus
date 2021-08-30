@@ -4,14 +4,15 @@
 
 	class PubView {
 
-		static toggleEdition = () => {
-			document.body.classList.contains('--edit-mode') ?
-				document.body.classList.remove('--edit-mode'):
-				document.body.classList.add('--edit-mode');
-		};
+		static setEditionMode = (item) => {
+			item.classList.add('--edit-mode');
+		}
+		static unsetEditionMode = (item) => {
+			item.classList.remove('--edit-mode');
+		}
 
-		static removeItem = item => {
-			document.querySelector('li[data-path="' + item + '"]').remove();
+		static removeItem = itemPath => {
+			document.querySelector('li[data-path="' + itemPath + '"]').remove();
 		};
 
 	}
@@ -111,38 +112,36 @@
 			}
 		};
 
-		static renameItem = (oldItemName, newItemName, item) => {
-			if(newItemName.length >= 1) {
-				if(oldItemName !== newItemName) {
-					Model.ajaxPost(
-						{
-							script: './app/server/rename-item.php',
-							args: [
-								{ 
-									name: 'oldItemName', 
-									value: oldItemName
-								},
-								{ 
-									name: 'newItemName', 
-									value: newItemName 
-								},
-								{
-									name: 'parentDir',
-									value: localStorage.getItem('currentDir')
-								}
-							]
-						}
-					)
-					.then(data => {
-						if(data.success) {
-							Controller.browseDirectory(localStorage.getItem('currentDir'));
-						}
-					})
-					.catch(err => Controller.handleError(err));
-				}
+		static renameItem = (item, oldItemName, newItemName) => {
+			if(oldItemName !== newItemName && newItemName.length >= 1) {
+				Model.ajaxPost(
+					{
+						script: './app/server/rename-item.php',
+						args: [
+							{ 
+								name: 'oldItemName', 
+								value: oldItemName
+							},
+							{ 
+								name: 'newItemName', 
+								value: newItemName 
+							},
+							{
+								name: 'parentDir',
+								value: localStorage.getItem('currentDir')
+							}
+						]
+					}
+				)
+				.then(data => {
+					if(data.success) {
+						Controller.browseDirectory(localStorage.getItem('currentDir'));
+					}
+				})
+				.catch(err => Controller.handleError(err));
 			}
 			else {
-				item.value = oldItemName;
+				PubView.unsetEditionMode(item);
 			}
 		};
 
@@ -235,13 +234,6 @@
 		ui.nav.leftCt.uploadBt.innerHTML = '<svg viewBox="3 3 18 18"><path d="M10.4971 12.9823L10 12.4853L12.4853 10L14.9706 12.4853L14.4735 12.9823L12.8368 11.3456V16H12.1338V11.3456L10.4971 12.9823Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1571 3H6.63636C5.73262 3 5 3.73262 5 4.63636V19.3636C5 20.2674 5.73262 21 6.63636 21H18.0909C18.9946 21 19.7273 20.2674 19.7273 19.3636V7.57019L15.1571 3ZM6.63636 4.63636H13.1818V7.90909C13.1818 8.81283 13.9144 9.54545 14.8182 9.54545H18.0909V19.3636H6.63636V4.63636ZM14.8182 7.90909V4.97527L17.752 7.90909H14.8182Z"/></svg>';
 		ui.nav.leftCt.uploadBt.onclick = () => PubController.uploadItems();
 		ui.nav.leftCt.appendChild(ui.nav.leftCt.uploadBt);
-
-		ui.nav.leftCt.renameBt = document.createElement('button');
-		ui.nav.leftCt.renameBt.setAttribute('class', 'datas-ft');
-		ui.nav.leftCt.renameBt.setAttribute('title', 'Activer / désactiver le mode d\'édition des fichiers et des dossiers');
-		ui.nav.leftCt.renameBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>';
-		ui.nav.leftCt.renameBt.onclick = () => PubView.toggleEdition();
-		ui.nav.leftCt.appendChild(ui.nav.leftCt.renameBt);
 
 		ui.nav.leftCt.barForm = document.createElement('form');
 		ui.nav.leftCt.barForm.setAttribute('class', 'bar datas-ft non-editable');

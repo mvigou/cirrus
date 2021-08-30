@@ -73,8 +73,8 @@ button
 	border: none
 	cursor: pointer
 	display: block
-	height: 44px
-	width: 44px
+	min-height: 44px
+	min-width: 44px
 		
 .bar
 	align-items: center
@@ -170,7 +170,7 @@ ul
 li
 	align-items: center
 	display: none
-	grid-template-columns: 1fr repeat(3, auto)
+	grid-template-columns: 1fr repeat(4, auto)
 	padding: 0px 12px 0px 24px
 	&.--visible
 		display: grid
@@ -320,7 +320,7 @@ footer
 		text-decoration: underline
 
 	li
-		grid-template-columns: auto 1fr repeat(3, auto)
+		grid-template-columns: auto 1fr repeat(4, auto)
 		&::before
 			border-radius: 50%
 			content: ""
