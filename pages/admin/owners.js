@@ -45,13 +45,14 @@
 			document.body.classList.add('--dark-mode');
 			localStorage.setItem('theme', 'dark');			
 		};
-
-		static setLightTheme = () => {
+		static unsetDarkTheme = () => {
 			document.body.classList.remove('--dark-mode');
-			localStorage.setItem('theme', 'light');
+			localStorage.removeItem('theme');
 		};
-
-		static switchThemeColor = () => document.body.classList.contains('--dark-mode') ? View.setLightTheme(): View.setDarkTheme();
+	
+		static toggleDarkTheme = () => document.body.classList.contains('--dark-mode') ? 
+			View.unsetDarkTheme(): 
+			View.setDarkTheme();
 
 		static setList = (listId, content = null) => {
 			const listElm = document.getElementById(listId);
@@ -264,12 +265,12 @@
 
 	/* buttons */
 
-		ui.switchThemeBt = document.createElement('button');
-		ui.switchThemeBt.setAttribute('id', 'switchThemeBt');
-		ui.switchThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
-		ui.switchThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
-		ui.switchThemeBt.onclick = () => View.switchThemeColor();
-		ui.main.appendChild(ui.switchThemeBt);
+		ui.toggleDarkThemeBt = document.createElement('button');
+		ui.toggleDarkThemeBt.setAttribute('id', 'toggleDarkThemeBt');
+		ui.toggleDarkThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
+		ui.toggleDarkThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
+		ui.toggleDarkThemeBt.onclick = () => View.toggleDarkTheme();
+		ui.main.appendChild(ui.toggleDarkThemeBt);
 
 		ui.backLink = document.createElement('a');
 		ui.backLink.setAttribute('href', '../../');
