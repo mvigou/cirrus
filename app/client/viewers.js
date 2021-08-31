@@ -517,7 +517,7 @@ ui.main.appendChild(ui.pan);
 
 /* popup */
 
-ui.popup = document.createElement('popup');
+ui.popup = document.createElement('div');
 ui.popup.setAttribute('class', 'popup');
 
 ui.popup.cirrusLogo = document.createElement('object');
