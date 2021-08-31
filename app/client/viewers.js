@@ -1,6 +1,6 @@
 "use strict";
 
-/* ### MVC classes ### */
+/* ### CLASSES ### */
 
 class Model {
 
@@ -105,28 +105,28 @@ class View {
 		ui.pan.classList.remove('--visible');
 	};
 
-	static setTree = dir => {
-		ui.aside.tree.innerHTML = '';
-		let tree = '';
-		for(let subDirs of dir.slice(3).split('/').slice(2)) {
-			tree += '/';
-			tree += subDirs;
-			let spanElm = document.createElement('span');
-			spanElm.textContent = ' / ';
-			ui.aside.tree.appendChild(spanElm);
-			let aElm = document.createElement('a');
-			aElm.href = tree;
-			aElm.textContent = subDirs;
-			aElm.onclick = e => {
+	static setTree = dirPath => {
+		ui.dirTree.innerHTML = '';
+		const dirs = dirPath.slice(3).split('/').slice(2);
+		let currentPath = '';
+		for(const dir of dirs) {
+			currentPath += '/' + dir;
+			const separatorElm = document.createElement('span');
+			separatorElm.textContent = ' / ';
+			ui.dirTree.appendChild(separatorElm);
+			const anchorElm = document.createElement('a');
+			anchorElm.href = currentPath;
+			anchorElm.textContent = dir;
+			anchorElm.onclick = e => {
 				Controller.browseDirectory('../../datas' + e.target.getAttribute('href'));
 				e.preventDefault();
 			};
-			ui.aside.tree.appendChild(aElm);
+			ui.dirTree.appendChild(anchorElm);
 		}
 	};
 
 	static setCounters = () => {
-		ui.aside.counters.innerHTML = '<span><svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length + '</span><span><svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file --visible').length + '</span>';
+		ui.counters.innerHTML = '<span><svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length + '</span><span><svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file --visible').length + '</span>';
 	};
 
 	static setItems = (items = [], parentDir = '', append = false) => {
@@ -302,12 +302,7 @@ class View {
 				renameItemBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>';
 				renameItemBt.onclick = e => PubView.setEditionMode(e.target.closest('li'));
 				ui.list.item.appendChild(renameItemBt);
-			
 
-			
-			
-			
-			
 				// Remove item.
 				let rmItemBtElm = document.createElement('button');
 				rmItemBtElm.classList.add('publisher-ft', 'non-editable');
@@ -458,122 +453,122 @@ class Controller {
 
 }
 
-/* ### build user interface ### */
+/* ### BUILDING USER INTERFACE ### */
 
 const ui = {};
 ui.main = document.createElement('main');
 
-	/* main nav */
+/* main nav */
 
-	ui.nav = document.createElement('nav');
-	ui.nav.setAttribute('class', 'main-nav');
-	
-	ui.leftNav = document.createElement('div');
-	ui.leftNav.setAttribute('class', 'nav__left-ct');
-	ui.nav.append(ui.leftNav);
+ui.nav = document.createElement('nav');
+ui.nav.setAttribute('class', 'main-nav');
 
-	ui.rightNav = document.createElement('div');
-	ui.rightNav.setAttribute('class', 'nav__right-ct');
+ui.leftNav = document.createElement('div');
+ui.leftNav.setAttribute('class', 'nav__left-ct');
+ui.nav.append(ui.leftNav);
 
-	ui.rightNav.toggleDarkThemeBt = document.createElement('button');
-	ui.rightNav.toggleDarkThemeBt.setAttribute('id', 'toggleDarkThemeBt');
-	ui.rightNav.toggleDarkThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
-	ui.rightNav.toggleDarkThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
-	ui.rightNav.toggleDarkThemeBt.onclick = () => View.toggleDarkTheme();
-	ui.rightNav.appendChild(ui.rightNav.toggleDarkThemeBt);
+ui.rightNav = document.createElement('div');
+ui.rightNav.setAttribute('class', 'nav__right-ct');
 
-	ui.rightNav.logOutBt = document.createElement('button');
-	ui.rightNav.logOutBt.setAttribute('title', 'Se déconnecter');
-	ui.rightNav.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
-	ui.rightNav.logOutBt.onclick = () => Controller.signOut();
-	ui.rightNav.appendChild(ui.rightNav.logOutBt);
+ui.rightNav.toggleDarkThemeBt = document.createElement('button');
+ui.rightNav.toggleDarkThemeBt.setAttribute('id', 'toggleDarkThemeBt');
+ui.rightNav.toggleDarkThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
+ui.rightNav.toggleDarkThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
+ui.rightNav.toggleDarkThemeBt.onclick = () => View.toggleDarkTheme();
+ui.rightNav.appendChild(ui.rightNav.toggleDarkThemeBt);
 
-	ui.nav.append(ui.rightNav);
-	ui.main.appendChild(ui.nav);
+ui.rightNav.logOutBt = document.createElement('button');
+ui.rightNav.logOutBt.setAttribute('title', 'Se déconnecter');
+ui.rightNav.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
+ui.rightNav.logOutBt.onclick = () => Controller.signOut();
+ui.rightNav.appendChild(ui.rightNav.logOutBt);
 
-	/* aside (directory infos) */
+ui.nav.append(ui.rightNav);
+ui.main.appendChild(ui.nav);
 
-	ui.aside = document.createElement('aside');		
+/* aside (directory infos) */
 
-	ui.aside.tree = document.createElement('div');
-	ui.aside.tree.setAttribute('class', 'tree');
-	ui.aside.appendChild(ui.aside.tree);
+ui.aside = document.createElement('aside');		
 
-	ui.aside.counters = document.createElement('div');			
-	ui.aside.counters.setAttribute('class', 'counters');
-	ui.aside.appendChild(ui.aside.counters);
+ui.dirTree = document.createElement('div');
+ui.dirTree.setAttribute('class', 'tree');
+ui.aside.appendChild(ui.dirTree);
 
-	ui.main.appendChild(ui.aside);
+ui.counters = document.createElement('div');			
+ui.counters.setAttribute('class', 'counters');
+ui.aside.appendChild(ui.counters);
 
-	/* user content */
+ui.main.appendChild(ui.aside);
 
-	ui.list = document.createElement('ul');
-	ui.main.appendChild(ui.list);
+/* user content */
 
-	/* pan (preview & perms) */
+ui.list = document.createElement('ul');
+ui.main.appendChild(ui.list);
 
-	ui.pan = document.createElement('div');
-	ui.pan.setAttribute('class', 'pan');
+/* pan (preview & perms) */
 
-	ui.panCont = document.createElement('div');
+ui.pan = document.createElement('div');
+ui.pan.setAttribute('class', 'pan');
 
-	ui.panNav = document.createElement('nav');
-	ui.panCont.appendChild(ui.panNav);
+ui.panCont = document.createElement('div');
 
-	ui.panCont.item = document.createElement('div');
-	ui.panCont.appendChild(ui.panCont.item);
+ui.panNav = document.createElement('nav');
+ui.panCont.appendChild(ui.panNav);
 
-	ui.pan.appendChild(ui.panCont);
-	ui.main.appendChild(ui.pan);
+ui.panCont.item = document.createElement('div');
+ui.panCont.appendChild(ui.panCont.item);
 
-	/* popup */
+ui.pan.appendChild(ui.panCont);
+ui.main.appendChild(ui.pan);
 
-	ui.popup = document.createElement('popup');
-	ui.popup.setAttribute('class', 'popup');
+/* popup */
 
-	ui.popup.cirrusLogo = document.createElement('object');
-	ui.popup.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-	ui.popup.cirrusLogo.setAttribute('class', 'popup__object');
-	ui.popup.cirrusLogo.setAttribute('data', './app/client/cirrus-logo.svg');
-	ui.popup.cirrusLogo.setAttribute('type', 'image/svg+xml');
-	ui.popup.appendChild(ui.popup.cirrusLogo);
+ui.popup = document.createElement('popup');
+ui.popup.setAttribute('class', 'popup');
 
-	ui.popup.textA = document.createElement('p');
-	ui.popup.textA.setAttribute('class', 'popup-confirm');
-	ui.popup.textA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
-	ui.popup.appendChild(ui.popup.textA);
+ui.popup.cirrusLogo = document.createElement('object');
+ui.popup.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+ui.popup.cirrusLogo.setAttribute('class', 'popup__object');
+ui.popup.cirrusLogo.setAttribute('data', './app/client/cirrus-logo.svg');
+ui.popup.cirrusLogo.setAttribute('type', 'image/svg+xml');
+ui.popup.appendChild(ui.popup.cirrusLogo);
 
-	ui.popup.textB = document.createElement('p');
-	ui.popup.textB.setAttribute('class', 'popup-download');
-	ui.popup.textB.textContent = 'Téléchargement en cours, veuillez patienter';
-	ui.popup.appendChild(ui.popup.textB);
+ui.popup.textA = document.createElement('p');
+ui.popup.textA.setAttribute('class', 'popup-confirm');
+ui.popup.textA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
+ui.popup.appendChild(ui.popup.textA);
 
-	ui.main.appendChild(ui.popup);
+ui.popup.textB = document.createElement('p');
+ui.popup.textB.setAttribute('class', 'popup-download');
+ui.popup.textB.textContent = 'Téléchargement en cours, veuillez patienter';
+ui.popup.appendChild(ui.popup.textB);
 
-	/* footer */
+ui.main.appendChild(ui.popup);
 
-	ui.footer = document.createElement('footer');
+/* footer */
 
-	ui.footer.docLink = document.createElement('a');
-	ui.footer.docLink.setAttribute('href', 'https://getcirrus.awebsome.fr/');
-	ui.footer.docLink.setAttribute('target', '_blank');
-	ui.footer.docLink.textContent = 'documentation';
-	ui.footer.appendChild(ui.footer.docLink);
+ui.footer = document.createElement('footer');
 
-	ui.footer.cirrusLogo = document.createElement('img');
-	ui.footer.cirrusLogo.setAttribute('src', './app/client/cirrus-logo.svg');
-	ui.footer.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-	ui.footer.appendChild(ui.footer.cirrusLogo);
-	
-	ui.footer.cirrusVersion = document.createElement('p');
-	ui.footer.cirrusVersion.textContent = 'version 1.1.3';
-	ui.footer.appendChild(ui.footer.cirrusVersion);
+ui.footer.docLink = document.createElement('a');
+ui.footer.docLink.setAttribute('href', 'https://getcirrus.awebsome.fr/');
+ui.footer.docLink.setAttribute('target', '_blank');
+ui.footer.docLink.textContent = 'documentation';
+ui.footer.appendChild(ui.footer.docLink);
 
-	ui.main.appendChild(ui.footer);
+ui.footer.cirrusLogo = document.createElement('img');
+ui.footer.cirrusLogo.setAttribute('src', './app/client/cirrus-logo.svg');
+ui.footer.cirrusLogo.setAttribute('alt', 'Logo cirrus');
+ui.footer.appendChild(ui.footer.cirrusLogo);
 
-	document.body.insertAdjacentElement('afterbegin', ui.main);
+ui.footer.cirrusVersion = document.createElement('p');
+ui.footer.cirrusVersion.textContent = 'version 1.1.3';
+ui.footer.appendChild(ui.footer.cirrusVersion);
 
-/* ### ending procedural ### */
+ui.main.appendChild(ui.footer);
+
+document.body.insertAdjacentElement('afterbegin', ui.main);
+
+/* ### ENDING PROCEDURAL ### */
 
 document.onkeydown = e => {
 	if(e.code === 'Escape') {
