@@ -259,8 +259,6 @@ class View {
 				edItemInputElm.value = item.label;
 				edItemInputElm.textContent = item.label;
 				ui.list.item.appendChild(edItemInputElm);
-				
-				
 				ui.list.item.submitBt = document.createElement('button');
 				ui.list.item.submitBt.classList.add('editable');
 				ui.list.item.submitBt.setAttribute('title', 'Enregistrer les changements');
@@ -276,7 +274,7 @@ class View {
 				ui.list.item.appendChild(ui.list.item.submitBt);
 			}
 			if(item.type === 'subdir') {	
-				// Restrict item.
+				// Set perms item.
 				let restItemBtElm = document.createElement('button');
 				restItemBtElm.classList.add('owner-ft', 'datas-ft', 'non-editable');
 				restItemBtElm.title = 'Définir les règles d\'accès au dossier';
@@ -292,17 +290,13 @@ class View {
 				dlItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
 				dlItemBtElm.onclick = () => Controller.downloadItem(item.path);
 				ui.list.item.appendChild(dlItemBtElm);
-			
-			
-			
 				// Rename item.
 				let renameItemBt = document.createElement('button');
-				renameItemBt.classList.add('datas-ft', 'non-editable');
-				renameItemBt.setAttribute('title', 'Activer / désactiver le mode d\'édition des fichiers et des dossiers');
+				renameItemBt.classList.add('publisher-ft', 'datas-ft', 'non-editable');
+				renameItemBt.setAttribute('title', 'Renommer');
 				renameItemBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>';
 				renameItemBt.onclick = e => PubView.setEditionMode(e.target.closest('li'));
 				ui.list.item.appendChild(renameItemBt);
-
 				// Remove item.
 				let rmItemBtElm = document.createElement('button');
 				rmItemBtElm.classList.add('publisher-ft', 'non-editable');
