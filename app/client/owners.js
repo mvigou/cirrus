@@ -4,12 +4,9 @@
 
 class OwnView {
 
-	static setUnregisteredCirrus() {
-		ui.ban.classList.add('--visible');
-		View.togglePopup('--purchase');
-	}
-
 	static setPanPerms = (dirPath, content) => {
+
+		/* pan nav */
 
 		ui.panNav.closeBt = document.createElement('button');
 		ui.panNav.closeBt.setAttribute('title', 'Fermer');
@@ -17,60 +14,56 @@ class OwnView {
 		ui.panNav.closeBt.onclick = () => View.unsetPan();
 		ui.panNav.appendChild(ui.panNav.closeBt);
 
+		/* pan form */
+
 		ui.panCont.form = document.createElement('form');
 		ui.panCont.form.onsubmit = (e) => {
 			OwnController.updatePerms(ui.pan.getAttribute('data-item-path'));
 			e.preventDefault();
 		};
 
-		ui.panCont.itemTitle = document.createElement('h2');
-		ui.panCont.itemTitle.textContent = 'Règles d\'accès au dossier';
-		ui.panCont.form.appendChild(ui.panCont.itemTitle);
+		/* pan form content */
 
-		ui.panCont.publicLabel = document.createElement('label');
+		ui.panCont.panTitle = document.createElement('h2');
+		ui.panCont.panTitle.textContent = 'Règles d\'accès au dossier';
+		ui.panCont.form.appendChild(ui.panCont.panTitle);
 
-			ui.panCont.publicRadio = document.createElement('input');
-			ui.panCont.publicRadio.setAttribute('class', 'perms-radio');
-			ui.panCont.publicRadio.setAttribute('name', 'isRestricted');
-			ui.panCont.publicRadio.setAttribute('type', 'radio');
-			ui.panCont.publicRadio.setAttribute('value', 'false');
-			ui.panCont.publicLabel.appendChild(ui.panCont.publicRadio);
+		ui.panCont.pubLab = document.createElement('label');
+		ui.panCont.pubRadio = document.createElement('input');
+		ui.panCont.pubRadio.setAttribute('class', 'perms-radio');
+		ui.panCont.pubRadio.setAttribute('name', 'isRestricted');
+		ui.panCont.pubRadio.setAttribute('type', 'radio');
+		ui.panCont.pubRadio.setAttribute('value', 'false');
+		ui.panCont.pubSpan = document.createElement('span');
+		ui.panCont.pubSpan.textContent = 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.';
+		ui.panCont.pubLab.appendChild(ui.panCont.pubRadio);
+		ui.panCont.pubLab.appendChild(ui.panCont.pubSpan);
+		ui.panCont.form.appendChild(ui.panCont.pubLab);
 
-			ui.panCont.publicSpan = document.createElement('span');
-			ui.panCont.publicSpan.textContent = 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.';
-			ui.panCont.publicLabel.appendChild(ui.panCont.publicSpan);
+		ui.panCont.privLab = document.createElement('label');
+		ui.panCont.privRadio = document.createElement('input');
+		ui.panCont.privRadio.setAttribute('class', 'perms-radio');
+		ui.panCont.privRadio.setAttribute('name', 'isRestricted');
+		ui.panCont.privRadio.setAttribute('type', 'radio');
+		ui.panCont.privRadio.setAttribute('value', 'true');		
+		ui.panCont.privSpan = document.createElement('span');
+		ui.panCont.privSpan.textContent = 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.';
+		ui.panCont.privLab.appendChild(ui.panCont.privRadio);
+		ui.panCont.privLab.appendChild(ui.panCont.privSpan);
+		ui.panCont.form.appendChild(ui.panCont.privLab);
 
-		ui.panCont.form.appendChild(ui.panCont.publicLabel);
-
-		ui.panCont.privateLabel = document.createElement('label');
-
-			ui.panCont.privateRadio = document.createElement('input');
-			ui.panCont.privateRadio.setAttribute('class', 'perms-radio');
-			ui.panCont.privateRadio.setAttribute('name', 'isRestricted');
-			ui.panCont.privateRadio.setAttribute('type', 'radio');
-			ui.panCont.privateRadio.setAttribute('value', 'true');
-			ui.panCont.privateLabel.appendChild(ui.panCont.privateRadio);
-
-			ui.panCont.privateSpan = document.createElement('span');
-			ui.panCont.privateSpan.textContent = 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.';
-			ui.panCont.privateLabel.appendChild(ui.panCont.privateSpan);
-
-		ui.panCont.form.appendChild(ui.panCont.privateLabel);
-
-		ui.panCont.textAreaLabel = document.createElement('label');
-		ui.panCont.textAreaLabel.textContent = 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :';
-		
+		ui.panCont.textAreaLab = document.createElement('label');
+		ui.panCont.textAreaLab.textContent = 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :';
 		ui.panCont.textArea = document.createElement('textarea');
 		ui.panCont.textArea.setAttribute('name', 'accreditedMembers');
+		ui.panCont.textAreaLab.appendChild(ui.panCont.textArea);
+		ui.panCont.form.appendChild(ui.panCont.textAreaLab);
 
-		ui.panCont.textAreaLabel.appendChild(ui.panCont.textArea);
-		ui.panCont.form.appendChild(ui.panCont.textAreaLabel);
-
-		ui.panCont.submitBt = document.createElement('button');
-		ui.panCont.submitBt.setAttribute('title', 'Enregistrer les changements');
-		ui.panCont.submitBt.setAttribute('type', 'submit');
-		ui.panCont.submitBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>';
-		ui.panCont.form.appendChild(ui.panCont.submitBt);
+		ui.panCont.confirmBt = document.createElement('button');
+		ui.panCont.confirmBt.setAttribute('title', 'Enregistrer les changements');
+		ui.panCont.confirmBt.setAttribute('type', 'submit');
+		ui.panCont.confirmBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>';
+		ui.panCont.form.appendChild(ui.panCont.confirmBt);
 
 		ui.panCont.item.appendChild(ui.panCont.form);
 
@@ -84,7 +77,13 @@ class OwnView {
 		}
 		ui.pan.setAttribute('data-item-path', dirPath);
 		ui.pan.classList.add('--visible');
+
 	};
+
+	static setUnregisteredCirrus() {
+		ui.ban.classList.add('--visible');
+		View.togglePopup('--purchase');
+	}
 
 }
 
