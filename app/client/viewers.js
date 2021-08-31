@@ -169,10 +169,10 @@ class View {
 					};
 				}
 				ui.list.item.ondragover = e => {
-					ui.list.item.classList.add('--hovered');
+					e.target.closest('li').classList.add('--hovered');
 					e.preventDefault();
 				};
-				ui.list.item.ondragleave = e => ui.list.item.classList.remove('--hovered');
+				ui.list.item.ondragleave = e => document.querySelector('li[data-path="' + item.path + '"]').classList.remove('--hovered');
 				ui.list.item.ondrop = e => {
 					const fromPath = e.dataTransfer.getData('path');
 					const toPath = item.path + '/' + e.dataTransfer.getData('label');
