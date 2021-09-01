@@ -170,12 +170,16 @@ ul
 li
 	align-items: center
 	display: none
-	grid-template-columns: 1fr repeat(4, auto)
+	grid-template-columns: 100% repeat(4, auto)
+	overflow-x: auto
 	padding: 0px 12px 0px 24px
+	@media screen and (min-width: 500px)
+		grid-template-columns: 1fr repeat(4, auto)	
 	&.--visible
 		display: grid
 	p
-		svg		
+		overflow-wrap: anywhere
+		svg	
 			margin-right: 12px
 			width: 20px
 	
