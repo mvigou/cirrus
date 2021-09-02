@@ -140,7 +140,7 @@ class View {
 	};
 
 	static setCounters = () => {
-		ui.counters.innerHTML = '<span><svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir --visible').length + '</span><span><svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file --visible').length + '</span>';
+		ui.counters.innerHTML = '<span><svg viewBox="3 3 18 18"><path d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42596 11.7923 6.33563 11.7306 6.2561C11.6869 6.1998 11.6472 6.14858 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273Z" /></svg> x ' + document.getElementsByClassName('subdir').length + '</span><span><svg viewBox="3 3 18 18"><path d="m15.157 3h-8.5207c-0.90374 0-1.6364 0.73262-1.6364 1.6364v14.727c0 0.9038 0.73262 1.6364 1.6364 1.6364h11.455c0.9037 0 1.6364-0.7326 1.6364-1.6364v-11.793zm-0.3389 4.9091v-2.9338l2.9338 2.9338z" /></svg> x ' + document.getElementsByClassName('file').length + '</span>';
 	};
 
 	static setItems = (items = [], parentDir = '', append = false) => {
@@ -161,7 +161,6 @@ class View {
 					item.path = parentDir.substr(0, parentDir.lastIndexOf('/'));
 					break;
 			}
-			ui.list.item.setAttribute('class', item.type + ' --visible');
 			ui.list.item.setAttribute('data-path', item.path);
 			ui.list.item.setAttribute('data-label', item.label);
 			ui.list.item.setAttribute('data-type', item.type);
@@ -238,7 +237,7 @@ class View {
 			if(item.type === 'subdir') {	
 				// Set perms item.
 				let restItemBtElm = document.createElement('button');
-				restItemBtElm.classList.add('owner-ft', 'datas-ft', 'non-editable');
+				restItemBtElm.classList.add('owner-ft', 'data-ft', 'non-editable');
 				restItemBtElm.title = 'Définir les règles d\'accès au dossier';
 				restItemBtElm.innerHTML = '<svg viewBox="3 3 18 18"><path d="m21 19.5h-18v-15h5.25c1.2713 1.4565 1.7783 2.25 3 2.25h9.75zm-13.438-13.5h-3.0622v12h15v-9.75h-8.25c-1.7542 0-2.6528-1.041-3.6878-2.25zm7.4378 10.5h-6v-3.75h0.75v-0.75c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25v0.75h0.75zm-3.75-4.5v0.75h1.5v-0.75c0-0.414-0.336-0.75-0.75-0.75s-0.75 0.336-0.75 0.75z" stroke-width=".75"/></svg>';
 				restItemBtElm.onclick = () => OwnController.browsePerms(item.path);
@@ -254,7 +253,7 @@ class View {
 				ui.list.item.appendChild(dlItemBtElm);
 				// Rename item.
 				let renameItemBt = document.createElement('button');
-				renameItemBt.classList.add('publisher-ft', 'datas-ft', 'non-editable');
+				renameItemBt.classList.add('publisher-ft', 'data-ft', 'non-editable');
 				renameItemBt.setAttribute('title', 'Renommer');
 				renameItemBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>';
 				renameItemBt.onclick = e => PubView.setEditionMode(e.target.closest('li'));
@@ -419,27 +418,27 @@ ui.main = document.createElement('main');
 ui.nav = document.createElement('nav');
 ui.nav.setAttribute('class', 'nav');
 
-ui.leftNav = document.createElement('div');
-ui.leftNav.setAttribute('class', 'nav__left-ct');
-ui.nav.append(ui.leftNav);
+ui.lNav = document.createElement('div');
+ui.lNav.setAttribute('class', 'nav__left-ct');
+ui.nav.append(ui.lNav);
 
-ui.rightNav = document.createElement('div');
-ui.rightNav.setAttribute('class', 'nav__right-ct');
+ui.rNav = document.createElement('div');
+ui.rNav.setAttribute('class', 'nav__right-ct');
 
-ui.rightNav.toggleDarkThemeBt = document.createElement('button');
-ui.rightNav.toggleDarkThemeBt.setAttribute('id', 'toggleDarkThemeBt');
-ui.rightNav.toggleDarkThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
-ui.rightNav.toggleDarkThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
-ui.rightNav.toggleDarkThemeBt.onclick = () => View.toggleDarkTheme();
-ui.rightNav.appendChild(ui.rightNav.toggleDarkThemeBt);
+ui.rNav.toggleDarkThemeBt = document.createElement('button');
+ui.rNav.toggleDarkThemeBt.setAttribute('id', 'toggleDarkThemeBt');
+ui.rNav.toggleDarkThemeBt.setAttribute('title', 'Basculer entre thème clair / thème sombre');
+ui.rNav.toggleDarkThemeBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10v-20zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg>';
+ui.rNav.toggleDarkThemeBt.onclick = () => View.toggleDarkTheme();
+ui.rNav.appendChild(ui.rNav.toggleDarkThemeBt);
 
-ui.rightNav.logOutBt = document.createElement('button');
-ui.rightNav.logOutBt.setAttribute('title', 'Se déconnecter');
-ui.rightNav.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
-ui.rightNav.logOutBt.onclick = () => Controller.signOut();
-ui.rightNav.appendChild(ui.rightNav.logOutBt);
+ui.rNav.logOutBt = document.createElement('button');
+ui.rNav.logOutBt.setAttribute('title', 'Se déconnecter');
+ui.rNav.logOutBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>';
+ui.rNav.logOutBt.onclick = () => Controller.signOut();
+ui.rNav.appendChild(ui.rNav.logOutBt);
 
-ui.nav.append(ui.rightNav);
+ui.nav.append(ui.rNav);
 ui.main.appendChild(ui.nav);
 
 /* aside (directory infos) */

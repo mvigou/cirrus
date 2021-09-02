@@ -44,7 +44,7 @@ body
 	&.--in-recycle
 		.recycle-ft
 			display: block
-		.datas-ft
+		.data-ft
 			display: none
 
 main
@@ -139,17 +139,6 @@ svg
 	label
 		position: absolute
 		top: -9999px
-	form
-		align-items: center
-		display: flex
-	input
-		font-size: .9rem
-		margin: 20px 0 -6px 6px
-		text-align: center
-		@media screen and (min-width: 768px)
-			min-width: 270px
-	.--hidden
-			display: none !important
 		
 .infos
 	border-bottom: solid 1px var(--border-color)
@@ -262,16 +251,12 @@ svg
 	padding: 0
 	li
 		align-items: center
-		display: none
+		display: grid
 		grid-template-columns: 100% repeat(4, auto)
 		overflow-x: auto
 		padding: 0px 12px 0px 24px
 		@media screen and (min-width: 500px)
 			grid-template-columns: 1fr repeat(4, auto)	
-		&.--visible
-			display: grid
-		&.--hidden
-			display: none !important
 		&.--editing
 			.non-editable 		
 				display: none !important
