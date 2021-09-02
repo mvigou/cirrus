@@ -1,11 +1,21 @@
-/* fonts */
-	
 @font-face
 	font-display: swap
 	font-family: 'Cabin'
 	src: url("./cabin-regular.woff2") format("woff2")
 
-/* main containers */
+@keyframes fade
+	from
+		opacity: 0
+	to
+		opacity: 1
+
+.owner-ft,
+.publisher-ft, 
+.recycle-ft,
+.editable
+	display: none
+
+/* --- COMMON --- */
 
 html
 	font-size: 16px
@@ -23,46 +33,41 @@ body
 	font-family: Cabin, sans-serif
 	height: 100vh
 	margin: 0
+	&.--dark-mode
+		--base-color: #bbb
+		--bg-color: #222
+		--border-color: #444	
+		--hovered-color: #fff
+	&.--is-publisher .publisher-ft,
+	&.--is-owner .owner-ft
+		display: block
+	&.--in-recycle
+		.recycle-ft
+			display: block
+		.datas-ft
+			display: none
 
 main
 	padding-bottom: 84px
 
-/* states */
-
-.owner-ft,
-.publisher-ft, 
-.recycle-ft,
-.editable
-	display: none
-
-.--hidden
-	display: none !important	
-
-.--dark-mode
-	--base-color: #bbb
-	--bg-color: #222
-	--border-color: #444	
-	--hovered-color: #fff
-	
-.--edit-mode
-	.non-editable 		
-		display: none !important
-	.editable
-		display: block
-
-.--publisher .publisher-ft
-	display: block
-
-.--owner .owner-ft
-	display: block
-
-.--in-recycle
-	.recycle-ft
-		display: block
-	.datas-ft
-		display: none
-
-/* common styles */
+footer
+	align-items: center
+	background-color: var(--bg-color)
+	border-top: solid 1px var(--border-color) 
+	bottom: 0px
+	display: flex
+	justify-content: space-between
+	left: 0px
+	margin: 0 12px
+	padding: 0 12px
+	position: fixed
+	right: 0px
+	img
+		margin: auto
+		vertical-align: middle
+		width: 36px
+	a
+		text-decoration: underline
 
 a
 	color: inherit
@@ -76,10 +81,6 @@ button
 	min-height: 44px
 	min-width: 44px
 		
-.bar
-	align-items: center
-	display: flex
-
 input
 	background-color: transparent
 	border: none
@@ -100,9 +101,9 @@ svg
 	fill: var(--base-color)
 	width: 24px
 
-/* banner (registration) */
+/* --- CUSTOM --- */
 
-.ban
+.banner
 	background-color: var(--cirrus-color)
 	color: #000
 	display: none
@@ -110,7 +111,7 @@ svg
 	text-align: right
 	&.--visible
 		display: block
-	.cta
+	a
 		border-radius: 6px
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
 		box-sizing: border-box
@@ -121,9 +122,7 @@ svg
 			fill: var(--bg-color)
 			width: 24px
 		
-/* main nav */
-
-.main-nav
+.nav
 	align-items: center
 	background-color: var(--bg-color)
 	border-bottom: solid 1px var(--border-color)
@@ -135,21 +134,24 @@ svg
 	position: sticky
 	top: 0
 	z-index: 1
-	> div
+	div
 		display: flex
 	label
 		position: absolute
 		top: -9999px
+	form
+		align-items: center
+		display: flex
 	input
 		font-size: .9rem
 		margin: 20px 0 -6px 6px
 		text-align: center
 		@media screen and (min-width: 768px)
 			min-width: 270px
-
-/* tree and counters */
-
-aside
+	.--hidden
+			display: none !important
+		
+.infos
 	border-bottom: solid 1px var(--border-color)
 	display: grid
 	grid-template-columns: auto auto
@@ -160,32 +162,8 @@ aside
 		margin-left: 18px
 	svg
 		width: 12px
-
-/* user content */
-
-ul
-	margin: 0
-	padding: 0
-
-li
-	align-items: center
-	display: none
-	grid-template-columns: 100% repeat(4, auto)
-	overflow-x: auto
-	padding: 0px 12px 0px 24px
-	@media screen and (min-width: 500px)
-		grid-template-columns: 1fr repeat(4, auto)	
-	&.--visible
-		display: grid
-	p
-		overflow-wrap: anywhere
-		svg	
-			margin-right: 12px
-			width: 20px
-	
-/* preview and permissions panel */
-
-.pan
+			
+.panel
 	background-color: #000a
 	bottom: 0
 	display: none
@@ -251,14 +229,6 @@ li
 	button:last-of-type
 		margin-left: auto
 		
-/* popup */
-
-@keyframes fade
-	from
-		opacity: 0
-	to
-		opacity: 1
-
 .popup
 	background-color: var(--bg-color)
 	border-radius: 6px
@@ -273,49 +243,45 @@ li
 	text-align: center
 	top: 50%
 	width: 220px
-	&__a
+	&.--visible
 		display: block
-		margin: 3px 0
-		text-decoration: underline
-	&__object
+		p
+			display: block
+	object
 		margin-bottom: -24px
 		width: 96px
-	.popup-confirm, .popup-download, .popup-purchase
+	p
 		animation: fade .1s .5s 1 both
 		display: none
-	&.--confirm
-		display: block
-		.popup-confirm
-			display: block
-	&.--download
-		display: block
-		.popup-download
-			display: block
-	&.--purchase
-		display: block
-		.popup-purchase
-			display: block
-
-/* footer */
-
-footer
-	align-items: center
-	background-color: var(--bg-color)
-	border-top: solid 1px var(--border-color) 
-	bottom: 0px
-	display: flex
-	justify-content: space-between
-	left: 0px
-	margin: 0 12px
-	padding: 0 12px
-	position: fixed
-	right: 0px
-	img
-		margin: auto
-		vertical-align: middle
-		width: 36px
+		line-height: 24px
 	a
 		text-decoration: underline
+
+.content
+	margin: 0
+	padding: 0
+	li
+		align-items: center
+		display: none
+		grid-template-columns: 100% repeat(4, auto)
+		overflow-x: auto
+		padding: 0px 12px 0px 24px
+		@media screen and (min-width: 500px)
+			grid-template-columns: 1fr repeat(4, auto)	
+		&.--visible
+			display: grid
+		&.--hidden
+			display: none !important
+		&.--editing
+			.non-editable 		
+				display: none !important
+			.editable
+				display: block
+		p
+			overflow-wrap: anywhere
+			svg	
+				margin-right: 12px
+				width: 20px
 
 @media (any-hover: hover)
 	
@@ -323,7 +289,7 @@ footer
 		color: var(--hovered-color)
 		text-decoration: underline
 
-	li
+	.content li
 		grid-template-columns: auto 1fr repeat(4, auto)
 		&::before
 			border-radius: 50%

@@ -8,81 +8,81 @@ class OwnView {
 
 		/* pan nav */
 
-		ui.panNav.closeBt = document.createElement('button');
-		ui.panNav.closeBt.setAttribute('title', 'Fermer');
-		ui.panNav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-		ui.panNav.closeBt.onclick = () => View.unsetPan();
-		ui.panNav.appendChild(ui.panNav.closeBt);
+		ui.panelNav.closeBt = document.createElement('button');
+		ui.panelNav.closeBt.setAttribute('title', 'Fermer');
+		ui.panelNav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+		ui.panelNav.closeBt.onclick = () => View.unsetPan();
+		ui.panelNav.appendChild(ui.panelNav.closeBt);
 
 		/* pan form */
 
-		ui.panCont.form = document.createElement('form');
-		ui.panCont.form.onsubmit = (e) => {
-			OwnController.updatePerms(ui.pan.getAttribute('data-item-path'));
+		ui.panelCont.form = document.createElement('form');
+		ui.panelCont.form.onsubmit = (e) => {
+			OwnController.updatePerms(ui.panel.getAttribute('data-item-path'));
 			e.preventDefault();
 		};
 
 		/* pan form content */
 
-		ui.panCont.panTitle = document.createElement('h2');
-		ui.panCont.panTitle.textContent = 'Règles d\'accès au dossier';
-		ui.panCont.form.appendChild(ui.panCont.panTitle);
+		ui.panelCont.panTitle = document.createElement('h2');
+		ui.panelCont.panTitle.textContent = 'Règles d\'accès au dossier';
+		ui.panelCont.form.appendChild(ui.panelCont.panTitle);
 
-		ui.panCont.pubLab = document.createElement('label');
-		ui.panCont.pubRadio = document.createElement('input');
-		ui.panCont.pubRadio.setAttribute('class', 'perms-radio');
-		ui.panCont.pubRadio.setAttribute('name', 'isRestricted');
-		ui.panCont.pubRadio.setAttribute('type', 'radio');
-		ui.panCont.pubRadio.setAttribute('value', 'false');
-		ui.panCont.pubSpan = document.createElement('span');
-		ui.panCont.pubSpan.textContent = 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.';
-		ui.panCont.pubLab.appendChild(ui.panCont.pubRadio);
-		ui.panCont.pubLab.appendChild(ui.panCont.pubSpan);
-		ui.panCont.form.appendChild(ui.panCont.pubLab);
+		ui.panelCont.pubLab = document.createElement('label');
+		ui.panelCont.pubRadio = document.createElement('input');
+		ui.panelCont.pubRadio.setAttribute('class', 'perms-radio');
+		ui.panelCont.pubRadio.setAttribute('name', 'isRestricted');
+		ui.panelCont.pubRadio.setAttribute('type', 'radio');
+		ui.panelCont.pubRadio.setAttribute('value', 'false');
+		ui.panelCont.pubSpan = document.createElement('span');
+		ui.panelCont.pubSpan.textContent = 'Dossier public : toute personne ayant accès à ce cirrus (via un lien d\'accès public / un compte visualiseur, éditeur ou propriétaire) peut accéder au dossier et à son contenu avec les droits qui sont les siens.';
+		ui.panelCont.pubLab.appendChild(ui.panelCont.pubRadio);
+		ui.panelCont.pubLab.appendChild(ui.panelCont.pubSpan);
+		ui.panelCont.form.appendChild(ui.panelCont.pubLab);
 
-		ui.panCont.privLab = document.createElement('label');
-		ui.panCont.privRadio = document.createElement('input');
-		ui.panCont.privRadio.setAttribute('class', 'perms-radio');
-		ui.panCont.privRadio.setAttribute('name', 'isRestricted');
-		ui.panCont.privRadio.setAttribute('type', 'radio');
-		ui.panCont.privRadio.setAttribute('value', 'true');		
-		ui.panCont.privSpan = document.createElement('span');
-		ui.panCont.privSpan.textContent = 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.';
-		ui.panCont.privLab.appendChild(ui.panCont.privRadio);
-		ui.panCont.privLab.appendChild(ui.panCont.privSpan);
-		ui.panCont.form.appendChild(ui.panCont.privLab);
+		ui.panelCont.privLab = document.createElement('label');
+		ui.panelCont.privRadio = document.createElement('input');
+		ui.panelCont.privRadio.setAttribute('class', 'perms-radio');
+		ui.panelCont.privRadio.setAttribute('name', 'isRestricted');
+		ui.panelCont.privRadio.setAttribute('type', 'radio');
+		ui.panelCont.privRadio.setAttribute('value', 'true');		
+		ui.panelCont.privSpan = document.createElement('span');
+		ui.panelCont.privSpan.textContent = 'Dossier privé : par défaut, seul un compte propriétaire (vous) peut accéder au dossier et à son contenu. Certains visualiseurs et éditeurs peuvent toutefois y êtes autorisés, à condition d\'inscrire leur nom d\'utilisateur dans la liste ci-dessous.';
+		ui.panelCont.privLab.appendChild(ui.panelCont.privRadio);
+		ui.panelCont.privLab.appendChild(ui.panelCont.privSpan);
+		ui.panelCont.form.appendChild(ui.panelCont.privLab);
 
-		ui.panCont.textAreaLab = document.createElement('label');
-		ui.panCont.textAreaLab.textContent = 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :';
-		ui.panCont.textArea = document.createElement('textarea');
-		ui.panCont.textArea.setAttribute('name', 'accreditedMembers');
-		ui.panCont.textAreaLab.appendChild(ui.panCont.textArea);
-		ui.panCont.form.appendChild(ui.panCont.textAreaLab);
+		ui.panelCont.textAreaLab = document.createElement('label');
+		ui.panelCont.textAreaLab.textContent = 'Si dossier privé, membres autorisés à y accéder (un nom d\'utilisateur par ligne) :';
+		ui.panelCont.textArea = document.createElement('textarea');
+		ui.panelCont.textArea.setAttribute('name', 'accreditedMembers');
+		ui.panelCont.textAreaLab.appendChild(ui.panelCont.textArea);
+		ui.panelCont.form.appendChild(ui.panelCont.textAreaLab);
 
-		ui.panCont.confirmBt = document.createElement('button');
-		ui.panCont.confirmBt.setAttribute('title', 'Enregistrer les changements');
-		ui.panCont.confirmBt.setAttribute('type', 'submit');
-		ui.panCont.confirmBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>';
-		ui.panCont.form.appendChild(ui.panCont.confirmBt);
+		ui.panelCont.confirmBt = document.createElement('button');
+		ui.panelCont.confirmBt.setAttribute('title', 'Enregistrer les changements');
+		ui.panelCont.confirmBt.setAttribute('type', 'submit');
+		ui.panelCont.confirmBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg>';
+		ui.panelCont.form.appendChild(ui.panelCont.confirmBt);
 
-		ui.panCont.item.appendChild(ui.panCont.form);
+		ui.panelCont.item.appendChild(ui.panelCont.form);
 
-		ui.panCont.item.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
-		const textAreaElm = ui.panCont.item.querySelector('textarea');
+		ui.panelCont.item.querySelector('.perms-radio[value=' + content.isRestricted + '').checked = true;
+		const textAreaElm = ui.panelCont.item.querySelector('textarea');
 		textAreaElm.value = '';
 		if(content.accreditedMembers !== null) {
 			for(let member of content.accreditedMembers) {
 				textAreaElm.value += member + '\n';
 			}
 		}
-		ui.pan.setAttribute('data-item-path', dirPath);
-		ui.pan.classList.add('--visible');
+		ui.panel.setAttribute('data-item-path', dirPath);
+		ui.panel.classList.add('--visible');
 
 	};
 
 	static setUnregisteredCirrus() {
-		ui.ban.classList.add('--visible');
-		View.togglePopup('--purchase');
+		ui.banner.classList.add('--visible');
+		View.setPopup('purchase');
 	}
 
 }
@@ -164,7 +164,7 @@ class OwnController {
 /* main nav */
 
 ui.leftNav.toRecycleBt = document.createElement('button');
-ui.leftNav.toRecycleBt.setAttribute('class', 'datas-ft non-editable');
+ui.leftNav.toRecycleBt.setAttribute('class', 'datas-ft');
 ui.leftNav.toRecycleBt.setAttribute('title', 'Afficher la corbeille');
 ui.leftNav.toRecycleBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 19c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5-17v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712zm-3 4v16h-14v-16h-2v18h18v-18h-2z"/></svg>';
 ui.leftNav.toRecycleBt.onclick = () => Controller.browseDirectory('RECYCLE');
@@ -208,53 +208,20 @@ document.getElementById('toggleDarkThemeBt').insertAdjacentElement('afterend',(u
 
 /* ban */
 
-ui.ban = document.createElement('div');
-ui.ban.setAttribute('class', 'ban');
-ui.ban.textContent = 'cirrus non enregistré';
+ui.banner = document.createElement('div');
+ui.banner.setAttribute('class', 'banner');
+ui.banner.textContent = 'cirrus non enregistré';
 
-ui.ban.buyLink = document.createElement('a');
-ui.ban.buyLink.setAttribute('class', 'cta');
-ui.ban.buyLink.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
-ui.ban.buyLink.setAttribute('target', '_blank');
-ui.ban.buyLink.setAttribute('title', 'Enregistrer ce cirrus');
-ui.ban.buyLink.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 23.73l-3-2.122v-14.2l3 1.359v14.963zm2-14.855v15.125l13-1.954v-15.046l-13 1.875zm5.963-7.875c-2.097 0-3.958 2.005-3.962 4.266l-.001 1.683c0 .305.273.54.575.494.244-.037.425-.247.425-.494v-1.681c.003-1.71 1.416-3.268 2.963-3.268.537 0 1.016.195 1.384.564.422.423.654 1.035.653 1.727v1.747c0 .305.273.54.575.494.243-.037.423-.246.423-.492l.002-1.749c.002-1.904-1.32-3.291-3.037-3.291zm-6.39 5.995c.245-.037.427-.247.427-.495v-2.232c.002-1.71 1.416-3.268 2.963-3.268l.162.015c.366-.283.765-.513 1.188-.683-.405-.207-.858-.332-1.35-.332-2.096 0-3.958 2.005-3.962 4.266v2.235c0 .306.272.538.572.494z"/></svg>';
-ui.ban.appendChild(ui.ban.buyLink);
+ui.banner.buyLink = document.createElement('a');
+ui.banner.buyLink.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
+ui.banner.buyLink.setAttribute('target', '_blank');
+ui.banner.buyLink.setAttribute('title', 'Enregistrer ce cirrus');
+ui.banner.buyLink.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 23.73l-3-2.122v-14.2l3 1.359v14.963zm2-14.855v15.125l13-1.954v-15.046l-13 1.875zm5.963-7.875c-2.097 0-3.958 2.005-3.962 4.266l-.001 1.683c0 .305.273.54.575.494.244-.037.425-.247.425-.494v-1.681c.003-1.71 1.416-3.268 2.963-3.268.537 0 1.016.195 1.384.564.422.423.654 1.035.653 1.727v1.747c0 .305.273.54.575.494.243-.037.423-.246.423-.492l.002-1.749c.002-1.904-1.32-3.291-3.037-3.291zm-6.39 5.995c.245-.037.427-.247.427-.495v-2.232c.002-1.71 1.416-3.268 2.963-3.268l.162.015c.366-.283.765-.513 1.188-.683-.405-.207-.858-.332-1.35-.332-2.096 0-3.958 2.005-3.962 4.266v2.235c0 .306.272.538.572.494z"/></svg>';
+ui.banner.appendChild(ui.banner.buyLink);
 
-ui.main.insertAdjacentElement('afterbegin', ui.ban);
-
-/* popup */
-
-ui.popup.subCt = document.createElement('div');
-ui.popup.subCt.setAttribute('class', 'popup-purchase');
-
-ui.popup.label = document.createElement('p');
-ui.popup.label.innerHTML = 'Vous appréciez cirrus ?<br/>Enregistrez-le.';
-ui.popup.subCt.appendChild(ui.popup.label);
-
-ui.popup.buyLink = document.createElement('a');
-ui.popup.buyLink.setAttribute('class', 'popup__a');
-ui.popup.buyLink.setAttribute('href', 'https://getcirrus.awebsome.fr/enregistrer?cirrusId=' + cirrusId);
-ui.popup.buyLink.setAttribute('target', '_blank');
-ui.popup.buyLink.textContent = 'Enregistrer ce cirrus';
-ui.popup.subCt.appendChild(ui.popup.buyLink);
-
-ui.popup.knowMoreLink = document.createElement('a');
-ui.popup.knowMoreLink.setAttribute('class', 'popup__a');
-ui.popup.knowMoreLink.setAttribute('href', 'https://getcirrus.awebsome.fr/documentation/pourquoi-faut-il-enregistrer-son-cirrus/');
-ui.popup.knowMoreLink.setAttribute('target', '_blank');
-ui.popup.knowMoreLink.textContent = 'En savoir plus';
-ui.popup.subCt.appendChild(ui.popup.knowMoreLink);
-
-ui.popup.closeLink = document.createElement('a');
-ui.popup.closeLink.setAttribute('class', 'popup__a');
-ui.popup.closeLink.setAttribute('href', '#');
-ui.popup.closeLink.textContent = 'Plus tard';
-ui.popup.closeLink.onclick = () => View.togglePopup();
-ui.popup.subCt.appendChild(ui.popup.closeLink);
-
-ui.popup.appendChild(ui.popup.subCt);
+ui.main.insertAdjacentElement('afterbegin', ui.banner);
 
 /* ### ENDING PROCEDURAL ### */
 
-document.body.classList.add('--owner');
+document.body.classList.add('--is-owner');
 OwnController.checkLicence();

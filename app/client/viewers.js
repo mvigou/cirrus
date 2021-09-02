@@ -57,52 +57,66 @@ class View {
 	static toggleDarkTheme = () => document.body.classList.contains('--dark-mode') ? 
 		View.unsetDarkTheme(): 
 		View.setDarkTheme();
+
+	static setPopup = type => {
+		switch(type) {
+			case 'confirm':
+				ui.popup.content.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
+				break;
+			case 'uploading':
+				ui.popup.content.textContent = 'Téléchargement en cours, veuillez patienter';
+				break;
+			case 'purchase':
+				ui.popup.content.innerHTML = `
+				Vous appréciez cirrus ?<br/>Enregistrez-le.<br/><br/>
+				<a href="https://getcirrus.awebsome.fr/enregistrer?cirrusId=${cirrusId}">Enregistrer ce cirrus</a><br/>
+				<a href="https://getcirrus.awebsome.fr/documentation/pourquoi-faut-il-enregistrer-son-cirrus/">En savoir plus</a><br/>
+				<a href="#" onclick="View.unsetPopup()">Plus tard</a>`;
+				break;
+		}
+		ui.popup.classList.add('--visible');
+	};
+
+	static unsetPopup = () => ui.popup.classList.remove('--visible');
 	
-	static togglePopup = (className = null) => 
-		ui.popup.setAttribute(
-			'class', className !== null ?
-				'popup ' + className:
-				'popup'
-	);	
-		
 	static setPreviewPan = item => {
 
-		ui.panNav.openBt = document.createElement('button');
-		ui.panNav.openBt.setAttribute('title', 'Ouvrir dans un nouvel onglet');
-		ui.panNav.openBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>';
-		ui.panNav.openBt.onclick = () => View.openItemInNewTab(document.querySelector('.pan').getAttribute('data-item-path'));
-		ui.panNav.appendChild(ui.panNav.openBt);
+		ui.panelNav.openBt = document.createElement('button');
+		ui.panelNav.openBt.setAttribute('title', 'Ouvrir dans un nouvel onglet');
+		ui.panelNav.openBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>';
+		ui.panelNav.openBt.onclick = () => View.openItemInNewTab(document.querySelector('.panel').getAttribute('data-item-path'));
+		ui.panelNav.appendChild(ui.panelNav.openBt);
 
-		ui.panNav.downloadBt = document.createElement('button');
-		ui.panNav.downloadBt.setAttribute('title', 'Télécharger');
-		ui.panNav.downloadBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
-		ui.panNav.downloadBt.onclick = () => View.downloadItem(ui.pan.getAttribute('data-item-path'));
-		ui.panNav.appendChild(ui.panNav.downloadBt);
+		ui.panelNav.downloadBt = document.createElement('button');
+		ui.panelNav.downloadBt.setAttribute('title', 'Télécharger');
+		ui.panelNav.downloadBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
+		ui.panelNav.downloadBt.onclick = () => View.downloadItem(ui.panel.getAttribute('data-item-path'));
+		ui.panelNav.appendChild(ui.panelNav.downloadBt);
 
-		ui.panNav.closeBt = document.createElement('button');
-		ui.panNav.closeBt.setAttribute('title', 'Fermer');
-		ui.panNav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-		ui.panNav.closeBt.onclick = () => View.unsetPan();
-		ui.panNav.appendChild(ui.panNav.closeBt);
+		ui.panelNav.closeBt = document.createElement('button');
+		ui.panelNav.closeBt.setAttribute('title', 'Fermer');
+		ui.panelNav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+		ui.panelNav.closeBt.onclick = () => View.unsetPan();
+		ui.panelNav.appendChild(ui.panelNav.closeBt);
 
 		if(item.itemType === 'img') {
-			ui.panCont.itemContent = document.createElement('img');
+			ui.panelCont.itemContent = document.createElement('img');
 		}
 		else if(item.itemType === 'pdf') {
-			ui.panCont.itemContent = document.createElement('iframe');
+			ui.panelCont.itemContent = document.createElement('iframe');
 		}
-		ui.panCont.itemContent.src = item.itemTempPath;
-		ui.panCont.item.appendChild(ui.panCont.itemContent);
+		ui.panelCont.itemContent.src = item.itemTempPath;
+		ui.panelCont.item.appendChild(ui.panelCont.itemContent);
 
-		ui.pan.setAttribute('data-item-path', item.itemTempPath);
-		ui.pan.classList.add('--visible');
+		ui.panel.setAttribute('data-item-path', item.itemTempPath);
+		ui.panel.classList.add('--visible');
 
 	};
 
 	static unsetPan = () => {
-		ui.panNav.innerHTML = '';
-		ui.panCont.item.innerHTML = '';
-		ui.pan.classList.remove('--visible');
+		ui.panelNav.innerHTML = '';
+		ui.panelCont.item.innerHTML = '';
+		ui.panel.classList.remove('--visible');
 	};
 
 	static setTree = dirPath => {
@@ -365,14 +379,14 @@ class Controller {
 	static watchConfirm = (step, item, event) => {
 		Controller.action[step].name = item;
 		Controller.action[step].time = performance.now();
-		View.togglePopup('--confirm');
+		View.setPopup('confirm');
 		if(event){
 			event.preventDefault();
 		}	
 	}
 
 	static validConfirm = () => {
-		View.togglePopup();
+		View.unsetPopup();
 		return Controller.action.start.name === Controller.action.end.name && (Controller.action.end.time - Controller.action.start.time) >= 600 ?
 			true : false;
 	}
@@ -380,7 +394,7 @@ class Controller {
 	static cancelConfirm = () => {
 		Controller.action['start'].name = null;
 		Controller.action['end'].name = null;
-		View.togglePopup();
+		View.unsetPopup();
 	}
 
 	static signOut = () => {
@@ -403,7 +417,7 @@ ui.main = document.createElement('main');
 /* main nav */
 
 ui.nav = document.createElement('nav');
-ui.nav.setAttribute('class', 'main-nav');
+ui.nav.setAttribute('class', 'nav');
 
 ui.leftNav = document.createElement('div');
 ui.leftNav.setAttribute('class', 'nav__left-ct');
@@ -430,62 +444,54 @@ ui.main.appendChild(ui.nav);
 
 /* aside (directory infos) */
 
-ui.aside = document.createElement('aside');		
+ui.infos = document.createElement('div');
+ui.infos.setAttribute('class', 'infos');
 
 ui.dirTree = document.createElement('div');
-ui.dirTree.setAttribute('class', 'tree');
-ui.aside.appendChild(ui.dirTree);
+ui.infos.appendChild(ui.dirTree);
 
 ui.counters = document.createElement('div');			
-ui.counters.setAttribute('class', 'counters');
-ui.aside.appendChild(ui.counters);
+ui.infos.appendChild(ui.counters);
 
-ui.main.appendChild(ui.aside);
-
-/* user content */
-
-ui.list = document.createElement('ul');
-ui.main.appendChild(ui.list);
+ui.main.appendChild(ui.infos);
 
 /* pan (preview & perms) */
 
-ui.pan = document.createElement('div');
-ui.pan.setAttribute('class', 'pan');
+ui.panel = document.createElement('div');
+ui.panel.setAttribute('class', 'panel');
 
-ui.panCont = document.createElement('div');
+ui.panelCont = document.createElement('div');
 
-ui.panNav = document.createElement('nav');
-ui.panCont.appendChild(ui.panNav);
+ui.panelNav = document.createElement('nav');
+ui.panelCont.appendChild(ui.panelNav);
 
-ui.panCont.item = document.createElement('div');
-ui.panCont.appendChild(ui.panCont.item);
+ui.panelCont.item = document.createElement('div');
+ui.panelCont.appendChild(ui.panelCont.item);
 
-ui.pan.appendChild(ui.panCont);
-ui.main.appendChild(ui.pan);
+ui.panel.appendChild(ui.panelCont);
+ui.main.appendChild(ui.panel);
 
 /* popup */
 
 ui.popup = document.createElement('div');
 ui.popup.setAttribute('class', 'popup');
 
-ui.popup.cirrusLogo = document.createElement('object');
-ui.popup.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-ui.popup.cirrusLogo.setAttribute('class', 'popup__object');
-ui.popup.cirrusLogo.setAttribute('data', './app/client/cirrus-logo.svg');
-ui.popup.cirrusLogo.setAttribute('type', 'image/svg+xml');
-ui.popup.appendChild(ui.popup.cirrusLogo);
+ui.popup.logo = document.createElement('object');
+ui.popup.logo.setAttribute('alt', 'Logo cirrus');
+ui.popup.logo.setAttribute('data', './app/client/cirrus-logo.svg');
+ui.popup.logo.setAttribute('type', 'image/svg+xml');
+ui.popup.appendChild(ui.popup.logo);
 
-ui.popup.textA = document.createElement('p');
-ui.popup.textA.setAttribute('class', 'popup-confirm');
-ui.popup.textA.textContent = 'Relâchez sur l\'option pour valider, relâchez ailleurs pour annuler';
-ui.popup.appendChild(ui.popup.textA);
-
-ui.popup.textB = document.createElement('p');
-ui.popup.textB.setAttribute('class', 'popup-download');
-ui.popup.textB.textContent = 'Téléchargement en cours, veuillez patienter';
-ui.popup.appendChild(ui.popup.textB);
+ui.popup.content = document.createElement('p');
+ui.popup.appendChild(ui.popup.content);
 
 ui.main.appendChild(ui.popup);
+
+/* user content */
+
+ui.list = document.createElement('ul');
+ui.list.setAttribute('class', 'content');
+ui.main.appendChild(ui.list);
 
 /* footer */
 
@@ -497,10 +503,10 @@ ui.footer.docLink.setAttribute('target', '_blank');
 ui.footer.docLink.textContent = 'documentation';
 ui.footer.appendChild(ui.footer.docLink);
 
-ui.footer.cirrusLogo = document.createElement('img');
-ui.footer.cirrusLogo.setAttribute('src', './app/client/cirrus-logo.svg');
-ui.footer.cirrusLogo.setAttribute('alt', 'Logo cirrus');
-ui.footer.appendChild(ui.footer.cirrusLogo);
+ui.footer.logo = document.createElement('img');
+ui.footer.logo.setAttribute('src', './app/client/cirrus-logo.svg');
+ui.footer.logo.setAttribute('alt', 'Logo cirrus');
+ui.footer.appendChild(ui.footer.logo);
 
 ui.footer.cirrusVersion = document.createElement('p');
 ui.footer.cirrusVersion.textContent = 'version 1.1.4';

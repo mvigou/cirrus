@@ -4,9 +4,9 @@
 
 class PubView {
 
-	static setEditionMode = item => item.classList.add('--edit-mode');
+	static setEditionMode = item => item.classList.add('--editing');
 
-	static unsetEditionMode = item => item.classList.remove('--edit-mode');
+	static unsetEditionMode = item => item.classList.remove('--editing');
 
 	static removeItem = itemPath => document.querySelector('li[data-path="' + itemPath + '"]').remove();
 
@@ -49,7 +49,7 @@ class PubController {
 		inputElm.click();
 		inputElm.onchange = (e) => {
 			let i = 0;
-			View.togglePopup('--download');
+			View.setPopup('uploading');
 			send(inputElm.files[i]);
 			function send(file) {
 				let formData = new FormData();
@@ -67,13 +67,13 @@ class PubController {
 						}
 						else {
 							setTimeout(
-								View.togglePopup(),
+								View.unsetPopup(),
 								1000
 							);	
 						}
 					}
 					else {
-						View.togglePopup();
+						View.unsetPopup();
 					}
 				};
 				req.send(formData);
@@ -225,14 +225,14 @@ class PubController {
 /* main nav */
 
 ui.leftNav.uploadBt = document.createElement('button');
-ui.leftNav.uploadBt.setAttribute('class', 'datas-ft non-editable');
+ui.leftNav.uploadBt.setAttribute('class', 'datas-ft');
 ui.leftNav.uploadBt.setAttribute('title', 'Envoyer des fichiers');
 ui.leftNav.uploadBt.innerHTML = '<svg viewBox="3 3 18 18"><path d="M10.4971 12.9823L10 12.4853L12.4853 10L14.9706 12.4853L14.4735 12.9823L12.8368 11.3456V16H12.1338V11.3456L10.4971 12.9823Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1571 3H6.63636C5.73262 3 5 3.73262 5 4.63636V19.3636C5 20.2674 5.73262 21 6.63636 21H18.0909C18.9946 21 19.7273 20.2674 19.7273 19.3636V7.57019L15.1571 3ZM6.63636 4.63636H13.1818V7.90909C13.1818 8.81283 13.9144 9.54545 14.8182 9.54545H18.0909V19.3636H6.63636V4.63636ZM14.8182 7.90909V4.97527L17.752 7.90909H14.8182Z"/></svg>';
 ui.leftNav.uploadBt.onclick = () => PubController.uploadItems();
 ui.leftNav.appendChild(ui.leftNav.uploadBt);
 
 ui.leftNav.bar = document.createElement('form');
-ui.leftNav.bar.setAttribute('class', 'bar datas-ft non-editable');
+ui.leftNav.bar.setAttribute('class', 'bar datas-ft');
 ui.leftNav.bar.onsubmit = e => PubController.barSubmit(e);
 
 ui.leftNav.barLabel = document.createElement('label');
@@ -257,4 +257,4 @@ ui.leftNav.appendChild(ui.leftNav.bar);
 
 /* ### ENDING PROCEDURAL ### */
 
-document.body.classList.add('--publisher');
+document.body.classList.add('--is-publisher');
