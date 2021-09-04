@@ -26,13 +26,23 @@ function searchRecursively($dir) {
 if(isAuthenticated()) {	
 	if(isset($_POST['chunckToSearch'], $_POST['startLocation'])) {
 		$matches = [];
-		searchRecursively($_POST['startLocation']);
-		if(error_get_last() === null) {
-			echo json_encode (
-				array(
-					'items' => $matches
-				)
-			);
+		array_push(
+			$matches,
+			array(
+				'label' => '..',
+				'path' => $_POST['startLocation'],
+				'type' => 'parent'
+			)
+		);
+		if(inDatasDirectory($_POST['startLocation'])) {
+			searchRecursively($_POST['startLocation']);
+			if(error_get_last() === null) {
+				echo json_encode (
+					array(
+						'items' => $matches
+					)
+				);
+			}
 		}
 	}
 }
