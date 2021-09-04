@@ -7,44 +7,29 @@ if(isAuthenticated()) {
 		if(inDatasDirectory($_POST['itemPath']) || (hasOwnerRights() && inScopeDirectory($_POST['itemPath']))) {
 			$itemName = array_slice(explode( '/', $_POST['itemPath']), -1)[0];
 			$itemPath = $_POST['itemPath'];
-			switch(mime_content_type($itemPath)) {
-				case 'application/pdf':
-					$itemType = 'pdf';
-					break;
-				case 'image/gif':
-				case 'image/jpeg':
-				case 'image/jpg':
-				case 'image/png':
-				case 'image/svg+xml':
-				case 'image/webp':
-					$itemType = 'img';
-					break;
+			$mimeType = mime_content_type($itemPath);
+			if(preg_match('/image\/.+/', $mimeType)) {
+				$openItemAs = 'img';
 			}
-			if(isset($itemType)) {
-				$tempDirectory = buildTempDir();
-				$itemTempPath = $tempDirectory . '/' . $itemName;
-				if(mkdir($tempDirectory)) {
-					if(copy($itemPath, $itemTempPath)) {
-						echo json_encode (
-							array(
-								'item' => array(
-									'isOpenable' => true,
-									'tempPath' => str_replace('../../', './', $itemTempPath),
-									'type' => $itemType,
-								)
-							)
-						);
-					}
-				}
+			else if($mimeType === 'application/pdf') {
+				$openItemAs = 'pdf';
 			}
 			else {
-				echo json_encode (
-					array(
-						'item' => array(
-							'isOpenable' => false
+				$openItemAs = 'download';
+			}
+			$tempDirectory = buildTempDir();
+			$itemTempPath = $tempDirectory . '/' . $itemName;
+			if(mkdir($tempDirectory)) {
+				if(copy($itemPath, $itemTempPath)) {
+					echo json_encode (
+						array(
+							'item' => array(
+								'openAs' => $openItemAs,
+								'tempPath' => str_replace('../../', './', $itemTempPath)
+							)
 						)
-					)
-				);
+					);
+				}
 			}
 		}
 	}

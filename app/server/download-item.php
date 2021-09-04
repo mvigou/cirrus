@@ -47,8 +47,9 @@ if(isAuthenticated()) {
 				if(error_get_last() === null) {
 					echo json_encode(
 						array (
-							'success' => true,
-							'content' => str_replace('../../', './', $toPath)
+							'item' => array(
+								'tempPath' => str_replace('../../', './', $toPath)
+							)
 						)
 					);
 				}

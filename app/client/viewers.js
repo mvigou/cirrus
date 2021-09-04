@@ -99,10 +99,10 @@ class View {
 		ui.panelNav.closeBt.onclick = () => View.unsetPan();
 		ui.panelNav.appendChild(ui.panelNav.closeBt);
 	
-		if(item.type === 'img') {
+		if(item.openAs === 'img') {
 			ui.panelCont.itemContent = document.createElement('img');
 		}
-		else if(item.type === 'pdf') {
+		else if(item.openAs === 'pdf') {
 			ui.panelCont.itemContent = document.createElement('iframe');
 		}
 		ui.panelCont.itemContent.src = item.tempPath;
@@ -328,11 +328,11 @@ class Controller {
 		)
 		.then(
 			data => {
-				if(data.item.isOpenable) {
+				if(data.item.openAs !== 'download') {
 					View.setPreviewPan(data.item);
 				}
 				else {
-					Controller.downloadItem(itemPath);
+					View.downloadItem(data.item.tempPath);
 				}
 			}
 		)
@@ -351,11 +351,7 @@ class Controller {
 				]
 			}
 		)
-		.then(data => {
-			if(data.success) {
-				View.downloadItem(data.content);
-			}
-		})
+		.then(data => View.downloadItem(data.item.tempPath))
 		.catch(err => Controller.handleError(err));
 	};
 
