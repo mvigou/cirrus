@@ -14,26 +14,6 @@ class PubView {
 
 class PubController {
 
-	static searchItem = chunckToSearch => {
-		if(chunckToSearch !== null && chunckToSearch !== '') {
-			Model.ajaxPost(
-				{
-					script: './app/server/search-item.php',
-					args: [
-						{ 
-							name: 'chunckToSearch', 
-							value: chunckToSearch 
-						}
-					]
-				}
-			)
-			.then(data => {
-				View.setItems(data.items);
-			})
-			.catch(err => Controller.handleError(err));
-		}
-	};
-
 	static uploadItems = () => {
 		let inputElm = document.createElement('input');
 		inputElm.setAttribute('type', 'file');
@@ -215,13 +195,6 @@ class PubController {
 /* ### BUILDING USER INTERFACE ### */
 
 /* main nav */
-
-ui.lNav.searchBt = document.createElement('button');
-ui.lNav.searchBt.setAttribute('title', 'Rechercher un dossier ou un document');
-ui.lNav.searchBt.setAttribute('class', 'data-ft publisher-ft');
-ui.lNav.searchBt.innerHTML = '<svg viewBox="3 3 18 18"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.0515 14.3208H15.8645L21 19.4666L19.4666 21L14.3208 15.8645V15.0515L14.0429 14.7633C12.8696 15.7719 11.3465 16.3791 9.68954 16.3791C5.99485 16.3791 3 13.3842 3 9.68954C3 5.99485 5.99485 3 9.68954 3C13.3842 3 16.3791 5.99485 16.3791 9.68954C16.3791 11.3465 15.7719 12.8696 14.7633 14.0429L15.0515 14.3208ZM5.05832 9.68954C5.05832 12.2521 7.12693 14.3208 9.68954 14.3208C12.2521 14.3208 14.3208 12.2521 14.3208 9.68954C14.3208 7.12693 12.2521 5.05832 9.68954 5.05832C7.12693 5.05832 5.05832 7.12693 5.05832 9.68954Z" /></svg>';
-ui.lNav.searchBt.onclick = () => PubController.searchItem(prompt('Que recherchez-vous ?'));
-ui.lNav.appendChild(ui.lNav.searchBt);
 
 ui.lNav.uploadBt = document.createElement('button');
 ui.lNav.uploadBt.setAttribute('class', 'data-ft publisher-ft');
