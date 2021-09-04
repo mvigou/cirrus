@@ -2,6 +2,20 @@
 session_start();
 require_once('./tools.php');
 
+function buildZip($zip, $zipName, $dirPath) {
+	foreach(array_diff(scandir($dirPath), array('..', '.')) as $dirEntry) {
+		$fromPath = $dirPath . '/' . $dirEntry;
+		$toPath = substr($dirPath, strpos($dirPath, $zipName)) . '/' . $dirEntry;
+		if(is_file($fromPath)) {
+			$zip->addFile($fromPath, $toPath);
+		}
+		else {
+			$zip->addEmptyDir($toPath);
+			buildZip($zip, $zipName, $fromPath);
+		}		
+	}
+}
+
 if(isAuthenticated()) {
 	if(isset($_POST['item'])) {
 		if(
@@ -40,19 +54,5 @@ if(isAuthenticated()) {
 				}
 			}
 		}
-	}
-}
-
-function buildZip($zip, $zipName, $dirPath) {
-	foreach(array_diff(scandir($dirPath), array('..', '.')) as $dirEntry) {
-		$fromPath = $dirPath . '/' . $dirEntry;
-		$toPath = substr($dirPath, strpos($dirPath, $zipName)) . '/' . $dirEntry;
-		if(is_file($fromPath)) {
-			$zip->addFile($fromPath, $toPath);
-		}
-		else {
-			$zip->addEmptyDir($toPath);
-			buildZip($zip, $zipName, $fromPath);
-		}		
 	}
 }

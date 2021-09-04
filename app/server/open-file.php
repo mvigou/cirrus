@@ -27,9 +27,11 @@ if(isAuthenticated()) {
 					if(copy($itemPath, $itemTempPath)) {
 						echo json_encode (
 							array(
-								'isOpenable' => true,
-								'itemType' => $itemType,
-								'itemTempPath' => str_replace('../../', './', $itemTempPath)
+								'item' => array(
+									'isOpenable' => true,
+									'tempPath' => str_replace('../../', './', $itemTempPath),
+									'type' => $itemType,
+								)
 							)
 						);
 					}
@@ -38,7 +40,9 @@ if(isAuthenticated()) {
 			else {
 				echo json_encode (
 					array(
-						'isOpenable' => false
+						'item' => array(
+							'isOpenable' => false
+						)
 					)
 				);
 			}

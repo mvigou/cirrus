@@ -4,29 +4,18 @@ require_once('./tools.php');
 
 if(isAuthenticated()) {	
 	if(isset($_POST['dir'])) {
-		if($_POST['dir'] === 'DATAS') {
-			$dir = '../../datas/content';
-		}
-		else if($_POST['dir'] === 'RECYCLE' && hasOwnerRights()) {
-			$dir = '../../datas/recyle';
-		}
-		else {
-			if(inDatasDirectory($_POST['dir']) || (inRecycleDirectory($_POST['dir']) && hasOwnerRights())) {
-				$dir = $_POST['dir'];	
-			}
-		}
-		if(isset($dir)) {
+		if(inDatasDirectory($_POST['dir']) || (inRecycleDirectory($_POST['dir']) && hasOwnerRights())) {		
 			$items = [];
 			$arrFiles = [];
 			$arrDir = [];
-			foreach(array_diff(scandir($dir), array('.', '.lock', '.perms')) as $item) {
+			foreach(array_diff(scandir($_POST['dir']), array('.', '.lock', '.perms')) as $item) {
 				// Parent directory.
 				if($item === '..') {
-					if($dir !== '../../datas/content' && $dir !== '../../datas/recyle') {
+					if($_POST['dir'] !== '../../datas/content' && $_POST['dir'] !== '../../datas/recyle') {
 						array_push($items,
 							array(
 								'label' => $item,
-								'path' => substr($dir, 0, strrpos($dir, '/')),
+								'path' => substr($_POST['dir'], 0, strrpos($_POST['dir'], '/')),
 								'type' => 'parent'
 							)
 						);
@@ -34,8 +23,8 @@ if(isAuthenticated()) {
 				}
 				else {
 					// Sub directory.
-					if(is_dir($dir . '/' . $item)) {
-						if(isDirReadableBy($dir . '/' . $item, $_SESSION['username'])) {
+					if(is_dir($_POST['dir'] . '/' . $item)) {
+						if(isDirReadableBy($_POST['dir'] . '/' . $item, $_SESSION['username'])) {
 							array_push($arrDir, $item);
 						}
 					}
@@ -49,7 +38,7 @@ if(isAuthenticated()) {
 				array_push($items,
 					array(
 						'label' => $item,
-						'path' => $dir . '/' . $item,
+						'path' => $_POST['dir'] . '/' . $item,
 						'type' => 'subdir'
 					)
 				);
@@ -58,7 +47,7 @@ if(isAuthenticated()) {
 				array_push($items,
 					array(
 						'label' => $item,
-						'path' => $dir . '/' . $item,
+						'path' => $_POST['dir'] . '/' . $item,
 						'type' => 'file'
 					)
 				);
@@ -66,7 +55,6 @@ if(isAuthenticated()) {
 			if(error_get_last() === null) {
 				echo json_encode (
 					array(
-						'dir' => $dir,
 						'items' => $items
 					)
 				);

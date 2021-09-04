@@ -86,31 +86,31 @@ class View {
 		ui.panelNav.openBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"/></svg>';
 		ui.panelNav.openBt.onclick = () => View.openItemInNewTab(document.querySelector('.panel').getAttribute('data-item-path'));
 		ui.panelNav.appendChild(ui.panelNav.openBt);
-
+	
 		ui.panelNav.downloadBt = document.createElement('button');
 		ui.panelNav.downloadBt.setAttribute('title', 'Télécharger');
 		ui.panelNav.downloadBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
 		ui.panelNav.downloadBt.onclick = () => View.downloadItem(ui.panel.getAttribute('data-item-path'));
 		ui.panelNav.appendChild(ui.panelNav.downloadBt);
-
+	
 		ui.panelNav.closeBt = document.createElement('button');
 		ui.panelNav.closeBt.setAttribute('title', 'Fermer');
 		ui.panelNav.closeBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
 		ui.panelNav.closeBt.onclick = () => View.unsetPan();
 		ui.panelNav.appendChild(ui.panelNav.closeBt);
-
-		if(item.itemType === 'img') {
+	
+		if(item.type === 'img') {
 			ui.panelCont.itemContent = document.createElement('img');
 		}
-		else if(item.itemType === 'pdf') {
+		else if(item.type === 'pdf') {
 			ui.panelCont.itemContent = document.createElement('iframe');
 		}
-		ui.panelCont.itemContent.src = item.itemTempPath;
+		ui.panelCont.itemContent.src = item.tempPath;
 		ui.panelCont.item.appendChild(ui.panelCont.itemContent);
-
-		ui.panel.setAttribute('data-item-path', item.itemTempPath);
+	
+		ui.panel.setAttribute('data-item-path', item.tempPath);
 		ui.panel.classList.add('--visible');
-
+	
 	};
 
 	static unsetPan = () => {
@@ -286,7 +286,7 @@ class View {
 
 class Controller {
 
-	static handleError = err => console.log(err);
+	static handleError = err => alert('Une erreur est survenue.\nConsultez les journaux depuis l\'administration pour en savoir plus.');
 
 	static browseDirectory = dir => {
 		Model.ajaxPost(
@@ -301,15 +301,15 @@ class Controller {
 			}
 		)
 		.then(data => {
-			if(dir === 'DATAS') {
+			if(dir === '../../datas/content') {
 				View.unsetRecycleTheme();
 			}
-			else if(dir === 'RECYCLE') {
+			else if(dir === '../../datas/recyle') {
 				View.setRecycleTheme();
 			}
-			localStorage.setItem('currentDir', data.dir);
+			localStorage.setItem('currentDir', dir);
 			View.setItems(data.items);
-			View.setTree(data.dir);
+			View.setTree(dir);
 		})
 		.catch(err => Controller.handleError(err));
 	};
@@ -328,8 +328,8 @@ class Controller {
 		)
 		.then(
 			data => {
-				if(data.isOpenable) {
-					View.setPreviewPan(data);
+				if(data.item.isOpenable) {
+					View.setPreviewPan(data.item);
 				}
 				else {
 					Controller.downloadItem(itemPath);

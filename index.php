@@ -25,7 +25,7 @@ if(is_dir('./datas')) {
 				if(localStorage.getItem('theme') === 'dark') {
 					View.setDarkTheme();
 				}
-				Controller.browseDirectory('DATAS');
+				Controller.browseDirectory('../../datas/content');
 			</script>
 		</body>
 	</html>

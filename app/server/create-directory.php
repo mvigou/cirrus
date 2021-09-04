@@ -21,7 +21,6 @@ if(isAuthenticated() && hasPublisherRights()) {
 			if(mkdir($dirPath, 0777, true)) {
 				echo json_encode(
 					array(
-						'success' => true,
 						'items' => array(
 							array(
 								'label' => $label,

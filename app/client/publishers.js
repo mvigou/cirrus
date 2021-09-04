@@ -70,11 +70,7 @@ class PubController {
 					]
 				}
 			)
-			.then(data => {
-				if(data.success) {
-					View.setItems(data.items, true);
-				}
-			})
+			.then(data => View.setItems(data.items, true))
 			.catch(err => Controller.handleError(err));
 		}
 	};
