@@ -368,6 +368,10 @@ class Controller {
 						{ 
 							name: 'chunckToSearch', 
 							value: chunckToSearch 
+						},
+						{
+							name: 'startLocation',
+							value: localStorage.getItem('currentDir')
 						}
 					]
 				}

@@ -24,9 +24,9 @@ function searchRecursively($dir) {
 }
 
 if(isAuthenticated()) {	
-	if(isset($_POST['chunckToSearch'])) {
+	if(isset($_POST['chunckToSearch'], $_POST['startLocation'])) {
 		$matches = [];
-		searchRecursively('../../datas/content');
+		searchRecursively($_POST['startLocation']);
 		if(error_get_last() === null) {
 			echo json_encode (
 				array(
