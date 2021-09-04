@@ -25,8 +25,9 @@ if(isAuthenticated()) {
 					if($dir !== '../../datas/content' && $dir !== '../../datas/recyle') {
 						array_push($items,
 							array(
-								'type' => 'parent',
-								'label' => $item
+								'label' => $item,
+								'path' => substr($dir, 0, strrpos($dir, '/')),
+								'type' => 'parent'
 							)
 						);
 					}
@@ -34,17 +35,7 @@ if(isAuthenticated()) {
 				else {
 					// Sub directory.
 					if(is_dir($dir . '/' . $item)) {
-						if(is_file($dir . '/' . $item . '/.lock')) {
-							if(hasOwnerRights()) {
-								array_push($arrDir, $item);
-							}
-							else if(is_file($dir . '/' . $item . '/.perms')) {
-								if(in_array($_SESSION['username'], json_decode(file_get_contents($dir . '/' . $item . '/.perms')))) {
-									array_push($arrDir, $item);
-								}
-							}
-						}
-						else {
+						if(isDirReadableBy($dir . '/' . $item, $_SESSION['username'])) {
 							array_push($arrDir, $item);
 						}
 					}
@@ -57,16 +48,18 @@ if(isAuthenticated()) {
 			foreach($arrDir as $item) {
 				array_push($items,
 					array(
-						'type' => 'subdir',
-						'label' => $item
+						'label' => $item,
+						'path' => $dir . '/' . $item,
+						'type' => 'subdir'
 					)
 				);
 			}
 			foreach($arrFiles as $item) {
 				array_push($items,
 					array(
-						'type' => 'file',
 						'label' => $item,
+						'path' => $dir . '/' . $item,
+						'type' => 'file'
 					)
 				);
 			}

@@ -36,6 +36,22 @@ function inRecycleDirectory($elm) {
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
+function isDirReadableBy($dir, $user) {
+	if(is_file($dir . '/.lock')) { // [protected directory]
+		if(hasOwnerRights()) {
+			return true;
+		}
+		else if(is_file($dir . '/.perms')) {
+			if(in_array($user, json_decode(file_get_contents($dir . '/.perms')))) {
+				return true;
+			}
+		}
+	}
+	else { // [public directory]
+		return true;
+	}
+	return false;
+}
 function buildTempDir() {
 	if(count(scandir('../../datas/temp')) - 2 === 10) {
 		removeThisDir('../../datas/temp');

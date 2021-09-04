@@ -5,28 +5,26 @@ require_once('./tools.php');
 if(isAuthenticated() && hasPublisherRights()) {
 	if(isset($_POST['parentDir']) && inDatasDirectory($_POST['parentDir'])) {
 		if(isset($_FILES) && $_FILES['file']['error'] === 0) {
-			$fileName = $_POST['parentDir'] . '/' . str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $_FILES['file']['name']);
-			if(is_file($fileName)) {
-				$baseName = $fileName; 
+			$filePath = $_POST['parentDir'] . '/' . str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $_FILES['file']['name']);
+			if(is_file($filePath)) {
+				$basePath = $filePath; 
 				$i = 1;
-				while(is_file($fileName)) {
-					$fileName = $baseName;
-					$fileName .= '(' . $i . ')';
+				while(is_file($filePath)) {
+					$filePath = $basePath;
+					$filePath .= '(' . $i . ')';
 					$i++;
 				}
 			}
-			$label = str_replace($_POST['parentDir'] . '/', '', $fileName);
-			if(move_uploaded_file($_FILES['file']['tmp_name'], $fileName)) {
+			$label = str_replace($_POST['parentDir'] . '/', '', $filePath);
+			if(move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
 				echo json_encode(
 					array(
 						'success' => true,
-						'content' => array(
-							'dir' => $_POST['parentDir'],
-							'items' => array(
-								array(
-									'type' => 'file',
-									'label' => $label
-								)
+						'items' => array(
+							array(
+								'label' => $label,
+								'path' => $filePath,
+								'type' => 'file'
 							)
 						)
 					)

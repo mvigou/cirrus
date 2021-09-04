@@ -224,4 +224,4 @@ ui.main.insertAdjacentElement('afterbegin', ui.banner);
 /* ### ENDING PROCEDURAL ### */
 
 document.body.classList.add('--is-owner');
-OwnController.checkLicence();
+// OwnController.checkLicence();
