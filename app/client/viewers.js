@@ -152,6 +152,7 @@ class View {
 			ui.list.item.setAttribute('data-path', item.path);
 			ui.list.item.setAttribute('data-label', item.label);
 			ui.list.item.setAttribute('data-type', item.type);
+			ui.list.item.setAttribute('class', item.type);
 			// Move and copy item with drag & drop (mouse).
 			if(item.type === 'file') {
 				ui.list.item.ondragstart = e => {		
