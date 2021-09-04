@@ -49,7 +49,7 @@ require('../../app/server/tools.php'); ?>
 						required
 					/>
 				</label>
-				<label>
+				<label class="password">
 					Mot de passe
 					<input type="password" 
 						id="user-pass" 
@@ -59,18 +59,17 @@ require('../../app/server/tools.php'); ?>
 						pattern="[a-zA-Z0-9.?!\-_*+=/|\\()[\]#$@%]{8,24}" 
 						required
 					/>
+					<button title="Afficher / Masquer la saisie">
+						<svg viewBox="0 0 512 512"><path d="M255.66,112c-77.94,0-157.89,45.11-220.83,135.33a16,16,0,0,0-.27,17.77C82.92,340.8,161.8,400,255.66,400,348.5,400,429,340.62,477.45,264.75a16.14,16.14,0,0,0,0-17.47C428.89,172.28,347.8,112,255.66,112Z" /><circle cx="256" cy="256" r="80" style="stroke:#000;stroke-width:32px"/></svg>
+					</button>
 				</label>
-				<button title="Valider" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
+				<button title="Se connecter" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z"/></svg></button>
 			</form>
 			<img 
 				alt="Logo cirrus"
 				src="../../app/client/cirrus-logo-alt.svg"
 			/>
 		</main>
-		<script>
-			if('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('../../service-worker.js');
-			};
-	</script>
+		<script src="./script.js"></script>
     </body>
 </html>

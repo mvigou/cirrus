@@ -1,11 +1,7 @@
-/* fonts */
-
 @font-face
 	font-display: swap
 	font-family: 'Cabin'
 	src: url("../../app/client/cabin-regular.woff2") format("woff2")
-
-/* colors */
 
 :root
 	--base-color: #bbb
@@ -13,8 +9,6 @@
 	--border-color: #444	
 	--cirrus-color: #2db4e1
 	--hovered-color: #fff
-
-/* main containers */
 
 html
 	font-size: 16px
@@ -57,8 +51,6 @@ img
 	@media screen and ( min-width: 1024px)
 		max-width: initial
 
-/* form */
-
 form
 	margin: 0 auto
 
@@ -75,40 +67,55 @@ input
 	background-color: transparent
 	border: none
 	border-bottom: solid 1px var(--border-color) 
+	box-sizing: border-box
 	color: var(--base-color)
 	display: block
 	font-size: 1rem
-	margin-top: 6px
+	margin-top: 12px
 	padding-bottom: 3px
-	width: 100%
+	width: 100%		
 	&:focus
 		border-bottom-color: var(--cirrus-color)
 		outline: none
+
+.password input
+	padding-right: 48px
 
 button
 	background-color: transparent
 	border: none
 	cursor: pointer
 	display: block
-	height: 44px
-	margin-left: auto
-	margin-right: 36px
-	width: 44px
+	margin: 0 36px 12px auto
+	min-height: 44px
+	min-width: 44px
+	@media screen and ( min-width: 1024px)
+		margin-bottom: 0
 	&::before
 		border-radius: 50%
 		content: ""
 		display: block
 		height: 9px
 		margin: 0 auto 6px auto
-		width: 9px	
-	&:hover
+		width: 9px
+
+.password button
+	margin-bottom: -48px
+	margin-right: 0
+	position: relative
+	top: -48px
+
+svg
+	pointer-events: none
+	fill: var(--base-color)
+	vertical-align: middle
+	width: 24px
+
+@media (any-hover: hover)
+
+	form > button:hover
 		outline: none
 		&::before
 			background-color: var(--cirrus-color)
 		svg
 			fill: var(--hovered-color)
-
-svg
-	fill: var(--base-color)
-	vertical-align: middle
-	width: 24px
