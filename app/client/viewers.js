@@ -525,7 +525,7 @@ ui.footer.logo.setAttribute('alt', 'Logo cirrus');
 ui.footer.appendChild(ui.footer.logo);
 
 ui.footer.cirrusVersion = document.createElement('p');
-ui.footer.cirrusVersion.textContent = 'version 1.1.4';
+ui.footer.cirrusVersion.textContent = 'version 1.2.0';
 ui.footer.appendChild(ui.footer.cirrusVersion);
 
 ui.main.appendChild(ui.footer);
