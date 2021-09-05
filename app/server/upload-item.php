@@ -8,11 +8,25 @@ if(isAuthenticated() && hasPublisherRights()) {
 			$filePath = $_POST['parentDir'] . '/' . str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $_FILES['file']['name']);
 			if(is_file($filePath)) {
 				$basePath = $filePath; 
+				$extension = pathinfo($filePath, PATHINFO_EXTENSION);
 				$i = 1;
-				while(is_file($filePath)) {
-					$filePath = $basePath;
-					$filePath .= '(' . $i . ')';
-					$i++;
+				// File without extension (rename at the end).
+				if($extension === '') {
+					while(is_file($filePath)) {
+						$filePath = $basePath;
+						$filePath .= '(' . $i . ')';
+						$i++;
+					}
+				}
+				// File with extension (rename before latest dot).
+				else {
+					$baseWithoutExt = substr($basePath, 0, strrpos($basePath, '.'));
+					while(is_file($filePath)) {
+						$filePath = $baseWithoutExt;
+						$filePath .= '(' . $i . ').';
+						$filePath .= $extension;
+						$i++;
+					}
 				}
 			}
 			$label = str_replace($_POST['parentDir'] . '/', '', $filePath);
