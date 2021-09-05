@@ -2,9 +2,9 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	if(isset($_POST['dirPath'], $_POST['isRestricted'], $_POST['accreditedMembers'])) {
-		if(inScopeDirectory($_POST['dirPath']) && ($_POST['isRestricted'] === 'true' || $_POST['isRestricted'] === 'false')) {
+		if(inDataDir($_POST['dirPath']) && ($_POST['isRestricted'] === 'true' || $_POST['isRestricted'] === 'false')) {
 			// Create or remove a .lock file to restrict access directory.
 			$isRestricted = $_POST['isRestricted'] === 'true' ? true : false;
 			$lockFilePath = $_POST['dirPath'] . '/.lock';

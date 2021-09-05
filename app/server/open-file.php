@@ -4,7 +4,7 @@ require_once('./tools.php');
 
 if(isAuthenticated()) {
 	if(isset($_POST['itemPath'])) {
-		if(inDatasDirectory($_POST['itemPath']) || (hasOwnerRights() && inScopeDirectory($_POST['itemPath']))) {
+		if(inDataDir($_POST['itemPath']) || (inRecycleDir($_POST['itemPath']) && isOwner())) {
 			$itemName = array_slice(explode( '/', $_POST['itemPath']), -1)[0];
 			$itemPath = $_POST['itemPath'];
 			$mimeType = mime_content_type($itemPath);

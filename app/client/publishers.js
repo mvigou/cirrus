@@ -53,8 +53,8 @@ class PubController {
 		};
 	};
 
-	static createDirectory = dirs => {
-		if(dirs !== null && dirs !== '') {
+	static createDirectory = dirToCreate => {
+		if(dirToCreate !== null && dirToCreate !== '') {
 			Model.ajaxPost(
 				{
 					script: './app/server/create-directory.php',
@@ -64,8 +64,8 @@ class PubController {
 							value: localStorage.getItem('currentDir')
 						},
 						{ 
-							name: 'dirs', 
-							value: dirs 
+							name: 'dirToCreate', 
+							value: dirToCreate
 						}
 					]
 				}
@@ -108,18 +108,18 @@ class PubController {
 		}
 	};
 
-	static copyItem = (oldItemPath, newItemPath) => {
+	static copyItem = (fromPath, toPath) => {
 		Model.ajaxPost(
 			{
 				script: './app/server/copy-item.php',
 				args: [
 					{ 
-						name: 'oldItemPath', 
-						value: oldItemPath
+						name: 'fromPath', 
+						value: fromPath
 					},
 					{ 
-						name: 'newItemPath', 
-						value: newItemPath 
+						name: 'toPath', 
+						value: toPath 
 					},
 				]
 			}
@@ -127,19 +127,19 @@ class PubController {
 		.catch(err => Controller.handleError(err));
 	};
 
-	static moveItem = (oldItemPath, newItemPath) => {
-		if(oldItemPath !== newItemPath.substring(0, newItemPath.lastIndexOf('/'))) {
+	static moveItem = (fromPath, toPath) => {
+		if(fromPath !== toPath.substring(0, toPath.lastIndexOf('/'))) {
 			Model.ajaxPost(
 				{
 					script: './app/server/move-item.php',
 					args: [
 						{ 
-							name: 'oldItemPath', 
-							value: oldItemPath
+							name: 'fromPath', 
+							value: fromPath
 						},
 						{ 
-							name: 'newItemPath', 
-							value: newItemPath 
+							name: 'toPath', 
+							value: toPath 
 						},
 					]
 				}
@@ -147,7 +147,7 @@ class PubController {
 			.then(
 				data => {
 					if(data.success) {
-						PubView.removeItem(oldItemPath);
+						PubView.removeItem(fromPath);
 						View.setCounters();
 					}
 				}

@@ -3,12 +3,12 @@ session_start();
 require_once('./tools.php');
 
 if(isAuthenticated()) {
-	if(isset($_POST['oldItemPath'], $_POST['newItemPath'])) {
+	if(isset($_POST['fromPath'], $_POST['toPath'])) {
 		if(
-			(hasPublisherRights() && inDatasDirectory($_POST['oldItemPath']) && inDatasDirectory($_POST['newItemPath'])) ||
-			(hasOwnerRights() && inScopeDirectory($_POST['oldItemPath']) && inScopeDirectory($_POST['newItemPath']))
+			(inDataDir($_POST['fromPath']) && inDataDir($_POST['toPath']) && isPublisher()) ||
+			(inRecycleDir($_POST['fromPath']) && inRecycleDir($_POST['toPath']) && isOwner())
 		) {
-			if(copy($_POST['oldItemPath'], getFreePath($_POST['newItemPath']))) {
+			if(copy($_POST['fromPath'], getFreePath($_POST['toPath']))) {
 				echo json_encode(array('success' => true));
 			}
 		}

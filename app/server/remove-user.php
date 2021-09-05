@@ -2,7 +2,7 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	if(isset($_POST['user-name'], $_POST['user-role'])) {
 		if($_POST['user-role'] === 'viewer') {
 			$path = "../../datas/users/viewers/{$_POST['user-name']}";

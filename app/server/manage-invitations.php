@@ -2,7 +2,7 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	if(isset($_POST['role'], $_POST['action'])) {
 		if($_POST['role'] === 'publisher') {
 			$authsDir = '../../datas/auth/sign-up-as-publisher';

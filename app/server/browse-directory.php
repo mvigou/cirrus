@@ -4,7 +4,7 @@ require_once('./tools.php');
 
 if(isAuthenticated()) {	
 	if(isset($_POST['dir'])) {
-		if(inDatasDirectory($_POST['dir']) || (inRecycleDirectory($_POST['dir']) && hasOwnerRights())) {		
+		if(inDataDir($_POST['dir']) || (inRecycleDir($_POST['dir']) && isOwner())) {		
 			$items = [];
 			$arrFiles = [];
 			$arrDir = [];

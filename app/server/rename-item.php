@@ -2,9 +2,9 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasPublisherRights()) {
+if(isAuthenticated() && isPublisher()) {
 	if(isset($_POST['oldItemName'], $_POST['newItemName'], $_POST['parentDir'])) {
-		if(inDatasDirectory($_POST['parentDir'])) {
+		if(inDataDir($_POST['parentDir'])) {
 			$fromPath = $_POST['parentDir'] . '/' . $_POST['oldItemName'];			
 			$toPath = getFreePath($_POST['parentDir'] . '/' . getValidName($_POST['newItemName']));			
 			if(rename($fromPath, $toPath)) {

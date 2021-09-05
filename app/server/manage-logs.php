@@ -2,7 +2,7 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	if(isset($_POST['action'])) {
 		if($_POST['action'] === 'browse') {
 			$logs = explode('[', file_get_contents('../../datas/logs/app-errors.txt'));

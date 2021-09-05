@@ -2,7 +2,7 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	$userProfiles = array(
 		array(
 			'role' => 'publisher',

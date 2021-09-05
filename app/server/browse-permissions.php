@@ -2,7 +2,7 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	if(isset($_POST['dirPath'])) {
 		$isRestricted = is_file($_POST['dirPath'] . '/.lock') ? true : false;
 		$permsPath = $_POST['dirPath'] . '/.perms';

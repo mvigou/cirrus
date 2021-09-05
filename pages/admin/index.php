@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require('../../app/server/tools.php');
-if(isAuthenticated() && hasOwnerRights()) { ?>
+if(isAuthenticated() && isOwner()) { ?>
 	<!DOCTYPE html>
 		<html lang="fr">
 		<head>

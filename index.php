@@ -15,9 +15,9 @@ if(is_dir('./datas')) {
 		</head>
 		<body>
 			<script src="./app/client/viewers.min.js"></script>
-			<?php if(hasPublisherRights()) { ?>
+			<?php if(isPublisher()) { ?>
 				<script src="./app/client/publishers.min.js"></script>
-			<?php } if(hasOwnerRights()) { ?>
+			<?php } if(isOwner()) { ?>
 				<script>const cirrusId = "<?php echo $env->cirrusId; ?>";</script>
 				<script src="./app/client/owners.min.js"></script>
 			<?php } ?>

@@ -7,10 +7,10 @@ if(isAuthenticated()) {
 		if($_POST['item'] === 'RECYCLE') {
 			$_POST['item'] = '../../datas/recyle';	
 		}
-		if(hasPublisherRights() && inDatasDirectory($_POST['item'])) {
+		if(isPublisher() && inDataDir($_POST['item'])) {
 			moveToRecycle($_POST['item']);
 		}
-		else if(hasOwnerRights() && inRecycleDirectory($_POST['item'])) {	
+		else if(isOwner() && inRecycleDir($_POST['item'])) {	
 			if(is_file($_POST['item'])) {
 				unlink($_POST['item']);
 			}

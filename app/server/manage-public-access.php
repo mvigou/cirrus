@@ -2,7 +2,7 @@
 session_start();
 require_once('./tools.php');
 
-if(isAuthenticated() && hasOwnerRights()) {
+if(isAuthenticated() && isOwner()) {
 	if(isset($_POST['action'])) {
 		$auths = scandir('../../datas/auth/sign-up-as-visitor');
 		switch($_POST['action']) {

@@ -34,7 +34,7 @@ if(isAuthenticated()) {
 				'type' => 'parent'
 			)
 		);
-		if(inDatasDirectory($_POST['startLocation'])) {
+		if(inDataDir($_POST['startLocation'])) {
 			searchRecursively($_POST['startLocation']);
 			if(error_get_last() === null) {
 				echo json_encode (
