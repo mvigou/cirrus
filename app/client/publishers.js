@@ -4,7 +4,10 @@
 
 class PubView {
 
-	static setEditionMode = item => item.classList.add('--editing');
+	static setEditionMode = item => {	
+		item.classList.add('--editing');
+		item.querySelector('input').focus();
+	};
 
 	static unsetEditionMode = item => item.classList.remove('--editing');
 
