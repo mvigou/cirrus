@@ -62,6 +62,9 @@ function getFreePath($path) {
 	}
 	return $path;
 }
+function getValidName($filename) {
+	return str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $filename);
+}
 function isDirReadableBy($dir, $user) {
 	if(is_file($dir . '/.lock')) { // [protected directory]
 		if(hasOwnerRights()) {
