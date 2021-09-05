@@ -36,6 +36,32 @@ function inRecycleDirectory($elm) {
 	$regex .= '/';
 	return preg_match($regex, $elm) ? true : false;
 }
+function getFreePath($path) {
+	if(is_file($path) || is_dir($path)) {
+		$basePath = $path; 
+		$ext = pathinfo($path, PATHINFO_EXTENSION);
+		$i = 1;
+		// File without extension or directory (rename at the end).
+		if($ext === '' || is_dir($path)) {
+			while(is_file($path) || is_dir($path)) {
+				$path = $basePath;
+				$path .= '(' . $i . ')';
+				$i++;
+			}
+		}
+		// File with extension (rename before the latest dot).
+		else {
+			$baseNoExt = substr($basePath, 0, strrpos($basePath, '.'));
+			while(is_file($path)) {
+				$path = $baseNoExt;
+				$path .= '(' . $i . ').';
+				$path .= $ext;
+				$i++;
+			}
+		}
+	}
+	return $path;
+}
 function isDirReadableBy($dir, $user) {
 	if(is_file($dir . '/.lock')) { // [protected directory]
 		if(hasOwnerRights()) {
