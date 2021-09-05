@@ -24,7 +24,7 @@ if(isAuthenticated()) {
 				else {
 					// Sub directory.
 					if(is_dir($_POST['dir'] . '/' . $item)) {
-						if(isDirReadableBy($_POST['dir'] . '/' . $item, $_SESSION['username'])) {
+						if(isOwner() || isAllowed($_POST['dir'] . '/' . $item, $_SESSION['username'])) {
 							array_push($arrDir, $item);
 						}
 					}

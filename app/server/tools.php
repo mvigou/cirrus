@@ -44,21 +44,39 @@ function getFreePath($path) {
 	}
 	return $path;
 }
-function isDirReadableBy($dir, $user) {
-	// Protected directory.
-	if(is_file($dir . '/.lock')) {
-		if(isOwner()) {
-			return true;
+function getTempDir() {
+	if(count(scandir('../../datas/temp')) === 13) {
+		function purgeDir($dir) {
+			foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
+				$itemPath = $dir . '/' . $item;
+				if(is_file($itemPath)) {
+					unlink($itemPath);
+				}
+				else {
+					purgeDir($itemPath);	
+				}
+			}
+			if($dir !== '../../datas/temp') {
+				rmdir($dir);
+			}
 		}
-		else if(is_file($dir . '/.perms')) {
+		purgeDir('../../datas/temp');
+	}
+	return '../../datas/temp' . '/' . hash('sha512', random_bytes(18));
+}
+
+function isAllowed($dir, $user) {
+	// Public directory.
+	if(!is_file($dir . '/.lock')) {
+		return true;
+	}
+	// Private, but maybe open to some users.
+	else {
+		if(is_file($dir . '/.perms')) { 
 			if(in_array($user, json_decode(file_get_contents($dir . '/.perms')))) {
 				return true;
 			}
 		}
-	}
-	// Public directory.
-	else {
-		return true;
 	}
 	return false;
 }

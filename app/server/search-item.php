@@ -3,22 +3,35 @@ session_start();
 require_once('./tools.php');
 
 function searchRecursively($dir) {
-	foreach(array_diff(scandir($dir), array('..', '.', '.lock', '.perms')) as $item) {
+	$items = array_diff(scandir($dir), array('..', '.', '.lock', '.perms'));
+	foreach($items as $item) {
 		$itemPath = $dir . '/' . $item;
-		if(stripos($item, $_POST['chunckToSearch']) !== false) {
-			array_push(
-				$GLOBALS['matches'],
-				array(
-					'label' => $item,
-					'path' => $itemPath,
-					'type' => is_file($itemPath) ? 'file':'subdir'
-				)
-			);	
-		}
-		if(is_dir($itemPath)) {
-			if(isDirReadableBy($itemPath, $_SESSION['username'])) {
-				searchRecursively($itemPath);
+		// Always save file match because directory access has been checked before.
+		if(is_file($itemPath)) {	
+			if(stripos($item, $_POST['chunckToSearch']) !== false) {
+				array_push(
+					$GLOBALS['matches'],
+					array(
+						'label' => $item,
+						'path' => $itemPath,
+						'type' => 'file'
+					)
+				);
 			}
+		}
+		// Save directory match and search inside only if read is allowed.
+		else if(is_dir($itemPath) && (isOwner() || isAllowed($itemPath, $_SESSION['username']))) {
+			if(stripos($item, $_POST['chunckToSearch']) !== false) {
+				array_push(
+					$GLOBALS['matches'],
+					array(
+						'label' => $item,
+						'path' => $itemPath,
+						'type' => 'subdir'
+					)
+				);
+			}
+			searchRecursively($itemPath);
 		}
 	}
 }
