@@ -14,18 +14,10 @@ function isAuthenticated() {
 }
 function isOwner() { return $_SESSION['role'] === 'owner' ? true : false; }
 function isPublisher() { return $_SESSION['role'] === 'owner' || $_SESSION['role'] === 'publisher' ? true : false; }
-function inDataDir($elm) {
-	$regex = '/^\.\.\/\.\.\/datas\/';
-	$regex .= array_slice(explode('/', '../../datas/content'), -1)[0];
-	$regex .= '/';
-	return preg_match($regex, $elm) ? true : false;
-}
-function inRecycleDir($elm) {
-	$regex = '/^\.\.\/\.\.\/datas\/';
-	$regex .= array_slice(explode('/', '../../datas/recyle'), -1)[0];
-	$regex .= '/';
-	return preg_match($regex, $elm) ? true : false;
-}
+function inDataDir($item) { return preg_match('/^\.\.\/\.\.\/datas\/content/', $item) ? true : false; }
+function inRecycleDir($item) {return preg_match('/^\.\.\/\.\.\/datas\/recyle/', $item) ? true : false; }
+function getValidFileName($name) { return str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $name); }
+function getValidDirName($name) { return str_replace(["<", ">", ":", "\\", "|", "?", "*", "\""], '-', $name); }
 function getFreePath($path) {
 	if(is_file($path) || is_dir($path)) {
 		$basePath = $path; 
@@ -52,7 +44,6 @@ function getFreePath($path) {
 	}
 	return $path;
 }
-function getValidName($filename) { return str_replace(["<", ">", ":", "/", "\\", "|", "?", "*", "\""], '-', $filename); }
 function isDirReadableBy($dir, $user) {
 	// Protected directory.
 	if(is_file($dir . '/.lock')) {
@@ -70,24 +61,4 @@ function isDirReadableBy($dir, $user) {
 		return true;
 	}
 	return false;
-}
-function buildTempDir() {
-	if(count(scandir('../../datas/temp')) - 2 === 10) {
-		removeThisDir('../../datas/temp');
-	}
-	return '../../datas/temp' . '/' . hash('sha512', random_bytes(18));
-}
-function removeThisDir($dir) {
-	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
-		$itemPath = $dir . '/' . $item;
-		if(is_file($itemPath)) {
-			unlink($itemPath);
-		}
-		else {
-			removeThisDir($itemPath);	
-		}
-	}
-	if($dir !== '../../datas/temp') {
-		rmdir($dir);
-	}
 }

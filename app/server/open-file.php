@@ -17,7 +17,7 @@ if(isAuthenticated()) {
 			else {
 				$openItemAs = 'download';
 			}
-			$tempDirectory = buildTempDir();
+			$tempDirectory = getTempDir();
 			$itemTempPath = $tempDirectory . '/' . $itemName;
 			if(mkdir($tempDirectory)) {
 				if(copy($itemPath, $itemTempPath)) {

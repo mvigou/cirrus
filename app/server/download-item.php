@@ -20,7 +20,7 @@ if(isAuthenticated()) {
 	if(isset($_POST['item'])) {
 		if(inDataDir($_POST['item']) || (inRecycleDir($_POST['item']) && isOwner())) {
 			$fileName = array_slice(explode( '/', $_POST['item']), -1)[0];
-			$tempDirectory = buildTempDir();
+			$tempDirectory = getTempDir();
 			$fromPath = $_POST['item'];
 			$toPath = '';
 			if(mkdir($tempDirectory)) {		
