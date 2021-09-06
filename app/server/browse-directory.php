@@ -7,7 +7,8 @@ if(isAuthenticated()) {
 		if(inDataDir($_POST['dir']) || (inRecycleDir($_POST['dir']) && isOwner())) {		
 			$items = [];
 			$arrFiles = [];
-			$arrDir = [];
+			$arrLinks = [];
+			$arrDirs = [];
 			foreach(array_diff(scandir($_POST['dir']), array('.', '.lock', '.perms')) as $item) {
 				// Parent directory.
 				if($item === '..') {
@@ -25,8 +26,12 @@ if(isAuthenticated()) {
 					// Sub directory.
 					if(is_dir($_POST['dir'] . '/' . $item)) {
 						if(isOwner() || isAllowed($_POST['dir'] . '/' . $item, $_SESSION['username'])) {
-							array_push($arrDir, $item);
+							array_push($arrDirs, $item);
 						}
+					}
+					// Link.
+					else if(is_link($_POST['dir'] . '/' . $item)) {
+						array_push($arrLinks, $item);
 					}
 					// File.
 					else {
@@ -34,12 +39,22 @@ if(isAuthenticated()) {
 					}
 				}
 			}
-			foreach($arrDir as $item) {
+			foreach($arrDirs as $item) {
 				array_push($items,
 					array(
 						'label' => $item,
 						'path' => $_POST['dir'] . '/' . $item,
 						'type' => 'subdir'
+					)
+				);
+			}
+			foreach($arrLinks as $item) {
+				array_push($items,
+					array(
+						'label' => urldecode($item),
+						'href' => readlink($_POST['dir'] . '/' . $item),
+						'path' => $_POST['dir'] . '/' . $item,
+						'type' => 'link'
 					)
 				);
 			}
