@@ -43,7 +43,7 @@ function moveToRecycle($elm) {
 function removeDir($dir) {
 	foreach(array_diff(scandir($dir), array('..', '.')) as $item) {
 		$itemPath = $dir . '/' . $item;
-		if(is_file($itemPath)) {
+		if(is_file($itemPath) || is_link($itemPath)) {
 			unlink($itemPath);
 		}
 		else {

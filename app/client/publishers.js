@@ -232,7 +232,7 @@ ui.lNav.createDirBt.onclick = () => PubController.createDirectory(prompt('Nom du
 ui.lNav.appendChild(ui.lNav.createDirBt);
 
 ui.lNav.createLinkBt = document.createElement('button');
-ui.lNav.createLinkBt.setAttribute('title', 'Créer un dossier');
+ui.lNav.createLinkBt.setAttribute('title', 'Créer un lien hypertexte');
 ui.lNav.createLinkBt.setAttribute('class', 'data-ft publisher-ft');
 ui.lNav.createLinkBt.innerHTML = '<svg viewBox="0 0 512 512"><g fill="none" stroke="var(--base-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="36px"><path d="m208 352h-64a96 96 0 0 1 0-192h64"/><path d="m304 160h64a96 96 0 0 1 0 192h-64"/><line x1="163.29" x2="350.71" y1="256" y2="256"/></g></svg>';
 ui.lNav.createLinkBt.onclick = () => PubController.createLink(prompt('Hyperlien à créer :'));
