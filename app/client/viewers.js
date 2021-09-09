@@ -181,53 +181,41 @@ class View {
 					e.ctrlKey ?
 						PubController.copyItem(fromPath, toPath):
 						PubController.moveItem(fromPath, toPath);
+					e.target.closest('li').classList.remove('--hovered');
 					e.preventDefault();
 				};
 			}
-			// Open item (replace the next sibling in normal mode).
-			let aItemElm = document.createElement('a');
-			aItemElm.classList.add('non-editable');
-			aItemElm.setAttribute('href', '#');
-			aItemElm.title = 'Ouvrir';
-			aItemElm.onclick = () => {
-				switch(item.type) {
-					case 'file':
-						Controller.openItem(item.path);
-						break;
-					case 'link':
-						window.open(item.href);
-						break;
-					case 'parent':
-					case 'subdir':
-						Controller.browseDirectory(item.path);
-						break;
-				}
-			};
-
-
-
-			let titleItemElm = document.createElement('p');
-			if(item.type === 'file') {
-				titleItemElm.innerHTML = `<svg viewBox="3 3 18 18"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.63636 3H15.1571L19.7273 7.57019V19.3636C19.7273 20.2674 18.9946 21 18.0909 21H6.63636C5.73262 21 5 20.2674 5 19.3636V4.63636C5 3.73262 5.73262 3 6.63636 3ZM13.1818 4.63636H6.63636V19.3636H18.0909V9.54545H14.8182C13.9144 9.54545 13.1818 8.81283 13.1818 7.90909V4.63636ZM14.8182 4.97527V7.90909H17.752L14.8182 4.97527Z" /></svg><span>${item.label}</span>`;
+			ui.list.itemAnchor = document.createElement('a');
+			ui.list.itemLabel = document.createElement('p');
+			ui.list.itemAnchor.setAttribute('class', 'non-editable');
+			ui.list.itemAnchor.setAttribute('href', '#');
+			ui.list.itemAnchor.title = 'Ouvrir';
+			switch(item.type) {
+				case 'file':
+					ui.list.itemAnchor.onclick = () => Controller.openItem(item.path);
+					ui.list.itemLabel.innerHTML = `<svg viewBox="3 3 18 18"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.63636 3H15.1571L19.7273 7.57019V19.3636C19.7273 20.2674 18.9946 21 18.0909 21H6.63636C5.73262 21 5 20.2674 5 19.3636V4.63636C5 3.73262 5.73262 3 6.63636 3ZM13.1818 4.63636H6.63636V19.3636H18.0909V9.54545H14.8182C13.9144 9.54545 13.1818 8.81283 13.1818 7.90909V4.63636ZM14.8182 4.97527V7.90909H17.752L14.8182 4.97527Z" /></svg><span>${item.label}</span>`;
+					break;
+				case 'link':
+					ui.list.itemAnchor.onclick = () => window.open(item.href);
+					ui.list.itemLabel.innerHTML = `<svg viewBox="-3 -3 24 24" ><path d="M3.19 9.345a.97.97 0 0 1 1.37 0 .966.966 0 0 1 0 1.367l-2.055 2.052a1.932 1.932 0 0 0 0 2.735 1.94 1.94 0 0 0 2.74 0l4.794-4.787a.966.966 0 0 0 0-1.367.966.966 0 0 1 0-1.368.97.97 0 0 1 1.37 0 2.898 2.898 0 0 1 0 4.103l-4.795 4.787a3.879 3.879 0 0 1-5.48 0 3.864 3.864 0 0 1 0-5.47L3.19 9.344zm11.62-.69a.97.97 0 0 1-1.37 0 .966.966 0 0 1 0-1.367l2.055-2.052a1.932 1.932 0 0 0 0-2.735 1.94 1.94 0 0 0-2.74 0L7.962 7.288a.966.966 0 0 0 0 1.367.966.966 0 0 1 0 1.368.97.97 0 0 1-1.37 0 2.898 2.898 0 0 1 0-4.103l4.795-4.787a3.879 3.879 0 0 1 5.48 0 3.864 3.864 0 0 1 0 5.47L14.81 8.656z"/></svg><span>${item.label}</span>`;
+					break;
+				case 'subdir':
+					ui.list.itemAnchor.onclick = () => Controller.browseDirectory(item.path);
+					ui.list.itemLabel.innerHTML = `<svg viewBox="3 3 18 18"><path fill-rule="evenodd" clip-rule="evenodd" d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42594 11.7922 6.33548 11.7305 6.25591C11.6867 6.19952 11.6472 6.14861 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273ZM19.3636 8.27273V18.0909H4.63636V6.63636H9.54545C9.85984 6.63636 10.0421 6.75792 10.3486 7.14458C10.3582 7.15674 10.3858 7.19234 10.4202 7.2367C10.486 7.32147 10.5766 7.43823 10.6139 7.48444C11.0253 7.99447 11.408 8.26957 11.9956 8.27272L19.3636 8.27273Z" /></svg><span>${item.label}</span>`;
+					break;
+				case 'parent':
+					ui.list.itemAnchor.onclick = () => Controller.browseDirectory(item.path);
+					ui.list.itemLabel.innerHTML = '<svg viewBox="3 3 18 18"><path d="M9.49706 12.9823L9 12.4853L11.4853 10L13.9706 12.4853L13.4735 12.9823L11.8368 11.3456V16H11.1338V11.3456L9.49706 12.9823Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M19.3636 6.63636C20.2674 6.63636 21 7.36899 21 8.27273V18.0909C21 18.9946 20.2674 19.7273 19.3636 19.7273H4.63636C3.73262 19.7273 3 18.9946 3 18.0909V6.63636C3 5.73262 3.73262 5 4.63636 5H9.54545C10.4618 5 11.0451 5.38901 11.631 6.12815C11.6472 6.14858 11.6866 6.19938 11.7303 6.25567C11.792 6.3352 11.8624 6.42596 11.8875 6.45703C11.9129 6.48848 11.9342 6.51449 11.9519 6.53598C12.0239 6.6235 12.0343 6.63619 12.0015 6.63636H19.3636ZM19.3636 18.0909V8.27273L11.9956 8.27272C11.408 8.26957 11.0253 7.99447 10.6139 7.48444C10.5766 7.43825 10.4861 7.32155 10.4203 7.23679C10.3859 7.19243 10.3582 7.15674 10.3486 7.14458C10.0421 6.75792 9.85984 6.63636 9.54545 6.63636H4.63636V18.0909H19.3636Z" /></svg>..';
+					break;
 			}
-			else if(item.type === 'subdir') {
-				titleItemElm.innerHTML = `<svg viewBox="3 3 18 18"><path fill-rule="evenodd" clip-rule="evenodd" d="M21 8.27273C21 7.36899 20.2674 6.63636 19.3636 6.63636H12.0015C12.0343 6.63619 12.0239 6.6235 11.9519 6.53598C11.9342 6.51449 11.9129 6.48848 11.8875 6.45703C11.8624 6.42594 11.7922 6.33548 11.7305 6.25591C11.6867 6.19952 11.6472 6.14861 11.631 6.12815C11.0451 5.38901 10.4618 5 9.54545 5H4.63636C3.73262 5 3 5.73262 3 6.63636V18.0909C3 18.9946 3.73262 19.7273 4.63636 19.7273H19.3636C20.2674 19.7273 21 18.9946 21 18.0909V8.27273ZM19.3636 8.27273V18.0909H4.63636V6.63636H9.54545C9.85984 6.63636 10.0421 6.75792 10.3486 7.14458C10.3582 7.15674 10.3858 7.19234 10.4202 7.2367C10.486 7.32147 10.5766 7.43823 10.6139 7.48444C11.0253 7.99447 11.408 8.26957 11.9956 8.27272L19.3636 8.27273Z" /></svg><span>${item.label}</span>`;
-			}
-			else if(item.type === 'link') {
-				titleItemElm.innerHTML = `<svg viewBox="0 0 512 512"><g fill="none" stroke="var(--base-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="36px"><path d="m208 352h-64a96 96 0 0 1 0-192h64"/><path d="m304 160h64a96 96 0 0 1 0 192h-64"/><line x1="163.29" x2="350.71" y1="256" y2="256"/></g></svg><span>${item.label}</span>`;
-			}
-			else {
-				titleItemElm.innerHTML = '<svg viewBox="3 3 18 18"><path d="M9.49706 12.9823L9 12.4853L11.4853 10L13.9706 12.4853L13.4735 12.9823L11.8368 11.3456V16H11.1338V11.3456L9.49706 12.9823Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M19.3636 6.63636C20.2674 6.63636 21 7.36899 21 8.27273V18.0909C21 18.9946 20.2674 19.7273 19.3636 19.7273H4.63636C3.73262 19.7273 3 18.9946 3 18.0909V6.63636C3 5.73262 3.73262 5 4.63636 5H9.54545C10.4618 5 11.0451 5.38901 11.631 6.12815C11.6472 6.14858 11.6866 6.19938 11.7303 6.25567C11.792 6.3352 11.8624 6.42596 11.8875 6.45703C11.9129 6.48848 11.9342 6.51449 11.9519 6.53598C12.0239 6.6235 12.0343 6.63619 12.0015 6.63636H19.3636ZM19.3636 18.0909V8.27273L11.9956 8.27272C11.408 8.26957 11.0253 7.99447 10.6139 7.48444C10.5766 7.43825 10.4861 7.32155 10.4203 7.23679C10.3859 7.19243 10.3582 7.15674 10.3486 7.14458C10.0421 6.75792 9.85984 6.63636 9.54545 6.63636H4.63636V18.0909H19.3636Z" /></svg>..';
-			}
-			aItemElm.appendChild(titleItemElm);
-			ui.list.item.appendChild(aItemElm);
-			// Rename item (replace the previous sibling in edit mode).
+			ui.list.itemAnchor.appendChild(ui.list.itemLabel);
+			ui.list.item.appendChild(ui.list.itemAnchor);
 			if(item.type !== 'parent') {
-				let edItemInputElm = document.createElement('input');
-				edItemInputElm.classList.add('editable');
-				edItemInputElm.value = item.label;
-				edItemInputElm.textContent = item.label;
-				ui.list.item.appendChild(edItemInputElm);
+				ui.list.itemRenameInput = document.createElement('input');
+				ui.list.itemRenameInput.classList.add('editable');
+				ui.list.itemRenameInput.value = item.label;
+				ui.list.itemRenameInput.textContent = item.label;
+				ui.list.item.appendChild(ui.list.itemRenameInput);
 				ui.list.item.submitBt = document.createElement('button');
 				ui.list.item.submitBt.classList.add('editable');
 				ui.list.item.submitBt.setAttribute('title', 'Enregistrer les changements');
@@ -236,57 +224,52 @@ class View {
 				ui.list.item.submitBt.onclick = e => {
 					const itemElm = e.target.closest('li');
 					const oldItemName = itemElm.getAttribute('data-label');
-					const newItemName = edItemInputElm.value;
-
+					const newItemName = itemElm.querySelector('input').value;
 					PubController.renameItem(itemElm, oldItemName, newItemName);
 				} 
 				ui.list.item.appendChild(ui.list.item.submitBt);
 			}
 			if(item.type === 'subdir') {	
-				// Set perms item.
-				let restItemBtElm = document.createElement('button');
-				restItemBtElm.classList.add('owner-ft', 'data-ft', 'non-editable');
-				restItemBtElm.title = 'Définir les règles d\'accès au dossier';
-				restItemBtElm.innerHTML = '<svg viewBox="3 3 18 18"><path d="m21 19.5h-18v-15h5.25c1.2713 1.4565 1.7783 2.25 3 2.25h9.75zm-13.438-13.5h-3.0622v12h15v-9.75h-8.25c-1.7542 0-2.6528-1.041-3.6878-2.25zm7.4378 10.5h-6v-3.75h0.75v-0.75c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25v0.75h0.75zm-3.75-4.5v0.75h1.5v-0.75c0-0.414-0.336-0.75-0.75-0.75s-0.75 0.336-0.75 0.75z" stroke-width=".75"/></svg>';
-				restItemBtElm.onclick = () => OwnController.browsePerms(item.path);
-				ui.list.item.appendChild(restItemBtElm);
+				ui.list.privateItemBt = document.createElement('button');
+				ui.list.privateItemBt.classList.add('owner-ft', 'data-ft', 'non-editable');
+				ui.list.privateItemBt.title = 'Définir les règles d\'accès au dossier';
+				ui.list.privateItemBt.innerHTML = '<svg viewBox="3 3 18 18"><path d="m21 19.5h-18v-15h5.25c1.2713 1.4565 1.7783 2.25 3 2.25h9.75zm-13.438-13.5h-3.0622v12h15v-9.75h-8.25c-1.7542 0-2.6528-1.041-3.6878-2.25zm7.4378 10.5h-6v-3.75h0.75v-0.75c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25v0.75h0.75zm-3.75-4.5v0.75h1.5v-0.75c0-0.414-0.336-0.75-0.75-0.75s-0.75 0.336-0.75 0.75z" stroke-width=".75"/></svg>';
+				ui.list.privateItemBt.onclick = () => OwnController.browsePerms(item.path);
+				ui.list.item.appendChild(ui.list.privateItemBt);
 			}
 			if(item.type === 'file' || item.type === 'subdir') {
-				// Download item.
-				let dlItemBtElm = document.createElement('button');
-				dlItemBtElm.classList.add('non-editable');
-				dlItemBtElm.title = 'Télécharger';
-				dlItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
-				dlItemBtElm.onclick = () => Controller.downloadItem(item.path);
-				ui.list.item.appendChild(dlItemBtElm);
-				// Rename item.
-				let renameItemBt = document.createElement('button');
-				renameItemBt.classList.add('publisher-ft', 'data-ft', 'non-editable');
-				renameItemBt.setAttribute('title', 'Renommer');
-				renameItemBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>';
-				renameItemBt.onclick = e => PubView.setEditionMode(e.target.closest('li'));
-				ui.list.item.appendChild(renameItemBt);
+				ui.list.downloadItemBt = document.createElement('button');
+				ui.list.downloadItemBt.classList.add('non-editable');
+				ui.list.downloadItemBt.title = 'Télécharger';
+				ui.list.downloadItemBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>';
+				ui.list.downloadItemBt.onclick = () => Controller.downloadItem(item.path);
+				ui.list.item.appendChild(ui.list.downloadItemBt);
+				ui.list.renameItemBt = document.createElement('button');
+				ui.list.renameItemBt.classList.add('publisher-ft', 'data-ft', 'non-editable');
+				ui.list.renameItemBt.setAttribute('title', 'Renommer');
+				ui.list.renameItemBt.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18.311 2.828l2.862 2.861-15.033 15.032-3.583.722.723-3.584 15.031-15.031zm0-2.828l-16.873 16.872-1.438 7.127 7.127-1.437 16.874-16.873-5.69-5.689z"/></svg>';
+				ui.list.renameItemBt.onclick = e => PubView.setEditionMode(e.target.closest('li'));
+				ui.list.item.appendChild(ui.list.renameItemBt);
 			}
 			if(item.type === 'file' || item.type === 'link' || item.type === 'subdir') {	
-				// Remove item.
-				let rmItemBtElm = document.createElement('button');
-				rmItemBtElm.classList.add('publisher-ft', 'non-editable');
-				rmItemBtElm.title = 'Supprimer (maintenir pour enclencher)';
-				rmItemBtElm.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
-				rmItemBtElm.onkeypress = () => { if(confirm('Supprimer cet élément ?')) { PubController.removeItem(item.path, true); }};
-				rmItemBtElm.onmousedown = () => Controller.watchConfirm('start', item.path);
-				rmItemBtElm.onmouseup = () => {
+				ui.list.removeItemBt = document.createElement('button');
+				ui.list.removeItemBt.classList.add('publisher-ft', 'non-editable');
+				ui.list.removeItemBt.title = 'Supprimer (maintenir pour enclencher)';
+				ui.list.removeItemBt.innerHTML = '<svg viewBox="-3 -3 30 30"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+				ui.list.removeItemBt.onkeypress = () => { if(confirm('Supprimer cet élément ?')) { PubController.removeItem(item.path, true); }};
+				ui.list.removeItemBt.onmousedown = () => Controller.watchConfirm('start', item.path);
+				ui.list.removeItemBt.onmouseup = () => {
 					Controller.watchConfirm('end', item.path);
 					PubController.removeItem(item.path);
 				};
-				rmItemBtElm.onmouseleave = () => Controller.cancelConfirm();
-				rmItemBtElm.ontouchstart = e => Controller.watchConfirm('start', item.path, e);
-				rmItemBtElm.ontouchend = () => {
+				ui.list.removeItemBt.onmouseleave = () => Controller.cancelConfirm();
+				ui.list.removeItemBt.ontouchstart = e => Controller.watchConfirm('start', item.path, e);
+				ui.list.removeItemBt.ontouchend = () => {
 					Controller.watchConfirm('end', item.path);
 					PubController.removeItem(item.path);
 				};
-				rmItemBtElm.ontouchmove = () => Controller.cancelConfirm();
-				ui.list.item.appendChild(rmItemBtElm);
+				ui.list.removeItemBt.ontouchmove = () => Controller.cancelConfirm();
+				ui.list.item.appendChild(ui.list.removeItemBt);
 			}
 			ui.list.appendChild(ui.list.item);
 		}
@@ -307,7 +290,7 @@ class View {
 
 class Controller {
 
-	static handleError = err => alert('Une erreur est survenue.\nConsultez les journaux depuis l\'administration pour en savoir plus.');
+	static handleError = err => console.log('Une erreur est survenue.\nConsultez les journaux depuis l\'administration pour en savoir plus.');
 
 	static browseDirectory = dir => {
 		Model.ajaxPost(
@@ -546,7 +529,7 @@ ui.footer.logo.setAttribute('alt', 'Logo cirrus');
 ui.footer.appendChild(ui.footer.logo);
 
 ui.footer.cirrusVersion = document.createElement('p');
-ui.footer.cirrusVersion.textContent = 'version 1.2.1';
+ui.footer.cirrusVersion.textContent = 'version 1.3.0';
 ui.footer.appendChild(ui.footer.cirrusVersion);
 
 ui.main.appendChild(ui.footer);

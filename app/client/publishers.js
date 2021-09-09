@@ -234,7 +234,7 @@ ui.lNav.appendChild(ui.lNav.createDirBt);
 ui.lNav.createLinkBt = document.createElement('button');
 ui.lNav.createLinkBt.setAttribute('title', 'Créer un lien hypertexte');
 ui.lNav.createLinkBt.setAttribute('class', 'data-ft publisher-ft');
-ui.lNav.createLinkBt.innerHTML = '<svg viewBox="0 0 512 512"><g fill="none" stroke="var(--base-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="36px"><path d="m208 352h-64a96 96 0 0 1 0-192h64"/><path d="m304 160h64a96 96 0 0 1 0 192h-64"/><line x1="163.29" x2="350.71" y1="256" y2="256"/></g></svg>';
+ui.lNav.createLinkBt.innerHTML = '<svg viewBox="-3 -3 24 24" ><path d="M3.19 9.345a.97.97 0 0 1 1.37 0 .966.966 0 0 1 0 1.367l-2.055 2.052a1.932 1.932 0 0 0 0 2.735 1.94 1.94 0 0 0 2.74 0l4.794-4.787a.966.966 0 0 0 0-1.367.966.966 0 0 1 0-1.368.97.97 0 0 1 1.37 0 2.898 2.898 0 0 1 0 4.103l-4.795 4.787a3.879 3.879 0 0 1-5.48 0 3.864 3.864 0 0 1 0-5.47L3.19 9.344zm11.62-.69a.97.97 0 0 1-1.37 0 .966.966 0 0 1 0-1.367l2.055-2.052a1.932 1.932 0 0 0 0-2.735 1.94 1.94 0 0 0-2.74 0L7.962 7.288a.966.966 0 0 0 0 1.367.966.966 0 0 1 0 1.368.97.97 0 0 1-1.37 0 2.898 2.898 0 0 1 0-4.103l4.795-4.787a3.879 3.879 0 0 1 5.48 0 3.864 3.864 0 0 1 0 5.47L14.81 8.656z"/></svg>';
 ui.lNav.createLinkBt.onclick = () => PubController.createLink(prompt('Hyperlien à créer :'));
 ui.lNav.appendChild(ui.lNav.createLinkBt);
 
